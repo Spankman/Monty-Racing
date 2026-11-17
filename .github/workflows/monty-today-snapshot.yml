@@ -1,0 +1,39 @@
+name: Monty requested race-day snapshot
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/monty-today-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Capture real race inputs without predictions
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os,json,datetime
+          from krok_adapter import fetch,normalize
+          data=fetch('2026-11-17',os.environ.get('KROK_API_KEY'))
+          snapshot,audit=normalize(data,'2026-11-17')
+          details=[]
+          for m in data.get('data',[]):
+              if m.get('type') not in ('T','R'):continue
+              for r in m.get('races',[]):
+                  details.append({'meeting':m.get('venue'),'country':m.get('country'),'race':r.get('number'),'status':r.get('status'),'race_keys':list(r.keys()),'race_metadata':{k:v for k,v in r.items() if k not in ('runners',) and isinstance(v,(str,int,float,bool,type(None)))},'runner_keys':list(r.get('runners',[{}])[0].keys()) if r.get('runners') else [],'going':r.get('track_condition'),'meeting_going':m.get('track_hint')})
+          result={'captured_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'snapshot':snapshot,'audit':audit,'races':details}
+          s=json.dumps(result,allow_nan=False)
+          key=os.environ.get('KROK_API_KEY','')
+          if key:s=s.replace(key,'[REDACTED]')
+          print('MONTY_INPUT_JSON_BEGIN')
+          print(s)
+          print('MONTY_INPUT_JSON_END')
+          PY
