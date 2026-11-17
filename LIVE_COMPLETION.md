@@ -25,3 +25,13 @@ Restore the private original archive with `restore_archive.py`. Set the existing
 On 17 November at 1:24 pm Queensland, four Kyneton race requests returned form data and seven further AU race requests returned HTTP errors. The four responses contained 380 history rows, of which 209 had finishing positions and 254 had BSP values. Rows were not independently reconciled or transformed into V6 features. Quote capture timestamps were present, so they are available for a future freshness-aware adapter. HTTP status codes were not retained by this first probe, so the reason for the seven failures is unconfirmed. The workflow succeeding means the audit completed, not that every API request succeeded.
 
 Evidence: https://github.com/Spankman/Monty-Racing/actions/runs/44009909818 . The temporary probe launcher was removed after this run. No research ratings were used, no model scoring occurred, and the key stayed in GitHub secrets.
+
+## Historical bridge and free source follow-up
+
+The canonical pre-race builder now reproduces all 62,255 archived feature rows exactly. A final-date run reproduced 367 runners with current outcomes absent. The original manifest-backed feature builder remains unchanged; the prediction adapter copies its formulas and suppresses current-day outcome updates.
+
+The historical market feature specifically uses BEST_AVAIL_BACK_AT_SCHEDULED_OFF. BSP and fixed-odds SP are not equivalent and are rejected as substitutes. The new official Betfair CSV importer exactly reproduces the corrected original April source loader (13,842 runners). A downloaded October 2026 file supplied 14,055 retained runners across 1,475 races, without using Krok credits; missing connection/going metadata remains explicit.
+
+The bounded follow-up provider diagnostic returned 200 for Scone R7 field-form, 16 November results and 17 November 2025 results. The response reported free-tier credit allowance remaining 11, reset 2026-12-01; no large Krok backfill was attempted. The earlier seven HTTP failures' status was not recorded, so their exact reason remains unconfirmed. The new client records status and stops on 401/402/403/429 without blind retries.
+
+Official free sources investigated: Betfair Automation Hub data/dataListing (historical prices/results and IDs), Racing Australia FreeFields (AU field/form/result pages), LOVERACING.NZ RaceInfo (NZ fields/results). No verified free one-for-one API replacement covering all required real-time odds, full form history and metadata was established. TAB says new Studio API applications are closed. Betfair offers delayed developer API data; it must not be presented as current executable odds.

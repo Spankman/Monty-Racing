@@ -7,6 +7,7 @@ import urllib.request
 from collections import Counter
 from zoneinfo import ZoneInfo
 from krok_adapter import fetch
+from krok_client import ProviderError,get
 
 
 def probe(date):
@@ -24,18 +25,9 @@ def probe(date):
             race_id = race.get('race_key_v2') or race.get('race_key') or race.get('id')
             if not race_id or str(race.get('status')).lower() in ('closed','final','resulted','abandoned'):
                 continue
-            query = urllib.parse.urlencode({'race_id':race_id, 'form_limit':10})
-            request = urllib.request.Request('https://krokodds.com.au/api/v1/racing/field-form?'+query,
-                      headers={'X-API-Key':key,'Accept':'application/json'})
             report = {'meeting':meeting.get('venue'), 'race':race.get('number')}
             try:
-                with urllib.request.urlopen(request, timeout=35) as response:
-                    raw=response.read(20_000_001)
-                if len(raw)>20_000_000:
-                    raise ValueError('Response exceeds limit')
-                payload=json.loads(raw)
-                if payload.get('success') is not True:
-                    raise ValueError('Provider did not return success')
+                payload=get('/api/v1/racing/field-form', {'race_id':race_id,'form_limit':10},key)
                 runners=payload.get('data',{}).get('runners',[])
                 fields=Counter(); form_fields=Counter(); histories=0; quotes=0
                 for runner in runners:
@@ -51,6 +43,12 @@ def probe(date):
                 report.update(runners=len(runners), runner_field_counts=dict(fields),
                               history_rows=histories, history_field_counts=dict(form_fields),
                               timestamped_quotes=quotes)
+            except ProviderError as exc:
+                report.update(http_status=exc.status,retry_after=exc.retry_after)
+                reports.append(report)
+                if exc.status in (401,402,403,429):
+                    return {'date':date,'predictions_generated':False,'stopped_on_http_status':exc.status,'races':reports}
+                continue
             except Exception as exc:
                 # Do not log credential-bearing request objects or provider response text.
                 report['error_type']=type(exc).__name__
