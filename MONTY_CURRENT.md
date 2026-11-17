@@ -24,3 +24,7 @@ No fully informed live betting service has been established. Recent scheduled-of
 5. Preserve original pre-race NO BET records. Manual expert tips are separate and must never be relabelled Monty predictions.
 
 For racing output, Ferg wants a short list of best bets and roughies with race, saddlecloth, name and timestamped odds; verify wet-track suitability and scratchings, cover AU/NZ meetings when available, and allow NO BET. Never invent scores or claim another chat's code ran in this session.
+
+## TAB fixed-price preference and input path
+
+Ferg approved capture-time-only current odds and fixed win prices only. Bookmaker-supplied update timestamps are not mandatory for that path; historical scheduled-off prices remain required. The TAB browser test and input adapter are documented in TAB_INPUTS.md. Kyneton R6 capture: 16 cards, four scratched, 12 active fixed-win quotes, Good 4. The corresponding readiness audit has 14/43 active inputs observed. Identity reconciliation and historical form remain unresolved; no model picks were generated.

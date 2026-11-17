@@ -48,7 +48,9 @@ def assess(bundle, now=None):
         if bundle.get('audit', {}).get('tab_verified') is not True:
             reasons.append('independent_fields_and_scratchings_unverified')
         # A capture timestamp is not evidence of the underlying quote's age.
-        reasons.append('provider_quote_update_time_unverified')
+        capture_only = bundle.get('audit', {}).get('quote_time_policy') == 'capture_only'
+        if not capture_only:
+            reasons.append('provider_quote_update_time_unverified')
         counts = {}
         for feature in active:
             if feature in ('log_field_size', 'log_market_probability'):
@@ -63,12 +65,14 @@ def assess(bundle, now=None):
         decisions.append(dict(meeting=key[0], race=key[1], runners=len(rows),
                               decision='BLOCKED', reasons=reasons,
                               fully_observed_active_features=len(active)-len(missing),
-                              active_features=len(active), missing_features=missing))
+                              active_features=len(active), missing_features=missing,
+                              quote_time_policy='capture_only' if capture_only else 'provider_update_required',
+                              warnings=['Provider update time unknown; capture-time-only pricing accepted by user.'] if capture_only else []))
     if not decisions:
         raise ValueError('No runner fields to assess')
     return dict(assessed_at_utc=now.isoformat(), captured_at_utc=captured.isoformat(),
                 artifact_hashes=verified, betting_ready=False, predictions_generated=False,
-                races=decisions, next_requirement='As-of form features, independently verified fields/scratchings and quote-update timestamps; then prospective model validation.')
+                races=decisions, next_requirement='As-of form features, independently verified fields/scratchings and captured current fixed-win odds; then prospective model validation.')
 
 
 def main():

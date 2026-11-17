@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.tab.com.au/racing/2026-11-17/KYNETON/KYN/R/6",
+  "captured_at_utc": "2026-11-17T03:51:29.274Z",
+  "declared_runner_cards": 16,
+  "active_runners": 12,
+  "scratched_runners": 4,
+  "price_type": "TAB fixed win",
+  "track_condition": "Good (4)",
+  "active_feature_inputs_observed": 14,
+  "active_feature_inputs_total": 43,
+  "identity_status_counts": {
+    "ambiguous": 6,
+    "candidate_requires_cross_source_verification": 4,
+    "absent": 2
+  },
+  "quote_time_policy": "capture_only",
+  "provider_quote_update_time_verified": false,
+  "predictions_generated": false,
+  "betting_ready": false
+}
