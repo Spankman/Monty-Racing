@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "monty-research"
+version = "6.1.0"
+description = "Auditable Australian thoroughbred modelling research"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "numpy>=2.3,<2.4",
+  "pandas>=2.2,<2.3",
+  "scipy>=1.17,<1.18",
+  "scikit-learn>=1.8,<1.9",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["monty*"]
+
+# requirements.txt remains the exact tested runtime pin set.
+# These bounds express intended compatibility, not tested support for every version.

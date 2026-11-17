@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+intake_output/
+connection_report.json
+race_day_output/
+output*/
+# Original datasets and research artifacts stay in the user's private archive.
+monty_v6/sources/
+monty_v6/results/*
+!monty_v6/results/frozen_model.json
+*.zip

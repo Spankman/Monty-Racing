@@ -2,7 +2,7 @@
 
 Based on the Monty Current Master Handover dated 10 November 2026.
 
-- V6 remains the established historical baseline, not yet imported here.
+- V6 remains the historical baseline. This repair branch imports its saved modular source and frozen linear artifact; historical datasets remain in the private archive. Full integrity validation and replay passed locally after archive restoration (see VALIDATION.md).
 - V7 is research only.
 - Archived expanding walk-forward: 4 folds and 59,258 scored races.
 - Market log loss: 1.778068963.

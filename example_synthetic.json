@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-14",
+  "races": [
+    {
+      "meeting": "SYNTHETIC ONLY",
+      "race": "1",
+      "expected_active_runners": 3
+    }
+  ],
+  "runners": [
+    {
+      "meeting": "SYNTHETIC ONLY",
+      "race": "1",
+      "number": "1",
+      "horse": "TEST HORSE 1",
+      "odds": 2.5
+    },
+    {
+      "meeting": "SYNTHETIC ONLY",
+      "race": "1",
+      "number": "2",
+      "horse": "TEST HORSE 2",
+      "odds": 4.0
+    },
+    {
+      "meeting": "SYNTHETIC ONLY",
+      "race": "1",
+      "number": "3",
+      "horse": "TEST HORSE 3",
+      "odds": 7.0
+    }
+  ]
+}

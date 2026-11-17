@@ -1,0 +1,17 @@
+{
+  "version":"Monty 6.0 multivariable research",
+  "scope":"AU thoroughbreds, strict identity/distance join with historical TAB-derived static fields",
+  "decision_time":"scheduled-start price; retrospective static metadata reconstructed from results, not certified morning snapshots",
+  "train":"2025-01-01 through 2025-03-31",
+  "validation":"2025-04-01 through 2025-04-30",
+  "diagnostic":"2025-05-01 through 2025-06-15",
+  "exposure":"ALL evaluation dates overlap prior V5 development data; this is feature-development diagnostic evidence, NOT a fresh holdout. September-October 2026 is not opened or scored again.",
+  "history":"2020 through previous local date, outcome-only history from retained Betfair AU races; connections/going available only in joined 2025 history",
+  "same_day_outcomes":"withheld until next local date; actual result publication timestamps unavailable",
+  "candidates":["market benchmark","linear market offset, L2 0.01/0.1/1.0","one fixed histogram gradient boosting classifier, blended with market at 10% or 25%"],
+  "boosting":{"max_iter":150,"max_leaf_nodes":15,"min_samples_leaf":100,"l2_regularization":10,"learning_rate":0.05,"random_state":600,"early_stopping":false},
+  "selection":"lowest validation race log loss, market eligible; no retuning on diagnostic",
+  "unavailable_inputs":"weights/claims, gear and first-after-gelding, age/sex, sectionals and pace are not inferred; feature engine accepts timestamped overlays and records unknowns",
+  "overlay_timing":"source_url and published_at required; published_at must be <= scheduled_start_utc per record; effective date+race+horse identity exact",
+  "trading":"no deployment/real bets; scheduled quote return proxy only; no liquidity, scratch timeline or reduction-factor reconstruction"
+}
