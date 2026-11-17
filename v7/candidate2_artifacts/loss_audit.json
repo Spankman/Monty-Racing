@@ -1,0 +1,407 @@
+{
+  "status": "CANDIDATE_2_DIAGNOSTIC_ONLY_NO_NEW_MODEL",
+  "period": [
+    "2025-05-01",
+    "2025-06-15"
+  ],
+  "original_bets": {
+    "bets": 139,
+    "wins": 39,
+    "expected_wins": 50.48816734427828,
+    "mean_predicted_probability": 0.3632242254984049,
+    "strike_rate": 0.2805755395683453,
+    "win_rate_wilson_95_low": 0.21256251712863877,
+    "win_rate_wilson_95_high": 0.3603905981390229,
+    "mean_odds": 3.6319424460431655,
+    "expected_profit_units": 17.35146280267449,
+    "actual_profit_units": -20.532500000000006,
+    "realization_minus_model_units": -37.88396280267449,
+    "roi": -0.14771582733812955,
+    "expected_roi": 0.12483066764514021
+  },
+  "passed_leaders": {
+    "bets": 1648,
+    "wins": 582,
+    "expected_wins": 586.6679119882314,
+    "mean_predicted_probability": 0.3559878106724705,
+    "strike_rate": 0.35315533980582525,
+    "win_rate_wilson_95_low": 0.33044558715682026,
+    "win_rate_wilson_95_high": 0.3765480850170554,
+    "mean_odds": 3.127014563106796,
+    "expected_profit_units": -66.72759924771782,
+    "actual_profit_units": -71.42600000000006,
+    "realization_minus_model_units": -4.698400752282229,
+    "roi": -0.043341019417475764,
+    "expected_roi": -0.040490048087207416
+  },
+  "folds": [
+    {
+      "fold": 2,
+      "bets": 114,
+      "wins": 32,
+      "expected_wins": 42.81313683767162,
+      "mean_predicted_probability": 0.37555383190940017,
+      "strike_rate": 0.2807017543859649,
+      "win_rate_wilson_95_low": 0.20640720544924923,
+      "win_rate_wilson_95_high": 0.3692939060239269,
+      "mean_odds": 3.4457894736842105,
+      "expected_profit_units": 13.124413567902167,
+      "actual_profit_units": -18.530500000000004,
+      "realization_minus_model_units": -31.65491356790217,
+      "roi": -0.1625482456140351,
+      "expected_roi": 0.11512643480615936
+    },
+    {
+      "fold": 3,
+      "bets": 25,
+      "wins": 7,
+      "expected_wins": 7.675030506606662,
+      "mean_predicted_probability": 0.30700122026426646,
+      "strike_rate": 0.28,
+      "win_rate_wilson_95_low": 0.14283853850956563,
+      "win_rate_wilson_95_high": 0.47576605190361576,
+      "mean_odds": 4.4807999999999995,
+      "expected_profit_units": 4.227049234772323,
+      "actual_profit_units": -2.0020000000000007,
+      "realization_minus_model_units": -6.229049234772325,
+      "roi": -0.08008000000000003,
+      "expected_roi": 0.16908196939089293
+    }
+  ],
+  "calibration_adjustment_fixed_selections": {
+    "all runners": {
+      "rows": 17987,
+      "actual_wins": 1787,
+      "pre_temperature_expected_wins": 1787.0,
+      "calibrated_expected_wins": 1786.9999999999993
+    },
+    "all race leaders": {
+      "rows": 1787,
+      "actual_wins": 621,
+      "pre_temperature_expected_wins": 628.5532581553896,
+      "calibrated_expected_wins": 637.1560793325095
+    },
+    "original 139 bets": {
+      "rows": 139,
+      "actual_wins": 39,
+      "pre_temperature_expected_wins": 49.067085775389344,
+      "calibrated_expected_wins": 50.48816734427828
+    }
+  },
+  "bootstrap": [
+    {
+      "population": "all runners",
+      "rows": 17987,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        4.0953071745092445e-17,
+        4.3786866509246036e-17
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.13081506535569026,
+        0.0710609723899673
+      ]
+    },
+    {
+      "population": "all runners / 10% vicinity",
+      "rows": 5822,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.004508057386712099,
+        0.006520976480993124
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.10258788377923381,
+        0.03896561271497414
+      ]
+    },
+    {
+      "population": "all runners / 20% vicinity",
+      "rows": 2248,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.019745897129643707,
+        0.006500220579934499
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.15304830705130648,
+        -0.025483291914975767
+      ]
+    },
+    {
+      "population": "all runners / 40% vicinity",
+      "rows": 427,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.0554748838635193,
+        0.0320874103138388
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.15851987612612614,
+        0.07212984895347026
+      ]
+    },
+    {
+      "population": "all race leaders",
+      "rows": 1787,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.028867611200890674,
+        0.010350030071116414
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.11137651456284837,
+        0.008365958120779865
+      ]
+    },
+    {
+      "population": "all race leaders / 10% vicinity",
+      "rows": 4,
+      "days": 3,
+      "observed_minus_predicted_probability_95": [
+        -0.14590482056529241,
+        -0.1378507338022715
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -1.0,
+        -1.0
+      ]
+    },
+    {
+      "population": "all race leaders / 20% vicinity",
+      "rows": 363,
+      "days": 44,
+      "observed_minus_predicted_probability_95": [
+        -0.05861397883920931,
+        0.02842961236177934
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.3210691963510557,
+        0.08724812631414675
+      ]
+    },
+    {
+      "population": "all race leaders / 40% vicinity",
+      "rows": 414,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.053848941861305746,
+        0.03532175505063066
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.1559514585517922,
+        0.07751611270683485
+      ]
+    },
+    {
+      "population": "original 139 bets",
+      "rows": 139,
+      "days": 42,
+      "observed_minus_predicted_probability_95": [
+        -0.14999102085834198,
+        -0.010110168103151369
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.3706464285714286,
+        0.09715367047534526
+      ]
+    },
+    {
+      "population": "original 139 bets / 10% vicinity",
+      "rows": 0
+    },
+    {
+      "population": "original 139 bets / 20% vicinity",
+      "rows": 28,
+      "days": 18,
+      "observed_minus_predicted_probability_95": [
+        -0.21063178329760548,
+        -0.0445363394744407
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -1.0,
+        -0.09709677419354844
+      ]
+    },
+    {
+      "population": "original 139 bets / 40% vicinity",
+      "rows": 33,
+      "days": 21,
+      "observed_minus_predicted_probability_95": [
+        -0.1385088838236971,
+        0.17225546259810443
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.24835892289348174,
+        0.7541740530303032
+      ]
+    },
+    {
+      "population": "passed race leaders",
+      "rows": 1648,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.023042993845379844,
+        0.017009500540190906
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.10646969344463457,
+        0.01869735881852738
+      ]
+    },
+    {
+      "population": "passed race leaders / 10% vicinity",
+      "rows": 4,
+      "days": 3,
+      "observed_minus_predicted_probability_95": [
+        -0.14590482056529241,
+        -0.1378507338022715
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -1.0,
+        -1.0
+      ]
+    },
+    {
+      "population": "passed race leaders / 20% vicinity",
+      "rows": 335,
+      "days": 43,
+      "observed_minus_predicted_probability_95": [
+        -0.050200089081770434,
+        0.03899516761680994
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.288388614331608,
+        0.12075597623545024
+      ]
+    },
+    {
+      "population": "passed race leaders / 40% vicinity",
+      "rows": 381,
+      "days": 46,
+      "observed_minus_predicted_probability_95": [
+        -0.055454640960119296,
+        0.03265574861487203
+      ],
+      "quote_proxy_roi_day_bootstrap_95": [
+        -0.1732794191098186,
+        0.05222195184636895
+      ]
+    }
+  ],
+  "threshold_sensitivity": [
+    {
+      "minimum_net_edge": 0,
+      "bets": 549,
+      "wins": 210,
+      "expected_wins": 222.66384110989276,
+      "mean_predicted_probability": 0.405580767048985,
+      "strike_rate": 0.3825136612021858,
+      "win_rate_wilson_95_low": 0.34280968182039673,
+      "win_rate_wilson_95_high": 0.4238503652115695,
+      "mean_odds": 3.0594899817850636,
+      "expected_profit_units": 25.779048189850197,
+      "actual_profit_units": -10.11950000000002,
+      "realization_minus_model_units": -35.89854818985021,
+      "roi": -0.01843260473588346,
+      "expected_roi": 0.04695637193051038
+    },
+    {
+      "minimum_net_edge": 0.025,
+      "bets": 285,
+      "wins": 97,
+      "expected_wins": 110.4177293570072,
+      "mean_predicted_probability": 0.3874306293228323,
+      "strike_rate": 0.34035087719298246,
+      "win_rate_wilson_95_low": 0.28778943302721616,
+      "win_rate_wilson_95_high": 0.3971588414637717,
+      "mean_odds": 3.2723859649122806,
+      "expected_profit_units": 22.516161950657704,
+      "actual_profit_units": -16.382500000000007,
+      "realization_minus_model_units": -38.89866195065771,
+      "roi": -0.057482456140350906,
+      "expected_roi": 0.0790040770198516
+    },
+    {
+      "minimum_net_edge": 0.05,
+      "bets": 139,
+      "wins": 39,
+      "expected_wins": 50.48816734427828,
+      "mean_predicted_probability": 0.3632242254984049,
+      "strike_rate": 0.2805755395683453,
+      "win_rate_wilson_95_low": 0.21256251712863877,
+      "win_rate_wilson_95_high": 0.3603905981390229,
+      "mean_odds": 3.6319424460431655,
+      "expected_profit_units": 17.35146280267449,
+      "actual_profit_units": -20.532500000000006,
+      "realization_minus_model_units": -37.88396280267449,
+      "roi": -0.14771582733812955,
+      "expected_roi": 0.12483066764514021
+    },
+    {
+      "minimum_net_edge": 0.075,
+      "bets": 82,
+      "wins": 25,
+      "expected_wins": 29.169571414674504,
+      "mean_predicted_probability": 0.35572648066676227,
+      "strike_rate": 0.3048780487804878,
+      "win_rate_wilson_95_low": 0.21583396436990138,
+      "win_rate_wilson_95_high": 0.4113857912164793,
+      "mean_odds": 3.867195121951219,
+      "expected_profit_units": 13.995209933911363,
+      "actual_profit_units": -3.372500000000001,
+      "realization_minus_model_units": -17.36770993391136,
+      "roi": -0.041128048780487814,
+      "expected_roi": 0.17067329187696784
+    },
+    {
+      "minimum_net_edge": 0.1,
+      "bets": 51,
+      "wins": 19,
+      "expected_wins": 18.034474861214907,
+      "mean_predicted_probability": 0.35361715414146877,
+      "strike_rate": 0.37254901960784315,
+      "win_rate_wilson_95_low": 0.25320519466264424,
+      "win_rate_wilson_95_high": 0.5097478653114912,
+      "mean_odds": 4.098823529411765,
+      "expected_profit_units": 11.309040878183803,
+      "actual_profit_units": 11.015999999999998,
+      "realization_minus_model_units": -0.29304087818380253,
+      "roi": 0.21599999999999997,
+      "expected_roi": 0.22174589957223143
+    },
+    {
+      "minimum_net_edge": 0.15,
+      "bets": 29,
+      "wins": 12,
+      "expected_wins": 10.588307445087791,
+      "mean_predicted_probability": 0.36511404983061346,
+      "strike_rate": 0.41379310344827586,
+      "win_rate_wilson_95_low": 0.255131773413224,
+      "win_rate_wilson_95_high": 0.5926216401212141,
+      "mean_odds": 4.044827586206897,
+      "expected_profit_units": 8.596980332037669,
+      "actual_profit_units": 8.801999999999998,
+      "realization_minus_model_units": 0.20501966796233062,
+      "roi": 0.30351724137931024,
+      "expected_roi": 0.29644759765647133
+    }
+  ],
+  "input_sha256": {
+    "walk_forward_predictions.csv.gz": "12c318c0c4417832d1f06d74d8cd06d230724238cc94df2a5e589c2de6c6cd84",
+    "joined_development_runners.csv.gz": "1618cc41fff78720418302b63fd540a35e64fe3b328a34c5b2e07385f5e70133",
+    "development_features.csv.gz": "bcbae1ab453f126476b74a077ba36bbbfae7866b8337513916b7e313ad62d27a"
+  },
+  "warnings": [
+    "Threshold comparisons are post-hoc diagnostics, not selection/optimization or fresh validation.",
+    "All 2025 dates already exposed. Calibration measured on disjoint test periods, not a fresh prospective sample.",
+    "Condition/class metadata reconstructed historically; publication/as-of snapshots unavailable.",
+    "Win-rate Wilson intervals are approximate. Day-block bootstrap accounts for date clustering, but few days remain uncertain.",
+    "Confidence means numeric win-probability band, not a claim of independently validated certainty.",
+    "Profit uses scheduled-off best-back quotes and 5% commission; liquidity/execution not verified.",
+    "One leading-probability runner per race; not all possible runners, no meeting quotas.",
+    "All-runner profit/ROI is descriptive only; no strategy bet every runner.",
+    "Aggregate all-runner calibration gap is identically zero because each complete field sums to one; use probability bins, not that aggregate, to assess calibration.",
+    "No original selections, probabilities, models or training parameters altered."
+  ]
+}
