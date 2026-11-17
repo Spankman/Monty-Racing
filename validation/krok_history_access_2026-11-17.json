@@ -1,0 +1,121 @@
+{
+  "captured_at_utc": "2026-11-17T03:29:21.345063+00:00",
+  "requests": [
+    {
+      "path": "/api/v1/racing/field-form",
+      "http_status": 200,
+      "races": 1,
+      "runners": 14,
+      "fields": {
+        "name": 14,
+        "slug": 14,
+        "tab_number": 14,
+        "entry_id": 14,
+        "scratched": 14,
+        "jockey": 14,
+        "trainer": 14,
+        "barrier": 14,
+        "weight": 14,
+        "best_win": 14,
+        "odds": 14,
+        "career": 14,
+        "splits": 14,
+        "profile": 14,
+        "track_bias": 14,
+        "recent_form": 14,
+        "sectionals": 3
+      },
+      "meta": {
+        "tier": "free",
+        "limit": 50,
+        "count": 14,
+        "truncated": null,
+        "date": null,
+        "rate_limit": null
+      }
+    },
+    {
+      "path": "/api/v1/racing/results/2026-11-16",
+      "http_status": 200,
+      "races": 657,
+      "runners": 5006,
+      "fields": {
+        "tab_number": 5006,
+        "entry_id": 5006,
+        "name": 5006,
+        "slug": 4956,
+        "is_scratched": 5006,
+        "finish_position": 4180,
+        "finish_position_source": 3680,
+        "starting_price": 2842,
+        "starting_price_source": 3683,
+        "win_result": 628,
+        "place_result": 1874,
+        "jockey": 2229,
+        "trainer": 2552,
+        "barrier": 3467,
+        "is_secondary": 5006,
+        "margin": 1471,
+        "margin_source": 1497,
+        "tote_dividend": 435,
+        "tote_dividend_source": 435,
+        "win_bsp": 993,
+        "age": 1299,
+        "weight": 532,
+        "weight_source": 482,
+        "horse_stats": 455,
+        "claim": 26,
+        "claim_source": 26
+      },
+      "meta": {
+        "tier": "free",
+        "limit": 2000,
+        "count": 657,
+        "truncated": false,
+        "date": "2026-11-16",
+        "rate_limit": {
+          "limit": 50,
+          "remaining": 16,
+          "reset": "2026-12-01T00:00:00.000Z"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/racing/results/2025-11-17",
+      "http_status": 200,
+      "races": 200,
+      "runners": 1750,
+      "fields": {
+        "tab_number": 1750,
+        "entry_id": 1750,
+        "name": 1750,
+        "slug": 1750,
+        "is_scratched": 1750,
+        "finish_position": 1372,
+        "starting_price_source": 1357,
+        "win_result": 1382,
+        "win_bsp": 1357,
+        "place_result": 1416,
+        "is_secondary": 1750,
+        "finish_position_source": 815,
+        "place_bsp": 1275,
+        "barrier": 1280,
+        "horse_stats": 305
+      },
+      "meta": {
+        "tier": "free",
+        "limit": 2000,
+        "count": 200,
+        "truncated": false,
+        "date": "2025-11-17",
+        "rate_limit": {
+          "limit": 50,
+          "remaining": 11,
+          "reset": "2026-12-01T00:00:00.000Z"
+        }
+      }
+    }
+  ],
+  "predictions_generated": false,
+  "workflow_run": "https://github.com/Spankman/Monty-Racing/actions/runs/44010504200"
+}

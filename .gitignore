@@ -12,3 +12,5 @@ monty_v6/sources/
 monty_v6/results/*
 !monty_v6/results/frozen_model.json
 *.zip
+
+history_data/

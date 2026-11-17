@@ -1,0 +1,25 @@
+{
+  "raw_rows": 16646,
+  "retained_runners": 14055,
+  "retained_races": 1475,
+  "date_min": "2026-10-01",
+  "date_max": "2026-10-31",
+  "conflicting_races": 0,
+  "exclusions": {
+    "quote_not_clearly_before_actual_off": 4,
+    "not_single_winner": 3,
+    "invalid_any_runner_quote": 1
+  },
+  "missing_metadata": [
+    "barrier",
+    "jockey",
+    "trainer",
+    "going"
+  ],
+  "nz_supported_by_frozen_baseline": false,
+  "source": "Official Betfair ANZ historical CSV",
+  "predictions_generated": false,
+  "betting_ready": false,
+  "source_sha256": "e68c268a6872bc01ec88325c9eaa3a697ba4f2d48f439211e990a653c554402f",
+  "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_10.csv"
+}
