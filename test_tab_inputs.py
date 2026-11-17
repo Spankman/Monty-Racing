@@ -30,6 +30,10 @@ class TabInputTests(unittest.TestCase):
     def test_duplicate_saddlecloth_rejected(self):
         c=self.capture();c['runners'][1]['number']='1'
         with self.assertRaisesRegex(ValueError,'saddlecloth'):normalize(c)
+    def test_meeting_must_match_observed_race_url(self):
+        c=self.capture();c['meeting']='Other'
+        with self.assertRaisesRegex(ValueError,'Meeting'):normalize(c)
+
     def test_elapsed_race_rejected(self):
         c=self.capture();c['jump_time']='2026-11-17T02:00:00Z'
         with self.assertRaisesRegex(ValueError,'already due'):normalize(c)

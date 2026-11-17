@@ -9,10 +9,10 @@ import json
 import math
 import re
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse,unquote
 from assess_day import timestamp
 from race_day import ROOT
-from monty.normalization import condition,numeric_class
+from monty.normalization import condition,numeric_class,normal
 
 
 def finite(value,label):
@@ -26,9 +26,11 @@ def finite(value,label):
 def normalize(capture):
     url=urlparse(capture['source_url'])
     match=re.fullmatch(r'/racing/(\d{4}-\d{2}-\d{2})/([^/]+)/([^/]+)/R/(\d+)(?:/Win)?/?',url.path)
-    if url.scheme!='https' or url.hostname!='www.tab.com.au' or not match or url.query or url.fragment:
+    if url.scheme!='https' or url.netloc!='www.tab.com.au' or not match or url.query or url.fragment:
         raise ValueError('Expected an observed TAB thoroughbred win race URL')
     date,slug,meeting_code,race=match.groups();dt.date.fromisoformat(date)
+    if normal(capture['meeting'])!=normal(unquote(slug)):
+        raise ValueError('Meeting name disagrees with TAB URL')
     timestamp(capture['captured_at_utc']);jump=timestamp(capture['jump_time'])
     if jump<=timestamp(capture['captured_at_utc']):raise ValueError('Race already due at capture')
     distance=finite(capture['distance_m'],'distance')
