@@ -44,9 +44,11 @@ def run(src,dst):
     df['market_prob']=base;df['monty_prob']=pred
     df['fair_odds']=1/pred;df['edge']=df.odds*pred-1
     df['feature_coverage']=np.isfinite(X).sum(axis=1)/len(names)
-    df['category']=np.where((df.odds>=6)&(df.edge>0),'RUFFY',np.where(df.edge>0,'BEST BET','NO BET'))
+    df['research_category']=np.where((df.odds>=6)&(df.edge>0),'RUFFY',np.where(df.edge>0,'BEST BET','NO BET'))
+    # Numerical edges alone cannot establish current form, timing or field provenance.
+    df['category']='BLOCKED — RESEARCH ONLY'
     df=df.sort_values(['category','edge'],ascending=[True,False])
-    cols=['meeting','race','number','horse','odds','market_prob','monty_prob','fair_odds','edge','feature_coverage','category']
+    cols=['meeting','race','number','horse','odds','market_prob','monty_prob','fair_odds','edge','feature_coverage','research_category','category']
     df[cols].to_csv(dst,index=False)
     return df[cols]
 

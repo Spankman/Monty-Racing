@@ -2,7 +2,7 @@ name: Monty offline code checks
 on:
   pull_request:
   push:
-    branches: [monty-repair-2026-11-17]
+    branches: [main, monty-repair-2026-11-17]
 permissions:
   contents: read
 jobs:
@@ -16,4 +16,4 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements-runner.txt
       - name: Adapter, provenance and restoration tests (no secrets or historical data)
-        run: python -m unittest test_krok_adapter test_adapter_parity test_v06 test_backend_bridge test_discover_meetings test_v04.Integration.test_incomplete_race_rejected test_operations
+        run: python -m unittest test_krok_adapter test_adapter_parity test_v06 test_backend_bridge test_discover_meetings test_v04.Integration.test_incomplete_race_rejected test_operations test_readiness

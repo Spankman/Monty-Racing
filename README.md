@@ -57,3 +57,7 @@ Data source: [Krok Odds](https://krokodds.com.au). A capture timestamp is not a 
 With the full archive restored locally: 55 original artifact hashes matched; 13 model tests and 20 wrapper/intake tests passed. Replay reproduced 17,987 runner probabilities across 1,787 races with maximum difference 1.6653345369377348e-16. The fitted model, preprocessing, manifest and original records were unchanged. Current branch validation is recorded in `VALIDATION.md`.
 
 Never fabricate runners, scratchings, conditions, odds, predictions, results or returns. Prioritise TAB.com.au and cross-check conflicting sources. Freeze genuine pre-race picks with timestamps; separate probability from value and permit NO BET. Expert tips and personal blackbook bets are not independent model predictions.
+
+## Race-day readiness
+
+`python intake_only.py --date YYYY-MM-DD` captures fields and writes `readiness.json` with per-race reasons for blocking live picks. See `README_RACEDAY.md`. The legacy scorer's mechanical labels are explicitly research-only; they cannot approve a live bet. Current blockers are missing as-of form history, quote-update timestamps and independent field verification. A complete live tipping service is not yet established.

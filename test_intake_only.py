@@ -30,7 +30,7 @@ class IntakeChecks(unittest.TestCase):
             self.assertFalse(report['betting_ready'])
             self.assertEqual(report['artifact_hashes'],55)
             self.assertEqual(report['active_feature_coverage']['observed_win_rate']['status'],'missing')
-            self.assertEqual({p.name for p in a.iterdir()}, {'provider_response.json','snapshot.json','intake_report.json'})
+            self.assertEqual({p.name for p in a.iterdir()}, {'provider_response.json','snapshot.json','intake_report.json','assessment_bundle.json'})
 
     def test_live_mock_redacts_credential(self):
         payload=self.fixture();payload['meta']['echo']='dummy-secret-test-value'
