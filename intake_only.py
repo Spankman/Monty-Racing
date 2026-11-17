@@ -50,7 +50,11 @@ def capture(date, output, fixture=None):
                                'Independent TAB verification is still required.',
                                'Capture time is not a verified quote-update time.',
                                'AU/NZ meeting completeness is not independently established.'])
-    for filename, value in [('provider_response.json', payload), ('snapshot.json', snapshot), ('intake_report.json', report)]:
+    race_times = [dict(meeting=m.get('venue'), race=str(r.get('number')), jump_time=r.get('jump_time'))
+                  for m in payload['data'] for r in m.get('races', [])
+                  if m.get('country') in ('AU', 'NZ', None)]
+    bundle = dict(captured_at_utc=captured.isoformat(), snapshot=snapshot, audit=audit, races=race_times)
+    for filename, value in [('assessment_bundle.json', bundle), ('provider_response.json', payload), ('snapshot.json', snapshot), ('intake_report.json', report)]:
         (out / filename).write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
     return out, report
 
@@ -70,6 +74,9 @@ def main():
     except Exception as exc:
         print('BLOCKED: ingestion failed (' + type(exc).__name__ + '); no predictions generated.', file=sys.stderr)
         return 2
+    from assess_day import assess
+    readiness = assess(json.loads((out / 'assessment_bundle.json').read_text()))
+    (out / 'readiness.json').write_text(json.dumps(readiness, indent=2, allow_nan=False) + '\n')
     print(json.dumps({'output': str(out), 'live': report['live'],
                       'races': report['adapter_audit']['races_accepted'], 'predictions_generated': False}))
     return 0
