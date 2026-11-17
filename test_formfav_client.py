@@ -25,6 +25,17 @@ class FormFavClientTests(unittest.TestCase):
     def test_predictions_endpoint_not_allowed(self):
         with self.assertRaises(FormFavError):Client('test-only').get('/predictions')
 
+    def test_statistics_name_is_encoded_as_one_path_segment(self):
+        requests=[]
+        def opened(req,timeout):
+            requests.append(req)
+            return io.BytesIO(b'{}')
+        Client('test-only',opened).stats('trainer','One / Two',90)
+        self.assertIn('One%20%2F%20Two',requests[0].full_url)
+
+    def test_stats_invalid_window_rejected_before_network(self):
+        with self.assertRaises(FormFavError):Client('test-only').stats('jockey','Damian Lane',366)
+
     def test_capture_rejects_wrong_race_date(self):
         class Fake:
             def get(self,path,params=None):

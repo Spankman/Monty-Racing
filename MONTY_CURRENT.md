@@ -9,6 +9,11 @@ to fill a list. Winning chance and value are separate claims.
 Ferg explicitly permits runs and provisional selections with missing features,
 using the saved trained imputation and clear disclosure. Missingness alone is
 not an execution or presentation veto; continue improving source coverage.
+Latest connection enrichment: read CONNECTIONS.md. Verified historical metadata
+adds the original jockey-change input for 92 runners in the saved 18 November
+card (13–22/43 active features). FormFav connection statistics stay separately
+labelled and are not substituted for market residuals. Prices are not refreshed
+by the enrichment step.
 
 ## Verified
 
