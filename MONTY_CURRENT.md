@@ -2,6 +2,11 @@
 
 Canonical code: https://github.com/Spankman/Monty-Racing/tree/main . Read this file and LIVE_COMPLETION.md from main before using any older ZIP or chat summary. Source archives are historical snapshots, not the latest operational code.
 
+Selection and presentation policy: read SELECTION_RULES.md. There are no
+meeting quotas: several supported selections or none are both valid. Assess
+horses against their own race fields, and never promote rankings to bets just
+to fill a list. Winning chance and value are separate claims.
+
 ## Verified
 
 - Original frozen V6 linear model and preprocessing preserved; 55-entry artifact manifest unchanged.
