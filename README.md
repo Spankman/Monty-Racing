@@ -46,7 +46,7 @@ Set `KROK_API_KEY` in your runner's environment, or use the existing GitHub Acti
 python check_krok.py --date YYYY-MM-DD
 ```
 
-The manual workflow is `Monty manual Krok connection check`. After the workflow exists on the default branch, open Actions, choose that workflow, select Run workflow, choose a branch and enter the Queensland racing date. It sends the secret only to the provider request step and uploads a count-only report. This workflow has not yet been run on GitHub.
+The manual workflow is `Monty manual Krok connection check`. After the workflow exists on the default branch, open Actions, choose that workflow, select Run workflow, choose a branch and enter the Queensland racing date. It sends the secret only to the provider request step and uploads a count-only report. The connection check was exercised successfully by a temporary one-time launcher on 17 November 2026: 12 accepted races, 119 runners and Krok-labelled TAB quotes. See validation/krok_connection_2026-11-17.json and its linked GitHub run. The temporary launcher was then removed; the reusable manual workflow remains. Complete AU/NZ coverage and independent TAB verification remain unestablished.
 
 Data source: [Krok Odds](https://krokodds.com.au). A capture timestamp is not a verified quote-update timestamp. Coverage of every AU/NZ meeting and independent TAB verification are not established. Historical-form features must still be sourced as of the decision time before treating model output as suitable for live selections.
 
