@@ -25,6 +25,21 @@ No fully informed live betting service has been established. Recent scheduled-of
 
 For racing output, Ferg wants a short list of best bets and roughies with race, saddlecloth, name and timestamped odds; verify wet-track suitability and scratchings, cover AU/NZ meetings when available, and allow NO BET. Never invent scores or claim another chat's code ran in this session.
 
+## PDF and FormFav integration — 18 November card
+
+See PDF_FORM.md and FORMFAV.md. PDF history extraction matched 375 historical
+starts and recovered latest-start fitness/distance features for 103 runners
+before subsequent scratchings. The original formulas and artifacts remain
+unchanged; cumulative horse and connections histories remain incomplete.
+
+FormFav API access and the user's Pro tier were verified. Source cards cover
+43 AU/NZ races. No FormFav model predictions are used as Monty outputs.
+A separate rendered TAB refresh captured all 35 Australian races at
+18:24–18:29 Queensland on 17 November: 416 active runners, 34 scratched,
+22 stale FormFav scratching flags reconciled. Frozen V6 was rerun with
+13–21/43 active features available. This remains research only, with no
+fully informed betting recommendation claimed. Keys and raw data stay private.
+
 ## TAB fixed-price preference and input path
 
 Ferg approved capture-time-only current odds and fixed win prices only. Bookmaker-supplied update timestamps are not mandatory for that path; historical scheduled-off prices remain required. The TAB browser test and input adapter are documented in TAB_INPUTS.md. Kyneton R6 capture: 16 cards, four scratched, 12 active fixed-win quotes, Good 4. The corresponding readiness audit has 14/43 active inputs observed. Identity reconciliation and historical form remain unresolved; no model picks were generated.
