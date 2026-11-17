@@ -1,0 +1,2 @@
+-r monty_v6/requirements.txt
+beautifulsoup4==4.14.3

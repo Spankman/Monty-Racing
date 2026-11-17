@@ -1,0 +1,7 @@
+{
+  "source": "TAB.com.au snapshot supplied by operator (replace with actual source)",
+  "captured_at": "2026-11-14T08:00:00+10:00",
+  "races": [
+    {"meeting": "EXAMPLE ONLY", "race": "1", "expected_active_runners": 2}
+  ]
+}

@@ -1,0 +1,45 @@
+Joined 62255 rows
+Features (62255, 55)
+{
+  "selected": {
+    "races": 1787,
+    "wins": 622,
+    "strike_rate": 0.3480693900391718,
+    "strike_wilson_95": [
+      0.326330071608431,
+      0.37046053231767834
+    ],
+    "log_loss": 1.8164070732111908,
+    "brier": 0.7817123958542052,
+    "winner_among_top4": 0.7683268047006155,
+    "quote_proxy_roi_5pct": -0.046881085618354815,
+    "real_bets": 0
+  },
+  "split_races": {
+    "train": 3439,
+    "validation": 1196,
+    "diagnostic": 1787
+  },
+  "warning": "Retrospective feature-development diagnostic; dates already exposed to V5. Not fresh out-of-sample proof.",
+  "market": {
+    "races": 1787,
+    "wins": 624,
+    "strike_rate": 0.34918858421936205,
+    "strike_wilson_95": [
+      0.3274304363702103,
+      0.3715937542673089
+    ],
+    "log_loss": 1.8159689848785507,
+    "brier": 0.7815747877249851,
+    "winner_among_top4": 0.7716843872411864,
+    "quote_proxy_roi_5pct": -0.04919082260772247,
+    "real_bets": 0
+  },
+  "paired_log_loss_difference": {
+    "selected_minus_market": 0.0004380883326401817,
+    "day_bootstrap_95": [
+      -0.0021505178014431005,
+      0.002741879577345391
+    ]
+  }
+}
