@@ -2,10 +2,10 @@
 
 No provider prediction endpoints, account changes, retries, or scheduled work.
 """
-import argparse,datetime,json,os
+import argparse,datetime,json,os,re
 from pathlib import Path
 from urllib.error import HTTPError,URLError
-from urllib.parse import urlencode
+from urllib.parse import urlencode,quote
 from urllib.request import Request,urlopen,build_opener,HTTPRedirectHandler
 
 class FormFavError(RuntimeError):pass
@@ -20,7 +20,7 @@ class Client:
         self._opener=opener or build_opener(NoRedirect()).open
 
     def get(self,path,params=None):
-        if path not in ['/usage','/form/meetings','/form','/results','/results/meeting']:
+        if path not in ['/usage','/form/meetings','/form','/results','/results/meeting'] and not re.fullmatch(r'/stats/(?:jockey|trainer)/[^/?#]+',path):
             raise FormFavError('Unsupported data endpoint')
         url='https://api.formfav.com/v1'+path
         if params:url+='?'+urlencode(params)
@@ -34,6 +34,13 @@ class Client:
         except (ValueError,TypeError):raise FormFavError('FormFav returned invalid JSON') from None
         if not isinstance(data,dict):raise FormFavError('FormFav returned an invalid response object')
         return data
+
+    def stats(self,kind,name,window):
+        if kind not in ('jockey','trainer') or not isinstance(name,str) or not name.strip():
+            raise FormFavError('Invalid connection identity')
+        if not isinstance(window,int) or not 14<=window<=365:
+            raise FormFavError('Invalid statistics window')
+        return self.get('/stats/'+kind+'/'+quote(name,safe=''),{'race_code':'gallops','window':window})
 
 def capture(date,output,countries=('au','nz'),refresh=False,client=None):
     datetime.date.fromisoformat(date)
