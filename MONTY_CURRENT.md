@@ -6,6 +6,9 @@ Selection and presentation policy: read SELECTION_RULES.md. There are no
 meeting quotas: several supported selections or none are both valid. Assess
 horses against their own race fields, and never promote rankings to bets just
 to fill a list. Winning chance and value are separate claims.
+Ferg explicitly permits runs and provisional selections with missing features,
+using the saved trained imputation and clear disclosure. Missingness alone is
+not an execution or presentation veto; continue improving source coverage.
 
 ## Verified
 

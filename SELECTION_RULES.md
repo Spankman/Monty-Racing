@@ -16,6 +16,11 @@ Ferg's instruction, confirmed 17 November 2026:
   the strongest winning chance. State what the output actually establishes.
 - Do not invent selection thresholds, confidence, scores, form, odds or model
   execution. Sparse-input research rankings are not validated betting selections.
+- Missing features alone must not prevent a Monty run or provisional selections.
+  Use the frozen model's saved imputation for unknown inputs; never invent them.
+  Label incomplete-data outputs provisional and disclose material gaps. Do not
+  require all 43 active features before executing or presenting provisional
+  best-chance/roughie rankings. Continue seeking suitable data to improve them.
 - Do not fill empty slots, force a roughie, or substitute expert picks while
   calling them Monty. If available evidence supports no selections, say so.
 - State the racing date and quote capture time. Recheck scratchings and going
