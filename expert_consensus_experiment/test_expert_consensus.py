@@ -1,5 +1,5 @@
 import unittest
-from expert_consensus import consensus_features
+from expert_consensus_experiment.expert_consensus import consensus_features
 
 class ExpertConsensusTests(unittest.TestCase):
     def test_future_vote_excluded_and_missing_not_zero(self):
