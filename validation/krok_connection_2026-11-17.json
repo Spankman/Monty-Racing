@@ -1,0 +1,17 @@
+{
+  "requested_date": "2026-11-17",
+  "captured_at_utc": "2026-11-17T03:07:23.589816+00:00",
+  "source": "Krok Odds API — https://krokodds.com.au",
+  "live_request_succeeded": true,
+  "accepted_races": 12,
+  "accepted_runners": 119,
+  "price_sources": [
+    "TAB"
+  ],
+  "tab_verified": false,
+  "complete_au_nz_coverage_verified": false,
+  "model_loaded": false,
+  "predictions_generated": false,
+  "github_run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44007843608",
+  "workflow_conclusion": "success"
+}
