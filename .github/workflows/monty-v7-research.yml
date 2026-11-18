@@ -29,9 +29,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install frozen V6 runtime dependencies
+        run: python -m pip install -r monty_v6/requirements.txt
       - name: Verify date and input path
         env:
-          RACING_DATE: ${{ inputs.racing_date }}
+          RACING_DATE: ${{ inputs.racing_date || '2026-11-18' }}
           SOURCE_SNAPSHOT: ${{ inputs.source_snapshot }}
         run: |
           python - <<'PY'
@@ -74,6 +76,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: monty-v7-research-${{ inputs.racing_date }}-${{ github.run_id }}
+          name: monty-v7-research-${{ github.run_id }}
           path: output/
           if-no-files-found: warn
