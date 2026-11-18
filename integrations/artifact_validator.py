@@ -42,12 +42,12 @@ def validate_artifact_bytes(data):
         predictions = _read_json(z, "predictions.json")
         if not isinstance(predictions, dict):
             raise ValueError("Invalid predictions.json")
-        for key in ("model_version", "generated_at", "data_cutoff", "races"):
+        for key in ("model_version", "generated_at", "races"):
             if not predictions.get(key):
                 raise ValueError("Completed predictions missing " + key)
         if not isinstance(predictions["races"], list) or not predictions["races"]:
             raise ValueError("Completed predictions must have nonempty races")
-        if predictions["model_version"] != status.get("model_version"):
+        if "data_cutoff" not in predictions:\n            raise ValueError("Missing data_cutoff field (null allowed when unknown)")\n        if predictions["model_version"] != status.get("model_version"):
             raise ValueError("Model version mismatch")
         if str(predictions["model_version"]).startswith("v7") and not predictions.get("research_only"):
             raise ValueError("V7 predictions must be research-only until approved")
