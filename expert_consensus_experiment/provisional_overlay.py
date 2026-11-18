@@ -15,7 +15,7 @@ def norm_meeting(value):
 
 def overlay(v6_races, observations, classifications=None):
     classifications=classifications or {"races":[]}
-    meta={(norm_meeting(r["meeting"]),int(r["race"])):r for r in classifications["races"]}
+    meta={}\n    for item in classifications["races"]:\n        key=(norm_meeting(item["meeting"]),int(item["race"]))\n        if key in meta:\n            raise ValueError("Duplicate race classification: "+str(key))\n        meta[key]=item
     votes=defaultdict(list)
     for item in observations["selections"]:
         key=(norm_meeting(item["meeting"]),int(item["race"]),str(item["number"]))
@@ -36,18 +36,18 @@ def overlay(v6_races, observations, classifications=None):
         candidates=[]
         for runner in race["runners"]:
             cloth=str(runner.get("runner_number",runner.get("number","")))
-            matches=votes.get((*key,cloth),[])
+            if not cloth or cloth in seen_cloths:\n                raise ValueError("Missing or duplicate runner number: "+str(key))\n            seen_cloths.add(cloth)\n            matches=votes.get((*key,cloth),[])
             # Deduplicate repeated mentions from same editorial voice.
             sources=sorted({v["source"] for v in matches})
             candidates.append({
                 "number":cloth,"horse":runner.get("runner_name",runner.get("horse")),
                 "v6_win_probability":runner.get("win_probability",runner.get("monty_prob")),
-                "expert_mentions":len(sources),"expert_sources":sources,
+                "expert_mentions":len(sources),"expert_sources":sources,\n                "verified_independent_sources":[],
                 "provisional_expert_weight":1.0 if sources else 0.0,
                 "v7_win_probability":None,
                 "status":"UNFITTED_RESEARCH_ONLY"})
         results.append({"meeting":meeting,"race":number,
-                        "betting_eligibility":eligibility,
+                        "betting_eligibility":eligibility,\n                        "race_metadata_verified":key in meta,
                         "runners":candidates})
     return {"status":"UNFITTED_V7_RESEARCH_OVERLAY","date":observations["date"],
             "weights":"equal provisional descriptive only; no probability adjustment",
