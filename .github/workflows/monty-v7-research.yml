@@ -1,5 +1,12 @@
 name: Monty V7 research pipeline
 on:
+  push:
+    branches:
+      - experiment/expert-consensus-v7
+    paths:
+      - 'integrations/**'
+      - 'expert_consensus_experiment/**'
+      - '.github/workflows/monty-v7-research.yml'
   workflow_dispatch:
     inputs:
       racing_date:
