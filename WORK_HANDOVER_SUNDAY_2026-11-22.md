@@ -112,3 +112,7 @@ python -m expert_consensus_experiment.formfav_ablation --enriched-inputs /privat
 ```
 
 **Not yet executed**: GitHub connector can commit code but cannot access the ignored private input CSV in this session. Do not fabricate a sensitivity number. A genuine historical predictive-value ablation requires matched past outcomes and point-in-time FormFav feature availability; a one-day prediction change alone is insufficient. Keep raw inputs, reports and API credentials private.
+
+## 18 Nov further QA — FormFav ablation validation tightened
+
+The paired ablation now validates scorer-output quotes are identical, win probabilities are finite and within [0,1], and each race's win probabilities sum to approximately one. Added negative tests for mismatched scorer quotes and non-normalized probability mass. Changes are committed on the V7 branch; **tests have not been executed in this session**. The required ignored/private `connections_enrichment.py` output `inputs.csv` was not found among accessible GitHub-tracked files; only private source captures can produce the genuine paired analysis. Do not confuse code readiness with a verified predictive improvement.
