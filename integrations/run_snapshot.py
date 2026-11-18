@@ -52,10 +52,11 @@ def execute(date, source_snapshot, output_dir="output"):
                 "feature_coverage":float(row["feature_coverage"]),
                 "selection_status":"RESEARCH_ONLY"})
         predictions={"model_version":"v6_frozen_research_snapshot","generated_at":now,
-                     "data_cutoff":now,"research_only":True,
+                     "data_cutoff":None,"research_only":True,
                      "source_sha256":audit["source_sha256"],
                      "races":[{"race_id":k,"runners":v} for k,v in sorted(races.items())],
-                     "warnings":["Snapshot runner counts and odds not independently verified",
+                     "warnings":["Source observation cutoff unavailable; do not infer a pre-race timestamp",
+                                 "Snapshot runner counts and odds not independently verified",
                                  "Do not treat as betting advice or validated V7 predictions"]}
         (out/"predictions.json").write_text(json.dumps(predictions,indent=2)+"\n")
         status.update({"model_executed":True,"status":"MODEL_COMPLETED",
