@@ -42,22 +42,25 @@ jobs:
         run: |
           mkdir -p output
           python -m expert_consensus_experiment.source_discovery --output output/expert_discovery_queue.json
-      - name: Check snapshot availability and record limitations
+      - name: Execute audited snapshot or report discovery-only status
         env:
           RACING_DATE: ${{ inputs.racing_date }}
           SOURCE_SNAPSHOT: ${{ inputs.source_snapshot }}
         run: |
+          python -m integrations.run_snapshot --date "$RACING_DATE" --source-snapshot "$SOURCE_SNAPSHOT" --output-dir output
+      - name: Validate completed-run JSON consistency
+        run: |
           python - <<'PY'
-          import os,json,pathlib
-          source=os.environ["SOURCE_SNAPSHOT"]
-          exists=bool(source) and pathlib.Path(source).is_file()
-          status={"racing_date":os.environ["RACING_DATE"],"source_snapshot":source or None,
-                  "snapshot_available":bool(exists),"model_executed":False,
-                  "expert_sites_fetched":False,
-                  "status":"DISCOVERY_ONLY_NO_RUNNER_SNAPSHOT" if not exists else "SNAPSHOT_AVAILABLE_PIPELINE_NOT_WIRED",
-                  "reason":"V6 execution and web collectors are not wired into this V7 workflow. Do not present as completed tips."}
-          pathlib.Path("output/run_status.json").write_text(json.dumps(status,indent=2)+"\n")
-          print(json.dumps(status))
+          import json,pathlib
+          status=json.loads(pathlib.Path("output/run_status.json").read_text())
+          if status.get("model_executed"):
+              p=json.loads(pathlib.Path("output/predictions.json").read_text())
+              assert status["status"]=="MODEL_COMPLETED"
+              assert p["model_version"]==status["model_version"]
+              assert p["research_only"] is True
+              assert p["races"]
+          else:
+              assert status["status"] in ("DISCOVERY_ONLY_NO_RUNNER_SNAPSHOT","SNAPSHOT_NOT_FOUND")
           PY
       - uses: actions/upload-artifact@v4
         if: always()
