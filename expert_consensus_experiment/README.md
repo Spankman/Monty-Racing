@@ -17,3 +17,13 @@ Input records require race_id, runner_id, expert_id, published_at (timezone-awar
 Run unit tests: `python -m unittest discover -s expert_consensus_experiment -p 'test_*.py'` from repo root (or from this directory with `python -m unittest`).
 
 **Status:** feature extraction prototype created; no tipster dataset acquired, model fitted or backtest run.
+
+## New rules (18 Nov 2026)
+
+- Per-race consensus is **valid only with 5–20 independent expert sources**. Below five, vote counts are retained for audit, but normalized consensus/confidence values are null and `expert_requirement_satisfied=false`. Monty-only scoring must remain available.
+- More than 20 sources triggers an error: curate independent, predeclared sources, never select experts based on that race's results.
+- `feature_priority.py` ranks feature groups from **paired chronological held-out ablation predictions**, reporting per-fold log-loss improvement and consistency. This is not a trained weight optimizer. Feature weights should be fitted with regularization on training folds, not assigned from test-set importance.
+- Prioritise sourcing features by measured out-of-sample gain, availability, licensing, freshness and acquisition cost. Recheck interactions and rare-condition features before discarding apparently weak groups.
+- No live experts were connected and no new model was trained by this change. Historical tip availability and tipster independence are outstanding.
+
+Run `python -m unittest discover -s expert_consensus_experiment -p 'test_*.py'` at repository root.
