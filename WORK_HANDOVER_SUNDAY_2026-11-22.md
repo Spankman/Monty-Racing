@@ -80,3 +80,12 @@ When the user requests racing selections, return a simple meeting-by-meeting lis
 - `provisional_overlay.py` now rejects duplicate race classifications, duplicate normalized V6 meeting/race keys and duplicate/missing saddlecloth numbers. This avoids quietly attaching the wrong expert opinion to a horse.
 - Overlay explicitly sets `verified_independent_sources: []` for all editorial mentions. **Do not automatically promote named publications to independent votes**. Confirm the actual originating analyst and syndication relationships first. As a result the current dynamic blend correctly remains zero until provenance is established.
 - Added regression tests for duplicate joins and unknown source independence. **Not yet executed**. The next Work step remains to run tests and a real runner-level join, then fix any failures.
+
+## 18 November — local REAL-DATA V7 replay completed
+
+- Executed a local deterministic research replay on the existing saved `monty_2026-11-18_v6_expert_comparison_pending.csv` file (SHA256 `49c6140b19efbdd5bdf9d01d7fe539a51e5c6b5b9b90723732f0e5d309ca8bb9`).
+- **35 races / 416 runners**, 12 editorial observations, all 12 matched by meeting/race/saddlecloth, 0 unmatched. Six confirmed excluded races using the available *partial* race classification subset; all others marked unverified override, NOT confirmed eligible.
+- **0 verified independent expert identities**, therefore the dynamic expert blend is **0%** and the provisional rankings are exactly the normalized V6 probabilities. **No calibrated V7 probability was generated.** This is a genuine input-data replay, not a trained V7 result or verified pre-race freeze.
+- Highest-ranked saved V6 horses with a recorded editorial mention: Belmont R4 #1 Rok 'n' Rom (36.81%), Doomben R7 #1 Climb The Ladder (30.31%), Sandown R4 #1 Pariah Pearl (25.08%), Warwick Farm R3 #11 Brightburn (27.80%). Historical research only; not live tips.
+- Local outputs in conversation container: `/mnt/data/monty_v7_2026-11-18_replay.json` and `/mnt/data/run_monty_v7_replay.py`. These are NOT in the GitHub repo; Work should reproduce from saved source CSV and committed expert observations. The CSV was sourced from a prior conversation attachment, not committed here.
+- **Critical:** prior GitHub integration tests still not executed; local replay independently mirrors conservative dynamic no-independence fallback, not the complete GitHub module test suite.
