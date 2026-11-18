@@ -8,14 +8,14 @@ def utc(value):
         raise ValueError("Timezone required")
     return d.astimezone(timezone.utc)
 
-def consensus_features(race_id, runners, evaluations, cutoff, weights=None):
+def consensus_features(race_id, runners, evaluations, cutoff, weights=None, min_experts=5, max_experts=20):
     """Use latest complete published ranking per expert, excluding future updates.
 
     Records: race_id, runner_id, expert_id, published_at, rank (positive integer),
     optional confidence (0..1). Same expert/time can rank multiple runners.
     An expert's latest published_at is treated as one ranking snapshot.
     """
-    cutoff = utc(cutoff)
+    if min_experts < 1 or max_experts < min_experts:\n        raise ValueError("Invalid expert coverage thresholds")\n    cutoff = utc(cutoff)
     weights = weights or {}
     runner_set = set(runners)
     snapshots = defaultdict(lambda: defaultdict(list))
@@ -43,7 +43,7 @@ def consensus_features(race_id, runners, evaluations, cutoff, weights=None):
         if len({rank for _, rank, _ in rows}) != len(rows):
             raise ValueError("Duplicate ranks within expert snapshot")
         latest[expert] = rows
-    total_weight = sum(max(0.0, float(weights.get(e, 1.0))) for e in latest)
+    # Reject oversized pools rather than silently cherry-picking experts.\n    if len(latest) > max_experts:\n        raise ValueError("More experts than the configured maximum; curate independent sources before scoring")\n    satisfied = min_experts <= len(latest) <= max_experts\n    total_weight = sum(max(0.0, float(weights.get(e, 1.0))) for e in latest) if satisfied else 0.0
     result = {}
     for runner in runners:
         votes = [(expert, rank, conf) for expert, rows in latest.items()
@@ -52,13 +52,13 @@ def consensus_features(race_id, runners, evaluations, cutoff, weights=None):
         top3 = [(e, rank, conf) for e, rank, conf in votes if rank <= 3]
         weight_top1 = sum(max(0.0, float(weights.get(e, 1.0))) for e, _, _ in top1)
         result[runner] = {
-            "expert_coverage": len(latest),
+            "expert_coverage": len(latest),\n            "expert_requirement_satisfied": satisfied,
             "expert_top1_votes": len(top1),
             "expert_top3_votes": len(top3),
-            "expert_top1_share": len(top1) / len(latest) if latest else None,
-            "expert_top3_share": len(top3) / len(latest) if latest else None,
+            "expert_top1_share": len(top1) / len(latest) if satisfied else None,
+            "expert_top3_share": len(top3) / len(latest) if satisfied else None,
             "expert_weighted_top1_share": weight_top1 / total_weight if total_weight else None,
-            "expert_mean_confidence": sum(conf for _, _, conf in votes) / len(votes) if votes else None,
-            "expert_data_missing": not bool(latest),
+            "expert_mean_confidence": sum(conf for _, _, conf in votes) / len(votes) if satisfied and votes else None,
+            "expert_data_missing": not satisfied,
         }
     return result
