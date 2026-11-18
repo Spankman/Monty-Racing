@@ -38,6 +38,8 @@ jobs:
           PY
       - name: Test discovery and fusion
         run: python -m unittest discover -s expert_consensus_experiment -p 'test_*.py'
+      - name: Test cross-AI integrations and artifact safeguards
+        run: python -m unittest discover -s integrations -p 'test_*.py'
       - name: Create persistent source discovery queue
         run: |
           mkdir -p output
