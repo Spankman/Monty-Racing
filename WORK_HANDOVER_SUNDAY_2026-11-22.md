@@ -136,3 +136,14 @@ Using the private saved archive `Monty_2026-11-18_Connections_Run.zip`, the exis
 **Results:** 416 runners, 35 races, 92 observed `jockey_changed` (57 yes, 35 no), 324 unknown, 32 races with observed feature. Mean absolute probability change 0.001072719539 (0.10727 percentage points) over all runners; 0.002567127327 (0.25671 pp) among observed rows; max 0.015240891786 (1.52409 pp). Exactly **one top-ranked horse changed:** Belmont R5 control #4 Von Rommel (20.2786% predicted) versus enriched #1 Arizona Sky (21.7208%). Control probabilities normalized to 1 within 1.11e-16.
 
 **Critical caveat:** This is *feature sensitivity*, not demonstrated predictive accuracy or positive ROI. No race outcomes were matched in this analysis; no FormFav support_jockey/trainer aggregate statistics were included in frozen V6. To evaluate benefit, obtain historical point-in-time source observations and matched official outcomes, and compare V6 with/without verified features across chronological races. Never infer that 99.3% request success implies accurate content or predictive value.
+
+## 18 Nov continuation — result-matched evaluation code committed
+
+Added `expert_consensus_experiment/formfav_outcome_evaluation.py` and `test_formfav_outcome_evaluation.py` on the V7 branch. The evaluator requires a complete runner-by-runner join between frozen paired predictions and sourced official results, exactly one winner per race, and normalized race probabilities. It compares per-race log loss, Brier and top-pick hits with control/enriched probabilities; it deliberately makes **no ROI claim**. Execute from repo root after results are verified:
+
+```bash
+python -m unittest expert_consensus_experiment.test_formfav_outcome_evaluation
+python -m expert_consensus_experiment.formfav_outcome_evaluation --predictions /private/path/to/monty_formfav_jockey_ablation_runner_comparison_2026-11-18.csv --outcomes /private/path/to/official_verified_results.csv --output-prefix /private/path/to/formfav_outcomes_2026-11-18
+```
+
+Required results CSV columns: `meeting,race,number,horse,finish_position,source_url`. **No real outcomes have been matched or scored in this stage**. Five corresponding local evaluator tests passed in this conversation container; the committed module's own tests have not yet been executed through GitHub CI. Do not use race results from later dates to tune pre-race predictions or interpret a single day's result as validation.
