@@ -34,7 +34,7 @@ def betting_eligibility(race, explicitly_requested=False):
     if reasons and explicitly_requested:
         return {"status":"OVERRIDE_ALLOWED","reasons":reasons,"override_used":True}
     # Lack of a trusted classification is not evidence of eligibility.
-    trusted=any(k in race for k in ("is_maiden","is_two_year_old","is_hurdle"))
+    trusted=all(isinstance(race.get(k), bool) for k in ("is_maiden","is_two_year_old","is_hurdle"))
     if not trusted:
         return {"status":"CLASSIFICATION_UNVERIFIED","reasons":[],"override_used":False}
     return {"status":"ELIGIBLE","reasons":[],"override_used":False}
