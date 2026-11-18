@@ -13,7 +13,7 @@ class Exclusions(unittest.TestCase):
         self.assertEqual(betting_eligibility({"race_name":"Maiden Plate"},True)["status"],"OVERRIDE_ALLOWED")
     def test_unknown_is_unverified(self):
         self.assertEqual(betting_eligibility({"race_name":"Race 4"})["status"],"CLASSIFICATION_UNVERIFIED")
-    def test_known_nonexcluded(self):
+    def test_partial_metadata_cannot_mark_eligible(self):\n        self.assertEqual(betting_eligibility({"is_maiden":False})["status"],"CLASSIFICATION_UNVERIFIED")\n    def test_known_nonexcluded(self):
         self.assertEqual(betting_eligibility({"is_maiden":False,"is_two_year_old":False,"is_hurdle":False})["status"],"ELIGIBLE")
 
 if __name__=="__main__":
