@@ -73,3 +73,10 @@ python -m expert_consensus_experiment.provisional_rank --overlay /tmp/monty-over
 When the user requests racing selections, return a simple meeting-by-meeting list with **Best Bet** and **Ruffie**, saddlecloth number and horse name; don't invent predictions or substitute tipsters for Monty. State when results are research-only, missing, or unverified. No automatic tip in excluded races unless specifically requested.
 
 **Completion criterion for Work:** a tested reproducible run on actual sourced runners with frozen inputs, source citations, accurate exclusions and honest model-version labels; ideally prospective result tracking. Report remaining blockers plainly.
+
+## 18 November continuation — join safety
+
+- Draft pull request **#9** is open and clearly titled **WORK START HERE**: https://github.com/Spankman/Monty-Racing/pull/9 . It is **draft / DO NOT MERGE**; use it as the discoverable entry point.
+- `provisional_overlay.py` now rejects duplicate race classifications, duplicate normalized V6 meeting/race keys and duplicate/missing saddlecloth numbers. This avoids quietly attaching the wrong expert opinion to a horse.
+- Overlay explicitly sets `verified_independent_sources: []` for all editorial mentions. **Do not automatically promote named publications to independent votes**. Confirm the actual originating analyst and syndication relationships first. As a result the current dynamic blend correctly remains zero until provenance is established.
+- Added regression tests for duplicate joins and unknown source independence. **Not yet executed**. The next Work step remains to run tests and a real runner-level join, then fix any failures.
