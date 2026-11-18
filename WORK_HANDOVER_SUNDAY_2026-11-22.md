@@ -99,3 +99,16 @@ When the user requests racing selections, return a simple meeting-by-meeting lis
 **What FormFav does NOT solve:** current fixed-win prices need separate TAB capture, official scheduled-off Betfair historical quotes cannot be substituted by FormFav official SP, FormFav aggregated career/90d/365d stats cannot be substituted for V6 expected-win residuals, historical horse and trainer feature coverage remains incomplete, and NZ model validity is not established. FormFav proprietary predictions are deliberately excluded from V6 scoring. The FormFav card capture is cached unless explicitly refreshed, so stale scratching information is a known risk.
 
 **Sunday priority update:** Do NOT rebuild the existing FormFav integration. Instead, inspect its existing outputs and audit the *incremental* benefit with same-race, same-time comparisons: V6 without supplemental FormFav features vs with eligible verified features, with point-in-time controls. Investigate whether 92 jockey-change inputs and other fields improve log loss, calibration and race ranking, not just feature counts. Keep `main` and V6 immutable while testing in the experimental branch. If saved raw snapshots aren't available to Work, report the dependency; don't invent an ablation result.
+
+## 18 Nov continuation — FormFav paired ablation code
+
+Added `expert_consensus_experiment/formfav_ablation.py` and `test_formfav_ablation.py` on experimental branch. The utility takes **the already-enriched private input CSV** and performs paired frozen-V6 scoring twice with identical race fields, horses and odds: once with only `jockey_changed` reset to missing (model's saved imputation), and once with verified `jockey_changed` values. It reports number of rows with that feature, probability movement and top-rank changes; it **does not** claim accuracy, value or ROI improvement. The test rejects changed fields/quotes and tests a ranking flip with a stub scorer.
+
+To execute from repository root when private enriched input CSV is available:
+
+```bash
+python -m unittest expert_consensus_experiment.test_formfav_ablation
+python -m expert_consensus_experiment.formfav_ablation --enriched-inputs /private/path/to/enriched/inputs.csv --output /private/path/to/formfav_sensitivity.json
+```
+
+**Not yet executed**: GitHub connector can commit code but cannot access the ignored private input CSV in this session. Do not fabricate a sensitivity number. A genuine historical predictive-value ablation requires matched past outcomes and point-in-time FormFav feature availability; a one-day prediction change alone is insufficient. Keep raw inputs, reports and API credentials private.
