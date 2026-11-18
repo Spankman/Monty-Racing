@@ -1,0 +1,67 @@
+name: Monty V7 research pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      racing_date:
+        description: 'AU/NZ racing date (YYYY-MM-DD)'
+        required: true
+        type: string
+      source_snapshot:
+        description: 'Optional relative path to a committed JSON runner snapshot (leave blank for source discovery only)'
+        required: false
+        default: ''
+        type: string
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify date and input path
+        env:
+          RACING_DATE: ${{ inputs.racing_date }}
+          SOURCE_SNAPSHOT: ${{ inputs.source_snapshot }}
+        run: |
+          python - <<'PY'
+          import os, datetime, pathlib
+          datetime.date.fromisoformat(os.environ["RACING_DATE"])
+          value = os.environ["SOURCE_SNAPSHOT"]
+          if value:
+              p = pathlib.PurePosixPath(value)
+              if p.is_absolute() or ".." in p.parts or p.suffix != ".json":
+                  raise ValueError("source_snapshot must be a relative JSON file without parent traversal")
+          PY
+      - name: Test discovery and fusion
+        run: python -m unittest discover -s expert_consensus_experiment -p 'test_*.py'
+      - name: Create persistent source discovery queue
+        run: |
+          mkdir -p output
+          python -m expert_consensus_experiment.source_discovery --output output/expert_discovery_queue.json
+      - name: Check snapshot availability and record limitations
+        env:
+          RACING_DATE: ${{ inputs.racing_date }}
+          SOURCE_SNAPSHOT: ${{ inputs.source_snapshot }}
+        run: |
+          python - <<'PY'
+          import os,json,pathlib
+          source=os.environ["SOURCE_SNAPSHOT"]
+          exists=bool(source) and pathlib.Path(source).is_file()
+          status={"racing_date":os.environ["RACING_DATE"],"source_snapshot":source or None,
+                  "snapshot_available":bool(exists),"model_executed":False,
+                  "expert_sites_fetched":False,
+                  "status":"DISCOVERY_ONLY_NO_RUNNER_SNAPSHOT" if not exists else "SNAPSHOT_AVAILABLE_PIPELINE_NOT_WIRED",
+                  "reason":"V6 execution and web collectors are not wired into this V7 workflow. Do not present as completed tips."}
+          pathlib.Path("output/run_status.json").write_text(json.dumps(status,indent=2)+"\n")
+          print(json.dumps(status))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-v7-research-${{ inputs.racing_date }}-${{ github.run_id }}
+          path: output/
+          if-no-files-found: warn
