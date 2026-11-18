@@ -1,8 +1,5 @@
 name: Monty manual Krok connection check
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/monty-manual-intake.yml']
   workflow_dispatch:
     inputs:
       date:
@@ -24,7 +21,7 @@ jobs:
       - name: Check live provider connection without predictions
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-          RACING_DATE: ${{ inputs.date || '2026-11-19' }}
+          RACING_DATE: ${{ inputs.date }}
         run: python check_krok.py --date "$RACING_DATE" --output connection_report.json
       - uses: actions/upload-artifact@v4
         if: success()
@@ -32,20 +29,4 @@ jobs:
           name: monty-connection-${{ github.run_id }}
           path: connection_report.json
           if-no-files-found: error
-          retention-days: 7
-      - name: Execute V6 live snapshot scoring (unverified, research only)
-        env:
-          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-        run: python krok_adapter.py --date 2026-11-19 --output-dir output_v05
-      - name: Upload non-secret snapshot and scoring
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monty-v6-research-${{ github.run_id }}
-          path: |
-            output_v05/krok_snapshot.json
-            output_v05/krok_adapter_audit.json
-            output_v05/scored/monty_selections.csv
-            output_v05/scored/run_audit.json
-          if-no-files-found: warn
           retention-days: 7
