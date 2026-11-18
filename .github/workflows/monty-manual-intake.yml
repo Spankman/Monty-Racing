@@ -1,8 +1,5 @@
 name: Monty manual Krok connection check
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/monty-manual-intake.yml']
   workflow_dispatch:
     inputs:
       date:
@@ -24,7 +21,7 @@ jobs:
       - name: Check live provider connection without predictions
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-          RACING_DATE: ${{ inputs.date || '2026-11-19' }}
+          RACING_DATE: ${{ inputs.date }}
         run: python check_krok.py --date "$RACING_DATE" --output connection_report.json
       - uses: actions/upload-artifact@v4
         if: success()
