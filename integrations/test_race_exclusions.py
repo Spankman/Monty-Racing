@@ -12,8 +12,8 @@ class Exclusions(unittest.TestCase):
     def test_explicit_override(self):
         self.assertEqual(betting_eligibility({"race_name":"Maiden Plate"},True)["status"],"OVERRIDE_ALLOWED")
     def test_unknown_is_unverified(self):
-        self.assertEqual(betting_eligibility({"race_name":"Race 4"})["status"],"CLASSIFICATION_UNVERIFIED")
-    def test_partial_metadata_cannot_mark_eligible(self):\n        self.assertEqual(betting_eligibility({"is_maiden":False})["status"],"CLASSIFICATION_UNVERIFIED")\n    def test_known_nonexcluded(self):
+        self.assertEqual(betting_eligibility({"race_name":"Race 4"})["status"],"UNVERIFIED_OVERRIDE")
+    def test_partial_metadata_cannot_mark_eligible(self):\n        self.assertEqual(betting_eligibility({"is_maiden":False})["status"],"CLASSIFICATION_UNVERIFIED")\n    def test_strict_mode_blocks_unverified(self):\n        self.assertEqual(betting_eligibility({"race_name":"Race 4"},allow_unverified=False)["status"],"CLASSIFICATION_UNVERIFIED")\n    def test_unverified_does_not_override_confirmed_exclusion(self):\n        self.assertEqual(betting_eligibility({"race_name":"Maiden Plate"})["status"],"NO_BET")\n    def test_known_nonexcluded(self):
         self.assertEqual(betting_eligibility({"is_maiden":False,"is_two_year_old":False,"is_hurdle":False})["status"],"ELIGIBLE")
 
 if __name__=="__main__":
