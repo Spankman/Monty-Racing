@@ -1,50 +1,64 @@
-"""Experimental, point-in-time expert consensus features. Does not alter V6."""
-from collections import defaultdict
+"""Point-in-time expert ranking features; experimental, never alters V6."""
 from datetime import datetime, timezone
-import math
+from collections import defaultdict
 
-def _time(value):
-    dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    if dt.tzinfo is None:
-        raise ValueError("Timestamps must include timezone")
-    return dt.astimezone(timezone.utc)
+def utc(value):
+    d = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    if d.tzinfo is None:
+        raise ValueError("Timezone required")
+    return d.astimezone(timezone.utc)
 
 def consensus_features(race_id, runners, evaluations, cutoff, weights=None):
-    """Return per-runner features; missing coverage is not a negative vote.
+    """Use latest complete published ranking per expert, excluding future updates.
 
-    evaluations: race_id, runner_id, expert_id, published_at, rank (1..),
-                 optional confidence (0..1). One latest eligible vote per expert.
+    Records: race_id, runner_id, expert_id, published_at, rank (positive integer),
+    optional confidence (0..1). Same expert/time can rank multiple runners.
+    An expert's latest published_at is treated as one ranking snapshot.
     """
+    cutoff = utc(cutoff)
     weights = weights or {}
-    deadline = _time(cutoff)
-    selected = {}
+    runner_set = set(runners)
+    snapshots = defaultdict(lambda: defaultdict(list))
     for e in evaluations:
-        if e["race_id"] != race_id or e["runner_id"] not in runners:
+        if e["race_id"] != race_id:
             continue
-        published = _time(e["published_at"])
-        if published > deadline:
+        published = utc(e["published_at"])
+        if published > cutoff:
             continue
-        rank = int(e["rank"])
-        confidence = float(e.get("confidence", 1.0))
-        if rank < 1 or not 0 <= confidence <= 1:
-            raise ValueError("Invalid rank or confidence")
         expert = str(e["expert_id"])
-        previous = selected.get(expert)
-        if previous is None or published > previous[0]:
-            selected[expert] = (published, e)
-    experts = {k: v[1] for k, v in selected.items()}
-    denominator = sum(max(0.0, float(weights.get(k, 1.0))) for k in experts)
-    out = {}
+        if not expert:
+            raise ValueError("Missing expert id")
+        rank = int(e["rank"])
+        conf = float(e.get("confidence", 1.0))
+        if rank < 1 or not 0 <= conf <= 1:
+            raise ValueError("Invalid rank/confidence")
+        if e["runner_id"] not in runner_set:
+            continue
+        snapshots[expert][published].append((e["runner_id"], rank, conf))
+    latest = {}
+    for expert, versions in snapshots.items():
+        rows = versions[max(versions)]
+        if len({r for r, _, _ in rows}) != len(rows):
+            raise ValueError("Duplicate runner within expert snapshot")
+        if len({rank for _, rank, _ in rows}) != len(rows):
+            raise ValueError("Duplicate ranks within expert snapshot")
+        latest[expert] = rows
+    total_weight = sum(max(0.0, float(weights.get(e, 1.0))) for e in latest)
+    result = {}
     for runner in runners:
-        votes = [(expert, e) for expert, e in experts.items() if e["runner_id"] == runner]
-        weighted = sum(max(0.0, float(weights.get(k, 1.0))) for k, _ in votes)
-        out[runner] = {
-            "expert_coverage": len(experts),
-            "expert_top1_votes": sum(int(e["rank"] == 1) for _, e in votes),
-            "expert_top3_votes": sum(int(e["rank"] <= 3) for _, e in votes),
-            "expert_vote_share": len(votes) / len(experts) if experts else None,
-            "expert_weighted_share": weighted / denominator if denominator else None,
-            "expert_mean_confidence": sum(e.get("confidence", 1.0) for _, e in votes) / len(votes) if votes else None,
-            "expert_data_missing": not bool(experts),
+        votes = [(expert, rank, conf) for expert, rows in latest.items()
+                 for r, rank, conf in rows if r == runner]
+        top1 = [(e, rank, conf) for e, rank, conf in votes if rank == 1]
+        top3 = [(e, rank, conf) for e, rank, conf in votes if rank <= 3]
+        weight_top1 = sum(max(0.0, float(weights.get(e, 1.0))) for e, _, _ in top1)
+        result[runner] = {
+            "expert_coverage": len(latest),
+            "expert_top1_votes": len(top1),
+            "expert_top3_votes": len(top3),
+            "expert_top1_share": len(top1) / len(latest) if latest else None,
+            "expert_top3_share": len(top3) / len(latest) if latest else None,
+            "expert_weighted_top1_share": weight_top1 / total_weight if total_weight else None,
+            "expert_mean_confidence": sum(conf for _, _, conf in votes) / len(votes) if votes else None,
+            "expert_data_missing": not bool(latest),
         }
-    return out
+    return result
