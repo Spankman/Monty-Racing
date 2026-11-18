@@ -12,7 +12,7 @@ class AblationTests(unittest.TestCase):
         with self.assertRaises(ValueError):validate_pairs(self.df,altered)
     def test_missing_runner_is_rejected(self):
         with self.assertRaises(ValueError):validate_pairs(self.df,self.df.iloc[:1])
-    def test_identical_fields_pass(self):
+    def test_invalid_probability_mass_rejected(self):\n        def scorer(path,out):\n            frame=pd.read_csv(path,dtype={"meeting":str,"race":str,"number":str})\n            frame["monty_prob"]=[0.6,0.3]\n            return frame\n        with self.assertRaises(ValueError):sensitivity(self.df,scorer)\n    def test_changed_scored_odds_rejected(self):\n        def scorer(path,out):\n            frame=pd.read_csv(path,dtype={"meeting":str,"race":str,"number":str})\n            if frame.jockey_changed.notna().any():frame.loc[0,"odds"]=99\n            frame["monty_prob"]=[0.6,0.4]\n            return frame\n        with self.assertRaises(ValueError):sensitivity(self.df,scorer)\n    def test_identical_fields_pass(self):
         validate_pairs(self.df,self.df.copy())
     def test_paired_score_and_rank_change(self):
         def scorer(path,out):
