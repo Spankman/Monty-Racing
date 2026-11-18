@@ -1,8 +1,5 @@
 name: Monty manual Krok connection check
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/monty-manual-intake.yml']
   workflow_dispatch:
     inputs:
       date:
@@ -24,7 +21,7 @@ jobs:
       - name: Check live provider connection without predictions
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-          RACING_DATE: ${{ inputs.date || '2026-11-19' }}
+          RACING_DATE: ${{ inputs.date }}
         run: python check_krok.py --date "$RACING_DATE" --output connection_report.json
       - uses: actions/upload-artifact@v4
         if: success()
@@ -32,21 +29,4 @@ jobs:
           name: monty-connection-${{ github.run_id }}
           path: connection_report.json
           if-no-files-found: error
-          retention-days: 7
-      - name: Fetch live snapshot and isolated research scoring
-        env:
-          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-        run: |
-          python -c "import os,json; from krok_adapter import fetch,normalize; d='2026-11-19'; snapshot,audit=normalize(fetch(d,os.environ['KROK_API_KEY']),d); open('research_snapshot.json','w').write(json.dumps(snapshot)); open('research_source_audit.json','w').write(json.dumps(audit))"
-          python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
-      - name: Upload isolated research results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monty-isolated-research-${{ github.run_id }}
-          path: |
-            research_scores.csv
-            research_scores.audit.json
-            research_source_audit.json
-          if-no-files-found: warn
           retention-days: 7
