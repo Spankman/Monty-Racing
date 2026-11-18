@@ -17,11 +17,11 @@ class OverlayTests(unittest.TestCase):
         self.assertEqual(result["races"][0]["betting_eligibility"]["status"],"NO_BET")
         self.assertEqual(result["races"][1]["betting_eligibility"]["status"],"ELIGIBLE")
         self.assertEqual(result["races"][1]["runners"][0]["expert_mentions"],1)
-        self.assertIsNone(result["races"][1]["runners"][0]["v7_win_probability"])
+        self.assertIsNone(result["races"][1]["runners"][0]["v7_win_probability"])\n        self.assertEqual(result["races"][1]["runners"][0]["verified_independent_sources"],[])
     def test_unknown_classification_flagged(self):
         r=overlay([{"race_id":"Gawler|6","runners":[{"runner_number":"2"}]}],
                   {"date":"2026-11-18","selections":[]})
         self.assertEqual(r["races"][0]["betting_eligibility"]["status"],"UNVERIFIED_OVERRIDE")
 
-if __name__=="__main__":
+    def test_duplicate_normalized_race_rejected(self):\n        races=[{"race_id":"Belmont|4","runners":[{"runner_number":"1"}]},\n               {"race_id":"Belmont Park|4","runners":[{"runner_number":"2"}]}]\n        with self.assertRaises(ValueError):\n            overlay(races,{"date":"2026-11-18","selections":[]})\n    def test_duplicate_runner_rejected(self):\n        races=[{"race_id":"Gawler|6","runners":[{"runner_number":"2"},{"runner_number":"2"}]}]\n        with self.assertRaises(ValueError):\n            overlay(races,{"date":"2026-11-18","selections":[]})\n\nif __name__=="__main__":
     unittest.main()
