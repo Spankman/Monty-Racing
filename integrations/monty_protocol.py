@@ -25,9 +25,9 @@ def validate_run_result(p):
     if not isinstance(p.get("run_id"),str) or not p["run_id"]:
         raise ValueError("Missing run id")
     if p["status"] == "completed":
-        if any(not p.get(k) for k in ("model_version","generated_at","data_cutoff","races")):
+        if any(not p.get(k) for k in ("model_version","generated_at","races")):
             raise ValueError("Missing completed-run metadata")
-        if not isinstance(p["races"],list):
+        if "data_cutoff" not in p:\n            raise ValueError("Missing data_cutoff field")\n        if not isinstance(p["races"],list):
             raise ValueError("Invalid races")
         if str(p["model_version"]).startswith("v7") and not p.get("research_only",False):
             raise ValueError("V7 requires research_only")
