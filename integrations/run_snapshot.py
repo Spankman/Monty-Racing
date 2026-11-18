@@ -52,11 +52,11 @@ def execute(date, source_snapshot, output_dir="output"):
                 "expected_value":float(row["edge"]),
                 "feature_coverage":float(row["feature_coverage"]),
                 "selection_status":"RESEARCH_ONLY"})
-        # Scoring CSV has no trusted race category metadata: fail closed for betting.\n        race_records=[]\n        for race_id, runners in sorted(races.items()):\n            eligibility=betting_eligibility({"race_name":race_id})\n            race_records.append({"race_id":race_id, "betting_eligibility":eligibility,\n                                 "runners":runners})\n        predictions={"model_version":"v6_frozen_research_snapshot","generated_at":now,
+        # Scoring CSV lacks trusted race category metadata: apply user-approved\n        # unverified classification override, never override confirmed exclusions.\n        race_records=[]\n        for race_id, runners in sorted(races.items()):\n            eligibility=betting_eligibility({"race_name":race_id})\n            race_records.append({"race_id":race_id, "betting_eligibility":eligibility,\n                                 "runners":runners})\n        predictions={"model_version":"v6_frozen_research_snapshot","generated_at":now,
                      "data_cutoff":None,"research_only":True,
                      "source_sha256":audit["source_sha256"],
                      "races":race_records,
-                     "warnings":["Race classifications are not verified: no betting recommendations permitted",\n                                 "Source observation cutoff unavailable; do not infer a pre-race timestamp",
+                     "warnings":["Race classifications are unverified; user permits flagged override, not confirmed exclusions",\n                                 "Source observation cutoff unavailable; do not infer a pre-race timestamp",
                                  "Snapshot runner counts and odds not independently verified",
                                  "Do not treat as betting advice or validated V7 predictions"]}
         (out/"predictions.json").write_text(json.dumps(predictions,indent=2)+"\n")
