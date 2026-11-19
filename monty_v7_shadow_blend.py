@@ -15,6 +15,8 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
     df=pd.read_csv(scores,dtype={k:str for k in KEY})
     if df.empty or df.duplicated(KEY).any(): raise ValueError('Invalid scoring identities')
     if not np.isfinite(df['research_prob'].to_numpy(float)).all(): raise ValueError('Invalid model scores')
+    if not df.groupby(['meeting','race']).research_prob.sum().between(.999999,1.000001).all():
+        raise ValueError('Unnormalized model probabilities')
     df['v7_shadow_prob']=df['research_prob'].astype(float)
     df['expert_weight_used']=0.0
     df['expert_sources']=''
@@ -24,6 +26,8 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
     required=set(KEY+['expert_score','source','captured_at','race_off_at'])
     if not required.issubset(e.columns): raise ValueError('Expert input missing required provenance')
     if e.empty: return df
+    if e['source'].astype(str).str.strip().eq('').any() or e['captured_at'].astype(str).str.strip().eq('').any():
+        raise ValueError('Blank expert provenance')
     e['expert_score']=pd.to_numeric(e['expert_score'],errors='raise')
     if not np.isfinite(e.expert_score).all() or (e.expert_score<0).any(): raise ValueError('Invalid expert score')
     if e[KEY+['source','captured_at','race_off_at']].isna().any().any() or e.duplicated(KEY+['source']).any():
