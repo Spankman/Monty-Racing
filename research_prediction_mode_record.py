@@ -34,5 +34,5 @@ def record_prediction(path, *, mode, meeting, race, selections, source,
     dest.parent.mkdir(parents=True,exist_ok=True)
     with dest.open('x',encoding='utf-8') as f:
         json.dump(entry,f,indent=2,sort_keys=True)
-        f.write('\\n')
+        f.write(chr(10))
     return entry
