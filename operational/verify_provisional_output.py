@@ -30,9 +30,12 @@ def verify(directory):
         if not needed.issubset(reader.fieldnames or []):
             raise ValueError("Missing mandatory prediction columns")
         count = 0
+        restricted_column = "research_only_restricted_race" in (reader.fieldnames or [])
         for row in reader:
             if row["betting_authorised"].strip().lower() not in ("false", "0"):
                 raise ValueError("A runner is marked betting-authorised")
+            if restricted_column and row["research_only_restricted_race"].strip().lower() not in ("true", "false", "1", "0"):
+                raise ValueError("Invalid research-only restriction flag")
             rid = row["race_id"]
             if not rid or not row["number"] or not row["horse"]:
                 raise ValueError("Missing race or runner identity")
@@ -44,6 +47,11 @@ def verify(directory):
             group = fields.setdefault(rid, {"sum": 0.0, "market_sum": 0.0, "runners": set()})
             if row["number"] in group["runners"]:
                 raise ValueError("Duplicate saddlecloth in output")
+            if restricted_column:
+                restricted = row["research_only_restricted_race"].strip().lower() in ("true", "1")
+                if "restricted" in group and group["restricted"] != restricted:
+                    raise ValueError("Inconsistent restricted-race flags within race")
+                group["restricted"] = restricted
             group["runners"].add(row["number"])
             group["sum"] += p
             group["market_sum"] += market
