@@ -1,6 +1,11 @@
 name: Monty live Krok connectivity smoke test
 on:
   workflow_dispatch:
+    inputs:
+      date:
+        description: 'Racing date in Queensland (YYYY-MM-DD); blank uses today'
+        required: false
+        type: string
 permissions:
   contents: read
 jobs:
@@ -17,13 +22,16 @@ jobs:
       - name: Validate Krok connection and provider response
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          RACING_DATE: ${{ inputs.date }}
         run: |
           python - <<'PY'
           import datetime, json, os
           from krok_adapter import fetch, normalize
           if not os.environ.get("KROK_API_KEY"):
               raise SystemExit("KROK_API_KEY repository secret missing; no live test performed")
-          day=(datetime.datetime.now(datetime.timezone.utc)+datetime.timedelta(hours=10)).date().isoformat()
+          from zoneinfo import ZoneInfo
+          day=os.environ.get('RACING_DATE') or datetime.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
+          datetime.date.fromisoformat(day)
           payload=fetch(day,os.environ["KROK_API_KEY"])
           if not isinstance(payload,dict) or payload.get("success") is not True:
               raise SystemExit("Provider did not confirm success; no live test passed")
