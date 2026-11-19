@@ -2,7 +2,7 @@ name: Monty daily research shadow scoring
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 21 * * *'
+    - cron: '15 20 * * *' # 06:15 Australia/Brisbane, daily research shadow
 permissions:
   contents: read
 jobs:
