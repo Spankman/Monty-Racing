@@ -33,6 +33,7 @@ jobs:
           PY
           python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
           python research_daily_audit.py research_scores.csv research_scores.audit.json research_source_audit.json --output daily_summary.json
+          python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
       - name: Upload safe research outputs (no raw API response or keys)
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,5 +44,6 @@ jobs:
             research_scores.audit.json
             research_source_audit.json
             daily_summary.json
+            v7_shadow.csv
           if-no-files-found: warn
           retention-days: 14
