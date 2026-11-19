@@ -25,6 +25,12 @@ class ExpertPipelineTests(unittest.TestCase):
   tip={**self.tip,'captured_at':'2026-11-19T10:00:00'}
   pd.DataFrame([tip]).to_csv(self.tips,index=False)
   with self.assertRaises(ValueError):prepare(self.scores,self.tips,self.out)
+ def test_mismatched_horse_rejected(self):
+  pd.DataFrame([{**self.tip,'horse':'Wrong Horse'}]).to_csv(self.tips,index=False)
+  with self.assertRaises(ValueError):prepare(self.scores,self.tips,self.out)
+ def test_invalid_source_url_rejected(self):
+  pd.DataFrame([{**self.tip,'source_url':'http://example.org/tip'}]).to_csv(self.tips,index=False)
+  with self.assertRaises(ValueError):prepare(self.scores,self.tips,self.out)
  def test_missing_result_rejected(self):
   pd.DataFrame([self.tip]).to_csv(self.tips,index=False)
   pd.DataFrame([dict(meeting='M',race='1',number='3',won=1)]).to_csv(self.results,index=False)
