@@ -3,9 +3,18 @@ import tempfile
 import unittest
 import zipfile
 from pathlib import Path
-from backup_zip_audit import audit_zip,verify_zip
+from backup_zip_audit import audit_zip,verify_zip,attach_provenance
 
 class BackupZipAuditTests(unittest.TestCase):
+ def test_provenance_is_not_misrepresented_as_verified(self):
+  m={'schema':'monty_source_zip_audit_v1','file_count':1}
+  result=attach_provenance(m,repository='Spankman/Monty-Racing',
+                           branch='development',commit_sha='a'*40)
+  self.assertEqual(result['provenance']['claimed_commit_sha'],'a'*40)
+  self.assertFalse(result['provenance']['commit_content_verified'])
+  self.assertNotIn('provenance',m)
+  with self.assertRaises(ValueError):
+   attach_provenance(m,repository='repo',branch='branch',commit_sha='not-a-sha')
  def test_valid_snapshot(self):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d)/'backup.zip'
