@@ -23,10 +23,17 @@ class NoRedirects(urllib.request.HTTPRedirectHandler):
 def capture_article(source_url, article_url, fetcher=None, robots_allowed=None, clock=None):
     source = urllib.parse.urlsplit(source_url)
     article = urllib.parse.urlsplit(article_url)
-    if (source.scheme != "https" or article.scheme != "https"
-            or not source.hostname or article.hostname != source.hostname
-            or source.username or source.password or source.port not in (None, 443)
-            or article.username or article.password or article.port not in (None, 443)):
+    try:
+        safe_url = (source.scheme == "https" and article.scheme == "https"
+                    and bool(source.hostname) and article.hostname == source.hostname
+                    and not source.username and not source.password
+                    and source.port in (None, 443)
+                    and not article.username and not article.password
+                    and article.port in (None, 443))
+    except ValueError:
+        # urlsplit.port raises for malformed ports; reject the lead, never crash a batch.
+        safe_url = False
+    if not safe_url:
         return {"url": article_url, "status": "rejected", "reason": "Unsafe or cross-host article URL", "candidates": []}
     if robots_allowed is None:
         robots = urllib.robotparser.RobotFileParser()
