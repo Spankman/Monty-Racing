@@ -12,11 +12,30 @@ def main():
     p.add_argument("input_csv")
     p.add_argument("--output-dir",default="operational_output")
     p.add_argument("--root",default="monty_v6")
+    p.add_argument("--race-manifest",help="Independent race counts JSON; mandatory for complete-field claims")
     args=p.parse_args()
     source=Path(args.input_csv)
     model=Path(args.root)/"results"/"frozen_model.json"
     df=pd.read_csv(source,dtype={"meeting":str,"race":str,"number":str,"horse":str})
     scored=score_operational(df,Path(args.root))
+    field_verified=False
+    if args.race_manifest:
+        manifest=json.loads(Path(args.race_manifest).read_text())
+        races=manifest.get("races")
+        if not isinstance(races,list) or not races:
+            raise ValueError("Race manifest needs races[]")
+        expected={}
+        for race in races:
+            key=str(race.get("meeting","")).strip().upper()+"|"+str(race.get("race","")).strip()
+            count=race.get("expected_active_runners")
+            if not key.strip("|") or type(count) is not int or count<1 or key in expected:
+                raise ValueError("Invalid or duplicate race count")
+            expected[key]=count
+        observed=scored.groupby("race_id").size().to_dict()
+        if observed!=expected:
+            raise ValueError("Incomplete or unexpected race fields: "+str({"observed":observed,"expected":expected}))
+        # Counts match the supplied manifest; its independent origin is not proven.
+
     out=Path(args.output_dir)
     out.mkdir(parents=True,exist_ok=True)
     record={
@@ -25,6 +44,8 @@ def main():
         "status":STATUS,
         "betting_authorised":False,
         "pre_off_proven":False,
+        "race_counts_match_supplied_manifest":bool(args.race_manifest),
+        "independent_field_verification_proven":False,
         "artifact_integrity_verified":False,
         "input_sha256":hashlib.sha256(source.read_bytes()).hexdigest(),
         "frozen_model_sha256":hashlib.sha256(model.read_bytes()).hexdigest(),
