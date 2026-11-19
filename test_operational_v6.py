@@ -42,6 +42,13 @@ class OperationalV6Tests(unittest.TestCase):
     def test_duplicate_runner(self):
         data=sample();data.loc[1,"number"]="1"
         with self.assertRaises(ValueError):score_operational(data,ROOT)
+    def test_reject_invalid_race_and_saddlecloth_numbers(self):
+        for field,value in (("race","0"),("race","R1"),("number","0"),("number","1A")):
+            with self.subTest(field=field,value=value):
+                data=sample()
+                data.loc[0,field]=value
+                with self.assertRaisesRegex(ValueError,"positive integers"):
+                    score_operational(data,ROOT)
     def test_duplicate_horse_name_is_rejected(self):
         data=sample()
         data.loc[1,"horse"]=" a "
