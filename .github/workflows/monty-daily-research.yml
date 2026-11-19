@@ -38,6 +38,7 @@ jobs:
           # verifies provenance/timing, field identities and coverage.
           if [ -f expert_tips_verified.csv ]; then
             python monty_v7_shadow_blend.py research_scores.csv --experts expert_tips_verified.csv --output v7_shadow.csv
+            python monty_expert_comparison.py research_scores.csv expert_tips_verified.csv --output expert_comparison_audit.json
           else
             echo 'NO VERIFIED EXPERT INPUT: 0% expert, 100% model research scores'
             python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
@@ -53,5 +54,6 @@ jobs:
             research_source_audit.json
             daily_summary.json
             v7_shadow.csv
+            expert_comparison_audit.json
           if-no-files-found: warn
           retention-days: 14
