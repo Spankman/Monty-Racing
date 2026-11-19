@@ -70,6 +70,7 @@ class OperationalV6Tests(unittest.TestCase):
             record=json.loads((d/"out"/"prediction_record.json").read_text())
             self.assertFalse(record["betting_authorised"])
             self.assertFalse(record["pre_off_proven"])
+            self.assertFalse(record["manifest_counts_are_source_assertions"])
             self.assertEqual(len(record["input_sha256"]),64)
             second=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(second.returncode,0)
