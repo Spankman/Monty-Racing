@@ -18,6 +18,23 @@ class SourceCoverageTests(unittest.TestCase):
    row={'meeting':'A','race':'1','number':'1','horse':'One','age':3}
    s.write_text(json.dumps({'runners':[row,row]}))
    with self.assertRaises(ValueError):audit(m,{'krok':s})
+ def test_cross_provider_identity_mismatch_blocks_comparison(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d);m=p/'model.json';a=p/'a.json';b=p/'b.json'
+   m.write_text(json.dumps({'input_feature_names':['age']}))
+   a.write_text(json.dumps({'runners':[{'meeting':'A','race':'1','number':'1','horse':'One','age':3}]}))
+   b.write_text(json.dumps({'runners':[{'meeting':'A','race':'1','number':'2','horse':'Two','age':4}]}))
+   result=audit(m,{'formfav':a,'krok':b})
+   self.assertEqual(result['comparison_status'],'BLOCKED_UNMATCHED_RUNNER_FIELDS')
+   self.assertEqual(result['runner_identity_parity']['comparisons']['krok']['missing_from_source'],1)
+ def test_cross_provider_identity_match(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d);m=p/'model.json';a=p/'a.json';b=p/'b.json'
+   m.write_text(json.dumps({'input_feature_names':['age']}))
+   row={'meeting':'A','race':'1','number':'1','horse':'One','age':3}
+   for f in (a,b):f.write_text(json.dumps({'runners':[row]}))
+   result=audit(m,{'formfav':a,'krok':b})
+   self.assertTrue(result['runner_identity_parity']['all_sources_match'])
  def test_empty_source_rejected(self):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d);m=p/'model.json';s=p/'source.json'
