@@ -6,6 +6,11 @@ on:
         description: 'Racing date in Queensland (YYYY-MM-DD); blank uses today'
         required: false
         type: string
+      include_restricted_flat_research:
+        description: 'Include maiden and 2YO flat races for research only (never betting)'
+        required: false
+        default: false
+        type: boolean
 permissions:
   contents: read
 jobs:
@@ -23,6 +28,7 @@ jobs:
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
           RACING_DATE: ${{ inputs.date }}
+          INCLUDE_RESTRICTED_FLAT_RESEARCH: ${{ inputs.include_restricted_flat_research }}
         run: |
           python - <<'PY'
           import datetime, json, os
@@ -38,11 +44,13 @@ jobs:
           print("Provider API returned success for Brisbane date",day)
           print("Meeting records received:",len(payload.get("data",[])))
           try:
-              snapshot,audit=normalize(payload,day)
+              research=os.environ.get('INCLUDE_RESTRICTED_FLAT_RESEARCH','false').lower() == 'true'
+              snapshot,audit=normalize(payload,day,include_restricted_flat_research=research)
           except ValueError as exc:
               print("Provider response not sufficient for complete pre-race scoring:",str(exc))
               raise
           print("Accepted races:",audit["races_accepted"])
+          print("Restricted flat research races:",audit["restricted_flat_research_races"])
           print("Provider meetings inspected:",audit["meetings"])
           print("Accepted runners:",audit["runners_accepted"])
           print("Skipped races:",len(audit["skipped"]))
@@ -110,6 +118,7 @@ jobs:
               safe["racing_date"]=day
               safe["provider_connection_succeeded"]=True
               safe["provider_accepted_races"]=audit["races_accepted"]
+              safe["restricted_flat_research_races"]=audit["restricted_flat_research_races"]
               safe["provider_accepted_runners"]=audit["runners_accepted"]
               # Aggregated skip reasons are safe to retain for coverage diagnosis.
               safe["provider_skipped_races"]=len(audit["skipped"])
