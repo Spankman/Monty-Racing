@@ -50,6 +50,19 @@ class OperationalV6Tests(unittest.TestCase):
         data["scratched"]=["yes","true","no"]
         with self.assertRaisesRegex(ValueError,"at least two active runners"):
             score_operational(data,ROOT)
+    def test_scratched_missing_odds_excluded_before_active_validation(self):
+        data=sample()
+        data.loc[2,"scratched"]="yes"
+        data.loc[:1,"scratched"]="no"
+        data.loc[2,"odds"]=np.nan
+        out=score_operational(data,ROOT)
+        self.assertEqual(len(out),2)
+        self.assertEqual(set(out.horse),{"A","B"})
+        self.assertAlmostEqual(out.monty_prob.sum(),1,places=8)
+        self.assertFalse(out.betting_authorised.any())
+        data.loc[0,"odds"]=np.nan
+        with self.assertRaisesRegex(ValueError,"Missing runner or odds"):
+            score_operational(data,ROOT)
     def test_duplicate_runner(self):
         data=sample();data.loc[1,"number"]="1"
         with self.assertRaises(ValueError):score_operational(data,ROOT)
