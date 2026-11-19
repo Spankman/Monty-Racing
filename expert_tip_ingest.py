@@ -26,7 +26,16 @@ def prepare(scores_path, tips_path, output_path):
     if tips.duplicated(KEY+['source']).any():raise ValueError('Duplicate source per runner')
     # Require verifiable contemporaneous capture before off, not merely a
     # date string. Never infer a missing timestamp from publication dates.
-    tz=re.compile(r'(?:Z|[+-][0-9]{2}:[0-9]{2})
+    tz=re.compile(r'(?:Z|[+-][0-9]{2}:[0-9]{2})' + '$')
+    for field in ('captured_at','race_off_at'):
+        if not tips[field].map(lambda x:bool(tz.search(str(x)))).all():
+            raise ValueError(f'{field} requires explicit timezone')
+    captured=pd.to_datetime(tips.captured_at,utc=True,errors='coerce')
+    off=pd.to_datetime(tips.race_off_at,utc=True,errors='coerce')
+    if captured.isna().any() or off.isna().any() or (captured>=off).any():
+        raise ValueError('Expert capture must precede verified race off')
+    if tips.groupby(['meeting','race']).race_off_at.nunique().gt(1).any():
+        raise ValueError('Conflicting off times for one race')
     if scores.duplicated(KEY).any():raise ValueError('Duplicate model runner')
     joined=tips.merge(scores[KEY+['horse']],on=KEY,how='left',validate='many_to_one',suffixes=('','_model'),indicator=True)
     if (joined._merge!='both').any() or not joined.horse_model.fillna('').str.casefold().eq(joined.horse.str.casefold()).all():
