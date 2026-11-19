@@ -33,7 +33,15 @@ jobs:
           PY
           python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
           python research_daily_audit.py research_scores.csv research_scores.audit.json research_source_audit.json --output daily_summary.json
-          python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
+          # Expert inputs are optional and must be real, source-attributed and pre-off.
+          # A checked-in file is NOT trusted merely because it exists; the blender
+          # verifies provenance/timing, field identities and coverage.
+          if [ -f expert_tips_verified.csv ]; then
+            python monty_v7_shadow_blend.py research_scores.csv --experts expert_tips_verified.csv --output v7_shadow.csv
+          else
+            echo 'NO VERIFIED EXPERT INPUT: 0% expert, 100% model research scores'
+            python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
+          fi
       - name: Upload safe research outputs (no raw API response or keys)
         if: always()
         uses: actions/upload-artifact@v4
