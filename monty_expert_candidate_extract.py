@@ -9,8 +9,8 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 PATTERNS=[
- re.compile(r'^\\s*(?:best bet|next best|value bet|roughie)\\s*[:\\-–]\\s*(?:race\\s*(\\d+)\\s*[,;: -]*)?(?:#\\s*(\\d+)\\s*)?([A-Za-z][A-Za-z0-9\'’ .-]{2,60})\\s*$',re.I),
- re.compile(r'^\\s*race\\s*(\\d+)\\s*[:\\-–]\s*#\\s*(\\d+)\\s+([A-Za-z][A-Za-z0-9\'’ .-]{2,60})\\s*$',re.I),
+ re.compile(r'^\s*(?:best bet|next best|value bet|roughie)\s*[:\\-–]\s*(?:race\s*(\d+)\s*[,;: -]*)?(?:#\s*(\d+)\s*)?([A-Za-z][A-Za-z0-9\'’ .-]{2,60})\s*$',re.I),
+ re.compile(r'^\s*race\s*(\d+)\s*[:\\-–]\s*#\s*(\d+)\s+([A-Za-z][A-Za-z0-9\'’ .-]{2,60})\s*$',re.I),
 ]
 def extract(html,source_url,author='',captured_at=''):
     soup=BeautifulSoup(html,'html.parser')
