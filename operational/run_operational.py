@@ -5,7 +5,7 @@ import json
 from datetime import datetime,timezone
 from pathlib import Path
 import pandas as pd
-from operational.v6_operational_scorer import score_operational,STATUS
+from v6_operational_scorer import score_operational,STATUS
 
 def main():
     p=argparse.ArgumentParser()
@@ -32,6 +32,8 @@ def main():
         "race_count":scored["race_id"].nunique(),
         "note":"Provisional research scoring; input field and odds timestamps unverified."
     }
+    if (out/"operational_predictions.csv").exists() or (out/"prediction_record.json").exists():
+        raise FileExistsError("Output directory already contains prediction records")
     # Create-only outputs prevent silent overwrites of prior predictions.
     with (out/"operational_predictions.csv").open("x",encoding="utf-8",newline="") as f:
         scored.to_csv(f,index=False)
