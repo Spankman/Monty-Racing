@@ -111,6 +111,11 @@ jobs:
               safe["provider_connection_succeeded"]=True
               safe["provider_accepted_races"]=audit["races_accepted"]
               safe["provider_accepted_runners"]=audit["runners_accepted"]
+              # Aggregated skip reasons are safe to retain for coverage diagnosis.
+              safe["provider_skipped_races"]=len(audit["skipped"])
+              safe["provider_skipped_reasons"]=dict(sorted(reasons.items()))
+              safe["provider_price_sources"]=audit["price_sources"]
+              safe["coverage_is_independently_verified"]=False
               pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\n")
           PY
       - name: Upload audit metadata only
