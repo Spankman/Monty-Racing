@@ -60,9 +60,9 @@ def normalize(payload,date,include_restricted_flat_research=False):
             # Jumps remain excluded. Maiden and juvenile flat races may be
             # scored for research ONLY when explicitly enabled.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
-            jumps=bool(re.search(r'\\b(?:hurdle|steeple|jumping|jumps|chase)\\b',label))
-            maiden=bool(re.search(r'\\b(?:maiden|mdn|maid)\\b',label))
-            juvenile=bool(re.search(r'\\b(?:2yo|2\\s*[- ]?\\s*y\\s*[- ]?\\s*o|2\\s*year\\s*old|two\\s*year\\s*old|juvenile)\\b',label))
+            jumps=bool(re.search(r'\b(?:hurdle|steeple|jumping|jumps|chase)\b',label))
+            maiden=bool(re.search(r'\b(?:maiden|mdn|maid)\b',label))
+            juvenile=bool(re.search(r'\b(?:2yo|2\s*[- ]?\s*y\s*[- ]?\s*o|2\s*year\s*old|two\s*year\s*old|juvenile)\b',label))
             if isinstance(race.get('runners'),list):
                 ages=[r.get('age') for r in race['runners'] if r.get('is_scratched') is False]
                 juvenile=juvenile or (bool(ages) and all(isinstance(age,(int,float)) and not isinstance(age,bool) and age==2 for age in ages))
