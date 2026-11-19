@@ -15,11 +15,17 @@ from monty_expert_candidate_extract import extract
 USER_AGENT = "MontyResearchBot/0.1 (research; respect robots.txt)"
 MAX_BYTES = 350_000
 
+class NoRedirects(urllib.request.HTTPRedirectHandler):
+    # A redirect must never fetch an unreviewed URL or bypass its robots check.
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
 def capture_article(source_url, article_url, fetcher=None, robots_allowed=None, clock=None):
     source = urllib.parse.urlsplit(source_url)
     article = urllib.parse.urlsplit(article_url)
     if (source.scheme != "https" or article.scheme != "https"
             or not source.hostname or article.hostname != source.hostname
+            or source.username or source.password or source.port not in (None, 443)
             or article.username or article.password or article.port not in (None, 443)):
         return {"url": article_url, "status": "rejected", "reason": "Unsafe or cross-host article URL", "candidates": []}
     if robots_allowed is None:
@@ -37,7 +43,7 @@ def capture_article(source_url, article_url, fetcher=None, robots_allowed=None, 
     try:
         if fetcher is None:
             req = urllib.request.Request(article_url, headers={"User-Agent": USER_AGENT, "Accept": "text/html"})
-            with urllib.request.urlopen(req, timeout=10) as response:
+            with urllib.request.build_opener(NoRedirects()).open(req, timeout=10) as response:
                 final = urllib.parse.urlsplit(response.geturl())
                 if final.scheme != "https" or final.hostname != article.hostname:
                     raise ValueError("Redirect left allowed host")
