@@ -5,6 +5,10 @@
 - This is **not** a successful live Krok API request. No private API credential or live field is available in CI.
 - Provisional V6 is **not betting-authorised**. Missing private V6 artifacts prevent full frozen-model integrity certification.
 
+## GitHub Actions execution prerequisite
+
+The manual `.github/workflows/monty-live-smoke.yml` workflow currently lives only on the **unmerged** `grok-independent-repairs` branch. GitHub normally requires a `workflow_dispatch` workflow to exist on the repository's **default branch** before it can be manually dispatched in the Actions UI/API. Passing ordinary branch CI does not mean the live smoke workflow ran. The authorised maintainer must review and merge/otherwise introduce the workflow to the default branch before manual dispatch. Confirm the `KROK_API_KEY` Actions secret exists; do not print or paste its value. No live provider connection has been proven by CI.
+
 ## Live smoke run (only when authorised key is available)
 
 Do not put a key in code, GitHub issues, logs, or chat. Set `KROK_API_KEY` as an environment secret in the execution environment, then run from the repository root:
