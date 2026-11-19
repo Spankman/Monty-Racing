@@ -1,4 +1,9 @@
 import unittest
+import json
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
 from krok_adapter import normalize
 class KrokAdapterTests(unittest.TestCase):
  def fixture(self):
@@ -47,4 +52,25 @@ class KrokAdapterTests(unittest.TestCase):
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
  def test_wrong_date_rejected(self):
   with self.assertRaises(ValueError):normalize(self.fixture(),'2026-11-15')
+ def test_fixture_cli_to_provisional_predictions(self):
+  with tempfile.TemporaryDirectory() as temp:
+   root=Path(temp)
+   fixture=root/'krok_fixture.json'
+   fixture.write_text(json.dumps(self.fixture()))
+   output=root/'out'
+   result=subprocess.run([sys.executable,'krok_adapter.py','--date','2026-11-14',
+     '--fixture',str(fixture),'--output-dir',str(output),'--provisional-operational'],
+     capture_output=True,text=True)
+   self.assertEqual(result.returncode,0,result.stderr)
+   record=json.loads((output/'provisional_scored'/'prediction_record.json').read_text())
+   provenance=json.loads((output/'provisional_scored'/'snapshot_provenance.json').read_text())
+   self.assertEqual(record['runner_count'],2)
+   self.assertEqual(record['race_count'],1)
+   self.assertFalse(record['betting_authorised'])
+   self.assertFalse(provenance['independent_field_verification_proven'])
+   self.assertTrue((output/'provisional_scored'/'operational_predictions.csv').exists())
+   rerun=subprocess.run([sys.executable,'krok_adapter.py','--date','2026-11-14',
+     '--fixture',str(fixture),'--output-dir',str(output),'--provisional-operational'],
+     capture_output=True,text=True)
+   self.assertNotEqual(rerun.returncode,0)
 if __name__=='__main__':unittest.main()
