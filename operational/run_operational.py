@@ -12,7 +12,7 @@ def main():
     p.add_argument("input_csv")
     p.add_argument("--output-dir",default="operational_output")
     p.add_argument("--root",default="monty_v6")
-    p.add_argument("--race-manifest",help="Independent race counts JSON; mandatory for complete-field claims")
+    p.add_argument("--race-manifest",help="Race count assertions JSON; does not independently verify completeness")
     args=p.parse_args()
     source=Path(args.input_csv)
     model=Path(args.root)/"results"/"frozen_model.json"
@@ -46,6 +46,7 @@ def main():
         "betting_authorised":False,
         "pre_off_proven":False,
         "race_counts_match_supplied_manifest":bool(args.race_manifest),
+        "manifest_counts_are_source_assertions":bool(args.race_manifest),
         "independent_field_verification_proven":False,
         "artifact_integrity_verified":False,
         "input_sha256":hashlib.sha256(source.read_bytes()).hexdigest(),
