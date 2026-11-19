@@ -58,6 +58,31 @@ class OperationalV6Tests(unittest.TestCase):
         data=sample();other=sample().assign(race="2")
         out=score_operational(pd.concat([data,other],ignore_index=True),ROOT)
         self.assertTrue(np.allclose(out.groupby("race_id").monty_prob.sum(),1))
+    def test_snapshot_bridge_end_to_end(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            snapshot=d/"snapshot.json"
+            snapshot.write_text(json.dumps({
+                "date":"2026-11-21",
+                "runners":sample().to_dict(orient="records"),
+                "races":[{"meeting":"TEST","race":"1","expected_active_runners":3}]
+            }))
+            output=d/"scored"
+            cmd=[sys.executable,"operational/run_snapshot.py",str(snapshot),
+                 "--output-dir",str(output)]
+            first=subprocess.run(cmd,capture_output=True,text=True)
+            self.assertEqual(first.returncode,0,first.stderr)
+            predictions=pd.read_csv(output/"operational_predictions.csv")
+            self.assertEqual(len(predictions),3)
+            self.assertFalse(predictions.betting_authorised.any())
+            self.assertAlmostEqual(predictions.monty_prob.sum(),1,places=8)
+            record=json.loads((output/"prediction_record.json").read_text())
+            provenance=json.loads((output/"snapshot_provenance.json").read_text())
+            self.assertFalse(record["independent_field_verification_proven"])
+            self.assertFalse(provenance["betting_authorised"])
+            self.assertEqual(len(provenance["source_snapshot_sha256"]),64)
+            second=subprocess.run(cmd,capture_output=True,text=True)
+            self.assertNotEqual(second.returncode,0)
     def test_cli_manifest_rejects_incomplete_field(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp)
