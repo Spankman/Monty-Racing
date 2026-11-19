@@ -16,6 +16,9 @@ jobs:
           python-version: '3.12'
       - name: Install pinned runner dependencies
         run: python -m pip install -r requirements-runner.txt
+      - name: Discover permitted public expert article leads (nonblocking)
+        continue-on-error: true
+        run: python monty_expert_article_discovery.py --output expert_article_leads.json --max-links 15
       - name: Fetch Krok fields and score research-only frozen linear model
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
@@ -65,5 +68,6 @@ jobs:
             daily_summary.json
             v7_shadow.csv
             expert_comparison_audit.json
+            expert_article_leads.json
           if-no-files-found: warn
           retention-days: 14
