@@ -1,8 +1,9 @@
+import json
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
-from backup_zip_audit import audit_zip
+from backup_zip_audit import audit_zip,verify_zip
 
 class BackupZipAuditTests(unittest.TestCase):
  def test_valid_snapshot(self):
@@ -26,4 +27,14 @@ class BackupZipAuditTests(unittest.TestCase):
     z.writestr('repo/a','a')
     z.writestr('repo/a','b')
    with self.assertRaises(ValueError):audit_zip(p)
+ def test_verify_saved_manifest_and_detect_changes(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d)/'backup.zip'
+   m=Path(d)/'manifest.json'
+   with zipfile.ZipFile(p,'w') as z:z.writestr('repo/a','original')
+   m.write_text(json.dumps(audit_zip(p)),encoding='utf-8')
+   self.assertEqual(verify_zip(p,m)['file_count'],1)
+   with zipfile.ZipFile(p,'w') as z:z.writestr('repo/a','modified')
+   with self.assertRaisesRegex(ValueError,'differs'):
+    verify_zip(p,m)
 if __name__=='__main__':unittest.main()
