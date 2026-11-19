@@ -43,6 +43,18 @@ def audit_zip(path):
     return {'schema':'monty_source_zip_audit_v1','kind':'SOURCE_SNAPSHOT_NOT_GIT_HISTORY',
             'file_count':len(files),'files':dict(sorted(files.items()))}
 
+def attach_provenance(manifest, *, repository, branch, commit_sha):
+    """Annotate a source manifest with caller-supplied, unverified Git ref."""
+    if not isinstance(commit_sha,str) or len(commit_sha)!=40 or any(ch not in '0123456789abcdef' for ch in commit_sha.lower()):
+        raise ValueError('Expected a 40-character Git commit SHA')
+    if not repository or not branch:
+        raise ValueError('Repository and branch are required')
+    enriched=dict(manifest)
+    enriched['provenance']={'repository':repository,'branch':branch,
+                            'claimed_commit_sha':commit_sha.lower(),
+                            'commit_content_verified':False}
+    return enriched
+
 def verify_zip(path, manifest_path):
     """Compare a backup against a previously saved independent manifest."""
     with open(manifest_path,encoding='utf-8') as source:
