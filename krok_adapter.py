@@ -2,7 +2,7 @@
 """Krok documented /api/v1/racing/meetings adapter -> Monty v0.4 snapshot.
 Requires user-provided API key; no unofficial TAB endpoints or fabricated features.
 """
-import argparse, datetime as dt, json, os, urllib.parse, urllib.request, urllib.error, time
+import argparse, datetime as dt, json, os, re, urllib.parse, urllib.request, urllib.error, time
 from pathlib import Path
 
 import sys
@@ -45,11 +45,17 @@ def normalize(payload,date):
         meetings+=1
         for race in meeting.get('races',[]):
             n=race.get('number');status=str(race.get('status','')).lower()
-            if n is None or status in ('abandoned','cancelled','canceled','resulted','closed','final'):
-                continue
+            # Only known pre-off states are eligible for research scoring.
+            # Unknown, running and resulted races must never be treated as pre-race.
+            if n is None or status not in ('open','scheduled','upcoming','pre-race','prerace'):
+                skipped.append(f'{venue} R{n}: not confirmed pre-race status');continue
             # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
-            if any(x in label for x in ('maiden','2yo','2 year old','two year old','hurdle','steeple','jumping')):
+            prohibited = bool(re.search(r'\\b(?:maiden|mdn|maid|2yo|2\\s*[- ]?\\s*y\\s*[- ]?\\s*o|2\\s*year\\s*old|two\\s*year\\s*old|juvenile|hurdle|steeple|jumping|jumps|chase)\\b',label))
+            if not prohibited and isinstance(race.get('runners'),list):
+                ages=[r.get('age') for r in race['runners'] if r.get('is_scratched') is False]
+                prohibited=bool(ages) and all(isinstance(a,(int,float)) and not isinstance(a,bool) and a==2 for a in ages)
+            if prohibited:
                 skipped.append(f'{venue} R{n}: prohibited race type');continue
             rr=race.get('runners')
             if not isinstance(rr,list) or len(rr)<2:
@@ -85,6 +91,10 @@ def normalize(payload,date):
                 skipped.append(f'{venue} R{n}: active runner lacks identity/price');continue
             if len({r['number'] for r in parsed})!=len(parsed):
                 skipped.append(f'{venue} R{n}: duplicate saddlecloth');continue
+            # A race must use one quoted price basis; mixed bookmakers distort
+            # normalized market probabilities and apparent edge.
+            if len({item['_price_source'] for item in parsed})!=1:
+                skipped.append(f'{venue} R{n}: mixed price sources');continue
             # Derive deterministic race-relative features only when field is complete.
             field_size=len(parsed)
             for item in parsed:
