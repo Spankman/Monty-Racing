@@ -51,7 +51,7 @@ def normalize(payload,date):
                 skipped.append(f'{venue} R{n}: not confirmed pre-race status');continue
             # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
-            prohibited = bool(re.search(r'\\b(?:maiden|mdn|maid|2yo|2\\s*[- ]?\\s*y\\s*[- ]?\\s*o|2\\s*year\\s*old|two\\s*year\\s*old|juvenile|hurdle|steeple|jumping|jumps|chase)\\b',label))
+            prohibited = bool(re.search(r'\b(?:maiden|mdn|maid|2yo|2\s*[- ]?\s*y\s*[- ]?\s*o|2\s*year\s*old|two\s*year\s*old|juvenile|hurdle|steeple|jumping|jumps|chase)\b',label))
             if not prohibited and isinstance(race.get('runners'),list):
                 ages=[r.get('age') for r in race['runners'] if r.get('is_scratched') is False]
                 prohibited=bool(ages) and all(isinstance(a,(int,float)) and not isinstance(a,bool) and a==2 for a in ages)
