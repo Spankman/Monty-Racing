@@ -24,6 +24,9 @@ class V7BlendTests(unittest.TestCase):
  def test_post_off_expert_fails(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T13:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   with self.assertRaises(ValueError):blend(self.s,self.e)
+ def test_timezone_naive_fails(self):
+  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T01:00:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
+  with self.assertRaises(ValueError):blend(self.s,self.e)
  def test_unknown_horse_fails(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'3','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   with self.assertRaises(ValueError):blend(self.s,self.e)
