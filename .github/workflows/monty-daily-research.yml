@@ -42,6 +42,7 @@ jobs:
           PY
           python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
           python research_daily_audit.py research_scores.csv research_scores.audit.json research_source_audit.json --output daily_summary.json
+          python research_source_feature_coverage.py monty_v6/results/frozen_model.json --source krok=research_snapshot.json --output research_krok_feature_coverage.json
           python research_evidence_manifest.py research_snapshot.json research_scores.csv research_scores.audit.json --output research_evidence_manifest.json
           python research_prediction_ledger.py research_scores.csv research_evidence_manifest.json --output research_prediction_ledger.csv
           python research_evidence_verify.py research_evidence_manifest.json research_prediction_ledger.csv
@@ -85,6 +86,7 @@ jobs:
             research_scores.csv
             research_scores.audit.json
             research_source_audit.json
+            research_krok_feature_coverage.json
             research_evidence_manifest.json
             research_prediction_ledger.csv
             daily_summary.json
