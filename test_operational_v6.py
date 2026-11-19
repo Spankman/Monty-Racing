@@ -32,6 +32,13 @@ class OperationalV6Tests(unittest.TestCase):
     def test_invalid_odds(self):
         data=sample();data.loc[0,"odds"]=0.5
         with self.assertRaises(ValueError):score_operational(data,ROOT)
+    def test_reject_single_runner_and_scratched_field(self):
+        with self.assertRaisesRegex(ValueError,"at least two active runners"):
+            score_operational(sample().iloc[:1],ROOT)
+        data=sample()
+        data["scratched"]=["yes","true","no"]
+        with self.assertRaisesRegex(ValueError,"at least two active runners"):
+            score_operational(data,ROOT)
     def test_duplicate_runner(self):
         data=sample();data.loc[1,"number"]="1"
         with self.assertRaises(ValueError):score_operational(data,ROOT)
