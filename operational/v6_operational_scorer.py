@@ -21,6 +21,10 @@ def score_operational(df, root=Path("monty_v6")):
         df[k] = df[k].astype(str).str.strip()
         if df[k].eq("").any():
             raise ValueError("Blank runner identity")
+    if not df["race"].str.fullmatch(r"[1-9][0-9]*").all():
+        raise ValueError("Race numbers must be positive integers")
+    if not df["number"].str.fullmatch(r"[1-9][0-9]*").all():
+        raise ValueError("Saddlecloth numbers must be positive integers")
     df["odds"] = pd.to_numeric(df["odds"], errors="raise")
     if not np.isfinite(df["odds"]).all() or (df["odds"] <= 1).any():
         raise ValueError("Odds must be finite and greater than one")
