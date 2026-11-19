@@ -63,6 +63,18 @@ class OperationalV6Tests(unittest.TestCase):
         data.loc[0,"odds"]=np.nan
         with self.assertRaisesRegex(ValueError,"Missing runner or odds"):
             score_operational(data,ROOT)
+    def test_unknown_or_missing_scratching_status_fails_closed(self):
+        for bad in ("unknown", "withdrawn", "", None, np.nan):
+            with self.subTest(bad=bad):
+                data=sample()
+                data["scratched"]=["no", "false", bad]
+                with self.assertRaisesRegex(ValueError,"Scratched flags must be explicit booleans"):
+                    score_operational(data,ROOT)
+        data=sample()
+        data["scratched"]=["YES", " 0 ", "false"]
+        out=score_operational(data,ROOT)
+        self.assertEqual(set(out.horse),{"B","C"})
+        self.assertFalse(out.betting_authorised.any())
     def test_duplicate_runner(self):
         data=sample();data.loc[1,"number"]="1"
         with self.assertRaises(ValueError):score_operational(data,ROOT)
