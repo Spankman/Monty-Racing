@@ -18,17 +18,18 @@ def main():
     model=Path(args.root)/"results"/"frozen_model.json"
     df=pd.read_csv(source,dtype={"meeting":str,"race":str,"number":str,"horse":str})
     scored=score_operational(df,Path(args.root))
-    field_verified=False
     if args.race_manifest:
         manifest=json.loads(Path(args.race_manifest).read_text())
         races=manifest.get("races")
+        if manifest.get("date") and not isinstance(manifest["date"],str):
+            raise ValueError("Invalid race manifest date")
         if not isinstance(races,list) or not races:
             raise ValueError("Race manifest needs races[]")
         expected={}
         for race in races:
             key=str(race.get("meeting","")).strip().upper()+"|"+str(race.get("race","")).strip()
             count=race.get("expected_active_runners")
-            if not key.strip("|") or type(count) is not int or count<1 or key in expected:
+            if not str(race.get("meeting","")).strip() or not str(race.get("race","")).strip() or type(count) is not int or count<1 or key in expected:
                 raise ValueError("Invalid or duplicate race count")
             expected[key]=count
         observed=scored.groupby("race_id").size().to_dict()
