@@ -27,6 +27,23 @@ class BackupZipAuditTests(unittest.TestCase):
     z.writestr('repo/a','a')
     z.writestr('repo/a','b')
    with self.assertRaises(ValueError):audit_zip(p)
+ def test_reject_multiple_roots(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d)/'backup.zip'
+   with zipfile.ZipFile(p,'w') as z:
+    z.writestr('repo/a','a')
+    z.writestr('other/b','b')
+   with self.assertRaisesRegex(ValueError,'Multiple repository roots'):
+    audit_zip(p)
+ def test_reject_symlinks(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d)/'backup.zip'
+   link=zipfile.ZipInfo('repo/link')
+   link.create_system=3
+   link.external_attr=(0o120777 << 16)
+   with zipfile.ZipFile(p,'w') as z:z.writestr(link,'../../outside')
+   with self.assertRaisesRegex(ValueError,'Symlink'):
+    audit_zip(p)
  def test_verify_saved_manifest_and_detect_changes(self):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d)/'backup.zip'
