@@ -22,6 +22,23 @@ class ArticleCaptureTests(unittest.TestCase):
                 fetcher=lambda u: self.fail("Should not fetch"),
                 robots_allowed=lambda u: self.fail("Should not check robots"))
             self.assertEqual(result["status"], "rejected")
+    def test_invalid_ports_rejected_without_crashing_batch(self):
+        for source, article in (
+            ("https://example.org:bad/tips/", "https://example.org/tips/a"),
+            ("https://example.org/tips/", "https://example.org:bad/tips/a"),
+            ("https://example.org/tips/", "https://example.org:99999/tips/a"),
+        ):
+            result = capture_article(source, article,
+                fetcher=lambda u: self.fail("Should not fetch"),
+                robots_allowed=lambda u: self.fail("Should not check robots"))
+            self.assertEqual(result["status"], "rejected")
+        data = {"sources": [{"source_url": "https://example.org/tips/",
+                 "articles": [{"url": "https://example.org:bad/tips/a"},
+                              {"url": "https://example.org/tips/b"}]}]}
+        result = process_leads(data, fetcher=fetch,
+                               robots_allowed=lambda u: True, clock=clock)
+        self.assertEqual([x["status"] for x in result["articles"]],
+                         ["rejected", "captured_unverified"])
     def test_robots_denial_fails_closed(self):
         result = capture_article("https://example.org/tips/", "https://example.org/tips/a",
             fetcher=lambda u: self.fail("Should not fetch"), robots_allowed=lambda u: False)
