@@ -42,6 +42,7 @@ jobs:
           PY
           python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
           python research_daily_audit.py research_scores.csv research_scores.audit.json research_source_audit.json --output daily_summary.json
+          python research_evidence_manifest.py research_snapshot.json research_scores.csv research_scores.audit.json --output research_evidence_manifest.json
           if [ -f expert_article_candidates.json ]; then
             python monty_expert_candidate_field_audit.py expert_article_candidates.json research_scores.csv --output expert_candidate_field_audit.json
           fi
@@ -82,6 +83,7 @@ jobs:
             research_scores.csv
             research_scores.audit.json
             research_source_audit.json
+            research_evidence_manifest.json
             daily_summary.json
             v7_shadow.csv
             expert_comparison_audit.json
