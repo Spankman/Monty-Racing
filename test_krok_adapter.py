@@ -13,6 +13,38 @@ class KrokAdapterTests(unittest.TestCase):
  def test_missing_price_skips(self):
   f=self.fixture();del f['data'][0]['races'][0]['runners'][1]['fixed_win']
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
+ def test_incomplete_race_diagnostics_keep_complete_races(self):
+  f=self.fixture()
+  incomplete=dict(f['data'][0]['races'][0])
+  incomplete['number']=2
+  incomplete['runners']=[dict(r) for r in incomplete['runners']]
+  incomplete['runners'][0].pop('fixed_win')
+  incomplete['runners'][1].pop('name')
+  incomplete['runners'][1].pop('number')
+  f['data'][0]['races'].append(incomplete)
+  s,a=normalize(f,'2026-11-14')
+  self.assertEqual(a['races_accepted'],1)
+  self.assertEqual(a['runners_accepted'],2)
+  self.assertEqual(len(a['incomplete_race_diagnostics']),1)
+  diagnostic=a['incomplete_race_diagnostics'][0]
+  self.assertEqual(diagnostic['meeting'],'Sample')
+  self.assertEqual(diagnostic['race'],'2')
+  self.assertEqual(diagnostic['missing_price'],1)
+  self.assertEqual(diagnostic['missing_number'],1)
+  self.assertEqual(diagnostic['missing_name'],1)
+  self.assertFalse(diagnostic['class_label_present'])
+  self.assertNotIn('runners',diagnostic)
+ def test_prohibited_race_not_misreported_as_incomplete(self):
+  f=self.fixture()
+  prohibited=dict(f['data'][0]['races'][0])
+  prohibited['number']=2
+  prohibited['name']='Maiden Plate'
+  prohibited['runners']=[dict(r) for r in prohibited['runners']]
+  prohibited['runners'][0].pop('fixed_win')
+  f['data'][0]['races'].append(prohibited)
+  _,a=normalize(f,'2026-11-14')
+  self.assertEqual(a['incomplete_race_diagnostics'],[])
+  self.assertEqual(sum('prohibited race type' in x for x in a['skipped']),1)
  def test_full_page_without_end_marker_rejected(self):
   f=self.fixture();f['data']=[dict(f['data'][0],venue='Sample'+str(i)) for i in range(50)]
   f['meta']={}
