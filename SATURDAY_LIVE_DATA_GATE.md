@@ -1,5 +1,11 @@
 # Monty live-data gate — Saturday 21 November 2026
 
+## Live provider connection — VERIFIED 19 November 2026
+
+GitHub Actions [run #44493611326](https://github.com/Spankman/Monty-Racing/actions/runs/44493611326), on default branch, **completed successfully**. For Queensland racing date **2026-11-20**, the actual Krok request accepted **48 races and 535 runners**, with reported quote source **TAB**. The key was present as a masked GitHub secret. The run explicitly recorded `tab_verified=false`, `complete_au_nz_coverage_verified=false`, `model_loaded=false`, and `predictions_generated=false`. This proves **provider connectivity**, not scoring, independent TAB validation or complete meeting coverage.
+
+Next: execute the separate end-to-end live smoke workflow after review/deployment; it now accepts an optional explicit Queensland racing date. No selections before Saturday morning.
+
 ## Verified offline
 - The Krok fixture -> adapter -> provisional V6 scorer -> create-only prediction/audit pipeline is covered by `test_krok_adapter.py::test_fixture_cli_to_provisional_predictions` and GitHub CI.
 - This is **not** a successful live Krok API request. No private API credential or live field is available in CI.
