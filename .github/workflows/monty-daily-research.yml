@@ -1,8 +1,5 @@
 name: Monty daily research shadow scoring
 on:
-  push:
-    paths:
-      - '.github/workflows/monty-daily-research.yml'
   workflow_dispatch:
   schedule:
     - cron: '30 21 * * *'
