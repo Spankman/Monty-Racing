@@ -19,6 +19,12 @@ jobs:
       - name: Discover permitted public expert article leads (nonblocking)
         continue-on-error: true
         run: python monty_expert_article_discovery.py --output expert_article_leads.json --max-links 15
+      - name: Capture permitted article candidates (research only, nonblocking)
+        continue-on-error: true
+        run: |
+          if [ -f expert_article_leads.json ]; then
+            python monty_expert_article_capture.py expert_article_leads.json --output expert_article_candidates.json --limit 2
+          fi
       - name: Fetch Krok fields and score research-only frozen linear model
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
@@ -77,6 +83,7 @@ jobs:
             v7_shadow.csv
             expert_comparison_audit.json
             expert_article_leads.json
+            expert_article_candidates.json
             expert_tips_validated.csv
           if-no-files-found: warn
           retention-days: 14
