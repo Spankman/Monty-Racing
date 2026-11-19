@@ -16,8 +16,13 @@ class V7BlendTests(unittest.TestCase):
   self.assertTrue((x.expert_weight_used==0).all())
  def test_documented_experts(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','author':'Named Analyst','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
-  x=blend(self.s,self.e);self.assertAlmostEqual(x.v7_shadow_prob.iloc[0],.54)
+  x=blend(self.s,self.e,weight=.10);self.assertAlmostEqual(x.v7_shadow_prob.iloc[0],.54)
   self.assertAlmostEqual(x.v7_shadow_prob.sum(),1)
+ def test_default_expert_weight_zero_even_with_valid_high_coverage(self):
+  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','author':'Named Analyst','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
+  x=blend(self.s,self.e)
+  self.assertAlmostEqual(x.v7_shadow_prob.iloc[0],.6)
+  self.assertTrue((x.expert_weight_used==0).all())
  def test_missing_author_disables_expert_weight(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   x=blend(self.s,self.e)
@@ -25,7 +30,7 @@ class V7BlendTests(unittest.TestCase):
  def test_syndicated_author_counts_once(self):
   rows=[{'meeting':'A','race':'1','number':'2','expert_score':1,'source':site,'author':'Same Analyst','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'} for site in ('Site A','Site B')]
   pd.DataFrame(rows).to_csv(self.e,index=False)
-  x=blend(self.s,self.e)
+  x=blend(self.s,self.e,weight=.10)
   self.assertAlmostEqual(x.v7_shadow_prob.iloc[0],.54)
  def test_low_coverage_disables_experts(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','author':'Named Analyst','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
