@@ -75,6 +75,29 @@ class OperationalV6Tests(unittest.TestCase):
             original=score_features(X,names,output.market_prob.to_numpy(),
                                     output.race_id.to_numpy(),root=ROOT)
         np.testing.assert_allclose(output.monty_prob.to_numpy(),original,rtol=1e-12,atol=1e-12)
+    def test_parity_with_real_feature_values_and_two_races(self):
+        from monty.scoring import score_features
+        model=json.loads((ROOT/"results"/"frozen_model.json").read_text())
+        names=model["input_feature_names"]
+        data=pd.concat([sample(),sample().assign(race="2",odds=[3.0,5.0,7.0])],ignore_index=True)
+        # Exercise real non-market features and missing-indicator handling.
+        nonmarket=[n for n in names if n not in ("log_field_size","log_market_probability")]
+        self.assertTrue(nonmarket)
+        for n in nonmarket[:3]:
+            data[n]=[0.2,np.nan,1.3,0.5,0.9,np.nan]
+        output=score_operational(data,ROOT)
+        X=np.full((len(data),len(names)),np.nan)
+        for j,n in enumerate(names):
+            if n in data:
+                X[:,j]=pd.to_numeric(data[n],errors="coerce").to_numpy(float)
+        if "log_field_size" in names:
+            X[:,names.index("log_field_size")]=np.log(3)
+        if "log_market_probability" in names:
+            X[:,names.index("log_market_probability")]=np.log(output.market_prob.to_numpy())
+        with patch("monty.scoring.verify_artifacts",return_value=55):
+            original=score_features(X,names,output.market_prob.to_numpy(),
+                                    output.race_id.to_numpy(),root=ROOT)
+        np.testing.assert_allclose(output.monty_prob.to_numpy(),original,rtol=1e-12,atol=1e-12)
     def test_missing_features_are_disclosed(self):
         out=score_operational(sample(),ROOT)
         self.assertTrue((out.feature_coverage<1).all())
