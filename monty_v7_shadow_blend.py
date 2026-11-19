@@ -1,6 +1,6 @@
 """Monty V7 experimental expert blend. Shadow-only; no betting approval.
 
-Expert file columns: meeting,race,number,expert_score,source,captured_at.
+Expert file columns: meeting,race,number,expert_score,source,captured_at,race_off_at.
 Scores are nonnegative and are normalized within each race. Missing or stale
 expert input leaves model probabilities unchanged. No inferred expert picks.
 """
@@ -21,13 +21,20 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
     df['v7_status']='UNAPPROVED V7 SHADOW — NO BET'
     if experts is None: return df
     e=pd.read_csv(experts,dtype={k:str for k in KEY})
-    required=set(KEY+['expert_score','source','captured_at'])
+    required=set(KEY+['expert_score','source','captured_at','race_off_at'])
     if not required.issubset(e.columns): raise ValueError('Expert input missing required provenance')
     if e.empty: return df
     e['expert_score']=pd.to_numeric(e['expert_score'],errors='raise')
     if not np.isfinite(e.expert_score).all() or (e.expert_score<0).any(): raise ValueError('Invalid expert score')
-    if e[KEY+['source','captured_at']].isna().any().any() or e.duplicated(KEY+['source']).any():
+    if e[KEY+['source','captured_at','race_off_at']].isna().any().any() or e.duplicated(KEY+['source']).any():
         raise ValueError('Expert provenance or duplicate error')
+    # Reject undated, timezone-naive, post-off or conflicting race-off evidence.
+    captured=pd.to_datetime(e['captured_at'],utc=True,errors='coerce')
+    off=pd.to_datetime(e['race_off_at'],utc=True,errors='coerce')
+    if captured.isna().any() or off.isna().any() or (captured>=off).any():
+        raise ValueError('Expert tips must have valid pre-race capture and off timestamps')
+    if e.groupby(['meeting','race']).race_off_at.nunique().gt(1).any():
+        raise ValueError('Conflicting race off times')
     # Each source contributes equally regardless of how many horses it selects.
     for (meeting,race),ix in df.groupby(['meeting','race'],sort=False).groups.items():
         sub=df.loc[ix]
