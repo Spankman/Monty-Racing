@@ -4,6 +4,7 @@ Usage: python operational/run_snapshot.py snapshot.json --output-dir out
 Never claims independent field verification or betting readiness.
 """
 import argparse
+from datetime import date
 import json
 import subprocess
 import sys
@@ -27,6 +28,12 @@ def main():
         raise ValueError("Snapshot requires race count assertions")
     if not isinstance(snapshot.get("date"),str):
         raise ValueError("Snapshot requires date")
+    try:
+        parsed_date=date.fromisoformat(snapshot["date"])
+        if parsed_date.isoformat()!=snapshot["date"]:
+            raise ValueError("Noncanonical date")
+    except ValueError as exc:
+        raise ValueError("Snapshot date must be YYYY-MM-DD") from exc
     output=Path(args.output_dir)
     if any((output/name).exists() for name in ("operational_predictions.csv","prediction_record.json","snapshot_provenance.json")):
         raise FileExistsError("Output directory already contains prediction or provenance records")
