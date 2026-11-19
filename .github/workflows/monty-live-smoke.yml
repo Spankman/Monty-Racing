@@ -64,4 +64,25 @@ jobs:
                   raise SystemExit("Scoring audit mismatch or unsafe betting authorisation")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
+              # Persist non-sensitive audit metadata, not selections or raw provider data.
+              safe={k:record[k] for k in (
+                  "schema","created_at_utc","status","betting_authorised",
+                  "pre_off_proven","race_counts_match_supplied_manifest",
+                  "manifest_counts_are_source_assertions",
+                  "independent_field_verification_proven",
+                  "artifact_integrity_verified","runner_count","race_count",
+                  "input_sha256","frozen_model_sha256")}
+              safe["racing_date"]=day
+              safe["provider_connection_succeeded"]=True
+              safe["provider_accepted_races"]=audit["races_accepted"]
+              safe["provider_accepted_runners"]=audit["runners_accepted"]
+              pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\\n")
           PY
+      - name: Upload audit metadata only
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monty-live-audit-${{ github.run_id }}
+          path: live_smoke_audit.json
+          if-no-files-found: error
+          retention-days: 7
