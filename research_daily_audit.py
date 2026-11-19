@@ -12,6 +12,12 @@ def assess(scores,model_audit,source_audit):
         raise ValueError('Runner-count mismatch')
     if df.groupby(['meeting','race']).ngroups!=model['races'] or model['races']!=source['races_accepted']:
         raise ValueError('Race-count mismatch')
+    if df[['meeting','race','number','horse']].isna().any().any():
+        raise ValueError('Missing runner identity')
+    if df.duplicated(['meeting','race','number']).any():
+        raise ValueError('Duplicate saddlecloth within race')
+    if df.duplicated(['meeting','race','horse']).any():
+        raise ValueError('Duplicate horse within race')
     if df.empty or not np.isfinite(df[['odds','market_prob','research_prob','edge','feature_coverage']].to_numpy(float)).all():
         raise ValueError('Empty or invalid scores')
     if not (df.status=='UNAPPROVED RESEARCH — NO BET').all():
