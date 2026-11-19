@@ -26,4 +26,14 @@ class PredictionModeRecordTests(unittest.TestCase):
     record_prediction(Path(tmp)/'bad.json',mode='OTHER',meeting='A',race=1,
                       selections=[{'number':1,'horse':'X'}],source='V7',
                       recorded_at_utc='2026-11-19T07:00:00Z')
+ def test_bad_timestamp_and_duplicate_selection(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   base=dict(mode='SINGLE_RACE',meeting='Mackay',race=9,source='V7',
+             selections=[{'number':3,'horse':'Example'}])
+   for bad in ('not-a-dateZ','2026-13-19T07:00:00Z','2026-11-19T07:00:00+10:00'):
+    with self.subTest(bad=bad),self.assertRaises(ValueError):
+     record_prediction(Path(tmp)/'bad.json',recorded_at_utc=bad,**base)
+   with self.assertRaises(ValueError):
+    record_prediction(Path(tmp)/'duplicate.json',recorded_at_utc='2026-11-19T07:00:00Z',
+      **dict(base,selections=[{'number':3,'horse':'Example'},{'number':3,'horse':'EXAMPLE'}]))
 if __name__=='__main__':unittest.main()
