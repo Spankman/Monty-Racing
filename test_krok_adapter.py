@@ -27,6 +27,24 @@ class KrokAdapterTests(unittest.TestCase):
   f['data'].append(dict(f['data'][0]))
   with self.assertRaisesRegex(ValueError,'Duplicate meeting/race'):
    normalize(f,'2026-11-14')
+ def test_in_play_and_unknown_statuses_rejected(self):
+  for status in ('running','jumped','interim',None,'final'):
+   f=self.fixture();f['data'][0]['races'][0]['status']=status
+   with self.subTest(status=status),self.assertRaises(ValueError):
+    normalize(f,'2026-11-14')
+ def test_prohibited_class_variants_rejected(self):
+  for label in ('MDN PLATE','Novice Chase','Jumps Flat Race','Juvenile Stakes','2-Y-O Handicap'):
+   f=self.fixture();f['data'][0]['races'][0]['name']=label
+   with self.subTest(label=label),self.assertRaises(ValueError):
+    normalize(f,'2026-11-14')
+ def test_all_two_year_old_runners_rejected(self):
+  f=self.fixture()
+  for r in f['data'][0]['races'][0]['runners']:r['age']=2
+  with self.assertRaises(ValueError):normalize(f,'2026-11-14')
+ def test_mixed_price_sources_rejected(self):
+  f=self.fixture()
+  f['data'][0]['races'][0]['runners'][0]['odds']=[{'bookmaker':'TAB','win':3.5}]
+  with self.assertRaises(ValueError):normalize(f,'2026-11-14')
  def test_wrong_date_rejected(self):
   with self.assertRaises(ValueError):normalize(self.fixture(),'2026-11-15')
 if __name__=='__main__':unittest.main()
