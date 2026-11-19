@@ -1,3 +1,5 @@
+> **WORK / NEXT SESSION — READ FIRST (19 Nov 2026):** Krok paid API is funded for **one month only**. User will decide whether to renew based on verified prospective betting profitability. Work must review [mandatory subscription and data-archive handover](WORK_HANDOVER_KROK_2026-11.md) and [tracking issue #11](https://github.com/Spankman/Monty-Racing/issues/11) **before doing other Monty development**. Verify actual billing expiry and auto-renew status; never assume auto-renew has been cancelled. Preserve licensed data privately, not in this public repo. V6 stays frozen.
+
 # Monty-Racing — M-Train Racing Algorithm
 
 **In Monty We Trust.**
