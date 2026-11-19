@@ -3,7 +3,7 @@
 This produces descriptive results ONLY. A result file is not proof of official
 settlement or independently verified race results.
 """
-import argparse,csv,hashlib,json
+import argparse,csv,hashlib,json,datetime
 from pathlib import Path
 
 def reconcile(ledger_path,results_path,output):
@@ -20,9 +20,24 @@ def reconcile(ledger_path,results_path,output):
         keys.add(key)
         if not r['horse'].strip() or not r['result_source'].strip() or not r['result_captured_utc'].strip():
             raise ValueError('Missing source, timestamp or horse')
+        try:
+            captured=datetime.datetime.fromisoformat(r['result_captured_utc'].strip().replace('Z','+00:00'))
+        except ValueError as exc:
+            raise ValueError('Invalid result capture timestamp') from exc
+        if captured.tzinfo is None or captured.utcoffset() is None:
+            raise ValueError('Result timestamp must include timezone')
         pos=r['finish_position'].strip()
         if not pos.isdigit() or int(pos)<1:raise ValueError('Only positive numeric finishing positions supported')
         lookup[key]=r
+    # A complete result must have exactly one winner per race and no repeated
+    # finishing positions. Dead heats and non-finishers need a separate schema.
+    by_race={}
+    for key,r in lookup.items():
+        race_key=key[:2]
+        by_race.setdefault(race_key,[]).append(int(r['finish_position']))
+    for race_key,positions in by_race.items():
+        if positions.count(1)!=1 or len(set(positions))!=len(positions):
+            raise ValueError('Ambiguous winner or finishing positions: '+str(race_key))
     seen=set();joined=[]
     for p in pred:
         key=(p['meeting'].strip().casefold(),p['race'].strip(),p['number'].strip())
