@@ -1,9 +1,12 @@
 """Provisional public-artifact V6 linear scorer; NEVER authorises betting."""
 import json
+import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from monty_v6.monty.integrity import validate_model_contract
+_V6_ROOT = Path(__file__).resolve().parents[1] / 'monty_v6'
+sys.path.insert(0, str(_V6_ROOT))
+from monty.integrity import validate_model_contract
 
 STATUS = "PROVISIONAL_OPERATIONAL_V6"
 
