@@ -1,3 +1,5 @@
+> **WORK — MANDATORY NEW OWNER RULE (19 Nov 2026):** Before any further Monty changes, read [issue #13](https://github.com/Spankman/Monty-Racing/issues/13), [MONTY_BETTING_POLICY.md](MONTY_BETTING_POLICY.md), and [monty_exotic_ladder.py](monty_exotic_ladder.py). Applies to **ALL versions and single-race tips**: best-bet exotic ladder, ruffies WIN ONLY, and appropriately relaxed confidence for one-off race opinions. Implement shared post-scoring integration and tests. **Do not modify frozen V6 or claim V7 shadow is betting-ready.**
+
 > **WORK / NEXT SESSION — READ FIRST (19 Nov 2026):** Krok paid API is funded for **one month only**. User will decide whether to renew based on verified prospective betting profitability. Work must review [mandatory subscription and data-archive handover](WORK_HANDOVER_KROK_2026-11.md) and [tracking issue #11](https://github.com/Spankman/Monty-Racing/issues/11) **before doing other Monty development**. Verify actual billing expiry and auto-renew status; never assume auto-renew has been cancelled. Preserve licensed data privately, not in this public repo. V6 stays frozen.
 
 # Monty-Racing — M-Train Racing Algorithm
