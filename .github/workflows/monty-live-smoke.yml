@@ -78,7 +78,7 @@ jobs:
               safe["provider_connection_succeeded"]=True
               safe["provider_accepted_races"]=audit["races_accepted"]
               safe["provider_accepted_runners"]=audit["runners_accepted"]
-              pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\\n")
+              pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\n")
           PY
       - name: Upload audit metadata only
         if: success()
