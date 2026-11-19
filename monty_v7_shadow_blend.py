@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 KEY=['meeting','race','number']
-def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
+def blend(scores, experts=None, weight=0.0, min_coverage=0.60):
     if not 0 <= weight <= 0.20: raise ValueError('Expert weight outside research guardrail')
     df=pd.read_csv(scores,dtype={k:str for k in KEY})
     if df.empty or df.duplicated(KEY).any(): raise ValueError('Invalid scoring identities')
@@ -80,7 +80,7 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('scores');p.add_argument('--experts');p.add_argument('--output',default='v7_shadow.csv')
-    p.add_argument('--weight',type=float,default=.10);p.add_argument('--min-coverage',type=float,default=.60)
+    p.add_argument('--weight',type=float,default=0.0);p.add_argument('--min-coverage',type=float,default=.60)
     a=p.parse_args()
     df=blend(a.scores,a.experts,a.weight,a.min_coverage)
     Path(a.output).parent.mkdir(parents=True,exist_ok=True)
