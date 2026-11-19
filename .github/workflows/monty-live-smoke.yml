@@ -72,6 +72,14 @@ jobs:
                   or provenance["betting_authorised"] is not False
                   or provenance["source_snapshot_date"] != day):
                   raise SystemExit("Scoring/provenance audit mismatch or unsafe betting authorisation")
+              # Independently audit the generated CSV and its fail-closed flags.
+              from operational.verify_provisional_output import verify
+              verified=verify(work/"scored")
+              if (verified["races"] != audit["races_accepted"]
+                  or verified["runners"] != audit["runners_accepted"]
+                  or verified["betting_authorised"] is not False):
+                  raise SystemExit("Provisional probability audit failed")
+              print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
               # Persist non-sensitive audit metadata, not selections or raw provider data.
