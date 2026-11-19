@@ -25,17 +25,20 @@ def collect(source, raw_path, manifest_path, date, timeout=20):
     else:raise ValueError('JSON must be list or object')
     if not isinstance(rows,list) or not rows:raise ValueError('Nonempty runners list required')
     if not all(isinstance(r,dict) for r in rows):raise ValueError('Runner records must be objects')
-    # Race-level active counts MUST come from an independently supplied, auditable
-    # manifest; no inference from the potentially incomplete runner payload.
+    # These counts are supplied by the SAME payload, not independently verified.
+    # Never promote this manifest to proof of complete fields.
     races=metadata.get('races',[])
     if not isinstance(races,list) or not races:raise ValueError('Source must provide independently verified race counts in races[]')
     for race in races:
-        if not isinstance(race.get('expected_active_runners'),int):raise ValueError('Missing independently verified active count')
+        if not isinstance(race,dict) or not str(race.get('meeting','')).strip() or not str(race.get('race','')).strip():
+            raise ValueError('Missing race identity')
+        count=race.get('expected_active_runners')
+        if type(count) is not int or count<2:raise ValueError('Invalid source-asserted active count')
     if metadata.get('date') and metadata['date']!=date:raise ValueError('Source date differs from requested date')
     raw_path=Path(raw_path);raw_path.parent.mkdir(parents=True,exist_ok=True)
     raw_path.write_bytes(data)
     captured=datetime.datetime.now(datetime.timezone.utc).isoformat()
-    manifest={'date':date,'source':source,'captured_at':captured,'sha256':hashlib.sha256(data).hexdigest(),'races':races,'source_asserted_counts':True,'tab_verified':False}
+    manifest={'date':date,'source':source,'captured_at':captured,'sha256':hashlib.sha256(data).hexdigest(),'races':races,'source_asserted_counts':True,'independent_field_verification_proven':False,'tab_verified':False}
     Path(manifest_path).write_text(json.dumps(manifest,indent=2)+'\n')
     return manifest
 if __name__=='__main__':
