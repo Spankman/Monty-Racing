@@ -1,5 +1,8 @@
 # MANDATORY WORK HANDOVER — Krok paid API, November 2026
 
+> **NEW OWNER DIRECTIVE:** Read [issue #13](https://github.com/Spankman/Monty-Racing/issues/13) and [MONTY_BETTING_POLICY.md](MONTY_BETTING_POLICY.md) before making changes. Universal best-bet exotic ladder for all Monty versions and single-race tips; ruffies win-only. Initial code and tests in `monty_exotic_ladder.py` / `test_monty_exotic_ladder.py` require integration. This is mandatory, not optional. Preserve frozen V6.
+
+
 **READ THIS FIRST whenever resuming Monty-Racing.** Linked at the very top of README.md and tracked in [issue #11](https://github.com/Spankman/Monty-Racing/issues/11).
 
 ## User's explicit instruction
