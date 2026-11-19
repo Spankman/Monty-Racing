@@ -18,7 +18,11 @@ def score_operational(df, root=Path("monty_v6")):
     # Filter before validating active-runner odds and identities.
     df = df.copy()
     if "scratched" in df:
-        df = df[~df["scratched"].astype(str).str.lower().isin(("true","1","yes"))].copy()
+        # Unknown/missing scratch status must never silently become an active runner.
+        flags = df["scratched"].astype("string").str.strip().str.lower()
+        if flags.isna().any() or not flags.isin(("true", "1", "yes", "false", "0", "no")).all():
+            raise ValueError("Scratched flags must be explicit booleans")
+        df = df[~flags.isin(("true", "1", "yes")).to_numpy()].copy()
     if df.empty:
         raise ValueError("No active runners")
     if df[required].isna().any().any():
