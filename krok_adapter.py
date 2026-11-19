@@ -32,6 +32,10 @@ def normalize(payload,date):
     if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
         raise ValueError('Unexpected API response; expected success=true and data[]')
     meta=payload.get('meta') or {}
+    if not isinstance(meta,dict):
+        raise ValueError('Unexpected provider pagination metadata type')
+    if any(not isinstance(m,dict) for m in payload['data']):
+        raise ValueError('Unexpected provider meeting record type')
     if meta.get('truncated') or meta.get('has_more') or meta.get('next_cursor') or meta.get('next_page') or meta.get('next'):
         raise ValueError('Meeting feed paginated/truncated; refusing to treat it as complete')
     # Fetch requests limit=50 meetings. A full page without a trustworthy
