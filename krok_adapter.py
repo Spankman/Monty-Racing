@@ -34,6 +34,10 @@ def normalize(payload,date):
     meta=payload.get('meta') or {}
     if meta.get('truncated') or meta.get('has_more') or meta.get('next_cursor') or meta.get('next_page') or meta.get('next'):
         raise ValueError('Meeting feed paginated/truncated; refusing to treat it as complete')
+    # Fetch requests limit=50 meetings. A full page without a trustworthy
+    # pagination terminator cannot prove complete AU/NZ coverage.
+    if len(payload['data']) >= 50 and not (meta.get('has_more') is False or meta.get('is_last_page') is True or meta.get('total_pages') == 1):
+        raise ValueError('Provider returned the 50-meeting page limit without an explicit end-of-feed signal')
     rows=[];races=[];skipped=[];meetings=0
     for meeting in payload['data']:
         if meeting.get('type') not in ('T','R'):continue
