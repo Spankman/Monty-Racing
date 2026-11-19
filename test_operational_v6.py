@@ -42,6 +42,11 @@ class OperationalV6Tests(unittest.TestCase):
     def test_duplicate_runner(self):
         data=sample();data.loc[1,"number"]="1"
         with self.assertRaises(ValueError):score_operational(data,ROOT)
+    def test_duplicate_horse_name_is_rejected(self):
+        data=sample()
+        data.loc[1,"horse"]=" a "
+        with self.assertRaisesRegex(ValueError,"Duplicate horse identity"):
+            score_operational(data,ROOT)
     def test_multiple_races(self):
         data=sample();other=sample().assign(race="2")
         out=score_operational(pd.concat([data,other],ignore_index=True),ROOT)
