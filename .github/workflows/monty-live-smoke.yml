@@ -114,6 +114,8 @@ jobs:
               # Aggregated skip reasons are safe to retain for coverage diagnosis.
               safe["provider_skipped_races"]=len(audit["skipped"])
               safe["provider_skipped_reasons"]=dict(sorted(reasons.items()))
+              # Only public meeting/race labels and missing-field counts.
+              safe["incomplete_race_diagnostics"]=audit["incomplete_race_diagnostics"]
               safe["provider_price_sources"]=audit["price_sources"]
               safe["coverage_is_independently_verified"]=False
               pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\n")
