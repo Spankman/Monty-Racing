@@ -10,6 +10,9 @@ class CandidateExtractTests(unittest.TestCase):
  def test_prose_not_a_tip(self):
   x=extract('<p>Chandler may improve in race seven but there are plenty of chances.</p>','https://example.org/article')
   self.assertEqual(x,[])
+ def test_betting_prose_not_misread_as_separator(self):
+  html='<p>Best betting tips</p><p>Value betting guide</p><p>Roughie of the day</p>'
+  self.assertEqual(extract(html,'https://example.org/tips'),[])
  def test_nav_ignored(self):
   x=extract('<nav><p>Best Bet: Race 7 #2 Chandler</p></nav>','https://example.org/article')
   self.assertEqual(x,[])
