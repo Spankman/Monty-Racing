@@ -17,12 +17,22 @@ def audit(model_path,sources):
         snap=json.loads(Path(path).read_text())
         runners=snap.get('runners')
         if not isinstance(runners,list) or not runners:raise ValueError('Missing runner records for '+label)
+        identities=set()
+        for row in runners:
+            if not isinstance(row,dict):
+                raise ValueError('Invalid runner row for '+label)
+            identity=tuple(str(row.get(k,'')).strip().casefold() for k in ('meeting','race','number','horse'))
+            if any(not x for x in identity):
+                raise ValueError('Missing runner identity for '+label)
+            if identity in identities:
+                raise ValueError('Duplicate runner identity for '+label)
+            identities.add(identity)
         counts={}
         for feature in features:
             counts[feature]=sum(1 for r in runners if isinstance(r,dict) and isinstance(r.get(feature),(int,float))
                 and not isinstance(r.get(feature),bool) and math.isfinite(r[feature]))
         n=len(runners)
-        result['sources'][label]={'runners':n,'fully_observed_features':sorted(k for k,v in counts.items() if v==n),
+        result['sources'][label]={'runners':n,'identity_checked':True,'fully_observed_features':sorted(k for k,v in counts.items() if v==n),
           'partially_observed_features':sorted(k for k,v in counts.items() if 0<v<n),
           'unobserved_features':sorted(k for k,v in counts.items() if v==0),
           'observed_counts':counts,
