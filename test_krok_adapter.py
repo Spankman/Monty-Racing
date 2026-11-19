@@ -22,6 +22,14 @@ class KrokAdapterTests(unittest.TestCase):
   f=self.fixture();f['data']=[dict(f['data'][0],venue='Sample'+str(i)) for i in range(50)]
   s,a=normalize(f,'2026-11-14')
   self.assertEqual(a['races_accepted'],50)
+ def test_malformed_pagination_metadata_rejected(self):
+  f=self.fixture();f['meta']=['not','metadata']
+  with self.assertRaisesRegex(ValueError,'pagination metadata'):
+   normalize(f,'2026-11-14')
+ def test_malformed_meeting_record_rejected(self):
+  f=self.fixture();f['data'].append(None)
+  with self.assertRaisesRegex(ValueError,'meeting record'):
+   normalize(f,'2026-11-14')
  def test_paginated_rejected(self):
   f=self.fixture();f['meta']['has_more']=True
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
