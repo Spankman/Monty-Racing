@@ -43,8 +43,10 @@ jobs:
               print("Provider response not sufficient for complete pre-race scoring:",str(exc))
               raise
           print("Accepted races:",audit["races_accepted"])
+          print("Provider meetings inspected:",audit["meetings"])
           print("Accepted runners:",audit["runners_accepted"])
           print("Skipped races:",len(audit["skipped"]))
+          print("Provider price sources:",", ".join(audit["price_sources"]))
           print("Independent field verification: NOT PROVEN")
           print("Betting authorised: NO")
           # Exercise full provisional scoring without publishing selections.
