@@ -35,6 +35,17 @@ def audit_zip(path):
     return {'schema':'monty_source_zip_audit_v1','kind':'SOURCE_SNAPSHOT_NOT_GIT_HISTORY',
             'file_count':len(files),'files':dict(sorted(files.items()))}
 
+def verify_zip(path, manifest_path):
+    """Compare a backup against a previously saved independent manifest."""
+    with open(manifest_path,encoding='utf-8') as source:
+        expected=json.load(source)
+    actual=audit_zip(path)
+    if expected.get('schema')!=actual['schema'] or expected.get('kind')!=actual['kind']:
+        raise ValueError('Unsupported backup manifest')
+    if expected.get('file_count')!=actual['file_count'] or expected.get('files')!=actual['files']:
+        raise ValueError('Backup differs from saved manifest')
+    return actual
+
 def main(argv=None):
     argv=sys.argv[1:] if argv is None else argv
     if len(argv)!=2:
