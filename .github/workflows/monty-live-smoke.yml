@@ -62,8 +62,16 @@ jobs:
               if result.returncode:
                   raise SystemExit("Live snapshot-to-scorer integration FAILED; inspect privately")
               record=json.loads((work/"scored"/"prediction_record.json").read_text())
-              if record["betting_authorised"] or record["runner_count"]!=audit["runners_accepted"]:
-                  raise SystemExit("Scoring audit mismatch or unsafe betting authorisation")
+              provenance=json.loads((work/"scored"/"snapshot_provenance.json").read_text())
+              if (record["betting_authorised"] is not False
+                  or record["runner_count"] != audit["runners_accepted"]
+                  or record["race_count"] != audit["races_accepted"]
+                  or record["race_counts_match_supplied_manifest"] is not True
+                  or record["independent_field_verification_proven"] is not False
+                  or record["artifact_integrity_verified"] is not False
+                  or provenance["betting_authorised"] is not False
+                  or provenance["source_snapshot_date"] != day):
+                  raise SystemExit("Scoring/provenance audit mismatch or unsafe betting authorisation")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
               # Persist non-sensitive audit metadata, not selections or raw provider data.
