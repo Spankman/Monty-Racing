@@ -68,6 +68,20 @@ class KrokAdapterTests(unittest.TestCase):
  def test_prohibited_race_is_excluded(self):
   f=self.fixture();f['data'][0]['races'].append({'number':2,'name':'Two Year Old Maiden','status':'open','runners':f['data'][0]['races'][0]['runners']})
   s,a=normalize(f,'2026-11-14');self.assertEqual(len(s['races']),1);self.assertTrue(any('prohibited race type' in x for x in a['skipped']))
+ def test_opt_in_flat_maiden_and_juvenile_are_research_only(self):
+  f=self.fixture()
+  f['data'][0]['races'][0]['name']='Two Year Old Maiden'
+  s,a=normalize(f,'2026-11-14',include_restricted_flat_research=True)
+  self.assertEqual(a['restricted_flat_research_races'],1)
+  self.assertEqual(a['races_accepted'],1)
+  self.assertTrue(s['races'][0]['research_only_restricted_race'])
+  self.assertFalse(s['races'][0]['betting_authorised'])
+  self.assertTrue(all(r['research_only_restricted_race'] and not r['betting_authorised'] for r in s['runners']))
+ def test_jumps_still_excluded_in_research_mode(self):
+  f=self.fixture()
+  f['data'][0]['races'][0]['name']='Novice Hurdle'
+  with self.assertRaisesRegex(ValueError,'No complete'):
+   normalize(f,'2026-11-14',include_restricted_flat_research=True)
  def test_uncertain_scratching_rejected(self):
   f=self.fixture();f['data'][0]['races'][0]['runners'][1].pop('is_scratched')
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
