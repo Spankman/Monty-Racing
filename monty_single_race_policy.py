@@ -33,7 +33,9 @@ def route_single_race(outputs, *, eligible=True, override=False):
         if any(not isinstance(p,dict) or any(not str(p.get(k,'')).strip()
                for k in ('meeting','race','number','horse')) for p in picks):
             continue
-        keys={(str(p['meeting']).casefold(),str(p['race']),str(p['number'])) for p in picks}
+        race_keys={(str(p['meeting']).strip().casefold(),str(p['race']).strip()) for p in picks}
+        if len(race_keys)!=1:continue
+        keys={(str(p['meeting']).strip().casefold(),str(p['race']).strip(),str(p['number']).strip()) for p in picks}
         if len(keys)!=len(picks):continue
         model=source in ('V7','V7_LE','V6')
         # The router cannot independently prove model execution or timing.
@@ -58,8 +60,20 @@ def route_full_day(outputs, *, explicit_le=False):
     for source in allowed:
         if source=='V7_LE' and not explicit_le:
             continue
-        candidate=route_single_race({source:outputs.get(source)})
-        if candidate.source==source:
-            return candidate
+        picks=outputs.get(source)
+        if not isinstance(picks,(list,tuple)) or not picks:
+            continue
+        # Daily predictions may cover many races; validate every selection
+        # without passing the batch through the single-race router.
+        if any(not isinstance(p,dict) or any(not str(p.get(k,'')).strip()
+               for k in ('meeting','race','number','horse')) for p in picks):
+            continue
+        identities={(str(p['meeting']).strip().casefold(),str(p['race']).strip(),
+                     str(p['number']).strip()) for p in picks}
+        if len(identities)!=len(picks):
+            continue
+        return SelectionRoute(source,tuple((p['meeting'],p['race'],p['number'],p['horse'])
+                             for p in picks),True,source=='V7_LE',False,
+                             'Full-day candidates only; verify source and pre-off evidence')
     return SelectionRoute('NO_BET',(),False,False,False,
                           'No qualifying full-day V7 selections; LE requires explicit authorization')
