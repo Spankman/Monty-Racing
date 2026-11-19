@@ -13,7 +13,7 @@ Next: execute the separate end-to-end live smoke workflow after review/deploymen
 
 ## GitHub Actions execution prerequisite
 
-**Existing live-connection shortcut:** The default `main` branch already contains `.github/workflows/monty-manual-intake.yml` (`Monty manual Krok connection check`). It can be manually dispatched in GitHub Actions with a Queensland racing date, and invokes `check_krok.py` with the `KROK_API_KEY` repository secret. This tests provider connectivity without predictions and uploads a seven-day connection report. Inspect its run conclusion and report before claiming live access. The separate end-to-end `.github/workflows/monty-live-smoke.yml` workflow currently lives only on the **unmerged** `grok-independent-repairs` branch. GitHub normally requires a `workflow_dispatch` workflow to exist on the repository's **default branch** before it can be manually dispatched in the Actions UI/API. Passing ordinary branch CI does not mean the live smoke workflow ran. The authorised maintainer must review and merge/otherwise introduce the workflow to the default branch before manual dispatch. Confirm the `KROK_API_KEY` Actions secret exists; do not print or paste its value. No live provider connection has been proven by CI.
+**Existing live-connection shortcut:** The default `main` branch already contains `.github/workflows/monty-manual-intake.yml` (`Monty manual Krok connection check`). It can be manually dispatched in GitHub Actions with a Queensland racing date, and invokes `check_krok.py` with the `KROK_API_KEY` repository secret. This tests provider connectivity without predictions and uploads a seven-day connection report. Inspect its run conclusion and report before claiming live access. The separate end-to-end `.github/workflows/monty-live-smoke.yml` workflow currently lives only on the **unmerged** `grok-independent-repairs` branch. GitHub normally requires a `workflow_dispatch` workflow to exist on the repository's **default branch** before it can be manually dispatched in the Actions UI/API. Passing ordinary branch CI does not mean the live smoke workflow ran. The authorised maintainer must review and merge/otherwise introduce the workflow to the default branch before manual dispatch. Confirm the `KROK_API_KEY` Actions secret exists; do not print or paste its value. A live provider connection was proven by run #44493611326 above; ordinary offline CI still does not prove end-to-end scoring or complete coverage.
 
 ## Live smoke run (only when authorised key is available)
 
@@ -44,7 +44,7 @@ A failure is a **NO BET / no selection** outcome, not permission to fabricate mi
 6. **No Saturday selections before Saturday morning**, per user instruction. Never describe research outputs as genuine fully certified V6 selections.
 
 ## Remaining blockers
-- Working live Krok access with valid permissions and complete, current feed.
+- Fresh live Krok access for Saturday 21 November with valid permissions and a complete, current feed (the successful 20 November connection check does not establish Saturday coverage).
 - Independent TAB (or other authoritative) field and scratching cross-check.
 - As-of historical features for meaningful predictions.
 - Original private V6 artifacts for full integrity verification.
