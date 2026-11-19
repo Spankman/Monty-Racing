@@ -6,9 +6,25 @@ pre-race tips. Fetching must respect site terms and robots restrictions.
 import argparse,datetime,json,re,urllib.parse,urllib.request,urllib.robotparser
 from bs4 import BeautifulSoup
 
+# Public landing pages are discovery leads, never proof of a tip.
+# Source URLs must be checked for terms and robots permissions on every run.
 SOURCES={
  'Just Horse Racing':'https://www.justhorseracing.com.au/tips/',
  'Racing and Sports':'https://www.racingandsports.com.au/news/racing/previews/',
+ 'Racenet':'https://www.racenet.com.au/',
+ 'Sky Racing':'https://www.skyracing.com.au/',
+ 'Punters':'https://www.punters.com.au/',
+ 'TAB':'https://www.tab.com.au/',
+ 'Sportsbet':'https://www.sportsbet.com.au/',
+ 'The Great Tip Off':'https://www.thegreattipoff.com/',
+ 'Racing.com':'https://www.racing.com/',
+ 'RacingBase':'https://www.racingbase.com.au/',
+ 'Bets.com.au':'https://www.bets.com.au/',
+ 'TAB NZ':'https://www.tab.co.nz/',
+ 'GoBet':'https://www.gobet.com.au/',
+ 'Racing SA':'https://www.racingsa.com.au/',
+ 'Before You Bet':'https://www.beforeyoubet.com.au/',
+ 'RSN':'https://www.rsn.net.au/',
 }
 USER_AGENT='MontyResearchBot/0.1 (research; respect robots.txt)'
 def discover(source,url,max_links=30,fetcher=None):
@@ -50,12 +66,13 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--output',default='expert_article_leads.json')
     p.add_argument('--source',choices=list(SOURCES))
+    p.add_argument('--max-links',type=int,default=20)
     a=p.parse_args()
     out={'captured_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),
       'sources':[],'verified_tip_count':0}
     for name,url in SOURCES.items():
         if a.source and name!=a.source:continue
-        try:out['sources'].append(discover(name,url))
+        try:out['sources'].append(discover(name,url,max_links=a.max_links))
         except Exception as exc:out['sources'].append({'source':name,'status':'unavailable','reason':type(exc).__name__,'articles':[]})
     with open(a.output,'w') as f:json.dump(out,f,indent=2)
     print(json.dumps({'source_count':len(out['sources']),'article_leads':sum(len(s['articles']) for s in out['sources']),'verified_tip_count':0}))
