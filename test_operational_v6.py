@@ -107,6 +107,24 @@ class OperationalV6Tests(unittest.TestCase):
             self.assertEqual(len(provenance["source_snapshot_sha256"]),64)
             second=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(second.returncode,0)
+    def test_auditor_rejects_mixed_research_flags_in_one_race(self):
+        from operational.verify_provisional_output import verify
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            source=d/"runners.csv"
+            data=sample()
+            data["research_only_restricted_race"]=True
+            data.to_csv(source,index=False)
+            result=subprocess.run([sys.executable,"operational/run_operational.py",str(source),
+                "--output-dir",str(d/"out")],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            csv_path=d/"out"/"operational_predictions.csv"
+            scored=pd.read_csv(csv_path)
+            self.assertTrue(scored.research_only_restricted_race.all())
+            scored.loc[0,"research_only_restricted_race"]=False
+            scored.to_csv(csv_path,index=False)
+            with self.assertRaisesRegex(ValueError,"Inconsistent restricted-race flags"):
+                verify(d/"out")
     def test_cli_manifest_rejects_incomplete_field(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp)
