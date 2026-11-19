@@ -1,5 +1,5 @@
 import unittest
-from monty_single_race_policy import route_single_race,next_bet_type,BET_ORDER
+from monty_single_race_policy import route_single_race,route_full_day,next_bet_type,BET_ORDER
 
 PICK={'meeting':'Newcastle','race':'8','number':'9','horse':'Example'}
 
@@ -23,6 +23,14 @@ class SingleRacePolicyTests(unittest.TestCase):
   self.assertEqual(route_single_race({'V7':[PICK]},eligible=False,override=True).source,'V7')
  def test_duplicate_runner_rejected(self):
   self.assertEqual(route_single_race({'V7':[PICK,PICK]}).source,'NO_BET')
+ def test_full_day_does_not_auto_le(self):
+  self.assertEqual(route_full_day({'V7_LE':[PICK],'V6':[PICK]}).source,'NO_BET')
+ def test_full_day_explicit_le(self):
+  self.assertEqual(route_full_day({'V7_LE':[PICK]},explicit_le=True).source,'V7_LE')
+ def test_full_day_does_not_fallback_v6(self):
+  self.assertEqual(route_full_day({'V6':[PICK]},explicit_le=True).source,'NO_BET')
+ def test_full_day_prefers_strict_v7(self):
+  self.assertEqual(route_full_day({'V7':[PICK],'V7_LE':[PICK]},explicit_le=True).source,'V7')
  def test_exotic_order(self):
   self.assertEqual(BET_ORDER,('WIN','QUINELLA_2','TRIFECTA_BOX_3','FIRST_FOUR_4'))
   self.assertEqual(next_bet_type('WIN'),'QUINELLA_2')
