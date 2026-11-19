@@ -64,7 +64,11 @@ def score_operational(df, root=Path("monty_v6")):
     out["market_prob"]=base
     out["monty_prob"]=pred
     out["fair_odds"]=1/pred
-    out["edge"]=pred/base-1
+    # Relative to normalized market probability; NOT expected betting ROI.
+    out["relative_market_edge"]=pred/base-1
+    # Expected gross win-bet return per unit staked at supplied decimal odds.
+    # Diagnostic only: odds timing, source and complete fields remain unverified.
+    out["expected_win_roi"]=pred*df["odds"].to_numpy(float)-1
     out["feature_coverage"]=finite.mean(axis=1)
     out["status"]=STATUS
     out["betting_authorised"]=False
