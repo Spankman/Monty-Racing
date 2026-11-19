@@ -4,6 +4,7 @@ Research metadata only. Never asserts pre-off proof or authorises bets.
 """
 import hashlib
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 MODES=('FULL_DAY','SINGLE_RACE')
@@ -21,8 +22,17 @@ def record_prediction(path, *, mode, meeting, race, selections, source,
     for p in selections:
         if not isinstance(p,dict) or not str(p.get('number','')).strip() or not str(p.get('horse','')).strip():
             raise ValueError('Each selection needs number and horse')
-    if not recorded_at_utc.endswith('Z'):
+    if not isinstance(recorded_at_utc,str) or not recorded_at_utc.endswith('Z'):
         raise ValueError('UTC timestamp ending Z required')
+    try:
+        stamp=datetime.fromisoformat(recorded_at_utc.replace('Z','+00:00'))
+    except ValueError as exc:
+        raise ValueError('Invalid UTC timestamp') from exc
+    if stamp.tzinfo is None or stamp.utcoffset().total_seconds()!=0:
+        raise ValueError('Timestamp must be UTC')
+    identities=[(str(p['number']).strip(),str(p['horse']).strip().casefold()) for p in selections]
+    if len(set(identities))!=len(identities):
+        raise ValueError('Duplicate selection identity')
     entry=dict(schema='monty_prediction_mode_v1',mode=mode,meeting=str(meeting),
                race=str(race),selections=list(selections),source=source,
                recorded_at_utc=recorded_at_utc,parent_daily_id=parent_daily_id,
