@@ -13,6 +13,7 @@ def audit(model_path,sources):
     if len(features)!=len(set(features)):raise ValueError('Duplicate model features')
     result={'schema':'monty-source-feature-coverage-v1','model_features':len(features),'sources':{},
             'note':'Observed numeric model-input keys only; no inference from provider field names, no prediction accuracy claim.'}
+    identity_sets={}
     for label,path in sources.items():
         snap=json.loads(Path(path).read_text())
         runners=snap.get('runners')
@@ -27,6 +28,7 @@ def audit(model_path,sources):
             if identity in identities:
                 raise ValueError('Duplicate runner identity for '+label)
             identities.add(identity)
+        identity_sets[label]=identities
         counts={}
         for feature in features:
             counts[feature]=sum(1 for r in runners if isinstance(r,dict) and isinstance(r.get(feature),(int,float))
@@ -37,6 +39,19 @@ def audit(model_path,sources):
           'unobserved_features':sorted(k for k,v in counts.items() if v==0),
           'observed_counts':counts,
           'mean_input_coverage':sum(counts.values())/(n*len(features))}
+    if len(identity_sets)>1:
+        labels=list(identity_sets)
+        baseline=identity_sets[labels[0]]
+        result['runner_identity_parity']={
+            'reference_source':labels[0],
+            'all_sources_match':all(v==baseline for v in identity_sets.values()),
+            'comparisons':{label:{'missing_from_source':len(baseline-ids),
+                                   'extra_in_source':len(ids-baseline)}
+                           for label,ids in identity_sets.items()}}
+        if not result['runner_identity_parity']['all_sources_match']:
+            result['comparison_status']='BLOCKED_UNMATCHED_RUNNER_FIELDS'
+        else:
+            result['comparison_status']='IDENTITIES_MATCH_COVERAGE_ONLY_NO_PREDICTIVE_CLAIM'
     return result
 
 if __name__=='__main__':
