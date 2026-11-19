@@ -48,7 +48,7 @@ def main():
     }
     with (Path(args.output_dir)/"snapshot_provenance.json").open("x") as f:
         json.dump(provenance,f,indent=2)
-        f.write("\\n")
+        f.write("\n")
 
 if __name__=="__main__":
     main()
