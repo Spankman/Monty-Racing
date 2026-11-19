@@ -12,6 +12,7 @@ from pathlib import PurePosixPath
 
 def audit_zip(path):
     files={}
+    root=None
     with zipfile.ZipFile(path) as archive:
         bad=archive.testzip()
         if bad is not None:
@@ -21,6 +22,13 @@ def audit_zip(path):
             parts=PurePosixPath(name).parts
             if not parts or name.startswith('/') or '..' in parts or '\\' in name:
                 raise ValueError('Unsafe archive path: '+name)
+            if root is None:
+                root=parts[0]
+            elif parts[0]!=root:
+                raise ValueError('Multiple repository roots in archive')
+            # Unix symlinks can point outside the extracted repository.
+            if (entry.external_attr >> 16) & 0o170000 == 0o120000:
+                raise ValueError('Symlink entry not permitted: '+name)
             if entry.is_dir():
                 continue
             relative='/'.join(parts[1:])
