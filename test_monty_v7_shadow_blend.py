@@ -27,6 +27,9 @@ class V7BlendTests(unittest.TestCase):
  def test_timezone_naive_fails(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T01:00:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   with self.assertRaises(ValueError):blend(self.s,self.e)
+ def test_unnormalized_model_fails(self):
+  d=pd.read_csv(self.s);d.loc[0,'research_prob']=.7;d.to_csv(self.s,index=False)
+  with self.assertRaises(ValueError):blend(self.s)
  def test_unknown_horse_fails(self):
   pd.DataFrame([{'meeting':'A','race':'1','number':'3','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   with self.assertRaises(ValueError):blend(self.s,self.e)
