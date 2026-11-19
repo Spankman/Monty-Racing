@@ -27,6 +27,9 @@ def main():
         raise ValueError("Snapshot requires race count assertions")
     if not isinstance(snapshot.get("date"),str):
         raise ValueError("Snapshot requires date")
+    output=Path(args.output_dir)
+    if any((output/name).exists() for name in ("operational_predictions.csv","prediction_record.json","snapshot_provenance.json")):
+        raise FileExistsError("Output directory already contains prediction or provenance records")
     with tempfile.TemporaryDirectory() as temp:
         temp=Path(temp)
         csv=temp/"runners.csv"
