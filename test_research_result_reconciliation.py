@@ -26,4 +26,10 @@ class ResearchReconciliationTests(unittest.TestCase):
  def test_missing_results_rejected(self):
   self.r.write_text('meeting,race,number,horse,finish_position,result_source,result_captured_utc\n')
   with self.assertRaises(ValueError):reconcile(self.l,self.r,self.o)
+ def test_timezone_required(self):
+  self.r.write_text(self.r.read_text().replace('2026-11-19T08:00:00Z','2026-11-19T08:00:00'))
+  with self.assertRaises(ValueError):reconcile(self.l,self.r,self.o)
+ def test_no_winner_rejected(self):
+  self.r.write_text(self.r.read_text().replace(',1,supplied-unverified',',2,supplied-unverified'))
+  with self.assertRaises(ValueError):reconcile(self.l,self.r,self.o)
 if __name__=='__main__':unittest.main()
