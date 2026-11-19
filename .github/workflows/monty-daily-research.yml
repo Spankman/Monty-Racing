@@ -1,9 +1,6 @@
 name: Monty daily research shadow scoring
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ['test_krok_adapter.py']
   schedule:
     - cron: '30 21 * * *'
 permissions:
