@@ -21,6 +21,14 @@ class OperationalV6Tests(unittest.TestCase):
         self.assertTrue((out.monty_prob>0).all())
         self.assertFalse(out.betting_authorised.any())
         self.assertTrue(out.status.str.startswith("PROVISIONAL").all())
+    def test_market_edge_is_not_betting_roi(self):
+        out=score_operational(sample(),ROOT)
+        np.testing.assert_allclose(out.relative_market_edge.to_numpy(),
+                                   out.monty_prob.to_numpy()/out.market_prob.to_numpy()-1)
+        np.testing.assert_allclose(out.expected_win_roi.to_numpy(),
+                                   out.monty_prob.to_numpy()*out.odds.to_numpy()-1)
+        self.assertFalse(out.betting_authorised.any())
+        self.assertNotIn("edge",out.columns)
     def test_invalid_odds(self):
         data=sample();data.loc[0,"odds"]=0.5
         with self.assertRaises(ValueError):score_operational(data,ROOT)
