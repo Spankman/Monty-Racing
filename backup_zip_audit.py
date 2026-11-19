@@ -48,8 +48,12 @@ def verify_zip(path, manifest_path):
 
 def main(argv=None):
     argv=sys.argv[1:] if argv is None else argv
+    if len(argv)==3 and argv[0]=='--verify':
+        result=verify_zip(argv[1],argv[2])
+        print('MATCH:',result['file_count'],'files match saved manifest')
+        return
     if len(argv)!=2:
-        raise SystemExit('Usage: python backup_zip_audit.py backup.zip manifest.json')
+        raise SystemExit('Usage: python backup_zip_audit.py backup.zip manifest.json OR --verify backup.zip manifest.json')
     result=audit_zip(argv[0])
     with open(argv[1],'x',encoding='utf-8') as out:
         json.dump(result,out,indent=2,sort_keys=True)
