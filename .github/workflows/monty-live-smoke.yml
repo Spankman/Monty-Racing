@@ -102,7 +102,8 @@ jobs:
               verified=verify(work/"scored")
               if (verified["races"] != audit["races_accepted"]
                   or verified["runners"] != audit["runners_accepted"]
-                  or verified["betting_authorised"] is not False):
+                  or verified["betting_authorised"] is not False
+                  or verified["restricted_flat_research_races"] != audit["restricted_flat_research_races"]):
                   raise SystemExit("Provisional probability audit failed")
               print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
