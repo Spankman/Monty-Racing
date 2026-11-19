@@ -15,13 +15,16 @@ class V7BlendTests(unittest.TestCase):
   x=blend(self.s);self.assertAlmostEqual(x.v7_shadow_prob.iloc[0],.6)
   self.assertTrue((x.expert_weight_used==0).all())
  def test_documented_experts(self):
-  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00'}]).to_csv(self.e,index=False)
+  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   x=blend(self.s,self.e);self.assertAlmostEqual(x.v7_shadow_prob.iloc[0],.54)
   self.assertAlmostEqual(x.v7_shadow_prob.sum(),1)
  def test_low_coverage_disables_experts(self):
-  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00'}]).to_csv(self.e,index=False)
+  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   x=blend(self.s,self.e,min_coverage=.95);self.assertTrue((x.expert_weight_used==0).all())
+ def test_post_off_expert_fails(self):
+  pd.DataFrame([{'meeting':'A','race':'1','number':'2','expert_score':1,'source':'tipster','captured_at':'2026-11-19T13:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
+  with self.assertRaises(ValueError):blend(self.s,self.e)
  def test_unknown_horse_fails(self):
-  pd.DataFrame([{'meeting':'A','race':'1','number':'3','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00'}]).to_csv(self.e,index=False)
+  pd.DataFrame([{'meeting':'A','race':'1','number':'3','expert_score':1,'source':'tipster','captured_at':'2026-11-19T00:00:00+10:00','race_off_at':'2026-11-19T12:00:00+10:00'}]).to_csv(self.e,index=False)
   with self.assertRaises(ValueError):blend(self.s,self.e)
 if __name__=='__main__':unittest.main()
