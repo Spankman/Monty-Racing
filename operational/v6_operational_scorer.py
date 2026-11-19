@@ -14,6 +14,13 @@ def score_operational(df, root=Path("monty_v6")):
     required = ["meeting", "race", "number", "horse", "odds"]
     if df.empty or any(k not in df for k in required):
         raise ValueError("Nonempty runner data with meeting,race,number,horse,odds required")
+    # Scratched entries are not competitors; providers may omit their prices.
+    # Filter before validating active-runner odds and identities.
+    df = df.copy()
+    if "scratched" in df:
+        df = df[~df["scratched"].astype(str).str.lower().isin(("true","1","yes"))].copy()
+    if df.empty:
+        raise ValueError("No active runners")
     if df[required].isna().any().any():
         raise ValueError("Missing runner or odds")
     df = df.copy()
@@ -28,10 +35,6 @@ def score_operational(df, root=Path("monty_v6")):
     df["odds"] = pd.to_numeric(df["odds"], errors="raise")
     if not np.isfinite(df["odds"]).all() or (df["odds"] <= 1).any():
         raise ValueError("Odds must be finite and greater than one")
-    if "scratched" in df:
-        df = df[~df["scratched"].astype(str).str.lower().isin(("true","1","yes"))].copy()
-    if df.empty:
-        raise ValueError("No active runners")
     df["race_id"] = df["meeting"].str.upper() + "|" + df["race"]
     if df.duplicated(["race_id","number"]).any():
         raise ValueError("Duplicate saddlecloth")
