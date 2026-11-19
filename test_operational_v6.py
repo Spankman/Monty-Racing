@@ -21,6 +21,17 @@ class OperationalV6Tests(unittest.TestCase):
         self.assertTrue((out.monty_prob>0).all())
         self.assertFalse(out.betting_authorised.any())
         self.assertTrue(out.status.str.startswith("PROVISIONAL").all())
+    def test_restricted_research_flag_survives_scoring(self):
+        data=sample()
+        data["research_only_restricted_race"]=True
+        out=score_operational(data,ROOT)
+        self.assertTrue(out.research_only_restricted_race.all())
+        self.assertFalse(out.betting_authorised.any())
+    def test_restricted_research_flag_rejects_strings(self):
+        data=sample()
+        data["research_only_restricted_race"]=["False","False","False"]
+        with self.assertRaisesRegex(ValueError,"must be booleans"):
+            score_operational(data,ROOT)
     def test_market_edge_is_not_betting_roi(self):
         out=score_operational(sample(),ROOT)
         np.testing.assert_allclose(out.relative_market_edge.to_numpy(),
