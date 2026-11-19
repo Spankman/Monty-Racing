@@ -31,6 +31,17 @@ class SingleRacePolicyTests(unittest.TestCase):
   self.assertEqual(route_full_day({'V6':[PICK]},explicit_le=True).source,'NO_BET')
  def test_full_day_prefers_strict_v7(self):
   self.assertEqual(route_full_day({'V7':[PICK],'V7_LE':[PICK]},explicit_le=True).source,'V7')
+ def test_full_day_multiple_races_are_allowed(self):
+  second=dict(PICK,race='9',number='4',horse='Another')
+  r=route_full_day({'V7':[PICK,second]})
+  self.assertEqual(r.source,'V7')
+  self.assertEqual(len(r.selections),2)
+  self.assertFalse(r.betting_authorised)
+ def test_single_race_rejects_mixed_races(self):
+  second=dict(PICK,race='9',number='4',horse='Another')
+  self.assertEqual(route_single_race({'V7':[PICK,second]}).source,'NO_BET')
+ def test_full_day_rejects_duplicate_runner_in_race(self):
+  self.assertEqual(route_full_day({'V7':[PICK,PICK]}).source,'NO_BET')
  def test_exotic_order(self):
   self.assertEqual(BET_ORDER,('WIN','QUINELLA_2','TRIFECTA_BOX_3','FIRST_FOUR_4'))
   self.assertEqual(next_bet_type('WIN'),'QUINELLA_2')
