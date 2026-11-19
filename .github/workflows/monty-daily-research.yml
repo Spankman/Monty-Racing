@@ -37,8 +37,18 @@ jobs:
           # A checked-in file is NOT trusted merely because it exists; the blender
           # verifies provenance/timing, field identities and coverage.
           if [ -f expert_tips_verified.csv ]; then
-            python monty_v7_shadow_blend.py research_scores.csv --experts expert_tips_verified.csv --output v7_shadow.csv
-            python monty_expert_comparison.py research_scores.csv expert_tips_verified.csv --output expert_comparison_audit.json
+            # Expert validation errors must never prevent a model-only run.
+            # Avoid leaving a partial expert blend or audit after rejection.
+            if python monty_v7_shadow_blend.py research_scores.csv --experts expert_tips_verified.csv --output v7_shadow_candidate.csv && \
+               python monty_expert_comparison.py research_scores.csv expert_tips_verified.csv --output expert_comparison_candidate.json; then
+              mv v7_shadow_candidate.csv v7_shadow.csv
+              mv expert_comparison_candidate.json expert_comparison_audit.json
+              echo 'VERIFIED EXPERT FILE ACCEPTED: inspect expert_weight_used for actual blend'
+            else
+              echo 'EXPERT INPUT REJECTED: fall back to 100% Monty research model'
+              rm -f v7_shadow_candidate.csv expert_comparison_candidate.json
+              python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
+            fi
           else
             echo 'NO VERIFIED EXPERT INPUT: 0% expert, 100% model research scores'
             python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
