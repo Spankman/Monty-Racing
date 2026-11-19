@@ -42,7 +42,7 @@ def normalize(payload,date):
     # pagination terminator cannot prove complete AU/NZ coverage.
     if len(payload['data']) >= 50 and not (meta.get('has_more') is False or meta.get('is_last_page') is True or meta.get('total_pages') == 1):
         raise ValueError('Provider returned the 50-meeting page limit without an explicit end-of-feed signal')
-    rows=[];races=[];skipped=[];meetings=0
+    rows=[];races=[];skipped=[];meetings=0;incomplete_race_diagnostics=[]
     for meeting in payload['data']:
         if meeting.get('type') not in ('T','R'):continue
         if meeting.get('country') not in (None,'AU','NZ'):continue
@@ -96,6 +96,15 @@ def normalize(payload,date):
                 item['_price_source']=origin
                 parsed.append(item)
             if len(parsed)!=len(active):
+                # Record only public race identifiers and aggregate missing-field counts.
+                # Never silently drop a runner to make a field scoreable.
+                incomplete_race_diagnostics.append({
+                    'meeting': str(venue), 'race': str(n),
+                    'missing_price': sum(price(r)[0] is None for r in active),
+                    'missing_number': sum(r.get('number') is None for r in active),
+                    'missing_name': sum(not r.get('name') for r in active),
+                    'class_label_present': bool(label.strip()),
+                })
                 skipped.append(f'{venue} R{n}: active runner lacks identity/price');continue
             if len({r['number'] for r in parsed})!=len(parsed):
                 skipped.append(f'{venue} R{n}: duplicate saddlecloth');continue
@@ -122,7 +131,7 @@ def normalize(payload,date):
     if len(keys)!=len(set(keys)):
         raise ValueError('Duplicate meeting/race identity in provider feed')
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
-    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
+    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
 
 def fetch(date,key):
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
