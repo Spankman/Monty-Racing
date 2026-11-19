@@ -4,7 +4,11 @@
 
 GitHub Actions [run #44493611326](https://github.com/Spankman/Monty-Racing/actions/runs/44493611326), on default branch, **completed successfully**. For Queensland racing date **2026-11-20**, the actual Krok request accepted **48 races and 535 runners**, with reported quote source **TAB**. The key was present as a masked GitHub secret. The run explicitly recorded `tab_verified=false`, `complete_au_nz_coverage_verified=false`, `model_loaded=false`, and `predictions_generated=false`. This proves **provider connectivity**, not scoring, independent TAB validation or complete meeting coverage.
 
-Next: execute the separate end-to-end live smoke workflow after review/deployment; it now accepts an optional explicit Queensland racing date. No selections before Saturday morning.
+The separate end-to-end live smoke workflow was subsequently executed successfully on the repair branch for 21 November; see the verified run below. No selections before Saturday morning.
+
+## Verified live provisional scoring — 20 November, for racing date 21 November 2026
+
+[Actions run #44633410641](https://github.com/Spankman/Monty-Racing/actions/runs/44633410641) manually dispatched `.github/workflows/monty-live-smoke.yml` on `grok-independent-repairs` at commit `cd040a2`, with `RACING_DATE=2026-11-21` and restricted flat research disabled. The job and audit upload succeeded. Its logs confirm 17 provider meetings, **73 accepted races / 963 runners**, and **61 skipped races**: 40 for active-runner identity/price incompleteness and 21 for prohibited race type. Sources of accepted quotes included `TAB`, `best_win`, and `fixed_win`; these are not independently verified TAB prices. Provisional scoring and probability/identity/NO BET audits passed. `betting_authorised=false`; full V6 artifact integrity, independent field checks, as-of odds timing and complete AU/NZ coverage remain **unproven**. The 40 incomplete races may be awaiting prices; the logs do not prove this is the sole cause. Re-fetch closer to race time, retaining race-level missing-price/missing-identity diagnostics. Never fill gaps with invented prices.
 
 ## Verified offline
 - The Krok fixture -> adapter -> provisional V6 scorer -> create-only prediction/audit pipeline is covered by `test_krok_adapter.py::test_fixture_cli_to_provisional_predictions` and GitHub CI.
@@ -13,7 +17,7 @@ Next: execute the separate end-to-end live smoke workflow after review/deploymen
 
 ## GitHub Actions execution prerequisite
 
-**Existing live-connection shortcut:** The default `main` branch already contains `.github/workflows/monty-manual-intake.yml` (`Monty manual Krok connection check`). It can be manually dispatched in GitHub Actions with a Queensland racing date, and invokes `check_krok.py` with the `KROK_API_KEY` repository secret. This tests provider connectivity without predictions and uploads a seven-day connection report. Inspect its run conclusion and report before claiming live access. The default `main` branch now also contains `.github/workflows/monty-live-smoke.yml` (commit `0610ca395`, 19 November), but that version performs **connectivity-only** checks and deliberately generates no predictions. The full end-to-end scoring implementation of the same workflow path remains only on the **unmerged** `grok-independent-repairs` branch. GitHub normally requires a `workflow_dispatch` workflow to exist on the repository's **default branch** before it can be manually dispatched in the Actions UI/API. Passing ordinary branch CI does not mean the live smoke workflow ran. The authorised maintainer must separately review and deploy the **full scoring workflow implementation** to the default branch before its manual dispatch can test scoring; dispatching the existing default-branch connectivity-only workflow cannot establish end-to-end readiness. Confirm the `KROK_API_KEY` Actions secret exists; do not print or paste its value. A live provider connection was proven by run #44493611326 above; ordinary offline CI still does not prove end-to-end scoring or complete coverage.
+**Confirmed branch-dispatch shortcut:** The default `main` branch registers `.github/workflows/monty-live-smoke.yml` as a connectivity-only workflow. Selecting `grok-independent-repairs` in the manual Run workflow branch selector successfully executed the full provisional scoring implementation from that branch in run #44633410641. **No merge or workflow copy to `main` was needed.** Select the repair branch explicitly; selecting `main` executes connectivity-only code. The `KROK_API_KEY` secret stays in Actions and must never be pasted into logs, issues, or chat.
 
 ## Live smoke run (only when authorised key is available)
 
@@ -44,7 +48,11 @@ A failure is a **NO BET / no selection** outcome, not permission to fabricate mi
 6. **No Saturday selections before Saturday morning**, per user instruction. Never describe research outputs as genuine fully certified V6 selections.
 
 ## Remaining blockers
-- Fresh live Krok access for Saturday 21 November with valid permissions and a complete, current feed (the successful 20 November connection check does not establish Saturday coverage).
+- Recheck Saturday's live feed closer to the off: the successful 21 November provisional run accepted 73 races / 963 runners but skipped 40 races with missing active-runner prices or identities. Complete AU/NZ coverage is not proven.
 - Independent TAB (or other authoritative) field and scratching cross-check.
 - As-of historical features for meaningful predictions.
 - Original private V6 artifacts for full integrity verification.
+
+## Daily selection policy — global, not per meeting
+
+Assess every available eligible AU/NZ race, then rank candidates **across the entire day** by model win probability, evidence quality, value and risk. **Never impose one best bet or one roughie per meeting.** Some meetings may have multiple qualified candidates; others none. Group the resulting global shortlist by meeting only for readability. Missing/incomplete races remain pending or NO BET, not fabricated. Keep best bets and roughies distinct; do not mistake the highest-probability $10 outsider for proven value. Experimental V7 shadow output and provisional V6 output are research rankings only until independent verification and model approval establish a betting edge. Preserve the no-maidens/no-2YO/no-jumps betting policy absent explicit override.
