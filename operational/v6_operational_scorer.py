@@ -78,6 +78,15 @@ def score_operational(df, root=Path("monty_v6")):
     # Diagnostic only: odds timing, source and complete fields remain unverified.
     out["expected_win_roi"]=pred*df["odds"].to_numpy(float)-1
     out["feature_coverage"]=finite.mean(axis=1)
+    # Carry research restrictions through to scored rows so downstream
+    # reporting cannot mistake maiden/juvenile research for ordinary races.
+    if "research_only_restricted_race" in df:
+        values=df["research_only_restricted_race"]
+        if not values.map(lambda v: isinstance(v, (bool, np.bool_))).all():
+            raise ValueError("Research restriction flags must be booleans")
+        out["research_only_restricted_race"]=values.astype(bool).to_numpy()
+    else:
+        out["research_only_restricted_race"]=False
     out["status"]=STATUS
     out["betting_authorised"]=False
     return out
