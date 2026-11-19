@@ -17,6 +17,16 @@ class KrokAdapterTests(unittest.TestCase):
  def test_uncertain_scratching_rejected(self):
   f=self.fixture();f['data'][0]['races'][0]['runners'][1].pop('is_scratched')
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
+ def test_duplicate_race_key_rejected(self):
+  f=self.fixture()
+  f['data'][0]['races'].append(dict(f['data'][0]['races'][0]))
+  with self.assertRaisesRegex(ValueError,'Duplicate meeting/race'):
+   normalize(f,'2026-11-14')
+ def test_duplicate_race_key_across_meetings_rejected(self):
+  f=self.fixture()
+  f['data'].append(dict(f['data'][0]))
+  with self.assertRaisesRegex(ValueError,'Duplicate meeting/race'):
+   normalize(f,'2026-11-14')
  def test_wrong_date_rejected(self):
   with self.assertRaises(ValueError):normalize(self.fixture(),'2026-11-15')
 if __name__=='__main__':unittest.main()
