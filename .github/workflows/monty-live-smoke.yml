@@ -39,4 +39,21 @@ jobs:
           print("Skipped races:",len(audit["skipped"]))
           print("Independent field verification: NOT PROVEN")
           print("Betting authorised: NO")
+          # Exercise full provisional scoring without publishing selections.
+          import pathlib, subprocess, sys, tempfile
+          with tempfile.TemporaryDirectory() as work:
+              work=pathlib.Path(work)
+              source=work/"snapshot.json"
+              source.write_text(json.dumps(snapshot))
+              result=subprocess.run(
+                  [sys.executable,"operational/run_snapshot.py",str(source),
+                   "--output-dir",str(work/"scored")],
+                  capture_output=True,text=True)
+              if result.returncode:
+                  raise SystemExit("Live snapshot-to-scorer integration FAILED; inspect privately")
+              record=json.loads((work/"scored"/"prediction_record.json").read_text())
+              if record["betting_authorised"] or record["runner_count"]!=audit["runners_accepted"]:
+                  raise SystemExit("Scoring audit mismatch or unsafe betting authorisation")
+              print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
+              print("Independent field verification: NOT PROVEN")
           PY
