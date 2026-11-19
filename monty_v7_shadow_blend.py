@@ -29,7 +29,10 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
     if e[KEY+['source','captured_at','race_off_at']].isna().any().any() or e.duplicated(KEY+['source']).any():
         raise ValueError('Expert provenance or duplicate error')
     # Reject undated, timezone-naive, post-off or conflicting race-off evidence.
-    tz_pattern=re.compile(r'(?:Z|[+-][0-9]{2}:[0-9]{2})
+    tz_pattern=re.compile(r'(?:Z|[+-][0-9]{2}:[0-9]{2})$')
+    if not e['captured_at'].map(lambda v: bool(tz_pattern.search(str(v)))).all() or not e['race_off_at'].map(lambda v: bool(tz_pattern.search(str(v)))).all():
+        raise ValueError('Expert timestamps require explicit UTC offset')
+    captured=pd.to_datetime(e['captured_at'],utc=True,errors='coerce')
     off=pd.to_datetime(e['race_off_at'],utc=True,errors='coerce')
     if captured.isna().any() or off.isna().any() or (captured>=off).any():
         raise ValueError('Expert tips must have valid pre-race capture and off timestamps')
