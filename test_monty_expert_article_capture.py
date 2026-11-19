@@ -1,6 +1,7 @@
 import datetime
 import unittest
-from monty_expert_article_capture import capture_article, process_leads
+from monty_expert_article_capture import capture_article, process_leads, NoRedirects
+from urllib.request import Request
 
 NOW = datetime.datetime(2026,11,19,3,0,tzinfo=datetime.timezone.utc)
 def clock(): return NOW
@@ -29,6 +30,16 @@ class ArticleCaptureTests(unittest.TestCase):
         result = capture_article("https://example.org/tips/", "https://example.org/tips/a",
             fetcher=lambda u: "x"*400000, robots_allowed=lambda u: True)
         self.assertEqual(result["status"], "unavailable")
+    def test_redirects_never_followed(self):
+        self.assertIsNone(NoRedirects().redirect_request(
+            Request("https://example.org/tips/a"), None, 302, "Found", {},
+            "https://other.org/private"))
+    def test_source_credentials_rejected(self):
+        result = capture_article("https://user:pass@example.org/tips/",
+            "https://example.org/tips/a",
+            fetcher=lambda u: self.fail("Should not fetch"),
+            robots_allowed=lambda u: self.fail("Should not check robots"))
+        self.assertEqual(result["status"], "rejected")
     def test_processing_never_verifies(self):
         data={"sources":[{"source":"Just Horse Racing","articles":[{"url":"https://www.justhorseracing.com.au/tips/example"}]}]}
         result=process_leads(data,fetcher=fetch,robots_allowed=lambda u: True,clock=clock)
