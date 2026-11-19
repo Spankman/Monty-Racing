@@ -3,6 +3,7 @@ import json
 import tempfile
 import subprocess
 import sys
+from unittest.mock import patch
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -57,6 +58,23 @@ class OperationalV6Tests(unittest.TestCase):
             self.assertEqual(len(record["input_sha256"]),64)
             second=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(second.returncode,0)
+    def test_matches_frozen_v6_scoring_math_without_private_artifacts(self):
+        # Patch only the integrity gate; the original V6 scoring math remains unchanged.
+        from monty.scoring import score_features
+        import json
+        model=json.loads((ROOT/"results"/"frozen_model.json").read_text())
+        names=model["input_feature_names"]
+        data=sample()
+        output=score_operational(data,ROOT)
+        X=np.full((len(data),len(names)),np.nan)
+        if "log_field_size" in names:
+            X[:,names.index("log_field_size")]=np.log(len(data))
+        if "log_market_probability" in names:
+            X[:,names.index("log_market_probability")]=np.log(output.market_prob.to_numpy())
+        with patch("monty.scoring.verify_artifacts",return_value=55):
+            original=score_features(X,names,output.market_prob.to_numpy(),
+                                    output.race_id.to_numpy(),root=ROOT)
+        np.testing.assert_allclose(output.monty_prob.to_numpy(),original,rtol=1e-12,atol=1e-12)
     def test_missing_features_are_disclosed(self):
         out=score_operational(sample(),ROOT)
         self.assertTrue((out.feature_coverage<1).all())
