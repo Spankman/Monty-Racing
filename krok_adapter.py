@@ -126,7 +126,7 @@ def fetch(date,key):
     return json.loads(body)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--date',required=True);p.add_argument('--fixture',help='Use a local API JSON fixture instead of live fetch');p.add_argument('--output-dir',default='output_v05');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--date',required=True);p.add_argument('--fixture',help='Use a local API JSON fixture instead of live fetch');p.add_argument('--output-dir',default='output_v05');p.add_argument('--provisional-operational',action='store_true',help='Use provisional V6 scorer; research only, not betting-authorised');a=p.parse_args()
     dt.date.fromisoformat(a.date)
     out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True)
     raw=json.loads(Path(a.fixture).read_text()) if a.fixture else fetch(a.date,os.environ.get('KROK_API_KEY'))
@@ -134,8 +134,13 @@ def main():
     (out/'krok_raw.json').write_text(json.dumps(raw,indent=2))
     (out/'krok_snapshot.json').write_text(json.dumps(snapshot,indent=2))
     (out/'krok_adapter_audit.json').write_text(json.dumps(audit,indent=2))
-    from run_day import run
-    result=run(str(out/'krok_snapshot.json'),a.date,str(out/'scored'))
+    if a.provisional_operational:
+        import subprocess
+        subprocess.run([sys.executable,str(Path(__file__).resolve().parent/'operational'/'run_snapshot.py'),str(out/'krok_snapshot.json'),'--output-dir',str(out/'provisional_scored')],check=True)
+        result={'status':'PROVISIONAL_RESEARCH_ONLY','output_dir':str(out/'provisional_scored'),'betting_authorised':False}
+    else:
+        from run_day import run
+        result=run(str(out/'krok_snapshot.json'),a.date,str(out/'scored'))
     print(json.dumps({'adapter':audit,'scoring':result},indent=2))
 
 if __name__=='__main__':main()
