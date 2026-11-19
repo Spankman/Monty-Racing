@@ -46,6 +46,23 @@ jobs:
           print("Provider meetings inspected:",audit["meetings"])
           print("Accepted runners:",audit["runners_accepted"])
           print("Skipped races:",len(audit["skipped"]))
+          # Aggregate reasons without logging venue names or runner records.
+          from collections import Counter
+          known_reasons = (
+              "wrong or missing date", "not confirmed pre-race status",
+              "prohibited race type", "missing runners",
+              "scratching status uncertain", "contradictory runner count",
+              "active runner lacks identity/price", "duplicate saddlecloth",
+              "mixed price sources",
+          )
+          reasons = Counter()
+          for skipped in audit["skipped"]:
+              match = next((reason for reason in known_reasons
+                            if skipped.endswith(": " + reason)), "other")
+              reasons[match] += 1
+          for reason, count in sorted(reasons.items()):
+              print("Skipped reason:", reason, count)
+
           print("Provider price sources:",", ".join(audit["price_sources"]))
           print("Independent field verification: NOT PROVEN")
           print("Betting authorised: NO")
