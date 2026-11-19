@@ -13,6 +13,15 @@ class KrokAdapterTests(unittest.TestCase):
  def test_missing_price_skips(self):
   f=self.fixture();del f['data'][0]['races'][0]['runners'][1]['fixed_win']
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
+ def test_full_page_without_end_marker_rejected(self):
+  f=self.fixture();f['data']=[dict(f['data'][0],venue='Sample'+str(i)) for i in range(50)]
+  f['meta']={}
+  with self.assertRaisesRegex(ValueError,'50-meeting page limit'):
+   normalize(f,'2026-11-14')
+ def test_full_page_with_explicit_end_marker_allowed(self):
+  f=self.fixture();f['data']=[dict(f['data'][0],venue='Sample'+str(i)) for i in range(50)]
+  s,a=normalize(f,'2026-11-14')
+  self.assertEqual(a['races_accepted'],50)
  def test_paginated_rejected(self):
   f=self.fixture();f['meta']['has_more']=True
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
