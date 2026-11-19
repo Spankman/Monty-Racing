@@ -28,7 +28,7 @@ def price(r):
         if p:return p,key
     return None,None
 
-def normalize(payload,date):
+def normalize(payload,date,include_restricted_flat_research=False):
     if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
         raise ValueError('Unexpected API response; expected success=true and data[]')
     meta=payload.get('meta') or {}
@@ -57,13 +57,17 @@ def normalize(payload,date):
             # Unknown, running and resulted races must never be treated as pre-race.
             if n is None or status not in ('open','scheduled','upcoming','pre-race','prerace'):
                 skipped.append(f'{venue} R{n}: not confirmed pre-race status');continue
-            # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.
+            # Jumps remain excluded. Maiden and juvenile flat races may be
+            # scored for research ONLY when explicitly enabled.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
-            prohibited = bool(re.search(r'\b(?:maiden|mdn|maid|2yo|2\s*[- ]?\s*y\s*[- ]?\s*o|2\s*year\s*old|two\s*year\s*old|juvenile|hurdle|steeple|jumping|jumps|chase)\b',label))
-            if not prohibited and isinstance(race.get('runners'),list):
+            jumps=bool(re.search(r'\\b(?:hurdle|steeple|jumping|jumps|chase)\\b',label))
+            maiden=bool(re.search(r'\\b(?:maiden|mdn|maid)\\b',label))
+            juvenile=bool(re.search(r'\\b(?:2yo|2\\s*[- ]?\\s*y\\s*[- ]?\\s*o|2\\s*year\\s*old|two\\s*year\\s*old|juvenile)\\b',label))
+            if isinstance(race.get('runners'),list):
                 ages=[r.get('age') for r in race['runners'] if r.get('is_scratched') is False]
-                prohibited=bool(ages) and all(isinstance(a,(int,float)) and not isinstance(a,bool) and a==2 for a in ages)
-            if prohibited:
+                juvenile=juvenile or (bool(ages) and all(isinstance(age,(int,float)) and not isinstance(age,bool) and age==2 for age in ages))
+            restricted=jumps or maiden or juvenile
+            if jumps or (restricted and not include_restricted_flat_research):
                 skipped.append(f'{venue} R{n}: prohibited race type');continue
             rr=race.get('runners')
             if not isinstance(rr,list) or len(rr)<2:
@@ -81,7 +85,7 @@ def normalize(payload,date):
                 p,origin=price(r)
                 if p is None or r.get('number') is None or not r.get('name'):
                     break
-                item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p}
+                item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p, 'research_only_restricted_race':bool(maiden or juvenile), 'betting_authorised':False}
                 for source,target in [('barrier','barrier'),('weight','allocated_weight'),('age','age'),('claim_kg','claim_kg')]:
                     v=r.get(source)
                     if isinstance(v,(int,float)) and not isinstance(v,bool):item[target]=v
@@ -124,14 +128,14 @@ def normalize(payload,date):
                 if 'allocated_weight' in item:
                     item['effective_weight']=item['allocated_weight']-item.get('claim_kg',0)
             rows.extend(parsed)
-            races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active)})
+            races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'betting_authorised':False})
     # A venue/race key must identify exactly one field. Duplicate provider records
     # would otherwise silently merge separate fields in downstream scoring.
     keys=[(str(r['meeting']).strip().casefold(),str(r['race']).strip()) for r in races]
     if len(keys)!=len(set(keys)):
         raise ValueError('Duplicate meeting/race identity in provider feed')
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
-    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
+    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'restricted_flat_research_races':sum(r['research_only_restricted_race'] for r in races),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
 
 def fetch(date,key):
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
