@@ -43,7 +43,7 @@ def prepare(scores_path, tips_path, output_path):
     # A source's listed picks receive equal source-local mass. The blend
     # subsequently gives each distinct source equal weight.
     tips['expert_score']=1.0
-    out=tips[KEY+['expert_score','source','captured_at','race_off_at']]
+    # Author is required for nonzero shadow consensus weight; preserve it.\n    if 'author' not in tips.columns: tips['author']=''\n    out=tips[KEY+['expert_score','source','author','captured_at','race_off_at']]
     out.to_csv(output_path,index=False)
     return len(out)
 
