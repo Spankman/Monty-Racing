@@ -118,6 +118,7 @@ class OperationalV6Tests(unittest.TestCase):
             result=subprocess.run([sys.executable,"operational/run_operational.py",str(source),
                 "--output-dir",str(d/"out")],capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
+            (d/"out"/"snapshot_provenance.json").write_text(json.dumps({"betting_authorised":False,"independent_field_verification_proven":False}))
             csv_path=d/"out"/"operational_predictions.csv"
             scored=pd.read_csv(csv_path)
             self.assertTrue(scored.research_only_restricted_race.all())
