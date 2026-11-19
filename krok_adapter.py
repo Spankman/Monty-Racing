@@ -98,6 +98,11 @@ def normalize(payload,date):
                     item['effective_weight']=item['allocated_weight']-item.get('claim_kg',0)
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active)})
+    # A venue/race key must identify exactly one field. Duplicate provider records
+    # would otherwise silently merge separate fields in downstream scoring.
+    keys=[(str(r['meeting']).strip().casefold(),str(r['race']).strip()) for r in races]
+    if len(keys)!=len(set(keys)):
+        raise ValueError('Duplicate meeting/race identity in provider feed')
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
     return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
 
