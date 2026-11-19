@@ -61,7 +61,9 @@ def verify(directory):
     for race, group in fields.items():
         if len(group["runners"]) < 2 or not math.isclose(group["sum"], 1.0, abs_tol=1e-6) or not math.isclose(group["market_sum"], 1.0, abs_tol=1e-6):
             raise ValueError(f"Probabilities or field size invalid for {race}")
-    return {"status": "PROVISIONAL_AUDIT_PASSED", "races": len(fields), "runners": count, "betting_authorised": False}
+    restricted_count = sum(bool(group.get("restricted", False)) for group in fields.values())
+    return {"status": "PROVISIONAL_AUDIT_PASSED", "races": len(fields), "runners": count,
+            "restricted_flat_research_races": restricted_count, "betting_authorised": False}
 
 
 if __name__ == "__main__":
