@@ -31,6 +31,8 @@ def score_operational(df, root=Path("monty_v6")):
     df["race_id"] = df["meeting"].str.upper() + "|" + df["race"]
     if df.duplicated(["race_id","number"]).any():
         raise ValueError("Duplicate saddlecloth")
+    if df.assign(_horse=df["horse"].str.casefold()).duplicated(["race_id","_horse"]).any():
+        raise ValueError("Duplicate horse identity in race")
     if (df.groupby("race_id")["number"].transform("size") < 2).any():
         raise ValueError("Race needs at least two active runners; incomplete or walkover field")
     model_path = Path(root) / "results" / "frozen_model.json"
