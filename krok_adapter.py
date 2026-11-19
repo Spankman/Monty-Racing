@@ -2,7 +2,7 @@
 """Krok documented /api/v1/racing/meetings adapter -> Monty v0.4 snapshot.
 Requires user-provided API key; no unofficial TAB endpoints or fabricated features.
 """
-import argparse, datetime as dt, json, os, urllib.parse, urllib.request
+import argparse, datetime as dt, json, os, urllib.parse, urllib.request, urllib.error, time
 from pathlib import Path
 
 import sys
@@ -47,7 +47,7 @@ def normalize(payload,date):
             n=race.get('number');status=str(race.get('status','')).lower()
             if n is None or status in ('abandoned','cancelled','canceled','resulted','closed','final'):
                 continue
-            rr=race.get('runners')
+            # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.\n            label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()\n            if any(x in label for x in ('maiden','2yo','2 year old','two year old','hurdle','steeple','jumping')):\n                skipped.append(f'{venue} R{n}: prohibited race type');continue\n            rr=race.get('runners')
             if not isinstance(rr,list) or len(rr)<2:
                 skipped.append(f'{venue} R{n}: missing runners');continue
             active=[r for r in rr if r.get('is_scratched') is False]
