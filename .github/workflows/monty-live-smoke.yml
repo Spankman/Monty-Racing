@@ -1,0 +1,42 @@
+name: Monty live Krok connectivity smoke test
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Queensland racing date YYYY-MM-DD; blank uses today'
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  connectivity-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Safe Krok connectivity check (no predictions or raw data published)
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          RACING_DATE: ${{ inputs.date }}
+        run: |
+          python - <<'PY'
+          import datetime, os
+          from zoneinfo import ZoneInfo
+          from krok_adapter import fetch, normalize
+          if not os.environ.get("KROK_API_KEY"):
+              raise SystemExit("KROK_API_KEY secret is missing")
+          day = os.environ.get("RACING_DATE") or datetime.datetime.now(ZoneInfo("Australia/Brisbane")).date().isoformat()
+          datetime.date.fromisoformat(day)
+          payload = fetch(day, os.environ["KROK_API_KEY"])
+          snapshot, audit = normalize(payload, day)
+          print("Racing date:", day)
+          print("Provider-accepted races:", audit["races_accepted"])
+          print("Provider-accepted runners:", audit["runners_accepted"])
+          print("Independent field verification: NOT PROVEN")
+          print("Betting authorised: NO")
+          print("No selections or provider records published")
+          PY
