@@ -54,7 +54,7 @@ def route_full_day(outputs, *, explicit_le=False):
     Caller must supply genuine externally verified output. This function only
     routes provided candidates, never executes models or approves betting.
     """
-    allowed=('V7','V7_LE','V6','FORM_ASSESSMENT') if explicit_le else ('V7',)
+    allowed=('V7','V7_LE') if explicit_le else ('V7',)
     for source in allowed:
         if source=='V7_LE' and not explicit_le:
             continue
