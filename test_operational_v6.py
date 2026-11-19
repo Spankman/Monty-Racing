@@ -107,6 +107,22 @@ class OperationalV6Tests(unittest.TestCase):
             self.assertEqual(len(provenance["source_snapshot_sha256"]),64)
             second=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(second.returncode,0)
+    def test_snapshot_rejects_invalid_dates_without_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            for idx,bad_date in enumerate(("2026-02-30","2026-11-2","tomorrow","2026-11-21T00:00:00")):
+                snapshot=d/f"snapshot-{idx}.json"
+                snapshot.write_text(json.dumps({
+                    "date":bad_date,
+                    "runners":sample().to_dict(orient="records"),
+                    "races":[{"meeting":"TEST","race":"1","expected_active_runners":3}]
+                }))
+                output=d/f"out-{idx}"
+                result=subprocess.run([sys.executable,"operational/run_snapshot.py",
+                    str(snapshot),"--output-dir",str(output)],capture_output=True,text=True)
+                self.assertNotEqual(result.returncode,0,bad_date)
+                self.assertIn("Snapshot date must be YYYY-MM-DD",result.stderr)
+                self.assertFalse((output/"prediction_record.json").exists())
     def test_auditor_rejects_mixed_research_flags_in_one_race(self):
         from operational.verify_provisional_output import verify
         with tempfile.TemporaryDirectory() as tmp:
