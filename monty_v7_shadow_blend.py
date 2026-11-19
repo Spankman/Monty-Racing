@@ -42,7 +42,14 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
         raise ValueError('Expert tips must have valid pre-race capture and off timestamps')
     if e.groupby(['meeting','race']).race_off_at.nunique().gt(1).any():
         raise ValueError('Conflicting race off times')
-    if not set(map(tuple,e[KEY].to_numpy())).issubset(set(map(tuple,df[KEY].to_numpy()))):\n        raise ValueError('Expert horse not in verified model field')\n    # Never treat multiple publishing sites as independent analysts.\n    # Legacy expert files without author evidence are not eligible for blending.\n    if 'author' not in e.columns or e['author'].fillna('').astype(str).str.strip().eq('').any():\n        return df\n    e['author_key']=e.author.astype(str).str.casefold().str.replace(r'[^a-z0-9]+',' ',regex=True).str.strip()\n    # Each independent named author contributes equally, regardless of syndication.
+    if not set(map(tuple,e[KEY].to_numpy())).issubset(set(map(tuple,df[KEY].to_numpy()))):
+        raise ValueError('Expert horse not in verified model field')
+    # Never treat multiple publishing sites as independent analysts.
+    # Legacy expert files without author evidence are not eligible for blending.
+    if 'author' not in e.columns or e['author'].fillna('').astype(str).str.strip().eq('').any():
+        return df
+    e['author_key']=e.author.astype(str).str.casefold().str.replace(r'[^a-z0-9]+',' ',regex=True).str.strip()
+    # Each independent named author contributes equally, regardless of syndication.
     for (meeting,race),ix in df.groupby(['meeting','race'],sort=False).groups.items():
         sub=df.loc[ix]
         ex=e[(e.meeting==meeting)&(e.race==race)]
@@ -53,7 +60,9 @@ def blend(scores, experts=None, weight=0.10, min_coverage=0.60):
         for source,g in ex.groupby('author_key'):
             total=g.expert_score.sum()
             if total<=0:continue
-            # Identical syndicated records count once per author/runner.\n            vals=g.groupby('number').expert_score.max()\n            vals=vals/vals.sum()
+            # Identical syndicated records count once per author/runner.
+            vals=g.groupby('number').expert_score.max()
+            vals=vals/vals.sum()
             vec=sub.number.map(vals).fillna(0).to_numpy(float)
             source_vectors.append(vec)
         if not source_vectors:continue
