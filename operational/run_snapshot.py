@@ -37,16 +37,18 @@ def main():
                  str(csv),"--output-dir",args.output_dir,"--root",args.root,
                  "--race-manifest",str(manifest)]
         subprocess.run(command,check=True)
-    # The input CSV is temporary; record its permanent source snapshot hash separately.
+    # Keep the create-only prediction record immutable. Store provenance separately.
     import hashlib
-    record_path=Path(args.output_dir)/"prediction_record.json"
-    record=json.loads(record_path.read_text())
-    record["source_snapshot_sha256"]=hashlib.sha256(Path(args.snapshot).read_bytes()).hexdigest()
-    record["source_snapshot_date"]=snapshot["date"]
-    record["source_adapter"]="Krok-normalized snapshot (source unverified)"
-    record["independent_field_verification_proven"]=False
-    record["betting_authorised"]=False
-    record_path.write_text(json.dumps(record,indent=2)+"\n")
+    provenance={
+        "source_snapshot_sha256":hashlib.sha256(Path(args.snapshot).read_bytes()).hexdigest(),
+        "source_snapshot_date":snapshot["date"],
+        "source_adapter":"Krok-normalized snapshot (source unverified)",
+        "independent_field_verification_proven":False,
+        "betting_authorised":False
+    }
+    with (Path(args.output_dir)/"snapshot_provenance.json").open("x") as f:
+        json.dump(provenance,f,indent=2)
+        f.write("\\n")
 
 if __name__=="__main__":
     main()
