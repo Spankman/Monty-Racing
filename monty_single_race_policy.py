@@ -47,3 +47,19 @@ def next_bet_type(current):
     if current not in BET_ORDER:raise ValueError('Unknown bet type')
     i=BET_ORDER.index(current)
     return BET_ORDER[i+1] if i+1<len(BET_ORDER) else None
+
+def route_full_day(outputs, *, explicit_le=False):
+    """Full-day selections never silently lower expectations.
+
+    Caller must supply genuine externally verified output. This function only
+    routes provided candidates, never executes models or approves betting.
+    """
+    allowed=('V7','V7_LE','V6','FORM_ASSESSMENT') if explicit_le else ('V7',)
+    for source in allowed:
+        if source=='V7_LE' and not explicit_le:
+            continue
+        candidate=route_single_race({source:outputs.get(source)})
+        if candidate.source==source:
+            return candidate
+    return SelectionRoute('NO_BET',(),False,False,False,
+                          'No qualifying full-day V7 selections; LE requires explicit authorization')
