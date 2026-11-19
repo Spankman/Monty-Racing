@@ -10,7 +10,7 @@ from monty_v7_shadow_blend import blend, KEY
 def audit(scores, experts):
     scored=pd.read_csv(scores,dtype={k:str for k in KEY})
     # The production blend validates source identity, timing and race matching.
-    checked=blend(scores,experts,weight=0.10,min_coverage=0.0)
+    blend(scores,experts,weight=0.10,min_coverage=0.0)
     e=pd.read_csv(experts,dtype={k:str for k in KEY})
     if e.empty:return {'races_with_experts':0,'source_count':0,'overlap':[]}
     # A positive source score is a source's actual nominated runner, not a
