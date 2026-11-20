@@ -1,5 +1,6 @@
 name: Monty live Krok connectivity smoke test
 on:
+  # Evening on-demand smoke run: push on this workflow file starts a live research check.
   push:
     branches: [grok-independent-repairs]
     paths: ['.github/workflows/monty-live-smoke.yml']
