@@ -7,7 +7,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent / 'monty_v6'))
-from monty.normalization import condition
+from monty.normalization import condition, numeric_class
 
 BASE='https://krokodds.com.au/api/v1/racing/meetings'
 
@@ -92,6 +92,11 @@ def normalize(payload,date,include_restricted_flat_research=False):
                 for source,target in [('barrier','barrier'),('weight','allocated_weight'),('age','age'),('claim_kg','claim_kg')]:
                     v=r.get(source)
                     if isinstance(v,(int,float)) and not isinstance(v,bool):item[target]=v
+                # Only an explicit BM/Benchmark number is a V6 benchmark class.
+                # Never infer a benchmark rating from a generic race title.
+                benchmark=numeric_class(label)
+                if benchmark == benchmark:
+                    item['benchmark_class']=benchmark
                 distance=race.get('distance_m',race.get('distance'))
                 if isinstance(distance,(int,float)) and distance>0:item['distance_km']=distance/1000
                 raw_going = race.get('track_condition')
