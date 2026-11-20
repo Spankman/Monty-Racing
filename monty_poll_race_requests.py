@@ -2,6 +2,7 @@
 
 Designed for scheduled and PR-triggered GitHub Actions, because issue-created events can be
 suppressed when an issue is created by an integration token.
+# Trigger Launceston R9 win-odds audit rerun.
 """
 import datetime as dt
 import json
