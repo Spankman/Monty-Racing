@@ -42,6 +42,22 @@ class KrokAdapterTests(unittest.TestCase):
   self.assertEqual(summary['missing_price_runner_slots'],1)
   self.assertEqual(summary['missing_number_runner_slots'],1)
   self.assertEqual(summary['missing_name_runner_slots'],1)
+  self.assertEqual(diagnostic['price_status'],'partial_fixed_win_prices')
+  self.assertEqual(summary['races_partial_fixed_win_prices'],1)
+  self.assertEqual(summary['races_no_fixed_win_prices'],0)
+  self.assertEqual(summary['races_prices_present_identity_incomplete'],0)
+ def test_no_fixed_odds_available_is_separate_diagnostic(self):
+  f=self.fixture()
+  extra=dict(f['data'][0]['races'][0])
+  extra['number']=2
+  extra['runners']=[dict(r) for r in extra['runners']]
+  for runner in extra['runners']:runner.pop('fixed_win',None)
+  f['data'][0]['races'].append(extra)
+  _,audit=normalize(f,'2026-11-14')
+  self.assertEqual(audit['incomplete_race_summary']['races_no_fixed_win_prices'],1)
+  self.assertEqual(audit['incomplete_race_diagnostics'][0]['price_status'],'no_fixed_win_prices')
+  self.assertEqual(audit['races_accepted'],1)
+
  def test_prohibited_race_not_misreported_as_incomplete(self):
   f=self.fixture()
   prohibited=dict(f['data'][0]['races'][0])
