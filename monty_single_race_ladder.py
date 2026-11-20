@@ -33,11 +33,12 @@ def choose(runners, *, approved=False, min_edge=0.05, short_price=3.0,
             "reason":"Unapproved research model: selection only, NO BET"}
     if not approved:
         return result
-    # Try each eligible win candidate in model order, never force a negative-edge win bet.
-    for r in ranked:
-        if r["edge"] >= min_edge and r["odds"] >= short_price:
-            return {**result,"bet_type":"WIN","selections":[r],"bet_authorised":True,
-                    "reason":"Verified positive estimated win edge"}
+    # Single-race BB must always be the top-ranked horse. If its win price
+    # is too short, progress to Q/T/FF; never silently substitute a lower
+    # ranked horse as the win selection.
+    if best["edge"] >= min_edge and best["odds"] >= short_price:
+        return {**result,"bet_type":"WIN","selections":[best],"bet_authorised":True,
+                "reason":"Top-ranked runner has verified positive estimated win edge"}
     # The highest probability horse remains first in every exotic display.
     # Exotic quotes must explicitly supply verified edge and approved joint probability.
     for kind,n in (("QUINELLA BOXED",2),("TRIFECTA BOXED",3),("FIRST FOUR BOXED",4)):
