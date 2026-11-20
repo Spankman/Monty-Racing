@@ -230,7 +230,7 @@ jobs:
                   "independent_field_verification_proven",
                   "artifact_integrity_verified","runner_count","race_count",
                   "input_sha256","frozen_model_sha256")}
-              safe["v6_input_feature_coverage"]=cv["mean_input_coverage"]
+          safe["v6_input_feature_coverage"]=cv["mean_input_coverage"]
           safe["v6_fully_observed_features"]=len(cv["fully_observed_features"])
           safe["v6_unobserved_features"]=len(cv["unobserved_features"])
           safe["racing_date"]=day
