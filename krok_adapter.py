@@ -158,73 +158,60 @@ def normalize(payload,date,include_restricted_flat_research=False):
     return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'restricted_flat_research_races':sum(r['research_only_restricted_race'] for r in races),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'incomplete_race_summary':incomplete_summary,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
 
 def fetch(date,key):
-    """Fetch every provider-declared page; fail closed on ambiguous pagination."""
-    if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
+    """Read complete dated full cards using documented cursor pagination."""
+    if not key:
+        raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
     records=[]
-    seen=set()
-    page=1
+    seen_cursors=set()
+    seen_meetings=set()
     cursor=None
     for attempt in range(100):
-        params={'date':date,'race_type':'T','limit':50}
+        # Krok's dated summary board is NOT the complete runner feed.
+        # Dated full=1 supports cursor pages (max 25 meetings).
+        params={'full':'1','limit':25,'race_type':'T'}
         if cursor is not None:
             params['cursor']=cursor
-        elif page>1:
-            params['page']=page
-        url=BASE+'?'+urllib.parse.urlencode(params)
-        req=urllib.request.Request(url,headers={'X-API-Key':key,'Accept':'application/json','User-Agent':'Monty-V6/0.5'})
+        url=BASE+'/'+date+'?'+urllib.parse.urlencode(params)
+        req=urllib.request.Request(url,headers={
+            'X-API-Key':key,'Accept':'application/json',
+            'User-Agent':'Monty-V6/0.5'})
         with urllib.request.urlopen(req,timeout=35) as resp:
             body=resp.read(20_000_001)
-        if len(body)>20_000_000:raise ValueError('Response too large')
+        if len(body)>20_000_000:
+            raise ValueError('Response too large')
         payload=json.loads(body)
-        if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
+        if (not isinstance(payload,dict) or payload.get('success') is not True
+                or not isinstance(payload.get('data'),list)):
             raise ValueError('Invalid provider page response')
         meta=payload.get('meta') or {}
-        if not isinstance(meta,dict):raise ValueError('Invalid pagination metadata')
-        if meta.get('truncated') and not (meta.get('next_cursor') or meta.get('next_page') or meta.get('has_more')):
-            # Some provider responses mark truncation without a continuation.
-            # Probe the next numbered page, but NEVER certify completeness
-            # unless a subsequent page supplies an explicit terminal signal.
-            if cursor is not None:
-                raise ValueError('Cursor page truncated without a continuation')
-            cursor=None
-            page+=1
-            # The repeated-page guard below rejects ignored page parameters.
-            inferred_next_page=True
-        else:
-            inferred_next_page=False
+        if not isinstance(meta,dict):
+            raise ValueError('Invalid pagination metadata')
         batch=payload['data']
-        if not batch and (meta.get('has_more') or meta.get('next_cursor') or meta.get('next_page')):
-            raise ValueError('Provider reports more meetings but returned an empty page')
-        # A repeated page means the provider ignored the continuation parameter.
-        signature=json.dumps(batch,sort_keys=True,default=str)
-        if signature in seen:raise ValueError('Repeated provider page; pagination not advancing')
-        seen.add(signature)
+        if not batch and (meta.get('has_more') or meta.get('truncated')):
+            raise ValueError('Provider returned empty nonterminal page')
+        for meeting in batch:
+            if not isinstance(meeting,dict):
+                raise ValueError('Invalid meeting record')
+            identity=str(meeting.get('id') or meeting.get('meeting_key') or
+                         (meeting.get('date'),meeting.get('venue'),meeting.get('type')))
+            if identity in seen_meetings:
+                raise ValueError('Duplicate meeting across cursor pages')
+            seen_meetings.add(identity)
         records.extend(batch)
-        next_cursor=meta.get('next_cursor')
-        next_page=meta.get('next_page')
-        has_more=meta.get('has_more')
-        if inferred_next_page:
+        more=meta.get('has_more')
+        nxt=meta.get('next_cursor')
+        if more is True or nxt:
+            if not nxt or not isinstance(nxt,str) or nxt in seen_cursors:
+                raise ValueError('Incomplete full-card feed: missing/repeated next_cursor')
+            seen_cursors.add(nxt)
+            cursor=nxt
             continue
-        if next_cursor:
-            cursor=str(next_cursor)
-            page+=1
-        elif next_page:
-            if isinstance(next_page,bool) or not str(next_page).isdigit() or int(next_page)<=page:
-                raise ValueError('Invalid next_page from provider')
-            cursor=None
-            page=int(next_page)
-        elif has_more is True:
-            cursor=None
-            page+=1
-        elif has_more is False or meta.get('is_last_page') is True or (
-            isinstance(meta.get('total_pages'),int) and page>=meta['total_pages']
-        ):
-            return {'success':True,'data':records,'meta':{'has_more':False,'is_last_page':True,'pages_fetched':attempt+1}}
-        elif len(batch)<50:
-            return {'success':True,'data':records,'meta':{'has_more':False,'is_last_page':True,'pages_fetched':attempt+1}}
-        else:
-            raise ValueError('Full provider page without pagination metadata; completeness unproven')
-    raise ValueError('Provider pagination exceeded 100 pages; refusing incomplete feed')
+        if more is False and not meta.get('truncated') and not nxt:
+            return {'success':True,'data':records,
+                    'meta':{'has_more':False,'is_last_page':True,
+                            'pages_fetched':attempt+1}}
+        raise ValueError('Provider did not confirm end of full-card feed')
+    raise ValueError('Provider pagination exceeded 100 pages')
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--date',required=True);p.add_argument('--fixture',help='Use a local API JSON fixture instead of live fetch');p.add_argument('--output-dir',default='output_v05');p.add_argument('--provisional-operational',action='store_true',help='Use provisional V6 scorer; research only, not betting-authorised');a=p.parse_args()
