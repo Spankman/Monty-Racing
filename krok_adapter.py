@@ -66,6 +66,9 @@ def normalize(payload,date,include_restricted_flat_research=False):
             if isinstance(race.get('runners'),list):
                 ages=[r.get('age') for r in race['runners'] if r.get('is_scratched') is False]
                 juvenile=juvenile or (bool(ages) and all(isinstance(age,(int,float)) and not isinstance(age,bool) and age==2 for age in ages))
+            # Unknown class is permitted for scoring, but not represented as
+            # positively verified to be an unrestricted race.
+            classification_unknown=not bool(label.strip())
             restricted=jumps or maiden or juvenile
             if jumps or (restricted and not include_restricted_flat_research):
                 skipped.append(f'{venue} R{n}: prohibited race type');continue
@@ -85,7 +88,7 @@ def normalize(payload,date,include_restricted_flat_research=False):
                 p,origin=price(r)
                 if p is None or r.get('number') is None or not r.get('name'):
                     break
-                item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p, 'research_only_restricted_race':bool(maiden or juvenile), 'betting_authorised':False}
+                item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p, 'research_only_restricted_race':bool(maiden or juvenile), 'race_classification_unknown':classification_unknown, 'betting_authorised':False}
                 for source,target in [('barrier','barrier'),('weight','allocated_weight'),('age','age'),('claim_kg','claim_kg')]:
                     v=r.get(source)
                     if isinstance(v,(int,float)) and not isinstance(v,bool):item[target]=v
@@ -128,7 +131,7 @@ def normalize(payload,date,include_restricted_flat_research=False):
                 if 'allocated_weight' in item:
                     item['effective_weight']=item['allocated_weight']-item.get('claim_kg',0)
             rows.extend(parsed)
-            races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'betting_authorised':False})
+            races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'race_classification_unknown':classification_unknown,'betting_authorised':False})
     # A venue/race key must identify exactly one field. Duplicate provider records
     # would otherwise silently merge separate fields in downstream scoring.
     keys=[(str(r['meeting']).strip().casefold(),str(r['race']).strip()) for r in races]
