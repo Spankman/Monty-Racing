@@ -128,8 +128,8 @@ jobs:
                   "",
                   "## Highest model win probabilities across all accepted races",
               ]
-              for best in ranked[:20]:
-                  if by_race[best["race_id"]][0] is not best: continue
+              bests=[group[0] for group in by_race.values()]
+              for best in bests[:20]:
                   group=by_race[best["race_id"]]
                   report.append("- **"+best["race_id"]+"**: "+format_runner(best))
                   if float(best["odds"]) < 4 and len(group)>=2:
@@ -147,7 +147,7 @@ jobs:
               print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
-              # Persist non-sensitive audit metadata, not selections or raw provider data.
+              # Persist non-sensitive audit metadata separately from the research report.
               safe={k:record[k] for k in (
                   "schema","created_at_utc","status","betting_authorised",
                   "pre_off_proven","race_counts_match_supplied_manifest",
@@ -169,11 +169,13 @@ jobs:
               safe["coverage_is_independently_verified"]=False
               pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\n")
           PY
-      - name: Upload audit metadata only
+      - name: Upload audit and unapproved research report
         if: success()
         uses: actions/upload-artifact@v5
         with:
           name: monty-live-audit-${{ github.run_id }}
-          path: |\n            live_smoke_audit.json\n            monty_research_report.md
+          path: |
+            live_smoke_audit.json
+            monty_research_report.md
           if-no-files-found: error
           retention-days: 7
