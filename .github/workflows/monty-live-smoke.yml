@@ -29,6 +29,13 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install -r requirements-runner.txt
+      - name: Probe historical results and form availability for frozen V6
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+        run: |
+          # Read-only, bounded provider requests; no private horse records logged.
+          # This is a source feasibility audit, not an approved V6 run.
+          python diagnose_history.py
       - name: Validate Krok connection and provider response
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
