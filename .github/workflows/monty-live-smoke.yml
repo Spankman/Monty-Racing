@@ -117,33 +117,48 @@ jobs:
               by_race={}
               for r in ranked:
                   by_race.setdefault(r["race_id"],[]).append(r)
+              # One-line-per-race, compact mobile-friendly report. Only display
+              # the horses required for the final triggered exotic tier.
               report=[
-                  "# Monty provisional research ranking — "+day,
+                  "# MONTY — "+day,
                   "",
-                  "**NO BET — NOT VERIFIED OR BETTING-AUTHORISED.**",
-                  "Prices are captured provider quotes, not independently verified live TAB odds.",
-                  "The scorer is provisional operational V6, NOT certified frozen V6 or V7.",
-                  "Model rankings do not establish betting value or predicted finishing order.",
-                  "Maiden, two-year-old and jumping races excluded from betting; incomplete races omitted.",
+                  "**RESEARCH ONLY — NO BET.** Provisional scorer; odds not independently TAB-verified.",
                   "",
-                  "## Highest model win probabilities across all accepted races",
+                  "## Best chances",
+                  "",
+                  "| Race | Type | Horses in Monty rank order |",
+                  "|---|---|---|",
               ]
               bests=[group[0] for group in by_race.values()]
-              for best in bests[:20]:
+              for best in bests[:10]:
                   group=by_race[best["race_id"]]
-                  report.append("- **"+best["race_id"]+"**: "+format_runner(best))
-                  if float(best["odds"]) < 4 and len(group)>=2:
-                      report.append("  - Quinella research: "+format_runner(group[1]))
+                  picks=[group[0]]
+                  kind="WIN"
+                  if float(group[0]["odds"]) < 4 and len(group)>=2:
+                      picks.append(group[1])
+                      kind="Q"
                       if float(group[1]["odds"]) < 4 and len(group)>=3:
-                          report.append("  - Boxed trifecta research: "+format_runner(group[2]))
+                          picks.append(group[2])
+                          kind="TRI BOX"
                           if float(group[2]["odds"]) < 4 and len(group)>=4:
-                              report.append("  - First-four research: "+format_runner(group[3]))
-              report += ["", "## Outsider research rankings (captured quote $10+; NOT value bets)"]
+                              picks.append(group[3])
+                              kind="F4 BOX"
+                  horses=" · ".join("#{} {} (${:g})".format(
+                      r["number"],r["horse"],float(r["odds"])) for r in picks)
+                  report.append("| {} | **{}** | {} |".format(best["race_id"],kind,horses))
+              report += ["", "## Roughie watch (not approved bets)", "",
+                         "| Race | Horse |", "|---|---|"]
               outsiders=[r for r in ranked if float(r["odds"])>=10]
-              for r in outsiders[:15]:
-                  report.append("- "+r["race_id"]+": "+format_runner(r))
-              report += ["", "Research only. Independent TAB fields, scratchings, timing, edge and original V6 integrity remain unverified."]
-              pathlib.Path("monty_research_report.md").write_text("\n".join(report)+"\n",encoding="utf-8")
+              for r in outsiders[:5]:
+                  report.append("| {} | #{} {} (${:g}) |".format(
+                      r["race_id"],r["number"],r["horse"],float(r["odds"])))
+              report += ["",
+                  "**Key:** WIN = one horse; Q = first two (quinella); TRI BOX = first three; F4 BOX = first four.",
+                  "Only the applicable horses appear. Left to right = descending model win probability.",
+                  "These are research combinations, not staking instructions. Missing or ineligible races omitted.",
+                  "Independent fields, scratchings, price freshness, value and V6 integrity unverified."
+              ]
+              pathlib.Path("monty_research_report.md").write_text("\\n".join(report)+"\\n",encoding="utf-8")
               print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
