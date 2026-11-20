@@ -25,7 +25,7 @@ def select(path, track, race):
             "status":"NO BET — UNAPPROVED RESEARCH",
             "source":"research_frozen_linear_replay.py",
             "runners":[{"number":r["number"],"horse":r["horse"],
-                        "research_probability":r["research_prob"],
+                        "research_probability":r["research_prob"],"odds":float(r["odds"]),
                         "edge":r["edge"]} for r in matches]}
 
 def main():
