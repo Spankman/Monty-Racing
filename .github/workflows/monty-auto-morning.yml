@@ -19,5 +19,7 @@ jobs:
           set -euo pipefail
           DATE=$(TZ=Australia/Brisbane date +%F)
           echo "Requesting Monty research run for Brisbane date $DATE"
+          # Run both the operational-branch integration check and main research audit.
           gh workflow run monty-live-smoke.yml --ref grok-independent-repairs -f date="$DATE" -f include_restricted_flat_research=false
+          gh workflow run monty-daily-research.yml --ref main
           echo "Dispatch requested; this does not certify bets or verify downstream completion."
