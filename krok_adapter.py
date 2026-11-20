@@ -112,6 +112,8 @@ def normalize(payload,date,include_restricted_flat_research=False):
                     'missing_name': sum(not r.get('name') for r in active),
                     'class_label_present': bool(label.strip()),
                     'price_status': ('no_fixed_win_prices' if all(price(r)[0] is None for r in active) else 'partial_fixed_win_prices') if any(price(r)[0] is None for r in active) else 'prices_present_identity_incomplete',
+                    'retry_candidate_when_prices_update': all(r.get('number') is not None and bool(r.get('name')) for r in active) and any(price(r)[0] is None for r in active),
+                    'retry_reason': 'await_complete_fixed_win_prices' if all(r.get('number') is not None and bool(r.get('name')) for r in active) and any(price(r)[0] is None for r in active) else 'identity_or_other_data_incomplete',
                 })
                 skipped.append(f'{venue} R{n}: active runner lacks identity/price');continue
             if len({r['number'] for r in parsed})!=len(parsed):
@@ -145,6 +147,7 @@ def normalize(payload,date,include_restricted_flat_research=False):
         'races_no_fixed_win_prices':sum(d['price_status']=='no_fixed_win_prices' for d in incomplete_race_diagnostics),
         'races_partial_fixed_win_prices':sum(d['price_status']=='partial_fixed_win_prices' for d in incomplete_race_diagnostics),
         'races_prices_present_identity_incomplete':sum(d['price_status']=='prices_present_identity_incomplete' for d in incomplete_race_diagnostics),
+        'races_retry_candidate_when_prices_update':sum(d['retry_candidate_when_prices_update'] for d in incomplete_race_diagnostics),
     }
     # A venue/race key must identify exactly one field. Duplicate provider records
     # would otherwise silently merge separate fields in downstream scoring.
