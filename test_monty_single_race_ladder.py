@@ -14,10 +14,10 @@ class TestLadder(unittest.TestCase):
         r=choose(field())
         self.assertFalse(r["bet_authorised"])
         self.assertEqual(r["selections"][0]["number"],"5")
-    def test_next_best_qualifying_win(self):
+    def test_short_price_top_runner_does_not_switch_to_second_best_win(self):
         r=choose(field(),approved=True)
-        self.assertEqual(r["bet_type"],"WIN")
-        self.assertEqual(r["selections"][0]["number"],"2")
+        self.assertFalse(r["bet_authorised"])
+        self.assertEqual(r["selections"][0]["number"],"5")
     def test_no_forced_exotic(self):
         r=choose(field(),approved=True,min_edge=0.9)
         self.assertFalse(r["bet_authorised"])
