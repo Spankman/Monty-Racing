@@ -6,7 +6,20 @@ a short win price alone is not proof of exotic value.
 """
 import math
 
-def choose(runners, *, approved=False, min_edge=0.05, short_price=3.0,
+def price_ladder(ranked, *, short_price=4.0):
+    """Select BB/Q/T/FF by individual WIN odds only; no exotic dividends."""
+    if not ranked:
+        raise ValueError("Empty ranked field")
+    count = 1
+    # First three short-priced ranked runners progressively expand the box.
+    while count <= 3 and count < len(ranked) and float(ranked[count-1]["odds"]) < short_price:
+        count += 1
+    labels = {1: "BB", 2: "QUINELLA BOXED", 3: "TRIFECTA BOXED", 4: "FIRST FOUR BOXED"}
+    return {"bet_type": labels[count], "selections": ranked[:count],
+            "bet_authorised": False,
+            "reason": "Win-odds selection only; exotic value not independently verified"}
+
+def choose(runners, *, approved=False, min_edge=0.05, short_price=4.0,
            exotic_quotes=None):
     if not runners:
         raise ValueError("Empty race field")
@@ -32,7 +45,7 @@ def choose(runners, *, approved=False, min_edge=0.05, short_price=3.0,
             "selections":[best],"bet_authorised":False,
             "reason":"Unapproved research model: selection only, NO BET"}
     if not approved:
-        return result
+        return {**result, **price_ladder(ranked, short_price=short_price)}
     # Single-race BB must always be the top-ranked horse. If its win price
     # is too short, progress to Q/T/FF; never silently substitute a lower
     # ranked horse as the win selection.
