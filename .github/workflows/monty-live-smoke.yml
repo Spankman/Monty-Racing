@@ -105,6 +105,45 @@ jobs:
                   or verified["betting_authorised"] is not False
                   or verified["restricted_flat_research_races"] != audit["restricted_flat_research_races"]):
                   raise SystemExit("Provisional probability audit failed")
+              # Export only a compact, clearly unapproved daily research ranking.
+              # The full source feed and complete runner-by-runner predictions remain private.
+              import csv
+              with (work/"scored"/"operational_predictions.csv").open(newline="",encoding="utf-8") as fh:
+                  ranked=list(csv.DictReader(fh))
+              ranked.sort(key=lambda r:(-float(r["monty_prob"]),r["race_id"],int(r["number"])))
+              def format_runner(r):
+                  return "#{} {} (quote ${:.2f}; model {:.1f}%)".format(
+                      r["number"],r["horse"],float(r["odds"]),100*float(r["monty_prob"]))
+              by_race={}
+              for r in ranked:
+                  by_race.setdefault(r["race_id"],[]).append(r)
+              report=[
+                  "# Monty provisional research ranking — "+day,
+                  "",
+                  "**NO BET — NOT VERIFIED OR BETTING-AUTHORISED.**",
+                  "Prices are captured provider quotes, not independently verified live TAB odds.",
+                  "The scorer is provisional operational V6, NOT certified frozen V6 or V7.",
+                  "Model rankings do not establish betting value or predicted finishing order.",
+                  "Maiden, two-year-old and jumping races excluded from betting; incomplete races omitted.",
+                  "",
+                  "## Highest model win probabilities across all accepted races",
+              ]
+              for best in ranked[:20]:
+                  if by_race[best["race_id"]][0] is not best: continue
+                  group=by_race[best["race_id"]]
+                  report.append("- **"+best["race_id"]+"**: "+format_runner(best))
+                  if float(best["odds"]) < 4 and len(group)>=2:
+                      report.append("  - Quinella research: "+format_runner(group[1]))
+                      if float(group[1]["odds"]) < 4 and len(group)>=3:
+                          report.append("  - Boxed trifecta research: "+format_runner(group[2]))
+                          if float(group[2]["odds"]) < 4 and len(group)>=4:
+                              report.append("  - First-four research: "+format_runner(group[3]))
+              report += ["", "## Outsider research rankings (captured quote $10+; NOT value bets)"]
+              outsiders=[r for r in ranked if float(r["odds"])>=10]
+              for r in outsiders[:15]:
+                  report.append("- "+r["race_id"]+": "+format_runner(r))
+              report += ["", "Research only. Independent TAB fields, scratchings, timing, edge and original V6 integrity remain unverified."]
+              pathlib.Path("monty_research_report.md").write_text("\n".join(report)+"\n",encoding="utf-8")
               print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
@@ -135,6 +174,6 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: monty-live-audit-${{ github.run_id }}
-          path: live_smoke_audit.json
+          path: |\n            live_smoke_audit.json\n            monty_research_report.md
           if-no-files-found: error
           retention-days: 7
