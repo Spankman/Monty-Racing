@@ -34,6 +34,14 @@ class KrokAdapterTests(unittest.TestCase):
   self.assertEqual(diagnostic['missing_name'],1)
   self.assertFalse(diagnostic['class_label_present'])
   self.assertNotIn('runners',diagnostic)
+  summary=a['incomplete_race_summary']
+  self.assertEqual(summary['races'],1)
+  self.assertEqual(summary['races_missing_price'],1)
+  self.assertEqual(summary['races_missing_number'],1)
+  self.assertEqual(summary['races_missing_name'],1)
+  self.assertEqual(summary['missing_price_runner_slots'],1)
+  self.assertEqual(summary['missing_number_runner_slots'],1)
+  self.assertEqual(summary['missing_name_runner_slots'],1)
  def test_prohibited_race_not_misreported_as_incomplete(self):
   f=self.fixture()
   prohibited=dict(f['data'][0]['races'][0])
