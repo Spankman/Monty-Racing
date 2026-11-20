@@ -69,15 +69,23 @@ def score(track,race,date):
     ladder=choose([{"number":r["number"],"horse":r["horse"],
                     "research_prob":r["research_probability"],"odds":r["odds"]}
                    for r in result["runners"]],approved=False)
-    leader=ladder["best"]
-    # A single-race request always returns one ranked selection. When the
-    # research model is unapproved, show a provisional BB, never a wager
-    # authorisation or invented exotic combination.
-    return (f"**{track} R{race} — BB (provisional research pick)**\\n\\n"
-            f"**#{leader['number']} {leader['horse']}**\\n\\n"
-            "Single-race ladder: BB → Q → T → FF. "
-            "This is a compulsory ranked selection, **not an authorised wager**. "
-            "No verified exotic value is available; do not fabricate Q/T/FF.")
+    selections=ladder["selections"]
+    kind=ladder["bet_type"]
+    labels={"BB":"BB","QUINELLA BOXED":"Q (boxed)",
+            "TRIFECTA BOXED":"T (boxed)","FIRST FOUR BOXED":"FF (boxed)"}
+    display=" → ".join(
+        (f"**#{r['number']} {r['horse']}**" if i==0
+         else f"#{r['number']} {r['horse']}")
+        for i,r in enumerate(selections))
+    prices="; ".join(
+        f"#{r['number']} {r['horse']} ${r['odds']:.2f}"
+        for r in ladder["ranked"][:min(4,len(ladder["ranked"]))])
+    return (f"**{track} R{race} — {labels.get(kind,kind)}**\\n\\n"
+            f"{display}\\n\\n"
+            f"Win prices used (model snapshot): {prices}\\n\\n"
+            "Progression uses individual win odds strictly under $4.00. "
+            "Snapshot prices can differ from current market prices. "
+            "Research selection only; not an authorised wager.")
 
 
 def main():
