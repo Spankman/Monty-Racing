@@ -1,5 +1,5 @@
 name: Monty live Krok connectivity smoke test
-# Live verification after fixing Krok final-page truncated semantics.
+# User-requested Saturday Monty live research run after successful pagination verification.
 on:
   # Evening on-demand smoke run: push on this workflow file starts a live research check.
   push:
