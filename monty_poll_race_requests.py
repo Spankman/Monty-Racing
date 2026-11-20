@@ -47,7 +47,7 @@ def score(track,race,date):
     from monty_single_race_research import select
     key=os.environ.get("KROK_API_KEY")
     if not key:raise RuntimeError("KROK_API_KEY is missing")
-    snapshot,audit=normalize(fetch(date,key),date)
+    snapshot,audit=normalize(fetch(date,key),date,allow_restricted_classes=True)
     # Classification is deliberately not used to reject an explicit race request.
     # Scope completeness validation to the requested race. Unrelated
     # incomplete races must not prevent this race from being evaluated.

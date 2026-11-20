@@ -28,7 +28,7 @@ def price(r):
         if p:return p,key
     return None,None
 
-def normalize(payload,date):
+def normalize(payload,date,*,allow_restricted_classes=False):
     if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
         raise ValueError('Unexpected API response; expected success=true and data[]')
     meta=payload.get('meta') or {}
@@ -49,7 +49,7 @@ def normalize(payload,date):
                 continue
             # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
-            if any(x in label for x in ('maiden','2yo','2 year old','two year old','hurdle','steeple','jumping')):
+            if not allow_restricted_classes and any(x in label for x in ('maiden','2yo','2 year old','two year old','hurdle','steeple','jumping')):
                 skipped.append(f'{venue} R{n}: prohibited race type');continue
             rr=race.get('runners')
             if not isinstance(rr,list) or len(rr)<2:
