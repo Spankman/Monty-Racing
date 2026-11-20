@@ -158,7 +158,7 @@ jobs:
                   "These are research combinations, not staking instructions. Missing or ineligible races omitted.",
                   "Independent fields, scratchings, price freshness, value and V6 integrity unverified."
               ]
-              pathlib.Path("monty_research_report.md").write_text("\\n".join(report)+"\\n",encoding="utf-8")
+              pathlib.Path("monty_research_report.md").write_text("\n".join(report)+"\n",encoding="utf-8")
               print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
