@@ -74,6 +74,30 @@ jobs:
             echo 'NO VERIFIED EXPERT INPUT: 0% expert, 100% model research scores'
             python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
           fi
+      - name: Verify required daily research outputs exist and are nonempty
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          required = [
+              'research_scores.csv',
+              'research_scores.audit.json',
+              'research_source_audit.json',
+              'daily_summary.json',
+              'daily_ladder_research_preview.csv',
+              'v7_shadow.csv',
+          ]
+          missing = [name for name in required if not Path(name).is_file() or Path(name).stat().st_size == 0]
+          if missing:
+              raise SystemExit('Missing or empty required daily artifacts: ' + ', '.join(missing))
+          summary = json.loads(Path('daily_summary.json').read_text())
+          if summary.get('approved_bets') != 0 or summary.get('status') != 'NO BET — RESEARCH ONLY':
+              raise SystemExit('Daily output incorrectly claims betting approval')
+          if summary.get('complete_AU_NZ_coverage_verified') is not False:
+              raise SystemExit('Daily output incorrectly claims complete AU/NZ coverage')
+          print('Required research artifacts present; research-only and coverage limits confirmed')
+          PY
       - name: Upload safe research outputs (no raw API response or keys)
         if: always()
         uses: actions/upload-artifact@v4
