@@ -63,12 +63,13 @@ def score(track,race,date):
         (p/"snapshot.json").write_text(json.dumps(snapshot))
         run(p/"snapshot.json",p/"scores.csv")
         result=select(p/"scores.csv",track,race)
-    lines=[f"**{track} R{race} — research rankings only; NO BET**","",
-           "Unapproved research output, not an authorised V6 betting selection."]
-    for i,r in enumerate(result["runners"],1):
-        lines.append(f"{i}. #{r['number']} {r['horse']} — research win probability {r['research_probability']:.1%}")
-    lines.append("\nNo exotic recommendation: independently verified odds and calibrated combination probabilities are unavailable.")
-    return "\n".join(lines)
+    # Research output cannot authorise any bet without verified odds and
+    # approved, calibrated probabilities. Never print the entire leaderboard.
+    leader=result["runners"][0]
+    return (f"**{track} R{race} — NO BET (research only)**\n\n"
+            f"**Top-ranked: #{leader['number']} {leader['horse']}**\n\n"
+            "BB → Q → T → FF: no authorised value bet. "
+            "Verified prices and approved probabilities are required.")
 
 def main():
     today=dt.datetime.now(TZ).date()
