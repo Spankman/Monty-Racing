@@ -7,7 +7,9 @@ permissions:
   issues: write
 jobs:
   requested-race:
-    if: startsWith(github.event.issue.title, 'Monty race: ') && (github.event.issue.author_association == 'OWNER' || github.event.issue.author_association == 'MEMBER' || github.event.issue.author_association == 'COLLABORATOR')
+    if: >-
+      startsWith(github.event.issue.title, 'Monty race: ') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
