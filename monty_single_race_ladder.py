@@ -45,7 +45,7 @@ def choose(runners, *, approved=False, min_edge=0.05, short_price=3.0,
         quote=(exotic_quotes or {}).get(kind)
         if not isinstance(quote,dict) or quote.get("verified") is not True:
             continue
-        joint=quote.get("calibrated_probability")
+        # An exotic price/probability applies to a specific combination, not\n        # any arbitrary top-N runners. Reject unmatched or unlabelled quotes.\n        expected={r["number"] for r in ranked[:n]}\n        quoted=quote.get("runner_numbers")\n        if not isinstance(quoted,(list,tuple)) or len(quoted)!=n or {str(x).strip() for x in quoted}!=expected:\n            continue\n        joint=quote.get("calibrated_probability")
         dividend=quote.get("decimal_dividend")
         if joint is None or dividend is None:continue
         joint=float(joint);dividend=float(dividend)
