@@ -146,6 +146,25 @@ class OperationalV6Tests(unittest.TestCase):
                 self.assertNotEqual(result.returncode,0,bad_date)
                 self.assertIn("Snapshot date must be YYYY-MM-DD",result.stderr)
                 self.assertFalse((output/"prediction_record.json").exists())
+    def test_auditor_rejects_mixed_unknown_classification_flags(self):
+        from operational.verify_provisional_output import verify
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            source=d/"runners.csv"
+            data=sample()
+            data["race_classification_unknown"]=True
+            data.to_csv(source,index=False)
+            result=subprocess.run([sys.executable,"operational/run_operational.py",str(source),
+                "--output-dir",str(d/"out")],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            (d/"out"/"snapshot_provenance.json").write_text(json.dumps({
+                "betting_authorised":False,"independent_field_verification_proven":False}))
+            csv_path=d/"out"/"operational_predictions.csv"
+            scored=pd.read_csv(csv_path)
+            scored.loc[0,"race_classification_unknown"]=False
+            scored.to_csv(csv_path,index=False)
+            with self.assertRaisesRegex(ValueError,"Inconsistent unknown classification flags"):
+                verify(d/"out")
     def test_auditor_rejects_mixed_research_flags_in_one_race(self):
         from operational.verify_provisional_output import verify
         with tempfile.TemporaryDirectory() as tmp:
