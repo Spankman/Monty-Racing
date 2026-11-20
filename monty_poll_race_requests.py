@@ -77,9 +77,14 @@ def score(track,race,date):
         (f"**#{r['number']} {r['horse']}**" if i==0
          else f"#{r['number']} {r['horse']}")
         for i,r in enumerate(selections))
+    prices="; ".join(
+        f"#{r['number']} {r['horse']} ${r['odds']:.2f}"
+        for r in ladder["ranked"][:min(4,len(ladder["ranked"]))])
     return (f"**{track} R{race} — {labels.get(kind,kind)}**\\n\\n"
             f"{display}\\n\\n"
-            "Progression based on individual win odds under $4.00. "
+            f"Win prices used (model snapshot): {prices}\\n\\n"
+            "Progression uses individual win odds strictly under $4.00. "
+            "Snapshot prices can differ from current market prices. "
             "Research selection only; not an authorised wager.")
 
 
