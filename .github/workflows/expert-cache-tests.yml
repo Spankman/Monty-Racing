@@ -4,6 +4,9 @@ on:
     paths:
       - 'monty_expert_cache.py'
       - 'test_monty_expert_cache.py'
+      - 'monty_single_race_research.py'
+      - 'test_monty_single_race_research.py'
+      - '.github/workflows/monty-race-research.yml'
       - '.github/workflows/expert-cache-tests.yml'
   workflow_dispatch:
 permissions:
@@ -18,4 +21,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate expert cache
-        run: python -m unittest -v test_monty_expert_cache.py
+        run: python -m unittest -v test_monty_expert_cache.py test_monty_single_race_research.py
