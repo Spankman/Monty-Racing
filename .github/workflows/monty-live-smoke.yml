@@ -82,6 +82,8 @@ jobs:
 
           print("Provider price sources:",", ".join(audit["price_sources"]))
           print("Independent field verification: NOT PROVEN")
+          print("Frozen V6 live scoring: BLOCKED — historical prior-day feature histories and independently verified pre-race fields not supplied by this Krok snapshot")
+          print("Expert weighting: BLOCKED — verified timestamped expert tips and comparative holdout evidence unavailable; effective weight zero")
           print("Betting authorised: NO")
           # Exercise full provisional scoring without publishing selections.
           import pathlib, subprocess, sys, tempfile
@@ -158,7 +160,7 @@ jobs:
               report=[
                   "# MONTY — "+day,
                   "",
-                  "**RESEARCH ONLY — NO BET.** Provisional scorer; odds not independently TAB-verified.",
+                  "**RESEARCH ONLY — NO BET.** Provisional scorer; odds not independently TAB-verified. Frozen V6 cannot be claimed from these provisional features.",
                   "",
                   "## Best chances",
                   "",
@@ -173,7 +175,7 @@ jobs:
                       return (match.group(1).strip().casefold(),int(match.group(2)),race_id)
                   return (race_id.casefold(),0,race_id)
               bests=[group[0] for group in by_race.values()]
-              bests=sorted(bests,key=lambda r:track_race_key(r["race_id"]))[:10]
+              bests=sorted(bests,key=lambda r:track_race_key(r["race_id"]))
               for best in bests:
                   group=by_race[best["race_id"]]
                   picks=[group[0]]
