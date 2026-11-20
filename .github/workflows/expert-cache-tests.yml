@@ -6,6 +6,8 @@ on:
       - 'test_monty_expert_cache.py'
       - 'monty_single_race_research.py'
       - 'test_monty_single_race_research.py'
+      - 'monty_single_race_ladder.py'
+      - 'test_monty_single_race_ladder.py'
       - '.github/workflows/monty-race-research.yml'
       - '.github/workflows/monty-issue-request.yml'
       - '.github/workflows/expert-cache-tests.yml'
@@ -22,4 +24,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate expert cache
-        run: python -m unittest -v test_monty_expert_cache.py test_monty_single_race_research.py
+        run: python -m unittest -v test_monty_expert_cache.py test_monty_single_race_research.py test_monty_single_race_ladder.py
