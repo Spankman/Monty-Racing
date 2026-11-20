@@ -114,6 +114,33 @@ jobs:
                   or verified["betting_authorised"] is not False
                   or verified["restricted_flat_research_races"] != audit["restricted_flat_research_races"]):
                   raise SystemExit("Provisional probability audit failed")
+              # V7 shadow bridge: no expert provenance is available in this run.
+              # With weight zero this is an integration check, NOT V7 validation.
+              import pandas as pd
+              from monty_v7_shadow_blend import blend
+              base=pd.read_csv(work/"scored"/"operational_predictions.csv",
+                               dtype={"meeting":str,"race":str,"number":str})
+              required={"meeting","race","number","monty_prob"}
+              if not required.issubset(base.columns):
+                  raise SystemExit("V7 bridge missing required provisional score fields")
+              shadow_input=base[["meeting","race","number"]].copy()
+              shadow_input["research_prob"]=base["monty_prob"].astype(float)
+              shadow_input["feature_coverage"]=0.0
+              shadow_path=work/"v7_input.csv"
+              shadow_input.to_csv(shadow_path,index=False)
+              shadow=blend(shadow_path,experts=None,weight=0.0)
+              if (len(shadow)!=len(base) or
+                  not shadow["v7_shadow_prob"].equals(shadow["research_prob"]) or
+                  not shadow["expert_weight_used"].eq(0).all()):
+                  raise SystemExit("V7 shadow integration mismatch")
+              print("V7 SHADOW integration: PASSED",len(shadow),"runners; expert inputs: 0; NO BET")
+              # Never publish unverified runner-level probabilities.
+              v7_audit={"date":day,"status":"UNAPPROVED V7 SHADOW — NO BET",
+                        "runners":len(shadow),"races":int(shadow.groupby(["meeting","race"]).ngroups),
+                        "expert_sources":0,"expert_weight_used":0.0,
+                        "is_genuine_v7_prediction":False,
+                        "note":"Zero-weight shadow integration only; not the complete V7 candidate."}
+              pathlib.Path("monty_v7_shadow_audit.json").write_text(json.dumps(v7_audit,indent=2)+"\\n")
               # Export only a compact, clearly unapproved daily research ranking.
               # The full source feed and complete runner-by-runner predictions remain private.
               import csv
@@ -210,5 +237,6 @@ jobs:
           path: |
             live_smoke_audit.json
             monty_research_report.md
+            monty_v7_shadow_audit.json
           if-no-files-found: error
           retention-days: 7
