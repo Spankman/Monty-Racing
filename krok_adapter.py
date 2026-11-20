@@ -181,7 +181,17 @@ def fetch(date,key):
         meta=payload.get('meta') or {}
         if not isinstance(meta,dict):raise ValueError('Invalid pagination metadata')
         if meta.get('truncated') and not (meta.get('next_cursor') or meta.get('next_page') or meta.get('has_more')):
-            raise ValueError('Provider reports truncated feed without a continuation')
+            # Some provider responses mark truncation without a continuation.
+            # Probe the next numbered page, but NEVER certify completeness
+            # unless a subsequent page supplies an explicit terminal signal.
+            if cursor is not None:
+                raise ValueError('Cursor page truncated without a continuation')
+            cursor=None
+            page+=1
+            # The repeated-page guard below rejects ignored page parameters.
+            inferred_next_page=True
+        else:
+            inferred_next_page=False
         batch=payload['data']
         if not batch and (meta.get('has_more') or meta.get('next_cursor') or meta.get('next_page')):
             raise ValueError('Provider reports more meetings but returned an empty page')
@@ -193,6 +203,8 @@ def fetch(date,key):
         next_cursor=meta.get('next_cursor')
         next_page=meta.get('next_page')
         has_more=meta.get('has_more')
+        if inferred_next_page:
+            continue
         if next_cursor:
             cursor=str(next_cursor)
             page+=1
