@@ -21,6 +21,17 @@ class OperationalV6Tests(unittest.TestCase):
         self.assertTrue((out.monty_prob>0).all())
         self.assertFalse(out.betting_authorised.any())
         self.assertTrue(out.status.str.startswith("PROVISIONAL").all())
+    def test_unknown_classification_survives_scoring(self):
+        data=sample()
+        data["race_classification_unknown"]=True
+        out=score_operational(data,ROOT)
+        self.assertTrue(out.race_classification_unknown.all())
+        self.assertFalse(out.betting_authorised.any())
+    def test_unknown_classification_rejects_strings(self):
+        data=sample()
+        data["race_classification_unknown"]=["False"]*len(data)
+        with self.assertRaisesRegex(ValueError,"must be booleans"):
+            score_operational(data,ROOT)
     def test_restricted_research_flag_survives_scoring(self):
         data=sample()
         data["research_only_restricted_race"]=True
