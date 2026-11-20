@@ -22,10 +22,18 @@ class TestLadder(unittest.TestCase):
         r=choose(field(),approved=True,min_edge=0.9)
         self.assertFalse(r["bet_authorised"])
     def test_verified_quinella(self):
-        q={"QUINELLA BOXED":{"verified":True,"calibrated_probability":0.2,"decimal_dividend":10}}
+        q={"QUINELLA BOXED":{"verified":True,"runner_numbers":[5,2],"calibrated_probability":0.2,"decimal_dividend":10}}
         r=choose(field(),approved=True,min_edge=0.9,exotic_quotes=q)
         self.assertEqual(r["bet_type"],"QUINELLA BOXED")
         self.assertEqual([x["number"] for x in r["selections"]],["5","2"])
+    def test_exotic_quote_for_different_horses_rejected(self):
+        q={"QUINELLA BOXED":{"verified":True,"runner_numbers":[5,7],"calibrated_probability":0.2,"decimal_dividend":10}}
+        r=choose(field(),approved=True,min_edge=0.9,exotic_quotes=q)
+        self.assertFalse(r["bet_authorised"])
+    def test_unlabelled_exotic_quote_rejected(self):
+        q={"QUINELLA BOXED":{"verified":True,"calibrated_probability":0.2,"decimal_dividend":10}}
+        r=choose(field(),approved=True,min_edge=0.9,exotic_quotes=q)
+        self.assertFalse(r["bet_authorised"])
     def test_invalid_probabilities_rejected(self):
         bad=field();bad[0]["research_prob"]=0.9
         with self.assertRaises(ValueError):choose(bad)
