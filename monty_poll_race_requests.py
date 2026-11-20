@@ -2,6 +2,7 @@
 
 Designed for scheduled and PR-triggered GitHub Actions, because issue-created events can be
 suppressed when an issue is created by an integration token.
+# Recheck Pakenham R7 under latest single-race ladder.
 """
 import datetime as dt
 import json
