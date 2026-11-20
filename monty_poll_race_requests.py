@@ -1,6 +1,6 @@
 """Poll authorised GitHub race requests; post an idempotent, fail-closed result.
 
-Designed for scheduled GitHub Actions, because issue-created events can be
+Designed for scheduled and PR-triggered GitHub Actions, because issue-created events can be
 suppressed when an issue is created by an integration token.
 """
 import datetime as dt
