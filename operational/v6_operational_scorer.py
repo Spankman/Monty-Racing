@@ -94,6 +94,13 @@ def score_operational(df, root=Path("monty_v6")):
         out["research_only_restricted_race"]=values.astype(bool).to_numpy()
     else:
         out["research_only_restricted_race"]=False
+    if "race_classification_unknown" in df:
+        values=df["race_classification_unknown"]
+        if not values.map(lambda v: isinstance(v, (bool, np.bool_))).all():
+            raise ValueError("Unknown race classification flags must be booleans")
+        out["race_classification_unknown"]=values.astype(bool).to_numpy()
+    else:
+        out["race_classification_unknown"]=False
     out["status"]=STATUS
     out["betting_authorised"]=False
     return out
