@@ -1,5 +1,5 @@
 import unittest
-from monty_single_race_ladder import choose
+from monty_single_race_ladder import choose, price_ladder
 
 def field():
     return [
@@ -10,6 +10,17 @@ def field():
     ]
 
 class TestLadder(unittest.TestCase):
+    def test_win_price_progression(self):
+        base = [{"number": str(i), "odds": odds} for i, odds in
+                enumerate([4.0, 3.5, 3.0, 8.0], 1)]
+        self.assertEqual(price_ladder(base)["bet_type"], "BB")
+        base[0]["odds"] = 3.99
+        self.assertEqual(price_ladder(base)["bet_type"], "QUINELLA BOXED")
+        base[1]["odds"] = 3.99
+        self.assertEqual(price_ladder(base)["bet_type"], "TRIFECTA BOXED")
+        base[2]["odds"] = 3.99
+        self.assertEqual(price_ladder(base)["bet_type"], "FIRST FOUR BOXED")
+        self.assertEqual(len(price_ladder(base)["selections"]), 4)
     def test_research_only_never_bets(self):
         r=choose(field())
         self.assertFalse(r["bet_authorised"])
