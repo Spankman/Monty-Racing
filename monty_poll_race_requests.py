@@ -16,6 +16,9 @@ REPO=os.environ.get("GITHUB_REPOSITORY","Spankman/Monty-Racing")
 MARKER="<!-- monty-race-request-v1 -->"
 TITLE=re.compile(r"Monty race: ([A-Za-z][A-Za-z .'-]{1,59}) ([1-9]|1[0-9]|20)$")
 TZ=ZoneInfo("Australia/Brisbane")
+# Every explicitly requested single race is eligible for analysis regardless of
+# maiden, two-year-old or hurdle classification. Daily selection filters remain separate.
+SINGLE_RACE_CLASS_OVERRIDE=True
 
 def gh(*args):
     p=subprocess.run(["gh",*args],text=True,capture_output=True,check=True)
@@ -45,6 +48,7 @@ def score(track,race,date):
     key=os.environ.get("KROK_API_KEY")
     if not key:raise RuntimeError("KROK_API_KEY is missing")
     snapshot,audit=normalize(fetch(date,key),date)
+    # Classification is deliberately not used to reject an explicit race request.
     # Scope completeness validation to the requested race. Unrelated
     # incomplete races must not prevent this race from being evaluated.
     target=[r for r in snapshot["races"] if str(r["meeting"]).strip().casefold()==track.strip().casefold() and str(r["race"])==str(race)]
