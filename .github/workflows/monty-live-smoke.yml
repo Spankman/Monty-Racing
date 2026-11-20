@@ -48,6 +48,9 @@ jobs:
               raise SystemExit("Provider did not confirm success; no live test passed")
           print("Provider API returned success for Brisbane date",day)
           print("Meeting records received:",len(payload.get("data",[])))
+          # Print only pagination flags, never API credentials or meeting payloads.
+          meta=payload.get("meta") or {}
+          print("Pagination audit:",json.dumps({k:meta.get(k) for k in ("truncated","has_more","next_cursor","next_page","next","is_last_page","total_pages","pages_fetched") if k in meta},sort_keys=True))
           try:
               research=os.environ.get('INCLUDE_RESTRICTED_FLAT_RESEARCH','false').lower() == 'true'
               snapshot,audit=normalize(payload,day,include_restricted_flat_research=research)
