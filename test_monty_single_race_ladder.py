@@ -12,7 +12,7 @@ def field():
 class TestLadder(unittest.TestCase):
     def test_win_price_progression(self):
         base = [{"number": str(i), "odds": odds} for i, odds in
-                enumerate([4.0, 3.5, 3.0, 8.0], 1)]
+                enumerate([4.0, 4.0, 4.0, 8.0], 1)]
         self.assertEqual(price_ladder(base)["bet_type"], "BB")
         base[0]["odds"] = 3.99
         self.assertEqual(price_ladder(base)["bet_type"], "QUINELLA BOXED")
