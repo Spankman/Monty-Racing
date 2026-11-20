@@ -154,6 +154,22 @@ class OperationalV6Tests(unittest.TestCase):
             scored.to_csv(csv_path,index=False)
             with self.assertRaisesRegex(ValueError,"Inconsistent restricted-race flags"):
                 verify(d/"out")
+    def test_manifest_research_restriction_mismatch_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            source=d/"runners.csv"
+            data=sample()
+            data["research_only_restricted_race"]=True
+            data.to_csv(source,index=False)
+            manifest=d/"races.json"
+            manifest.write_text(json.dumps({"races":[{"meeting":"TEST","race":"1",
+                "expected_active_runners":3,"research_only_restricted_race":False}]}))
+            result=subprocess.run([sys.executable,"operational/run_operational.py",str(source),
+                "--output-dir",str(d/"out"),"--race-manifest",str(manifest)],
+                capture_output=True,text=True)
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn("research restrictions disagree",result.stderr)
+            self.assertFalse((d/"out"/"prediction_record.json").exists())
     def test_cli_manifest_rejects_incomplete_field(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp)
