@@ -131,8 +131,10 @@ def normalize(payload,date,include_restricted_flat_research=False):
                     item['inside_three']=int(b<=3)
                     item['outside_barrier']=float(b>field_size*.75)
                     if 'distance_km' in item:item['barrier_x_distance']=b/field_size*distance/1000
-                if 'allocated_weight' in item:
-                    item['effective_weight']=item['allocated_weight']-item.get('claim_kg',0)
+                # Unknown apprentice claim is not zero: leave effective weight
+                # missing unless both weight and claim are explicitly supplied.
+                if 'allocated_weight' in item and 'claim_kg' in item and item['claim_kg'] >= 0:
+                    item['effective_weight']=item['allocated_weight']-item['claim_kg']
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'race_classification_unknown':classification_unknown,'betting_authorised':False})
     # Explain recoverable provider-data gaps without fabricating missing odds.
