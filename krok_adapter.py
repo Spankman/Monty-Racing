@@ -208,7 +208,12 @@ def fetch(date,key):
             seen_cursors.add(nxt)
             cursor=nxt
             continue
-        if more is False and not meta.get('truncated') and not nxt:
+        # 'truncated' describes the per-page response shape, not necessarily
+        # incomplete pagination: the provider can retain it on the final page.
+        if more is False and not nxt:
+            total=meta.get('total')
+            if isinstance(total,int) and not isinstance(total,bool) and total != len(records):
+                raise ValueError('Provider total disagrees with collected meetings')
             return {'success':True,'data':records,
                     'meta':{'has_more':False,'is_last_page':True,
                             'pages_fetched':attempt+1}}
