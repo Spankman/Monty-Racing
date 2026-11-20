@@ -5,6 +5,7 @@ No race is promoted to a betting recommendation. All rows remain unapproved.
 import argparse
 from pathlib import Path
 import pandas as pd
+import numpy as np
 from monty_single_race_ladder import price_ladder
 
 def preview(scores):
@@ -13,6 +14,16 @@ def preview(scores):
     if not needed.issubset(df.columns):raise ValueError("Missing required scoring fields")
     if df.empty or not df.status.eq("UNAPPROVED RESEARCH — NO BET").all():
         raise ValueError("Research scores are not valid or not research-only")
+    if df[list(needed)].isna().any().any():
+        raise ValueError("Incomplete race identity, prices, or research scores")
+    if df.duplicated(["meeting","race","number"]).any():
+        raise ValueError("Duplicate saddlecloth in race")
+    df["odds"]=pd.to_numeric(df.odds,errors="raise")
+    df["research_prob"]=pd.to_numeric(df.research_prob,errors="raise")
+    if not np.isfinite(df[["odds","research_prob"]].to_numpy(float)).all() or (df.odds<=1).any() or (df.research_prob<0).any():
+        raise ValueError("Invalid odds or probabilities")
+    if not df.groupby(["meeting","race"]).research_prob.sum().between(.999999,1.000001).all():
+        raise ValueError("Unnormalized race probabilities")
     rows=[]
     for (meeting,race),g in df.groupby(["meeting","race"],sort=False):
         ranked=[{"number":r.number,"horse":r.horse,"odds":float(r.odds),"research_prob":float(r.research_prob)} for r in g.itertuples(index=False)]
