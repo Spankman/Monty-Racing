@@ -18,8 +18,19 @@ def assess(scores,model_audit,source_audit):
         raise ValueError('Unexpected status')
     if not df.groupby(['meeting','race']).research_prob.sum().between(0.999999,1.000001).all():
         raise ValueError('Research probabilities not normalized by race')
+    skipped=source.get('skipped',[])
+    if not isinstance(skipped,list):raise ValueError('Invalid skipped-race audit')
+    if any(not isinstance(s,str) for s in skipped):raise ValueError('Invalid skipped-race entry')
+    feed_meetings=source.get('meetings')
+    if not isinstance(feed_meetings,int) or isinstance(feed_meetings,bool) or feed_meetings<df.meeting.nunique():
+        raise ValueError('Invalid feed meeting count')
     return {
-        'date':model['date'],'meetings':int(df.meeting.nunique()),'races':int(model['races']),
+        'date':model['date'],'meetings':int(df.meeting.nunique()),
+        'feed_meetings_seen':feed_meetings,
+        'meetings_without_accepted_races':int(feed_meetings-df.meeting.nunique()),
+        'accepted_meeting_names':sorted(df.meeting.astype(str).unique().tolist()),
+        'skipped_race_count':len(skipped),'skipped_race_reasons':skipped,
+        'races':int(model['races']),
         'runners':int(len(df)),'feature_coverage_mean':round(float(df.feature_coverage.mean()),4),
         'feature_coverage_min':round(float(df.feature_coverage.min()),4),
         'positive_edge_runners':int((df.edge>0).sum()),
