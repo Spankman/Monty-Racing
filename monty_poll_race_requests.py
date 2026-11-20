@@ -2,6 +2,7 @@
 
 Designed for scheduled and PR-triggered GitHub Actions, because issue-created events can be
 suppressed when an issue is created by an integration token.
+# Single-race poll trigger: Pakenham R6, 20 November 2026.
 """
 import datetime as dt
 import json
