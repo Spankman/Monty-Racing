@@ -132,13 +132,23 @@ def normalize(payload,date,include_restricted_flat_research=False):
                     item['effective_weight']=item['allocated_weight']-item.get('claim_kg',0)
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'race_classification_unknown':classification_unknown,'betting_authorised':False})
+    # Explain recoverable provider-data gaps without fabricating missing odds.
+    incomplete_summary={
+        'races':len(incomplete_race_diagnostics),
+        'races_missing_price':sum(d['missing_price']>0 for d in incomplete_race_diagnostics),
+        'races_missing_number':sum(d['missing_number']>0 for d in incomplete_race_diagnostics),
+        'races_missing_name':sum(d['missing_name']>0 for d in incomplete_race_diagnostics),
+        'missing_price_runner_slots':sum(d['missing_price'] for d in incomplete_race_diagnostics),
+        'missing_number_runner_slots':sum(d['missing_number'] for d in incomplete_race_diagnostics),
+        'missing_name_runner_slots':sum(d['missing_name'] for d in incomplete_race_diagnostics),
+    }
     # A venue/race key must identify exactly one field. Duplicate provider records
     # would otherwise silently merge separate fields in downstream scoring.
     keys=[(str(r['meeting']).strip().casefold(),str(r['race']).strip()) for r in races]
     if len(keys)!=len(set(keys)):
         raise ValueError('Duplicate meeting/race identity in provider feed')
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
-    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'restricted_flat_research_races':sum(r['research_only_restricted_race'] for r in races),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
+    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'restricted_flat_research_races':sum(r['research_only_restricted_race'] for r in races),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'incomplete_race_summary':incomplete_summary,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
 
 def fetch(date,key):
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
