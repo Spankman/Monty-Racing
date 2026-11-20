@@ -43,6 +43,7 @@ class KrokAdapterTests(unittest.TestCase):
   self.assertEqual(summary['missing_number_runner_slots'],1)
   self.assertEqual(summary['missing_name_runner_slots'],1)
   self.assertEqual(diagnostic['price_status'],'partial_fixed_win_prices')
+  self.assertFalse(diagnostic['retry_candidate_when_prices_update'])
   self.assertEqual(summary['races_partial_fixed_win_prices'],1)
   self.assertEqual(summary['races_no_fixed_win_prices'],0)
   self.assertEqual(summary['races_prices_present_identity_incomplete'],0)
@@ -56,6 +57,8 @@ class KrokAdapterTests(unittest.TestCase):
   _,audit=normalize(f,'2026-11-14')
   self.assertEqual(audit['incomplete_race_summary']['races_no_fixed_win_prices'],1)
   self.assertEqual(audit['incomplete_race_diagnostics'][0]['price_status'],'no_fixed_win_prices')
+  self.assertTrue(audit['incomplete_race_diagnostics'][0]['retry_candidate_when_prices_update'])
+  self.assertEqual(audit['incomplete_race_summary']['races_retry_candidate_when_prices_update'],1)
   self.assertEqual(audit['races_accepted'],1)
 
  def test_prohibited_race_not_misreported_as_incomplete(self):
