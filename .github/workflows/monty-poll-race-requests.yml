@@ -18,7 +18,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r requirements-runner.txt
+      - name: Install scoring dependencies (report failure through issue poller)
+        continue-on-error: true
+        run: python -m pip install -r requirements-runner.txt
       - name: Poll pending requests and post safe results
         env:
           GH_TOKEN: ${{ github.token }}
