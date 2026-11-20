@@ -1,5 +1,9 @@
 name: Monty poll pending race requests
 on:
+  pull_request:
+    paths:
+      - 'monty_poll_race_requests.py'
+      - '.github/workflows/monty-poll-race-requests.yml'
   push:
     branches: [main]
   schedule:
@@ -23,6 +27,10 @@ jobs:
       - name: Install scoring dependencies (report failure through issue poller)
         continue-on-error: true
         run: python -m pip install -r requirements-runner.txt
+      - name: Verify poller runtime
+        run: |
+          gh --version
+          python -m unittest -v test_monty_poll_race_requests.py
       - name: Poll pending requests and post safe results
         env:
           GH_TOKEN: ${{ github.token }}
