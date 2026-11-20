@@ -72,7 +72,8 @@ def score(track,race,date):
 
 def main():
     today=dt.datetime.now(TZ).date()
-    for issue in pending()[:10]:
+    # Process newest requests first; old unresolved issues must not starve live requests.
+    for issue in sorted(pending(), key=lambda x: x["created_at"], reverse=True)[:100]:
         n=issue["number"]
         if issue["user"]["login"] != REPO.split("/")[0]:
             continue
