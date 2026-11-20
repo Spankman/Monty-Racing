@@ -1,5 +1,5 @@
 name: Monty live Krok connectivity smoke test
-# Live verification of documented dated full-card cursor pagination.
+# Live verification of dated full-card pagination with safe metadata diagnostics.
 on:
   # Evening on-demand smoke run: push on this workflow file starts a live research check.
   push:
