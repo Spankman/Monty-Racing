@@ -1,5 +1,8 @@
 name: Monty live Krok connectivity smoke test
 on:
+  push:
+    branches: [grok-independent-repairs]
+    paths: ['.github/workflows/monty-live-smoke.yml']
   workflow_dispatch:
     inputs:
       date:
@@ -27,7 +30,7 @@ jobs:
       - name: Validate Krok connection and provider response
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-          RACING_DATE: ${{ inputs.date }}
+          RACING_DATE: ${{ github.event_name == 'push' && '2026-11-21' || inputs.date }}
           INCLUDE_RESTRICTED_FLAT_RESEARCH: ${{ inputs.include_restricted_flat_research }}
         run: |
           python - <<'PY'
@@ -54,6 +57,7 @@ jobs:
           print("Provider meetings inspected:",audit["meetings"])
           print("Accepted runners:",audit["runners_accepted"])
           print("Skipped races:",len(audit["skipped"]))
+          print("Incomplete race summary:",json.dumps(audit["incomplete_race_summary"],sort_keys=True))
           # Aggregate reasons without logging venue names or runner records.
           from collections import Counter
           known_reasons = (
@@ -188,6 +192,7 @@ jobs:
               safe["provider_skipped_reasons"]=dict(sorted(reasons.items()))
               # Only public meeting/race labels and missing-field counts.
               safe["incomplete_race_diagnostics"]=audit["incomplete_race_diagnostics"]
+              safe["incomplete_race_summary"]=audit["incomplete_race_summary"]
               safe["provider_price_sources"]=audit["price_sources"]
               safe["coverage_is_independently_verified"]=False
               pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\n")
