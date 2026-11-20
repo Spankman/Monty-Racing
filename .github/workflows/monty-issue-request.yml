@@ -1,0 +1,80 @@
+name: Monty race request from GitHub issue
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  requested-race:
+    if: startsWith(github.event.issue.title, 'Monty race: ') && (github.event.issue.author_association == 'OWNER' || github.event.issue.author_association == 'MEMBER' || github.event.issue.author_association == 'COLLABORATOR')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Score requested race from current Queensland date
+        id: score
+        continue-on-error: true
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          python - <<'PY'
+          import datetime,json,os,re
+          from zoneinfo import ZoneInfo
+          from krok_adapter import fetch,normalize
+          title=os.environ['ISSUE_TITLE']
+          match=re.fullmatch(r'Monty race: ([A-Za-z][A-Za-z .\x27-]{1,59}) ([1-9]|1[0-9]|20)',title)
+          if not match: raise SystemExit('Invalid request. Example: Monty race: Kilcoy 4')
+          if not os.getenv('KROK_API_KEY'): raise SystemExit('KROK_API_KEY missing')
+          day=datetime.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
+          snapshot,audit=normalize(fetch(day,os.environ['KROK_API_KEY']),day)
+          with open('research_snapshot.json','w') as f:json.dump(snapshot,f)
+          with open('research_source_audit.json','w') as f:json.dump(audit,f)
+          with open('requested_race.json','w') as f:json.dump({'track':match.group(1),'race':int(match.group(2))},f)
+          PY
+          python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
+          python - <<'PY'
+          import json
+          from monty_single_race_research import select
+          from pathlib import Path
+          request=json.loads(Path('requested_race.json').read_text())
+          result=select('research_scores.csv',request['track'],request['race'])
+          Path('single_race_research.json').write_text(json.dumps(result,indent=2)+'\n')
+          PY
+      - name: Post safe research result on issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          SCORE_OUTCOME: ${{ steps.score.outcome }}
+        run: |
+          python - <<'PY'
+          import json,os,pathlib
+          p=pathlib.Path('single_race_research.json')
+          if os.environ['SCORE_OUTCOME']=='success' and p.exists():
+              data=json.loads(p.read_text())
+              lines=['**Monty research only — NO BET (not approved V6 selections)**','',f"**{data['meeting']} R{data['race']}**"]
+              for r in data['runners']:
+                  lines.append(f"- #{r['number']} {r['horse']}: research probability {r['research_probability']:.1%}")
+              lines.append('\nField, odds and race status require independent verification before betting.')
+              body='\n'.join(lines)
+          else:
+              body='Monty could not verify and score this race. **NO BET.** Check the workflow logs for missing data or credentials.'
+          pathlib.Path('comment.md').write_text(body)
+          PY
+          gh issue comment "$ISSUE" --body-file comment.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-issue-research-${{ github.run_id }}
+          path: |
+            research_scores.audit.json
+            research_source_audit.json
+            single_race_research.json
+          retention-days: 2
+          if-no-files-found: ignore
