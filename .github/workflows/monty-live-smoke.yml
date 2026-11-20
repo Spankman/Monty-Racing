@@ -129,8 +129,16 @@ jobs:
                   "| Race | Type | Horses in Monty rank order |",
                   "|---|---|---|",
               ]
+              import re
+              def track_race_key(race_id):
+                  # Keep meetings together and race numbers numeric (R2 before R10).
+                  match=re.search(r"^(.*?)\\s*[-:]?\\s*R(?:ace)?\\s*(\\d+)\\b",race_id,re.I)
+                  if match:
+                      return (match.group(1).strip().casefold(),int(match.group(2)),race_id)
+                  return (race_id.casefold(),0,race_id)
               bests=[group[0] for group in by_race.values()]
-              for best in bests[:10]:
+              bests=sorted(bests[:10],key=lambda r:track_race_key(r["race_id"]))
+              for best in bests:
                   group=by_race[best["race_id"]]
                   picks=[group[0]]
                   kind="WIN"
