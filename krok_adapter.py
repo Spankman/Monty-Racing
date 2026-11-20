@@ -186,6 +186,8 @@ def fetch(date,key):
         meta=payload.get('meta') or {}
         if not isinstance(meta,dict):
             raise ValueError('Invalid pagination metadata')
+        # Log only non-sensitive pagination shape for diagnosis.
+        print('Krok page audit:',json.dumps({'page':attempt+1,'count':len(payload['data']),'meta_keys':sorted(meta.keys()),'has_more':meta.get('has_more'),'truncated':meta.get('truncated'),'is_last_page':meta.get('is_last_page'),'total_pages':meta.get('total_pages'),'next_cursor_present':bool(meta.get('next_cursor')),'top_level_keys':sorted(payload.keys())}),flush=True)
         batch=payload['data']
         if not batch and (meta.get('has_more') or meta.get('truncated')):
             raise ValueError('Provider returned empty nonterminal page')
