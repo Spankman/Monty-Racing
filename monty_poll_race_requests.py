@@ -45,6 +45,15 @@ def score(track,race,date):
     key=os.environ.get("KROK_API_KEY")
     if not key:raise RuntimeError("KROK_API_KEY is missing")
     snapshot,audit=normalize(fetch(date,key),date)
+    # Scope completeness validation to the requested race. Unrelated
+    # incomplete races must not prevent this race from being evaluated.
+    target=[r for r in snapshot["races"] if str(r["meeting"]).strip().casefold()==track.strip().casefold() and str(r["race"])==str(race)]
+    if len(target)!=1:
+        raise ValueError("Requested race absent or ambiguous")
+    runners=[r for r in snapshot["runners"] if str(r["meeting"]).strip().casefold()==track.strip().casefold() and str(r["race"])==str(race)]
+    if len(runners)!=int(target[0]["expected_active_runners"]):
+        raise ValueError("Requested race field incomplete")
+    snapshot={**snapshot,"races":target,"runners":runners}
     with tempfile.TemporaryDirectory() as tmp:
         p=Path(tmp)
         (p/"snapshot.json").write_text(json.dumps(snapshot))
