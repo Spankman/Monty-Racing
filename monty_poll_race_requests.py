@@ -70,10 +70,15 @@ def score(track,race,date):
                     "research_prob":r["research_probability"],"odds":r["odds"]}
                    for r in result["runners"]],approved=False)
     leader=ladder["best"]
-    return (f"**{track} R{race} — NO BET (research only)**\n\n"
-            f"**Top-ranked: #{leader['number']} {leader['horse']}**\n\n"
-            "BB → Q → T → FF: no authorised value bet. "
-            "Verified prices and approved probabilities are required.")
+    # A single-race request always returns one ranked selection. When the
+    # research model is unapproved, show a provisional BB, never a wager
+    # authorisation or invented exotic combination.
+    return (f"**{track} R{race} — BB (provisional research pick)**\\n\\n"
+            f"**#{leader['number']} {leader['horse']}**\\n\\n"
+            "Single-race ladder: BB → Q → T → FF. "
+            "This is a compulsory ranked selection, **not an authorised wager**. "
+            "No verified exotic value is available; do not fabricate Q/T/FF.")
+
 
 def main():
     today=dt.datetime.now(TZ).date()
