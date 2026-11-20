@@ -1,4 +1,5 @@
 name: Monty live Krok connectivity smoke test
+# Recheck complete provider pagination after adapter repair.
 on:
   # Evening on-demand smoke run: push on this workflow file starts a live research check.
   push:
