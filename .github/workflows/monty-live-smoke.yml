@@ -91,6 +91,17 @@ jobs:
               work=pathlib.Path(work)
               source=work/"snapshot.json"
               source.write_text(json.dumps(snapshot))
+              # Measure actual frozen-V6 feature availability rather than assuming
+              # Krok form fields are equivalent to historical V6 inputs.
+              from research_source_feature_coverage import audit as audit_coverage
+              coverage=audit_coverage("monty_v6/results/frozen_model.json",{"krok":source})
+              cv=coverage["sources"]["krok"]
+              print("Frozen V6 feature coverage:",json.dumps({
+                  "mean_input_coverage":cv["mean_input_coverage"],
+                  "fully_observed_features":len(cv["fully_observed_features"]),
+                  "partially_observed_features":len(cv["partially_observed_features"]),
+                  "unobserved_features":len(cv["unobserved_features"])
+              },sort_keys=True))
               result=subprocess.run(
                   [sys.executable,"operational/run_snapshot.py",str(source),
                    "--output-dir",str(work/"scored")],
@@ -219,7 +230,10 @@ jobs:
                   "independent_field_verification_proven",
                   "artifact_integrity_verified","runner_count","race_count",
                   "input_sha256","frozen_model_sha256")}
-              safe["racing_date"]=day
+              safe["v6_input_feature_coverage"]=cv["mean_input_coverage"]
+          safe["v6_fully_observed_features"]=len(cv["fully_observed_features"])
+          safe["v6_unobserved_features"]=len(cv["unobserved_features"])
+          safe["racing_date"]=day
               safe["provider_connection_succeeded"]=True
               safe["provider_accepted_races"]=audit["races_accepted"]
               safe["restricted_flat_research_races"]=audit["restricted_flat_research_races"]
