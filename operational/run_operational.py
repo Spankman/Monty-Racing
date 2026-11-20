@@ -32,6 +32,18 @@ def main():
             if not str(race.get("meeting","")).strip() or not str(race.get("race","")).strip() or type(count) is not int or count<1 or key in expected:
                 raise ValueError("Invalid or duplicate race count")
             expected[key]=count
+        # If the manifest declares research restrictions, enforce them against
+        # the scored runner-level flags. Missing declarations remain unverified.
+        for race in races:
+            if "research_only_restricted_race" not in race:
+                continue
+            restricted=race["research_only_restricted_race"]
+            if type(restricted) is not bool:
+                raise ValueError("Invalid manifest research restriction flag")
+            key=str(race["meeting"]).strip().upper()+"|"+str(race["race"]).strip()
+            actual=scored.loc[scored["race_id"]==key,"research_only_restricted_race"]
+            if actual.empty or not actual.eq(restricted).all():
+                raise ValueError("Manifest and scored research restrictions disagree")
         observed=scored.groupby("race_id").size().to_dict()
         if observed!=expected:
             raise ValueError("Incomplete or unexpected race fields: "+str({"observed":observed,"expected":expected}))
