@@ -14,6 +14,15 @@ class KrokAdapterTests(unittest.TestCase):
  def test_prohibited_race_is_excluded(self):
   f=self.fixture();f['data'][0]['races'].append({'number':2,'name':'Two Year Old Maiden','status':'open','runners':f['data'][0]['races'][0]['runners']})
   s,a=normalize(f,'2026-11-14');self.assertEqual(len(s['races']),1);self.assertTrue(any('prohibited race type' in x for x in a['skipped']))
+ def test_explicit_single_race_overrides_prohibited_classes(self):
+  for race_name in ('Maiden Plate','Two Year Old Handicap','Hurdle','Steeplechase'):
+   with self.subTest(race_name=race_name):
+    f=self.fixture()
+    f['data'][0]['races'][0]['name']=race_name
+    with self.assertRaises(ValueError):normalize(f,'2026-11-14')
+    s,a=normalize(f,'2026-11-14',allow_restricted_classes=True)
+    self.assertEqual(len(s['races']),1)
+    self.assertEqual(len(s['runners']),2)
  def test_uncertain_scratching_rejected(self):
   f=self.fixture();f['data'][0]['races'][0]['runners'][1].pop('is_scratched')
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
