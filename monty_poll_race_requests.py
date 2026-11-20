@@ -63,11 +63,13 @@ def score(track,race,date):
         (p/"snapshot.json").write_text(json.dumps(snapshot))
         run(p/"snapshot.json",p/"scores.csv")
         result=select(p/"scores.csv",track,race)
-    lines=[f"**{track} R{race} — research rankings only; NO BET**","",
-           "Unapproved research output, not an authorised V6 betting selection."]
-    for i,r in enumerate(result["runners"],1):
-        lines.append(f"{i}. #{r['number']} {r['horse']} — research win probability {r['research_probability']:.1%}")
-    lines.append("\nNo exotic recommendation: independently verified odds and calibrated combination probabilities are unavailable.")
+    # One compact output, not the full research ranking. This unapproved
+    # model cannot issue BB/Q/T/FF bets without verified odds and calibration.
+    best=result["runners"][0]
+    lines=[f"**{track} R{race} — NO BET**","",
+           f"Research leader only: **#{best['number']} {best['horse']}**",
+           "No authorised BB / Q / T / FF: verified prices and calibrated value estimates are unavailable.",
+           "Research ranking is not an approved V6 betting selection."]
     return "\n".join(lines)
 
 def main():
