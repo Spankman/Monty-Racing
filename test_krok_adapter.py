@@ -22,6 +22,14 @@ class KrokAdapterTests(unittest.TestCase):
   f['data'][0]['races'][0]['runners'][0].update(weight=58.5,claim_kg=2.0)
   s,_=normalize(f,'2026-11-14')
   self.assertEqual(s['runners'][0]['effective_weight'],56.5)
+ def test_explicit_benchmark_class_only(self):
+  f=self.fixture()
+  f['data'][0]['races'][0]['name']='Benchmark 72 Handicap'
+  s,_=normalize(f,'2026-11-14')
+  self.assertTrue(all(r['benchmark_class']==72 for r in s['runners']))
+  f['data'][0]['races'][0]['name']='Open Handicap'
+  s,_=normalize(f,'2026-11-14')
+  self.assertTrue(all('benchmark_class' not in r for r in s['runners']))
  def test_missing_price_skips(self):
   f=self.fixture();del f['data'][0]['races'][0]['runners'][1]['fixed_win']
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
