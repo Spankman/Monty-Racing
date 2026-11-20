@@ -45,6 +45,7 @@ def score(track,race,date):
     from krok_adapter import fetch,normalize
     from research_frozen_linear_replay import run
     from monty_single_race_research import select
+    from monty_single_race_ladder import choose
     key=os.environ.get("KROK_API_KEY")
     if not key:raise RuntimeError("KROK_API_KEY is missing")
     snapshot,audit=normalize(fetch(date,key),date,allow_restricted_classes=True)
@@ -65,7 +66,10 @@ def score(track,race,date):
         result=select(p/"scores.csv",track,race)
     # Research output cannot authorise any bet without verified odds and
     # approved, calibrated probabilities. Never print the entire leaderboard.
-    leader=result["runners"][0]
+    ladder=choose([{"number":r["number"],"horse":r["horse"],
+                    "research_prob":r["research_probability"],"odds":r["odds"]}
+                   for r in result["runners"]],approved=False)
+    leader=ladder["best"]
     return (f"**{track} R{race} — NO BET (research only)**\n\n"
             f"**Top-ranked: #{leader['number']} {leader['horse']}**\n\n"
             "BB → Q → T → FF: no authorised value bet. "
