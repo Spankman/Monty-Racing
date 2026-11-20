@@ -203,6 +203,9 @@ jobs:
                   "Independent fields, scratchings, price freshness, value and V6 integrity unverified."
               ]
               pathlib.Path("monty_research_report.md").write_text("\n".join(report)+"\n",encoding="utf-8")
+              print("BEGIN UNAPPROVED RESEARCH SELECTIONS — NO BET",flush=True)
+              print(pathlib.Path("monty_research_report.md").read_text(),flush=True)
+              print("END UNAPPROVED RESEARCH SELECTIONS — NO BET",flush=True)
               print("Probability sums, runner identities and betting flags: PASSED")
               print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
               print("Independent field verification: NOT PROVEN")
