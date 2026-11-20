@@ -10,6 +10,18 @@ class KrokAdapterTests(unittest.TestCase):
   return {'success':True,'data':[{'venue':'Sample','country':'AU','date':'2026-11-14','type':'T','races':[{'number':1,'status':'open','distance':1200,'runner_count':3,'track_condition':'Soft 6','runners':[{'number':1,'name':'A','is_scratched':False,'fixed_win':3.5,'barrier':1},{'number':2,'name':'B','is_scratched':False,'fixed_win':4.5},{'number':3,'name':'C','is_scratched':True}]}]}],'meta':{'has_more':False}}
  def test_complete(self):
   s,a=normalize(self.fixture(),'2026-11-14');self.assertEqual(len(s['runners']),2);self.assertEqual(s['runners'][0]['distance_km'],1.2);self.assertEqual(s['runners'][0]['going_soft'],1)
+ def test_missing_claim_does_not_invent_effective_weight(self):
+  f=self.fixture()
+  f['data'][0]['races'][0]['runners'][0]['weight']=58.5
+  s,_=normalize(f,'2026-11-14')
+  self.assertEqual(s['runners'][0]['allocated_weight'],58.5)
+  self.assertNotIn('effective_weight',s['runners'][0])
+  self.assertNotIn('claim_kg',s['runners'][0])
+ def test_explicit_claim_derives_effective_weight(self):
+  f=self.fixture()
+  f['data'][0]['races'][0]['runners'][0].update(weight=58.5,claim_kg=2.0)
+  s,_=normalize(f,'2026-11-14')
+  self.assertEqual(s['runners'][0]['effective_weight'],56.5)
  def test_missing_price_skips(self):
   f=self.fixture();del f['data'][0]['races'][0]['runners'][1]['fixed_win']
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
