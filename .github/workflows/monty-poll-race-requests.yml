@@ -1,0 +1,26 @@
+name: Monty poll pending race requests
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: monty-pending-race-requests
+  cancel-in-progress: false
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Poll pending requests and post safe results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+        run: python monty_poll_race_requests.py
