@@ -31,11 +31,14 @@ def verify(directory):
             raise ValueError("Missing mandatory prediction columns")
         count = 0
         restricted_column = "research_only_restricted_race" in (reader.fieldnames or [])
+        unknown_column = "race_classification_unknown" in (reader.fieldnames or [])
         for row in reader:
             if row["betting_authorised"].strip().lower() not in ("false", "0"):
                 raise ValueError("A runner is marked betting-authorised")
             if restricted_column and row["research_only_restricted_race"].strip().lower() not in ("true", "false", "1", "0"):
                 raise ValueError("Invalid research-only restriction flag")
+            if unknown_column and row["race_classification_unknown"].strip().lower() not in ("true", "false", "1", "0"):
+                raise ValueError("Invalid unknown race classification flag")
             rid = row["race_id"]
             if not rid or not row["number"] or not row["horse"]:
                 raise ValueError("Missing race or runner identity")
@@ -52,6 +55,11 @@ def verify(directory):
                 if "restricted" in group and group["restricted"] != restricted:
                     raise ValueError("Inconsistent restricted-race flags within race")
                 group["restricted"] = restricted
+            if unknown_column:
+                unknown = row["race_classification_unknown"].strip().lower() in ("true", "1")
+                if "unknown" in group and group["unknown"] != unknown:
+                    raise ValueError("Inconsistent unknown classification flags within race")
+                group["unknown"] = unknown
             group["runners"].add(row["number"])
             group["sum"] += p
             group["market_sum"] += market
@@ -62,8 +70,9 @@ def verify(directory):
         if len(group["runners"]) < 2 or not math.isclose(group["sum"], 1.0, abs_tol=1e-6) or not math.isclose(group["market_sum"], 1.0, abs_tol=1e-6):
             raise ValueError(f"Probabilities or field size invalid for {race}")
     restricted_count = sum(bool(group.get("restricted", False)) for group in fields.values())
+    unknown_count = sum(bool(group.get("unknown", False)) for group in fields.values())
     return {"status": "PROVISIONAL_AUDIT_PASSED", "races": len(fields), "runners": count,
-            "restricted_flat_research_races": restricted_count, "betting_authorised": False}
+            "restricted_flat_research_races": restricted_count, "unknown_classification_races": unknown_count, "betting_authorised": False}
 
 
 if __name__ == "__main__":
