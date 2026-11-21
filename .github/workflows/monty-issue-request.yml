@@ -66,6 +66,9 @@ jobs:
                   lines.append("\\n**VALUE BET: NONE — no positive model edge verified.**")
               lines.append(f"\nProgression: {d.get('fixed_win_price_progression',{}).get('type','UNKNOWN')} {'–'.join(nums)}")
               lines.append("\n"+d.get("win_value_diagnostic",{}).get("betting_decision","NO BET — provisional"))
+              lines.append("\n**Evidence audit:** scored at "+str(d.get("scored_at_utc") or "UNKNOWN")+"; provider odds captured at "+str(d.get("provider_odds_captured_at_utc") or "UNKNOWN")+".")
+              lines.append("Snapshot SHA-256: "+str(d.get("provider_snapshot_sha256") or "UNKNOWN"))
+              lines.append("Pre-race odds evidence verified: **"+("YES" if d.get("pre_race_evidence_verified") is True else "NO")+"**. Do not count as verified pre-race performance.")
               lines.append("\nProvisional probabilities unvalidated; fixed win prices only.")
               body="\n".join(lines)
           else:
