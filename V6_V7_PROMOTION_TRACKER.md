@@ -34,6 +34,6 @@ Frozen V6 artifacts must never be modified.
 ## Betting policy
 - [x] Documented owner directive: fixed-win odds only for BB/Q/T/FF progression; no exotic dividends as selection inputs (SELECTION_RULES.md).
 - [ ] Verify every added supporting runner independently; NO BET when qualification/value cannot be shown.
-- [ ] Reconcile superseded 19 Nov wording in MONTY_BETTING_POLICY.md with 21 Nov fixed-$4 rule.
+- [x] Add explicit superseding 21 Nov fixed-$4 rule to MONTY_BETTING_POLICY.md (commit 4394524); earlier historical wording retained for audit.
 
 This checklist is evidence-based: passing CI does not prove model accuracy, betting profitability or genuine V6/V7 scoring.
