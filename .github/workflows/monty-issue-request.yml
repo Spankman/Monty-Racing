@@ -62,6 +62,8 @@ jobs:
                   edge=float(value["model_expected_win_roi"])
                   lines.append(f"\\n**VALUE WATCH (model-only, NO BET):** #{value['number']} {value['horse']} — fixed WIN ${float(value['fixed_win_odds']):.2f}, V7 {float(value['v7_win_probability']):.1%}, estimated ROI {edge:+.1%}")
                   lines.append("Uncalibrated estimate; not a verified betting edge.")
+              else:
+                  lines.append("\\n**VALUE BET: NONE — no positive model edge verified.**")
               lines.append(f"\nProgression: {d.get('fixed_win_price_progression',{}).get('type','UNKNOWN')} {'–'.join(nums)}")
               lines.append("\n"+d.get("win_value_diagnostic",{}).get("betting_decision","NO BET — provisional"))
               lines.append("\nProvisional probabilities unvalidated; fixed win prices only.")
