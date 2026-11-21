@@ -1,6 +1,7 @@
 """Single-race quick-mode policy and transparent fallback routing.
 
-This module routes *available verified outputs*, not model execution.\nSingle-race routing does not silently substitute V6 for unavailable V7. It never
+This module routes *available verified outputs*, not model execution.
+Single-race routing does not silently substitute V6 for unavailable V7. It never
 manufactures selections or converts a research-only score into an approved bet.
 """
 from dataclasses import dataclass
@@ -41,7 +42,7 @@ def route_single_race(outputs, *, eligible=True, override=False):
         # The router cannot independently prove model execution or timing.
         # Even model-labelled inputs remain unauthorised without external checks.
         return SelectionRoute(source,tuple((p['meeting'],p['race'],p['number'],p['horse']) for p in picks),
-            model,source=='V7_LE',False,'Candidate selections only; verify provenance, timing and betting rules externally')
+            False,source=='V7_LE',False,'Candidate selections only; model execution unverified by router; verify provenance, timing and betting rules externally')
     return SelectionRoute('NO_BET',(),False,False,False,'No actual selections available from any source')
 
 def next_bet_type(current):
@@ -73,7 +74,7 @@ def route_full_day(outputs, *, explicit_le=False):
         if len(identities)!=len(picks):
             continue
         return SelectionRoute(source,tuple((p['meeting'],p['race'],p['number'],p['horse'])
-                             for p in picks),True,source=='V7_LE',False,
+                             for p in picks),False,source=='V7_LE',False,
                              'Full-day candidates only; verify source and pre-off evidence')
     return SelectionRoute('NO_BET',(),False,False,False,
                           'No qualifying full-day V7 selections; LE requires explicit authorization')
