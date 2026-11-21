@@ -13,6 +13,9 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
             allow_restricted=False, model_path=Path("v7/artifacts/fold_3_model.json")):
     if country not in ("AU", "NZ"):
         raise ValueError("Country must be AU or NZ")
+    snapshot_data=json.loads(Path(snapshot).read_text())
+    if str(snapshot_data.get('date','')) != str(date):
+        raise ValueError('Snapshot date does not match requested race date')
     out=Path(output_dir)
     if out.exists() and any(out.iterdir()):
         raise FileExistsError("Output directory must be empty to freeze prediction evidence")
