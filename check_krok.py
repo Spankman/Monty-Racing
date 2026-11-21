@@ -31,9 +31,20 @@ def main():
     try:
         report=check(a.date,a.output)
     except ValueError as exc:
-        # Fixed diagnostic; never print provider bodies, request objects or credentials.
-        msg='Missing KROK_API_KEY' if not os.environ.get('KROK_API_KEY') else 'Date or provider input did not pass validation'
-        print('BLOCKED: '+msg);return 2
+        # Categorise known failures without logging provider payloads or credentials.
+        if not os.environ.get('KROK_API_KEY'):
+            reason='missing_api_key'
+        elif 'No complete, priced, active thoroughbred fields found' in str(exc):
+            reason='no_eligible_complete_fields'
+        elif 'Duplicate meeting/race identity' in str(exc):
+            reason='duplicate_race_identity'
+        elif 'pagination' in str(exc).lower() or 'page limit' in str(exc).lower():
+            reason='incomplete_pagination'
+        elif 'date' in str(exc).lower():
+            reason='invalid_date_or_feed_date'
+        else:
+            reason='provider_input_validation'
+        print('BLOCKED: '+reason);return 2
     except urllib.error.HTTPError as exc:
         print('BLOCKED: provider HTTP status '+str(exc.code));return 2
     except Exception as exc:
