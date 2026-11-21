@@ -46,3 +46,27 @@ def exotic_ladder(primary, supporting, *, short_price_limit, verified=False, sta
         for o in options:o['total_stake']=round(o['combinations']*stake_per_combination,2)
     return {'options':options,'status':'OPTIONS ONLY — verify value before staking'}
 
+
+
+def research_display_ladder(ranked_runners, *, short_price_limit=4):
+    """Fixed-win-odds presentation ONLY; never authorises a bet.
+
+    Input is a single race in strongest-first order. Does not claim supporting
+    runners have passed form/value gates. Returns the displayed stage and picks.
+    """
+    if not isinstance(short_price_limit,(int,float)) or short_price_limit<=1:
+        raise ValueError('Invalid short-price limit')
+    if not ranked_runners:
+        return 'NO BET', []
+    chosen=[ranked_runners[0]]
+    kinds=('WIN','Q','TRI BOX','F4 BOX')
+    for runner in ranked_runners[1:4]:
+        try:
+            current=float(chosen[-1]['odds'])
+            if not 1<current<float('inf'):break
+        except (KeyError,TypeError,ValueError):
+            break
+        if current>=short_price_limit:break
+        if str(runner.get('number')) in {str(x.get('number')) for x in chosen}:break
+        chosen.append(runner)
+    return kinds[len(chosen)-1], chosen
