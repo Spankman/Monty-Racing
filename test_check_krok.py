@@ -35,6 +35,16 @@ class ConnectionDiagnosticTests(unittest.TestCase):
         self.assertEqual(status, 2)
         self.assertIn('incomplete_pagination', output)
 
+    def test_empty_eligible_fields_are_classified(self):
+        status, output = self.run_case(ValueError('No complete, priced, active thoroughbred fields found'))
+        self.assertEqual(status, 2)
+        self.assertIn('no_eligible_complete_fields', output)
+
+    def test_invalid_date_is_classified(self):
+        status, output = self.run_case(ValueError('invalid feed date 2026-11-21'))
+        self.assertEqual(status, 2)
+        self.assertIn('invalid_date_or_feed_date', output)
+
     def test_duplicate_is_classified(self):
         status, output = self.run_case(ValueError('Duplicate meeting/race identity in provider feed'))
         self.assertEqual(status, 2)
