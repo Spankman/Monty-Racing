@@ -188,7 +188,7 @@ jobs:
               import re
               def track_race_key(race_id):
                   # Keep meetings together and race numbers numeric (R2 before R10).
-                  match=re.search(r"^(.*?)\s*[-:]?\s*R(?:ace)?\s*(\d+)\b",race_id,re.I)
+                  match=re.search(r"^(.*?)\s*(?:\|\s*|[-:]?\s*R(?:ace)?\s*)(\d+)\s*$",race_id,re.I)
                   if match:
                       return (match.group(1).strip().casefold(),int(match.group(2)),race_id)
                   return (race_id.casefold(),0,race_id)
