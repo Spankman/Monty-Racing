@@ -40,6 +40,19 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
                         "fixed_win_odds":float(row.fixed_win_odds),
                         "v7_win_probability":float(row.v7_win_probability)}
                        for row in scored.itertuples(index=False)]}
+    # Market comparison is diagnostic only: no evidence of a calibrated edge
+    # or profitable exotic payout is inferred from a ranking.
+    for runner in result["ordered"]:
+        odds=runner["fixed_win_odds"]
+        probability=runner["v7_win_probability"]
+        runner["market_implied_probability"]=1.0/odds
+        runner["model_minus_raw_market_probability"]=probability-1.0/odds
+        runner["model_expected_win_roi"]=probability*odds-1.0
+    result["win_value_diagnostic"]={
+        "best_bet_model_expected_win_roi":result["ordered"][0]["model_expected_win_roi"],
+        "best_bet_fair_win_odds":1.0/result["ordered"][0]["v7_win_probability"],
+        "calibration_unverified":True,
+        "betting_decision":"NO BET — provisional probabilities not prospectively validated"}
     # Exotic progression uses fixed WIN prices only, never exotic dividends.
     ranked=result["ordered"]
     progression={"type":"WIN","numbers":[ranked[0]["number"]]}
