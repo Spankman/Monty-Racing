@@ -40,6 +40,16 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
                         "fixed_win_odds":float(row.fixed_win_odds),
                         "v7_win_probability":float(row.v7_win_probability)}
                        for row in scored.itertuples(index=False)]}
+    # Exotic progression uses fixed WIN prices only, never exotic dividends.
+    ranked=result["ordered"]
+    progression={"type":"WIN","numbers":[ranked[0]["number"]]}
+    if len(ranked)>=2 and ranked[0]["fixed_win_odds"]<4:
+        progression={"type":"QUINELLA","numbers":[x["number"] for x in ranked[:2]]}
+        if len(ranked)>=3 and ranked[1]["fixed_win_odds"]<4:
+            progression={"type":"BOXED_TRIFECTA","numbers":[x["number"] for x in ranked[:3]]}
+            if len(ranked)>=4 and ranked[2]["fixed_win_odds"]<4:
+                progression={"type":"BOXED_FIRST_FOUR","numbers":[x["number"] for x in ranked[:4]]}
+    result["fixed_win_price_progression"]=progression
     (out/"provisional_selection.json").write_text(json.dumps(result,indent=2)+"\n")
     return result
 
