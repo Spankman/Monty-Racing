@@ -11,6 +11,16 @@ import pandas as pd
 
 def stage(snapshot_path, meeting, race, output_csv):
     snapshot=json.loads(Path(snapshot_path).read_text())
+    races=snapshot.get("races")
+    if not isinstance(races,list):
+        raise ValueError("Snapshot missing accepted race manifest")
+    matching=[entry for entry in races if
+              str(entry.get("meeting","")).strip().casefold()==meeting.strip().casefold()
+              and str(entry.get("race","")).strip()==str(race).strip()]
+    if len(matching)!=1:
+        raise ValueError("Requested race must occur exactly once in accepted race manifest")
+    if matching[0].get("betting_authorised") is not False:
+        raise ValueError("Unexpected race betting-authorisation flag")
     rows=snapshot.get("runners")
     if not isinstance(rows,list):
         raise ValueError("Snapshot has no runner list")
@@ -18,6 +28,8 @@ def stage(snapshot_path, meeting, race, output_csv):
               and str(r.get("race","")).strip()==str(race).strip()]
     if not selected:
         raise ValueError("Requested race not found in snapshot")
+    if matching[0].get("expected_active_runners") != len(selected):
+        raise ValueError("Runner count differs from accepted race manifest")
     if len(selected)<3:
         raise ValueError("At least three active runners required for V7")
     if any(r.get("betting_authorised") is not False for r in selected):
