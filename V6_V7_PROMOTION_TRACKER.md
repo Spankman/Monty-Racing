@@ -11,7 +11,7 @@ Frozen V6 artifacts must never be modified.
 - [x] Shared fixed-win-odds BB/Q/T/FF presentation wired to live research report, with offline tests (commits 823da6a, 985c38d). Research only.
 - [x] Fixed odds strictly below $4 trigger escalation; exactly $4 does not (commit 86f2763).
 - [x] Offline code checks passed following live report ladder integration (GitHub Actions 44845708799).
-- [ ] Diagnose failed manual Krok connection run 44847348535; do not confuse this with successful offline CI.
+- [ ] Diagnose failed manual Krok connection run 44847348535: generic validation error. Added safe error categories (commit f8a85d5); next run must establish exact cause. Do not confuse this with successful offline CI.
 - [ ] Resolve provider duplicate records with verifiable authoritative field/price provenance; recover Wanganui and other excluded races safely.
 - [ ] Independent TAB validation of fields, scratchings, odds and quote timestamps for full AU/NZ TAB coverage.
 - [x] Verify latest workflow change (d58dce7) by CI (offline checks 44847256229 passed).
