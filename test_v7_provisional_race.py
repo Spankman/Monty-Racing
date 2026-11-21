@@ -31,6 +31,10 @@ class ProvisionalV7Test(unittest.TestCase):
             self.assertEqual(len(result["ordered"]),4)
             self.assertAlmostEqual(sum(x["v7_win_probability"] for x in result["ordered"]),1,places=6)
             self.assertTrue((root/"scored"/"v7_research_scores.csv").exists())
+            ranked=result["ordered"]
+            expected=[x["number"] for x in ranked[:4]]
+            self.assertEqual(result["fixed_win_price_progression"]["numbers"],expected[:len(result["fixed_win_price_progression"]["numbers"])])
+            self.assertIn(result["fixed_win_price_progression"]["type"],("WIN","QUINELLA","BOXED_TRIFECTA","BOXED_FIRST_FOUR"))
 
 if __name__=="__main__":
     unittest.main()
