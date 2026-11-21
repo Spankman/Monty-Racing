@@ -93,6 +93,6 @@ def dividend_progression(primary, supporting, *, quotes, verified=False,
                'quoted_dividend':quote,'gross_return_if_successful':round(quote*stake_per_combination,2)}
         options.append(entry)
         # Compare gross payout to owner's floor AND full combination stake.
-        if entry['gross_return_if_successful']>=max(min_return,stake):
+        # Owner rule: every verified BB below $4 must assess the quinella,\n        # regardless of the configured minimum gross return.\n        if kind=='WIN' and win<4:\n            continue\n        if entry['gross_return_if_successful']>=max(min_return,stake):
             return {'options':options,'status':'STOP — return threshold met; value still requires probability assessment'}
     return {'options':options,'status':'STOP — no stage met return threshold; NO BET'}
