@@ -9,11 +9,20 @@ from zoneinfo import ZoneInfo
 from krok_adapter import fetch, normalize
 
 def check(date, output):
-    dt.date.fromisoformat(date)
+    try:
+        dt.date.fromisoformat(date)
+    except ValueError as exc:
+        raise ValueError('invalid_date') from exc
     key=os.environ.get('KROK_API_KEY','')
     if not key:raise ValueError('KROK_API_KEY is absent; no live request attempted.')
-    payload=fetch(date,key)
-    _,audit=normalize(payload,date)
+    try:
+        payload=fetch(date,key)
+    except ValueError as exc:
+        raise ValueError('provider_payload_or_size') from exc
+    try:
+        _,audit=normalize(payload,date)
+    except (ValueError,KeyError,TypeError) as exc:
+        raise ValueError('provider_normalization') from exc
     report={'requested_date':date,'captured_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
             'source':'Krok Odds API — https://krokodds.com.au',
             'live_request_succeeded':True,'accepted_races':audit['races_accepted'],
@@ -32,7 +41,10 @@ def main():
         report=check(a.date,a.output)
     except ValueError as exc:
         # Fixed diagnostic; never print provider bodies, request objects or credentials.
-        msg='Missing KROK_API_KEY' if not os.environ.get('KROK_API_KEY') else 'Date or provider input did not pass validation'
+        categories={'invalid_date':'Invalid racing date',
+                    'provider_payload_or_size':'Provider response JSON or size invalid',
+                    'provider_normalization':'Provider response failed racing-field normalization'}
+        msg='Missing KROK_API_KEY' if not os.environ.get('KROK_API_KEY') else categories.get(str(exc),'Provider input validation failed')
         print('BLOCKED: '+msg);return 2
     except urllib.error.HTTPError as exc:
         print('BLOCKED: provider HTTP status '+str(exc.code));return 2
