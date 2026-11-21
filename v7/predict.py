@@ -7,7 +7,7 @@ from .core import predict,exotics,value_decision
 from .evidence import blackbook_matches
 
 
-def run(model_path,features_path,out):
+def run(model_path,features_path,out,*,provisional=False):
     m=json.loads(model_path.read_text());d=pd.read_csv(features_path,dtype={'race_id':str,'runner_id':str})
     needed={'race_id','runner_id','horse','date','country','fixed_win_odds','source_url'}
     if not needed.issubset(d):raise ValueError('Missing required field/quote provenance columns')
@@ -19,7 +19,9 @@ def run(model_path,features_path,out):
     odds=pd.to_numeric(d.fixed_win_odds,errors='coerce')
     if not np.isfinite(odds).all() or (odds<=1).any():raise ValueError('Invalid fixed win quote')
     # Require explicit attestation that scratched runners were excluded and field checked.
-    if 'field_verified' not in d or not d.field_verified.eq(True).all():raise ValueError('Complete active field verification required')
+    verified='field_verified' in d and d.field_verified.eq(True).all()
+    if not verified and not provisional:raise ValueError('Complete active field verification required')
+    if provisional and verified:raise ValueError('Provisional mode must not mislabel independently verified fields')
     inv=1/odds;base=inv/inv.groupby(d.race_id).transform('sum')
     X=np.column_stack([pd.to_numeric(d[n],errors='coerce') if n in d else np.full(len(d),np.nan) for n in m['names']])
     # Current market and field size are deterministic contemporaneous inputs.
@@ -28,7 +30,7 @@ def run(model_path,features_path,out):
     d['v7_win_probability']=predict(m,X,base,d.race_id)
     d['known_feature_count']=np.isfinite(X).sum(1)
     d['within_race_rank']=d.groupby('race_id').v7_win_probability.rank(method='first',ascending=False).astype(int)
-    d['status']='EXPERIMENTAL_V7_NOT_APPROVED_REPLACEMENT'
+    d['status']='PROVISIONAL_V7_PROVIDER_UNVERIFIED' if provisional else 'EXPERIMENTAL_V7_NOT_APPROVED_REPLACEMENT'
     d['country_warning']=np.where(d.country.eq('NZ'),'NZ_NOT_VALIDATED','AU_RETROSPECTIVE_ONLY')
     d['estimated_top3_probability']=np.nan;pairs=[]
     for race,g in d.groupby('race_id',sort=False):
@@ -42,7 +44,7 @@ def run(model_path,features_path,out):
     decisions=[value_decision(p,o) for p,o in zip(d.v7_win_probability,odds)]
     d['research_value_label']=[x['decision'] for x in decisions];d['net_edge']=[x['net_edge'] for x in decisions]
     # Deployment remains NO BET until V7 is validated and approved separately.
-    d['deployment_decision']='NO BET — V7 UNAPPROVED'
+    d['deployment_decision']='NO BET — PROVISIONAL V7 UNVERIFIED' if provisional else 'NO BET — V7 UNAPPROVED'
     out.mkdir(parents=True,exist_ok=True);d.to_csv(out/'v7_research_scores.csv',index=False)
     pd.DataFrame(pairs).to_csv(out/'quinella_estimates.csv',index=False)
     (out/'blackbook_next_starts.json').write_text(json.dumps(blackbook_matches(d.to_dict('records')),indent=2))
