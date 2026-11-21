@@ -213,6 +213,14 @@ jobs:
                   "These are research combinations, not staking instructions. Missing or ineligible races omitted.",
                   "Independent fields, scratchings, price freshness, value and V6 integrity unverified."
               ]
+              # Expose excluded race identities so a missing Wanganui/Whanganui
+              # race cannot be mistaken for an assessed NO BET.
+              alias_exclusions=sorted(x for x in audit["skipped"]
+                                      if "conflicting duplicate venue aliases" in x)
+              if alias_exclusions:
+                  report += ["", "## Excluded duplicate-alias races (not assessed)", ""]
+                  report += ["- "+x for x in alias_exclusions]
+                  report += ["", "Conflicting venue feeds were excluded; no V7 or V6 bet is implied."]
               pathlib.Path("monty_research_report.md").write_text("\n".join(report)+"\n",encoding="utf-8")
               print("BEGIN UNAPPROVED RESEARCH SELECTIONS — NO BET",flush=True)
               print(pathlib.Path("monty_research_report.md").read_text(),flush=True)
