@@ -1,0 +1,49 @@
+"""Stage a Krok snapshot as a V7 single-race verification worksheet.
+
+This tool NEVER attests that a provider field is independently verified and
+NEVER scores or authorises a bet. Operator must check active runners,
+scratchings, quote source, timestamp and country separately.
+"""
+import argparse
+import json
+from pathlib import Path
+import pandas as pd
+
+def stage(snapshot_path, meeting, race, output_csv):
+    snapshot=json.loads(Path(snapshot_path).read_text())
+    rows=snapshot.get("runners")
+    if not isinstance(rows,list):
+        raise ValueError("Snapshot has no runner list")
+    selected=[r for r in rows if str(r.get("meeting","")).strip().casefold()==meeting.strip().casefold()
+              and str(r.get("race","")).strip()==str(race).strip()]
+    if not selected:
+        raise ValueError("Requested race not found in snapshot")
+    if len(selected)<3:
+        raise ValueError("At least three active runners required for V7")
+    if any(r.get("betting_authorised") is not False for r in selected):
+        raise ValueError("Unexpected betting-authorisation flag")
+    required=("meeting","race","number","horse","odds")
+    if any(any(k not in r or r[k] is None for k in required) for r in selected):
+        raise ValueError("Incomplete provider field")
+    if len({str(r["number"]) for r in selected})!=len(selected):
+        raise ValueError("Duplicate saddlecloth")
+    out=Path(output_csv)
+    if out.exists():
+        raise FileExistsError("Refusing to overwrite an existing field")
+    out.parent.mkdir(parents=True,exist_ok=True)
+    pd.DataFrame(selected).to_csv(out,index=False)
+    return {"status":"UNVERIFIED_PROVIDER_FIELD_REQUIRES_INDEPENDENT_CHECK",
+            "runners":len(selected),"output_csv":str(out),
+            "betting_authorised":False}
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument("snapshot",type=Path)
+    p.add_argument("--meeting",required=True)
+    p.add_argument("--race",required=True)
+    p.add_argument("--output-csv",type=Path,required=True)
+    a=p.parse_args()
+    print(json.dumps(stage(a.snapshot,a.meeting,a.race,a.output_csv),indent=2))
+
+if __name__=="__main__":
+    main()
