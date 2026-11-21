@@ -3,6 +3,7 @@
 This never claims independent verification, betting approval or TAB coverage.
 """
 import argparse
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import pandas as pd
@@ -35,7 +36,11 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
     run(Path(model_path),out/"provisional_input.csv",out,provisional=True)
     scored=pd.read_csv(out/"v7_research_scores.csv")
     scored=scored.sort_values("v7_win_probability",ascending=False)
+    scored_at=datetime.now(timezone.utc).isoformat().replace("+00:00","Z")
     result={"status":"PROVISIONAL_V7_PROVIDER_UNVERIFIED","betting_authorised":False,
+            "scored_at_utc":scored_at,
+            "provider_odds_captured_at_utc":None,
+            "pre_race_evidence_verified":False,
             "meeting":meeting,"race":str(race),"date":date,"country":country,
             "ordered":[{"number":str(row.runner_id),"horse":str(row.horse),
                         "fixed_win_odds":float(row.fixed_win_odds),
