@@ -53,6 +53,22 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
         "best_bet_fair_win_odds":1.0/result["ordered"][0]["v7_win_probability"],
         "calibration_unverified":True,
         "betting_decision":"NO BET — provisional probabilities not prospectively validated"}
+    # Separate value ranking from the most-likely winner. All probabilities
+    # remain uncalibrated: these are diagnostics, never betting approvals.
+    value_ranked=sorted(result["ordered"],
+                        key=lambda x:x["model_expected_win_roi"],reverse=True)
+    value=value_ranked[0]
+    result["provisional_value_candidate"]={
+        "number":value["number"],"horse":value["horse"],
+        "fixed_win_odds":value["fixed_win_odds"],
+        "v7_win_probability":value["v7_win_probability"],
+        "model_expected_win_roi":value["model_expected_win_roi"],
+        "model_fair_win_odds":1.0/value["v7_win_probability"],
+        "same_as_best_bet":value["number"]==result["ordered"][0]["number"],
+        "positive_model_edge":value["model_expected_win_roi"]>0,
+        "betting_authorised":False,
+        "warning":"Uncalibrated model-only value diagnostic; NO BET"}
+    # An apparent positive edge cannot authorise a wager.
     # Exotic progression uses fixed WIN prices only, never exotic dividends.
     ranked=result["ordered"]
     progression={"type":"WIN","numbers":[ranked[0]["number"]]}
