@@ -4,7 +4,7 @@ on:
     inputs:
       date:
         description: Racing date in Queensland (YYYY-MM-DD)
-        required: true
+        required: false
         type: string
 permissions:
   contents: read
@@ -22,7 +22,11 @@ jobs:
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
           RACING_DATE: ${{ inputs.date }}
-        run: python check_krok.py --date "$RACING_DATE" --output connection_report.json
+        run: |
+          if [ -z "$RACING_DATE" ]; then
+            RACING_DATE="$(TZ=Australia/Brisbane date +%F)"
+          fi
+          python check_krok.py --date "$RACING_DATE" --output connection_report.json
       - uses: actions/upload-artifact@v4
         if: success()
         with:
