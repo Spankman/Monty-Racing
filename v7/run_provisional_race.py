@@ -5,6 +5,7 @@ This never claims independent verification, betting approval or TAB coverage.
 import argparse
 from datetime import datetime, timezone
 import json
+import hashlib
 from pathlib import Path
 import pandas as pd
 from .stage_krok_field import stage
@@ -15,7 +16,9 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
             allow_restricted=False, model_path=Path("v7/artifacts/fold_3_model.json")):
     if country not in ("AU", "NZ"):
         raise ValueError("Country must be AU or NZ")
-    snapshot_data=json.loads(Path(snapshot).read_text())
+    snapshot_bytes=Path(snapshot).read_bytes()
+    snapshot_sha256=hashlib.sha256(snapshot_bytes).hexdigest()
+    snapshot_data=json.loads(snapshot_bytes)
     if str(snapshot_data.get('date','')) != str(date):
         raise ValueError('Snapshot date does not match requested race date')
     out=Path(output_dir)
@@ -39,6 +42,7 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
     scored_at=datetime.now(timezone.utc).isoformat().replace("+00:00","Z")
     result={"status":"PROVISIONAL_V7_PROVIDER_UNVERIFIED","betting_authorised":False,
             "scored_at_utc":scored_at,
+            "provider_snapshot_sha256":snapshot_sha256,
             "provider_odds_captured_at_utc":None,
             "pre_race_evidence_verified":False,
             "meeting":meeting,"race":str(race),"date":date,"country":country,
