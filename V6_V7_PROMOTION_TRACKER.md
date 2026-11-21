@@ -12,6 +12,7 @@ Frozen V6 artifacts must never be modified.
 - [x] Fixed odds strictly below $4 trigger escalation; exactly $4 does not (commit 86f2763).
 - [x] Offline code checks passed following live report ladder integration (GitHub Actions 44845708799).
 - [x] Add safe error-category diagnostics to manual Krok checker (commit f8a85d5; offline CI 44847770547 passed).
+- [x] Add four safe diagnostic regression tests (test_check_krok.py, commit 39e27eb; offline CI 44848152021 passed).
 - [x] Make blank-date fallback explicit in manual Krok workflow (commit 496e88a; offline CI 44847898309 passed). **Correction:** the failed historical run's logs already show a Queensland-date fallback, so blank input is NOT established as its root cause.
 - [ ] Diagnose failed manual Krok connection run 44847348535: generic validation error; rerun with new diagnostics and verify live provider response. Do not confuse this with successful offline CI.
 - [ ] Resolve provider duplicate records with verifiable authoritative field/price provenance; recover Wanganui and other excluded races safely.
