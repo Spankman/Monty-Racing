@@ -8,6 +8,7 @@ from pathlib import Path
 import pandas as pd
 from .stage_krok_field import stage
 from .predict import run
+from .value_watch import select_value_watch
 
 def execute(snapshot, meeting, race, *, date, country, output_dir,
             allow_restricted=False, model_path=Path("v7/artifacts/fold_3_model.json")):
@@ -55,24 +56,12 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
         "betting_decision":"NO BET — provisional probabilities not prospectively validated"}
     # Separate value ranking from the most-likely winner. All probabilities
     # remain uncalibrated: these are diagnostics, never betting approvals.
-    value_ranked=sorted(result["ordered"],
-                        key=lambda x:x["model_expected_win_roi"],reverse=True)
-    value=value_ranked[0]
-    result["provisional_value_candidate"]={
-        "number":value["number"],"horse":value["horse"],
-        "fixed_win_odds":value["fixed_win_odds"],
-        "v7_win_probability":value["v7_win_probability"],
-        "model_expected_win_roi":value["model_expected_win_roi"],
-        "model_fair_win_odds":1.0/value["v7_win_probability"],
-        "same_as_best_bet":value["number"]==result["ordered"][0]["number"],
-        "positive_model_edge":value["model_expected_win_roi"]>0,
-        "betting_authorised":False,
-        "warning":"Uncalibrated model-only value diagnostic; NO BET"}
-    if value["model_expected_win_roi"] <= 0:
-        result["provisional_value_candidate"]=None
-        result["value_watch_status"]="NO POSITIVE MODEL EDGE — NO BET"
-    else:
-        result["value_watch_status"]="UNCALIBRATED POSITIVE MODEL EDGE — NO BET"
+    result["provisional_value_candidate"]=select_value_watch(result["ordered"])
+    result["value_watch_status"]=(
+        "UNCALIBRATED POSITIVE MODEL EDGE — NO BET"
+        if result["provisional_value_candidate"] is not None
+        else "NO POSITIVE MODEL EDGE — NO BET"
+    )
     # An apparent positive edge cannot authorise a wager.
     # Exotic progression uses fixed WIN prices only, never exotic dividends.
     ranked=result["ordered"]
