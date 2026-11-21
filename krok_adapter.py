@@ -28,6 +28,15 @@ def price(r):
         if p:return p,key
     return None,None
 
+def venue_identity(venue):
+    """Known alternate spellings only; do not merge unrelated racecourses."""
+    name=' '.join(str(venue).strip().upper().split())
+    if name in ('PUKEKOHE', 'PUKEKOHE PARK', 'PUKEKOHE PARK - NZ'):
+        return 'PUKEKOHE PARK'
+    if name in ('WANGANUI', 'WHANGANUI'):
+        return 'WHANGANUI'
+    return name
+
 def normalize(payload,date,include_restricted_flat_research=False):
     if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
         raise ValueError('Unexpected API response; expected success=true and data[]')
@@ -142,6 +151,18 @@ def normalize(payload,date,include_restricted_flat_research=False):
                     item['effective_weight']=item['allocated_weight']-item['claim_kg']
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'race_classification_unknown':classification_unknown,'betting_authorised':False})
+    # Same meeting may appear under aliases with contradictory odds. Exclude
+    # all competing versions of that race instead of picking a convenient quote.
+    from collections import Counter
+    canonical_keys=[(venue_identity(r['meeting']),str(r['race']).strip()) for r in races]
+    counts=Counter(canonical_keys)
+    ambiguous={key for key,n in counts.items() if n>1}
+    if ambiguous:
+        skipped.extend(f'{venue} R{race}: conflicting duplicate venue aliases'
+                       for venue,race in sorted(ambiguous))
+        races=[r for r in races if (venue_identity(r['meeting']),str(r['race']).strip()) not in ambiguous]
+        rows=[r for r in rows if (venue_identity(r['meeting']),str(r['race']).strip()) not in ambiguous]
+    # A canonical venue identity must not be split across competing feed labels.
     # Explain recoverable provider-data gaps without fabricating missing odds.
     incomplete_summary={
         'races':len(incomplete_race_diagnostics),
@@ -162,7 +183,7 @@ def normalize(payload,date,include_restricted_flat_research=False):
     if len(keys)!=len(set(keys)):
         raise ValueError('Duplicate meeting/race identity in provider feed')
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
-    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'restricted_flat_research_races':sum(r['research_only_restricted_race'] for r in races),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'incomplete_race_summary':incomplete_summary,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
+    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'restricted_flat_research_races':sum(r['research_only_restricted_race'] for r in races),'skipped':skipped,'incomplete_race_diagnostics':incomplete_race_diagnostics,'incomplete_race_summary':incomplete_summary,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows)),'ambiguous_alias_races_excluded':len(ambiguous)}
 
 def fetch(date,key):
     """Read complete dated full cards using documented cursor pagination."""
