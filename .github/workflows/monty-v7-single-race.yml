@@ -1,5 +1,8 @@
 name: Monty V7 provisional single race
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/monty-v7-single-race.yml']
   workflow_dispatch:
     inputs:
       meeting:
@@ -50,7 +53,7 @@ jobs:
           COUNTRY: ${{ inputs.country }}
           ALLOW_RESTRICTED: ${{ inputs.allow_restricted }}
         run: |
-          if [ -z "$MEETING" ]; then MEETING="Cranbourne"; RACE="5"; DATE="2026-11-21"; COUNTRY="AU"; ALLOW_RESTRICTED="true"; fi
+          if [ -z "$MEETING" ]; then MEETING="Alice Springs"; RACE="1"; DATE="2026-11-21"; COUNTRY="AU"; ALLOW_RESTRICTED="true"; fi
           args=(--meeting "$MEETING" --race "$RACE" --country "$COUNTRY" --output-dir output_v7_single)
           if [ -n "$DATE" ]; then args+=(--date "$DATE"); fi
           if [ "$ALLOW_RESTRICTED" = "true" ]; then args+=(--allow-restricted); fi
