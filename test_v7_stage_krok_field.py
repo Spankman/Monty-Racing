@@ -18,6 +18,15 @@ class StageKrokV7Tests(unittest.TestCase):
             self.assertTrue((root/"field.csv").exists())
             with self.assertRaises(FileExistsError):
                 stage(src,"Whanganui","3",root/"field.csv")
+    def test_rejects_blank_horse(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            src=root/"snapshot.json"
+            src.write_text(json.dumps({"runners":[
+                {"meeting":"Whanganui","race":"3","number":str(i),"horse":" ",
+                 "odds":i+2,"betting_authorised":False} for i in range(1,5)]}))
+            with self.assertRaisesRegex(ValueError,"Blank runner"):
+                stage(src,"Whanganui","3",root/"field.csv")
     def test_rejects_unauthorised_identity(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)
