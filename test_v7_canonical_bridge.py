@@ -12,6 +12,15 @@ class CanonicalBridgeTests(unittest.TestCase):
         self.assertEqual(len(out),4)
         self.assertTrue(out.field_verified.all())
         self.assertEqual(out.race_id.iloc[0],"NZ|PUKEKOHE|6")
+    def test_nonfinite_odds_rejected(self):
+        for invalid in (float("inf"), float("nan")):
+            rows=[dict(r) for r in ROWS]
+            rows[0]["odds"]=invalid
+            with self.assertRaises(ValueError):
+                to_v7_fields(rows,date="2026-11-21",country="NZ",source_url="https://example.org",field_verified=True)
+    def test_malformed_date_rejected(self):
+        with self.assertRaises(ValueError):
+            to_v7_fields(ROWS,date="tomorrow",country="NZ",source_url="https://example.org",field_verified=True)
     def test_duplicate_rejected(self):
         with self.assertRaises(ValueError):
             to_v7_fields(ROWS+[ROWS[0]],date="2026-11-21",country="NZ",source_url="https://example.org",field_verified=True)
