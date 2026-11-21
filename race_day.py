@@ -57,13 +57,3 @@ if __name__=='__main__':
     ap.add_argument('input');ap.add_argument('--output',default='monty_selections.csv');ap.add_argument('--complete-fields',action='store_true',required=True,help='Confirm all non-scratched runners and odds are present for every included race')
     a=ap.parse_args();print(run(a.input,a.output).to_string(index=False))
 
-
-def assess_daily_best_bet_progression(primary, supporting, *, quotes, verified=False,
-                                      min_return=None, stake_per_combination=None):
-    """Use the same post-scoring dividend gates as single-race selections.
-
-    This does not promote race_day research scores to verified betting tips.
-    """
-    from monty_exotic_ladder import dividend_progression
-    return dividend_progression(primary, supporting, quotes=quotes, verified=verified,
-                                min_return=min_return, stake_per_combination=stake_per_combination)
