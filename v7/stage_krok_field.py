@@ -25,8 +25,14 @@ def stage(snapshot_path, meeting, race, output_csv):
     required=("meeting","race","number","horse","odds")
     if any(any(k not in r or r[k] is None for k in required) for r in selected):
         raise ValueError("Incomplete provider field")
+    if any(str(r[k]).strip()=="" for r in selected for k in ("meeting","race","number","horse")):
+        raise ValueError("Blank runner identity")
     if len({str(r["number"]) for r in selected})!=len(selected):
         raise ValueError("Duplicate saddlecloth")
+    # Never merge a snapshot containing contradictory aliases into a single field.
+    # The upstream adapter excludes known aliases, but stage must fail closed too.
+    if len({(str(r["meeting"]).casefold(),str(r["race"])) for r in selected})!=1:
+        raise ValueError("Conflicting race identities")
     out=Path(output_csv)
     if out.exists():
         raise FileExistsError("Refusing to overwrite an existing field")
