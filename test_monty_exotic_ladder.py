@@ -18,6 +18,12 @@ class LadderTests(unittest.TestCase):
  def test_unqualified_not_padded(self):
   r=ladder(horse(1,2),[horse(2,2,qualified=False)],short_price_limit=4,verified=True)
   self.assertEqual(len(r['options']),1)
+ def test_exactly_four_is_not_short(self):
+  r=ladder(horse(1,4),[horse(2,2)],short_price_limit=4,verified=True)
+  self.assertEqual([o['bet_type'] for o in r['options']],['WIN'])
+ def test_second_at_four_stops_before_trifecta(self):
+  r=ladder(horse(1,2),[horse(2,4),horse(3,2)],short_price_limit=4,verified=True)
+  self.assertEqual([o['bet_type'] for o in r['options']],['WIN','QUINELLA'])
  def test_missing_threshold_fails(self):
   with self.assertRaises(ValueError):ladder(horse(1,2),[],short_price_limit=None,verified=True)
 if __name__=='__main__':unittest.main()
