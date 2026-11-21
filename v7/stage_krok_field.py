@@ -33,6 +33,10 @@ def stage(snapshot_path, meeting, race, output_csv):
         raise ValueError("Runner count differs from accepted race manifest")
     if len(selected)<3:
         raise ValueError("At least three active runners required for V7")
+    if any(r.get("research_only_restricted_race") is True for r in selected):
+        raise ValueError("Restricted race requires separate explicit override")
+    if any(r.get("race_classification_unknown") is True for r in selected):
+        raise ValueError("Unknown race classification requires separate review")
     if any(r.get("betting_authorised") is not False for r in selected):
         raise ValueError("Unexpected betting-authorisation flag")
     required=("meeting","race","number","horse","odds")
