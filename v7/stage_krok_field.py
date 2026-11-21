@@ -10,7 +10,7 @@ import math
 from pathlib import Path
 import pandas as pd
 
-def stage(snapshot_path, meeting, race, output_csv):
+def stage(snapshot_path, meeting, race, output_csv, *, allow_restricted=False):
     snapshot=json.loads(Path(snapshot_path).read_text())
     races=snapshot.get("races")
     if not isinstance(races,list):
@@ -33,9 +33,9 @@ def stage(snapshot_path, meeting, race, output_csv):
         raise ValueError("Runner count differs from accepted race manifest")
     if len(selected)<3:
         raise ValueError("At least three active runners required for V7")
-    if any(r.get("research_only_restricted_race") is True for r in selected):
+    if not allow_restricted and any(r.get("research_only_restricted_race") is True for r in selected):
         raise ValueError("Restricted race requires separate explicit override")
-    if any(r.get("race_classification_unknown") is True for r in selected):
+    if not allow_restricted and any(r.get("race_classification_unknown") is True for r in selected):
         raise ValueError("Unknown race classification requires separate review")
     if any(r.get("betting_authorised") is not False for r in selected):
         raise ValueError("Unexpected betting-authorisation flag")
