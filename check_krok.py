@@ -33,6 +33,14 @@ def check(date, output):
     target.write_text(json.dumps(report,indent=2)+'\n')
     return report
 
+def blocked_report(output,date,category):
+    report={'requested_date':date,
+            'captured_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
+            'status':'BLOCKED','failure_category':category,
+            'tab_verified':False,'model_loaded':False,'predictions_generated':False}
+    target=Path(output);target.parent.mkdir(parents=True,exist_ok=True)
+    target.write_text(json.dumps(report,indent=2)+'\n')
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--date',default=dt.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat())
@@ -45,10 +53,13 @@ def main():
                     'provider_payload_or_size':'Provider response JSON or size invalid',
                     'provider_normalization':'Provider response failed racing-field normalization'}
         msg='Missing KROK_API_KEY' if not os.environ.get('KROK_API_KEY') else categories.get(str(exc),'Provider input validation failed')
+        blocked_report(a.output,a.date,msg)
         print('BLOCKED: '+msg);return 2
     except urllib.error.HTTPError as exc:
+        blocked_report(a.output,a.date,'provider_http_'+str(exc.code))
         print('BLOCKED: provider HTTP status '+str(exc.code));return 2
     except Exception as exc:
+        blocked_report(a.output,a.date,'unexpected_'+type(exc).__name__)
         print('BLOCKED: '+type(exc).__name__);return 2
     print(json.dumps(report));return 0
 
