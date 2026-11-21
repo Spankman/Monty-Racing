@@ -1,6 +1,6 @@
 # Monty V6 → V7 promotion tracker
 
-Updated: 2026-11-21. Branch: grok-independent-repairs. Latest offline CI 44847906745 passed at commit da2eae8e; manual Krok connection run 44847348535 failed (requires diagnosis).
+Updated: 2026-11-21. Branch: grok-independent-repairs. Latest passing offline CI 44848152021 at commit 39e27eb (before new test suite was wired in); new suite failed at 684ec77 and fix 8785d9d awaits verification; manual Krok connection run 44847348535 failed (requires diagnosis).
 Rule: mark [x] only after direct evidence; partial work stays [ ].
 Frozen V6 artifacts must never be modified.
 
@@ -12,7 +12,7 @@ Frozen V6 artifacts must never be modified.
 - [x] Fixed odds strictly below $4 trigger escalation; exactly $4 does not (commit 86f2763).
 - [x] Offline code checks passed following live report ladder integration (GitHub Actions 44845708799).
 - [x] Add safe error-category diagnostics to manual Krok checker (commit f8a85d5; offline CI 44847770547 passed).
-- [x] Add four safe diagnostic regression tests (test_check_krok.py, commit 39e27eb; offline CI 44848152021 passed).
+- [ ] Verify four safe diagnostic regression tests in CI: tests added at 39e27eb, but first CI invocation at 684ec77 **failed** on `paginated` classification; correction committed 8785d9d, awaiting rerun.
 - [x] Make blank-date fallback explicit in manual Krok workflow (commit 496e88a; offline CI 44847898309 passed). **Correction:** the failed historical run's logs already show a Queensland-date fallback, so blank input is NOT established as its root cause.
 - [ ] Diagnose failed manual Krok connection run 44847348535: generic validation error; rerun with new diagnostics and verify live provider response. Do not confuse this with successful offline CI.
 - [ ] Resolve provider duplicate records with verifiable authoritative field/price provenance; recover Wanganui and other excluded races safely.
