@@ -39,4 +39,12 @@ class DividendProgressionTests(unittest.TestCase):
  def test_no_threshold_no_bet(self):
   r=dividend_progression(horse(1,2),[],quotes={},verified=True,stake_per_combination=1)
   self.assertEqual(r['options'],[])
+ def test_single_and_daily_use_identical_progression(self):
+  from monty_single_race_policy import assess_single_race_progression
+  from race_day import assess_daily_best_bet_progression
+  kwargs=dict(quotes={'QUINELLA':110},verified=True,min_return=100,stake_per_combination=1)
+  a=assess_single_race_progression(horse(1,2),[horse(2,5)],**kwargs)
+  b=assess_daily_best_bet_progression(horse(1,2),[horse(2,5)],**kwargs)
+  self.assertEqual(a,b)
+  self.assertEqual(a['options'][-1]['bet_type'],'QUINELLA')
 if __name__=='__main__':unittest.main()
