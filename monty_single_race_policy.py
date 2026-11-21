@@ -1,12 +1,13 @@
 """Single-race quick-mode policy and transparent fallback routing.
 
-This module routes *available verified outputs*, not model execution. It never
+This module routes *available verified outputs*, not model execution.
+Single-race routing does not silently substitute V6 for unavailable V7. It never
 manufactures selections or converts a research-only score into an approved bet.
 """
 from dataclasses import dataclass
 
 BET_ORDER=('WIN','QUINELLA_2','TRIFECTA_BOX_3','FIRST_FOUR_4')
-MODEL_ORDER=('V7','V7_LE','V6','FORM_ASSESSMENT')
+MODEL_ORDER=('V7','V7_LE','FORM_ASSESSMENT')
 
 @dataclass(frozen=True)
 class SelectionRoute:
@@ -37,11 +38,11 @@ def route_single_race(outputs, *, eligible=True, override=False):
         if len(race_keys)!=1:continue
         keys={(str(p['meeting']).strip().casefold(),str(p['race']).strip(),str(p['number']).strip()) for p in picks}
         if len(keys)!=len(picks):continue
-        model=source in ('V7','V7_LE','V6')
+        model=source in ('V7','V7_LE')
         # The router cannot independently prove model execution or timing.
         # Even model-labelled inputs remain unauthorised without external checks.
         return SelectionRoute(source,tuple((p['meeting'],p['race'],p['number'],p['horse']) for p in picks),
-            model,source=='V7_LE',False,'Candidate selections only; verify provenance, timing and betting rules externally')
+            False,source=='V7_LE',False,'Candidate selections only; model execution unverified by router; verify provenance, timing and betting rules externally')
     return SelectionRoute('NO_BET',(),False,False,False,'No actual selections available from any source')
 
 def next_bet_type(current):
@@ -73,7 +74,8 @@ def route_full_day(outputs, *, explicit_le=False):
         if len(identities)!=len(picks):
             continue
         return SelectionRoute(source,tuple((p['meeting'],p['race'],p['number'],p['horse'])
-                             for p in picks),True,source=='V7_LE',False,
+                             for p in picks),False,source=='V7_LE',False,
                              'Full-day candidates only; verify source and pre-off evidence')
     return SelectionRoute('NO_BET',(),False,False,False,
                           'No qualifying full-day V7 selections; LE requires explicit authorization')
+

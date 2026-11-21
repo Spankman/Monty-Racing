@@ -43,6 +43,28 @@ class OperationsChecks(unittest.TestCase):
             self.assertFalse(r['model_loaded']);self.assertFalse(r['predictions_generated'])
             self.assertEqual(r['accepted_runners'],2)
             self.assertNotIn('runners',r)
+    def test_collector_counts_are_source_assertions_not_independent_proof(self):
+        from collect_runners import collect
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);source=d/'source.json'
+            source.write_text(json.dumps({'date':'2026-11-21',
+                'runners':[{'meeting':'TEST','race':'1','number':'1'},
+                           {'meeting':'TEST','race':'1','number':'2'}],
+                'races':[{'meeting':'TEST','race':'1','expected_active_runners':2}]}))
+            record=collect(str(source),d/'raw.json',d/'manifest.json','2026-11-21')
+            self.assertTrue(record['source_asserted_counts'])
+            self.assertFalse(record['independent_field_verification_proven'])
+            self.assertFalse(record['tab_verified'])
+    def test_collector_rejects_invalid_counts_and_missing_race_identity(self):
+        from collect_runners import collect
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);source=d/'source.json'
+            for race in ({'meeting':'TEST','race':'1','expected_active_runners':True},
+                         {'meeting':'','race':'1','expected_active_runners':2},
+                         {'meeting':'TEST','race':'1','expected_active_runners':1}):
+                source.write_text(json.dumps({'runners':[{'number':1}], 'races':[race]}))
+                with self.assertRaises(ValueError):
+                    collect(str(source),d/'raw.json',d/'manifest.json','2026-11-21')
     def test_integrity_gate_still_rejects_missing_artifacts(self):
         from race_day import ROOT
         from monty.integrity import ArtifactError,verify_artifacts

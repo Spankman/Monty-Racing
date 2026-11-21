@@ -56,3 +56,4 @@ if __name__=='__main__':
     ap=argparse.ArgumentParser()
     ap.add_argument('input');ap.add_argument('--output',default='monty_selections.csv');ap.add_argument('--complete-fields',action='store_true',required=True,help='Confirm all non-scratched runners and odds are present for every included race')
     a=ap.parse_args();print(run(a.input,a.output).to_string(index=False))
+

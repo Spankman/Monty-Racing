@@ -9,11 +9,20 @@ from zoneinfo import ZoneInfo
 from krok_adapter import fetch, normalize
 
 def check(date, output):
-    dt.date.fromisoformat(date)
+    try:
+        dt.date.fromisoformat(date)
+    except ValueError as exc:
+        raise ValueError('invalid_date') from exc
     key=os.environ.get('KROK_API_KEY','')
     if not key:raise ValueError('KROK_API_KEY is absent; no live request attempted.')
-    payload=fetch(date,key)
-    _,audit=normalize(payload,date)
+    try:
+        payload=fetch(date,key)
+    except ValueError as exc:
+        raise ValueError('provider_payload_or_size') from exc
+    try:
+        _,audit=normalize(payload,date)
+    except (ValueError,KeyError,TypeError) as exc:
+        raise ValueError('provider_normalization') from exc
     report={'requested_date':date,'captured_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
             'source':'Krok Odds API — https://krokodds.com.au',
             'live_request_succeeded':True,'accepted_races':audit['races_accepted'],
@@ -31,12 +40,26 @@ def main():
     try:
         report=check(a.date,a.output)
     except ValueError as exc:
-        # Fixed diagnostic; never print provider bodies, request objects or credentials.
-        msg='Missing KROK_API_KEY' if not os.environ.get('KROK_API_KEY') else 'Date or provider input did not pass validation'
-        print('BLOCKED: '+msg);return 2
+        # Categorise known failures without logging provider payloads or credentials.
+        if not os.environ.get('KROK_API_KEY'):
+            reason='missing_api_key'
+        elif 'No complete, priced, active thoroughbred fields found' in str(exc):
+            reason='no_eligible_complete_fields'
+        elif 'Duplicate meeting/race identity' in str(exc):
+            reason='duplicate_race_identity'
+        elif any(token in str(exc).lower() for token in ('pagination', 'paginated', 'page limit', 'next_cursor', 'full-card feed', 'cursor pages')):
+            reason='incomplete_pagination'
+        elif 'date' in str(exc).lower():
+            reason='invalid_date_or_feed_date'
+        else:
+            reason='provider_input_validation'
+        Path(a.output).write_text(json.dumps({'requested_date':a.date,'live_request_succeeded':False,'failure_category':reason,'predictions_generated':False,'betting_authorised':False},indent=2)+'\n')
+        print('BLOCKED: '+reason);return 2
     except urllib.error.HTTPError as exc:
+        Path(a.output).write_text(json.dumps({'requested_date':a.date,'live_request_succeeded':False,'failure_category':'provider_http','http_status':exc.code,'betting_authorised':False},indent=2)+'\n')
         print('BLOCKED: provider HTTP status '+str(exc.code));return 2
     except Exception as exc:
+        Path(a.output).write_text(json.dumps({'requested_date':a.date,'live_request_succeeded':False,'failure_category':'unexpected_exception','exception_type':type(exc).__name__,'betting_authorised':False},indent=2)+'\n')
         print('BLOCKED: '+type(exc).__name__);return 2
     print(json.dumps(report));return 0
 

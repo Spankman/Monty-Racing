@@ -1,0 +1,267 @@
+name: Monty live Krok connectivity smoke test
+# User-requested 2026-11-21 provisional research refresh after NZ alias deduplication; frozen V6 is not claimed.
+on:
+  # Evening on-demand smoke run: push on this workflow file starts a live research check.
+  push:
+    branches: [grok-independent-repairs]
+    paths: ['.github/workflows/monty-live-smoke.yml']
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Racing date in Queensland (YYYY-MM-DD); blank uses today'
+        required: false
+        type: string
+      include_restricted_flat_research:
+        description: 'Include maiden and 2YO flat races for research only (never betting)'
+        required: false
+        default: false
+        type: boolean
+permissions:
+  contents: read
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r requirements-runner.txt
+      - name: Probe historical results and form availability for frozen V6
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+        run: |
+          # Read-only, bounded provider requests; no private horse records logged.
+          # This is a source feasibility audit, not an approved V6 run.
+          python diagnose_history.py
+      - name: Validate Krok connection and provider response
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          RACING_DATE: ${{ inputs.date }}
+          INCLUDE_RESTRICTED_FLAT_RESEARCH: ${{ inputs.include_restricted_flat_research }}
+        run: |
+          python - <<'PY'
+          import datetime, json, os
+          from krok_adapter import fetch, normalize
+          if not os.environ.get("KROK_API_KEY"):
+              raise SystemExit("KROK_API_KEY repository secret missing; no live test performed")
+          from zoneinfo import ZoneInfo
+          day=os.environ.get('RACING_DATE') or datetime.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
+          datetime.date.fromisoformat(day)
+          payload=fetch(day,os.environ["KROK_API_KEY"])
+          if not isinstance(payload,dict) or payload.get("success") is not True:
+              raise SystemExit("Provider did not confirm success; no live test passed")
+          print("Provider API returned success for Brisbane date",day)
+          print("Meeting records received:",len(payload.get("data",[])))
+          # Print only pagination flags, never API credentials or meeting payloads.
+          meta=payload.get("meta") or {}
+          print("Pagination audit:",json.dumps({k:meta.get(k) for k in ("truncated","has_more","next_cursor","next_page","next","is_last_page","total_pages","pages_fetched") if k in meta},sort_keys=True))
+          try:
+              research=os.environ.get('INCLUDE_RESTRICTED_FLAT_RESEARCH','false').lower() == 'true'
+              snapshot,audit=normalize(payload,day,include_restricted_flat_research=research)
+          except ValueError as exc:
+              print("Provider response not sufficient for complete pre-race scoring:",str(exc))
+              raise
+          print("Accepted races:",audit["races_accepted"])
+          print("Restricted flat research races:",audit["restricted_flat_research_races"])
+          print("Provider meetings inspected:",audit["meetings"])
+          print("Accepted runners:",audit["runners_accepted"])
+          print("Skipped races:",len(audit["skipped"]))
+          print("Incomplete race summary:",json.dumps(audit["incomplete_race_summary"],sort_keys=True))
+          # Aggregate reasons without logging venue names or runner records.
+          from collections import Counter
+          known_reasons = (
+              "wrong or missing date", "not confirmed pre-race status",
+              "prohibited race type", "missing runners",
+              "scratching status uncertain", "contradictory runner count",
+              "active runner lacks identity/price", "duplicate saddlecloth",
+              "mixed price sources",
+          )
+          reasons = Counter()
+          for skipped in audit["skipped"]:
+              match = next((reason for reason in known_reasons
+                            if skipped.endswith(": " + reason)), "other")
+              reasons[match] += 1
+          for reason, count in sorted(reasons.items()):
+              print("Skipped reason:", reason, count)
+
+          print("Provider price sources:",", ".join(audit["price_sources"]))
+          print("Independent field verification: NOT PROVEN")
+          print("Frozen V6 live scoring: BLOCKED — historical prior-day feature histories and independently verified pre-race fields not supplied by this Krok snapshot")
+          print("Expert weighting: BLOCKED — verified timestamped expert tips and comparative holdout evidence unavailable; effective weight zero")
+          print("Betting authorised: NO")
+          # Exercise full provisional scoring without publishing selections.
+          import pathlib, subprocess, sys, tempfile
+          with tempfile.TemporaryDirectory() as work:
+              work=pathlib.Path(work)
+              source=work/"snapshot.json"
+              source.write_text(json.dumps(snapshot))
+              # Measure actual frozen-V6 feature availability rather than assuming
+              # Krok form fields are equivalent to historical V6 inputs.
+              from research_source_feature_coverage import audit as audit_coverage
+              coverage=audit_coverage("monty_v6/results/frozen_model.json",{"krok":source})
+              cv=coverage["sources"]["krok"]
+              print("Frozen V6 feature coverage:",json.dumps({
+                  "mean_input_coverage":cv["mean_input_coverage"],
+                  "fully_observed_features":len(cv["fully_observed_features"]),
+                  "partially_observed_features":len(cv["partially_observed_features"]),
+                  "unobserved_features":len(cv["unobserved_features"])
+              },sort_keys=True))
+              result=subprocess.run(
+                  [sys.executable,"operational/run_snapshot.py",str(source),
+                   "--output-dir",str(work/"scored")],
+                  capture_output=True,text=True)
+              if result.returncode:
+                  raise SystemExit("Live snapshot-to-scorer integration FAILED; inspect privately")
+              record=json.loads((work/"scored"/"prediction_record.json").read_text())
+              provenance=json.loads((work/"scored"/"snapshot_provenance.json").read_text())
+              if (record["betting_authorised"] is not False
+                  or record["runner_count"] != audit["runners_accepted"]
+                  or record["race_count"] != audit["races_accepted"]
+                  or record["race_counts_match_supplied_manifest"] is not True
+                  or record["independent_field_verification_proven"] is not False
+                  or record["artifact_integrity_verified"] is not False
+                  or provenance["betting_authorised"] is not False
+                  or provenance["source_snapshot_date"] != day):
+                  raise SystemExit("Scoring/provenance audit mismatch or unsafe betting authorisation")
+              # Independently audit the generated CSV and its fail-closed flags.
+              from operational.verify_provisional_output import verify
+              verified=verify(work/"scored")
+              if (verified["races"] != audit["races_accepted"]
+                  or verified["runners"] != audit["runners_accepted"]
+                  or verified["betting_authorised"] is not False
+                  or verified["restricted_flat_research_races"] != audit["restricted_flat_research_races"]):
+                  raise SystemExit("Provisional probability audit failed")
+              # V7 shadow bridge: no expert provenance is available in this run.
+              # With weight zero this is an integration check, NOT V7 validation.
+              import pandas as pd
+              from monty_v7_shadow_blend import blend
+              base=pd.read_csv(work/"scored"/"operational_predictions.csv",
+                               dtype={"meeting":str,"race":str,"number":str})
+              required={"meeting","race","number","monty_prob"}
+              if not required.issubset(base.columns):
+                  raise SystemExit("V7 bridge missing required provisional score fields")
+              shadow_input=base[["meeting","race","number"]].copy()
+              shadow_input["research_prob"]=base["monty_prob"].astype(float)
+              shadow_input["feature_coverage"]=0.0
+              shadow_path=work/"v7_input.csv"
+              shadow_input.to_csv(shadow_path,index=False)
+              shadow=blend(shadow_path,experts=None,weight=0.0)
+              if (len(shadow)!=len(base) or
+                  not shadow["v7_shadow_prob"].equals(shadow["research_prob"]) or
+                  not shadow["expert_weight_used"].eq(0).all()):
+                  raise SystemExit("V7 shadow integration mismatch")
+              print("V7 SHADOW integration: PASSED",len(shadow),"runners; expert inputs: 0; NO BET")
+              # Never publish unverified runner-level probabilities.
+              v7_audit={"date":day,"status":"UNAPPROVED V7 SHADOW — NO BET",
+                        "runners":len(shadow),"races":int(shadow.groupby(["meeting","race"]).ngroups),
+                        "expert_sources":0,"expert_weight_used":0.0,
+                        "is_genuine_v7_prediction":False,
+                        "note":"Zero-weight shadow integration only; not the complete V7 candidate."}
+              pathlib.Path("monty_v7_shadow_audit.json").write_text(json.dumps(v7_audit,indent=2)+"\\n")
+              # Export only a compact, clearly unapproved daily research ranking.
+              # The full source feed and complete runner-by-runner predictions remain private.
+              import csv
+              with (work/"scored"/"operational_predictions.csv").open(newline="",encoding="utf-8") as fh:
+                  ranked=list(csv.DictReader(fh))
+              ranked.sort(key=lambda r:(-float(r["monty_prob"]),r["race_id"],int(r["number"])))
+              def format_runner(r):
+                  return "#{} {} (quote ${:.2f}; model {:.1f}%)".format(
+                      r["number"],r["horse"],float(r["odds"]),100*float(r["monty_prob"]))
+              by_race={}
+              for r in ranked:
+                  by_race.setdefault(r["race_id"],[]).append(r)
+              # One-line-per-race, compact mobile-friendly report. Only display
+              # the horses required for the final triggered exotic tier.
+              report=[
+                  "# MONTY — "+day,
+                  "",
+                  "**RESEARCH ONLY — NO BET.** Provisional scorer; odds not independently TAB-verified. Frozen V6 cannot be claimed from these provisional features.",
+                  "",
+                  "## Best chances",
+                  "",
+                  "| Race | Type | Horses in Monty rank order |",
+                  "|---|---|---|",
+              ]
+              import re
+              def track_race_key(race_id):
+                  # Keep meetings together and race numbers numeric (R2 before R10).
+                  match=re.search(r"^(.*?)\s*(?:\|\s*|[-:]?\s*R(?:ace)?\s*)(\d+)\s*$",race_id,re.I)
+                  if match:
+                      return (match.group(1).strip().casefold(),int(match.group(2)),race_id)
+                  return (race_id.casefold(),0,race_id)
+              bests=[group[0] for group in by_race.values()]
+              bests=sorted(bests,key=lambda r:track_race_key(r["race_id"]))
+              for best in bests:
+                  group=by_race[best["race_id"]]
+                  from monty_exotic_ladder import research_display_ladder
+                  kind,picks=research_display_ladder(group,short_price_limit=4)
+                  horses=" · ".join("#{} {} (${:g})".format(
+                      r["number"],r["horse"],float(r["odds"])) for r in picks)
+                  report.append("| {} | **{}** | {} |".format(best["race_id"],kind,horses))
+              report += ["", "## Roughie watch (not approved bets)", "",
+                         "| Race | Horse |", "|---|---|"]
+              outsiders=[r for r in ranked if float(r["odds"])>=10]
+              for r in outsiders[:5]:
+                  report.append("| {} | #{} {} (${:g}) |".format(
+                      r["race_id"],r["number"],r["horse"],float(r["odds"])))
+              report += ["",
+                  "**Key:** WIN = one horse; Q = first two (quinella); TRI BOX = first three; F4 BOX = first four.",
+                  "Only the applicable horses appear. Left to right = descending model win probability.",
+                  "These are research combinations, not staking instructions. Missing or ineligible races omitted.",
+                  "Independent fields, scratchings, price freshness, value and V6 integrity unverified."
+              ]
+              # Expose excluded race identities so a missing Wanganui/Whanganui
+              # race cannot be mistaken for an assessed NO BET.
+              alias_exclusions=sorted(x for x in audit["skipped"]
+                                      if "conflicting duplicate venue aliases" in x)
+              if alias_exclusions:
+                  report += ["", "## Excluded duplicate-alias races (not assessed)", ""]
+                  report += ["- "+x for x in alias_exclusions]
+                  report += ["", "Conflicting venue feeds were excluded; no V7 or V6 bet is implied."]
+              pathlib.Path("monty_research_report.md").write_text("\n".join(report)+"\n",encoding="utf-8")
+              print("BEGIN UNAPPROVED RESEARCH SELECTIONS — NO BET",flush=True)
+              print(pathlib.Path("monty_research_report.md").read_text(),flush=True)
+              print("END UNAPPROVED RESEARCH SELECTIONS — NO BET",flush=True)
+              print("Probability sums, runner identities and betting flags: PASSED")
+              print("Provisional scorer completed:",record["race_count"],"races,",record["runner_count"],"runners")
+              print("Independent field verification: NOT PROVEN")
+              # Persist non-sensitive audit metadata separately from the research report.
+              safe={k:record[k] for k in (
+                  "schema","created_at_utc","status","betting_authorised",
+                  "pre_off_proven","race_counts_match_supplied_manifest",
+                  "manifest_counts_are_source_assertions",
+                  "independent_field_verification_proven",
+                  "artifact_integrity_verified","runner_count","race_count",
+                  "input_sha256","frozen_model_sha256")}
+              safe["v6_input_feature_coverage"]=cv["mean_input_coverage"]
+              safe["v6_fully_observed_features"]=len(cv["fully_observed_features"])
+              safe["v6_unobserved_features"]=len(cv["unobserved_features"])
+              safe["racing_date"]=day
+              safe["provider_connection_succeeded"]=True
+              safe["provider_accepted_races"]=audit["races_accepted"]
+              safe["restricted_flat_research_races"]=audit["restricted_flat_research_races"]
+              safe["provider_accepted_runners"]=audit["runners_accepted"]
+              # Aggregated skip reasons are safe to retain for coverage diagnosis.
+              safe["provider_skipped_races"]=len(audit["skipped"])
+              safe["provider_skipped_reasons"]=dict(sorted(reasons.items()))
+              # Only public meeting/race labels and missing-field counts.
+              safe["incomplete_race_diagnostics"]=audit["incomplete_race_diagnostics"]
+              safe["incomplete_race_summary"]=audit["incomplete_race_summary"]
+              safe["provider_price_sources"]=audit["price_sources"]
+              safe["coverage_is_independently_verified"]=False
+              pathlib.Path("live_smoke_audit.json").write_text(json.dumps(safe,indent=2)+"\n")
+          PY
+      - name: Upload audit and unapproved research report
+        if: success()
+        uses: actions/upload-artifact@v5
+        with:
+          name: monty-live-audit-${{ github.run_id }}
+          path: |
+            live_smoke_audit.json
+            monty_research_report.md
+            monty_v7_shadow_audit.json
+          if-no-files-found: error
+          retention-days: 7

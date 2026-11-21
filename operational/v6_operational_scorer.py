@@ -1,0 +1,106 @@
+"""Provisional public-artifact V6 linear scorer; NEVER authorises betting."""
+import json
+import sys
+from pathlib import Path
+import numpy as np
+import pandas as pd
+_V6_ROOT = Path(__file__).resolve().parents[1] / 'monty_v6'
+sys.path.insert(0, str(_V6_ROOT))
+from monty.integrity import validate_model_contract
+
+STATUS = "PROVISIONAL_OPERATIONAL_V6"
+
+def score_operational(df, root=Path("monty_v6")):
+    required = ["meeting", "race", "number", "horse", "odds"]
+    if df.empty or any(k not in df for k in required):
+        raise ValueError("Nonempty runner data with meeting,race,number,horse,odds required")
+    # Scratched entries are not competitors; providers may omit their prices.
+    # Filter before validating active-runner odds and identities.
+    df = df.copy()
+    if "scratched" in df:
+        # Unknown/missing scratch status must never silently become an active runner.
+        flags = df["scratched"].astype("string").str.strip().str.lower()
+        if flags.isna().any() or not flags.isin(("true", "1", "yes", "false", "0", "no")).all():
+            raise ValueError("Scratched flags must be explicit booleans")
+        df = df[~flags.isin(("true", "1", "yes")).to_numpy()].copy()
+    if df.empty:
+        raise ValueError("No active runners")
+    if df[required].isna().any().any():
+        raise ValueError("Missing runner or odds")
+    df = df.copy()
+    for k in required[:4]:
+        df[k] = df[k].astype(str).str.strip()
+        if df[k].eq("").any():
+            raise ValueError("Blank runner identity")
+    if not df["race"].str.fullmatch(r"[1-9][0-9]*").all():
+        raise ValueError("Race numbers must be positive integers")
+    if not df["number"].str.fullmatch(r"[1-9][0-9]*").all():
+        raise ValueError("Saddlecloth numbers must be positive integers")
+    df["odds"] = pd.to_numeric(df["odds"], errors="raise")
+    if not np.isfinite(df["odds"]).all() or (df["odds"] <= 1).any():
+        raise ValueError("Odds must be finite and greater than one")
+    df["race_id"] = df["meeting"].str.upper() + "|" + df["race"]
+    if df.duplicated(["race_id","number"]).any():
+        raise ValueError("Duplicate saddlecloth")
+    if df.assign(_horse=df["horse"].str.casefold()).duplicated(["race_id","_horse"]).any():
+        raise ValueError("Duplicate horse identity in race")
+    if (df.groupby("race_id")["number"].transform("size") < 2).any():
+        raise ValueError("Race needs at least two active runners; incomplete or walkover field")
+    model_path = Path(root) / "results" / "frozen_model.json"
+    model = json.loads(model_path.read_text())
+    if model.get("selected") != "linear_1.0" or model["models"]["linear_1.0"]["kind"] != "linear":
+        raise ValueError("Unexpected frozen model")
+    names = model["input_feature_names"]
+    active = validate_model_contract(model, names)
+    ids = df["race_id"].to_numpy()
+    implied = 1.0 / df["odds"].to_numpy(float)
+    base = implied / pd.Series(implied).groupby(ids).transform("sum").to_numpy()
+    X = np.full((len(df),len(names)),np.nan)
+    for j,name in enumerate(names):
+        if name in df:
+            X[:,j] = pd.to_numeric(df[name],errors="coerce").to_numpy(float)
+    if "log_field_size" in names:
+        X[:,names.index("log_field_size")] = np.log(df.groupby("race_id")["horse"].transform("size").to_numpy(float))
+    if "log_market_probability" in names:
+        X[:,names.index("log_market_probability")] = np.log(base)
+    finite = np.isfinite(X)
+    Xi = np.where(finite,X,np.asarray(model["imputation_medians"]))
+    ix = [names.index(n) for n in active]
+    Z = np.column_stack([Xi[:,ix],(~finite[:,ix]).astype(float)])
+    Z = (Z-np.asarray(model["mean"]))/np.asarray(model["scale"])
+    formidx = [i for i,n in enumerate(model["numeric_feature_names"]) if n!="log_market_probability"]
+    logits = np.log(base)+Z[:,formidx]@np.asarray(model["models"]["linear_1.0"]["weights"])
+    pred = np.empty(len(df),float)
+    for _,positions in df.groupby("race_id",sort=False).indices.items():
+        values=logits[positions]
+        exp=np.exp(values-values.max())
+        pred[positions]=exp/exp.sum()
+    out=df[["meeting","race","number","horse","odds","race_id"]].copy()
+    out["market_prob"]=base
+    out["monty_prob"]=pred
+    out["fair_odds"]=1/pred
+    # Relative to normalized market probability; NOT expected betting ROI.
+    out["relative_market_edge"]=pred/base-1
+    # Expected gross win-bet return per unit staked at supplied decimal odds.
+    # Diagnostic only: odds timing, source and complete fields remain unverified.
+    out["expected_win_roi"]=pred*df["odds"].to_numpy(float)-1
+    out["feature_coverage"]=finite.mean(axis=1)
+    # Carry research restrictions through to scored rows so downstream
+    # reporting cannot mistake maiden/juvenile research for ordinary races.
+    if "research_only_restricted_race" in df:
+        values=df["research_only_restricted_race"]
+        if not values.map(lambda v: isinstance(v, (bool, np.bool_))).all():
+            raise ValueError("Research restriction flags must be booleans")
+        out["research_only_restricted_race"]=values.astype(bool).to_numpy()
+    else:
+        out["research_only_restricted_race"]=False
+    if "race_classification_unknown" in df:
+        values=df["race_classification_unknown"]
+        if not values.map(lambda v: isinstance(v, (bool, np.bool_))).all():
+            raise ValueError("Unknown race classification flags must be booleans")
+        out["race_classification_unknown"]=values.astype(bool).to_numpy()
+    else:
+        out["race_classification_unknown"]=False
+    out["status"]=STATUS
+    out["betting_authorised"]=False
+    return out
