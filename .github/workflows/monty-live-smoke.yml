@@ -1,5 +1,5 @@
 name: Monty live Krok connectivity smoke test
-# User-requested Saturday Monty live research run after successful pagination verification.
+# User-requested 2026-11-21 provisional research refresh; frozen V6 is not claimed.
 on:
   # Evening on-demand smoke run: push on this workflow file starts a live research check.
   push:
