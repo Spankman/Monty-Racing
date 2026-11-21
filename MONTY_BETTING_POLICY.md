@@ -43,3 +43,8 @@ Applies to **all Monty versions** and to **ad-hoc single-race tips**, including 
 - Define/confirm short-price threshold, runner qualification rules, first-four boxing and staking policy; fail closed on missing information.
 - Add output fields `selection_type`, `confidence_tier`, `bet_type`, `runner_numbers`, `quoted_odds_at`, `total_combinations`, `total_stake`, `recommendation_status`.
 - Verify actual data and performance before permitting any live exotic recommendation.
+
+
+## Superseding clarification — 21 November 2026 (authoritative)
+
+This section supersedes any contradictory wording in the 19 November exotic-ladder directive above. The owner confirmed that **only individual runners' verified fixed-win prices** determine whether the BB → quinella → boxed trifecta → boxed First Four progression is examined. **Do not use exotic dividends, payouts, or dividend estimates as progression inputs.** A qualified BB strictly below **$4.00** triggers assessment of a two-horse quinella. If both runners are strictly below $4.00, assess a three-horse boxed trifecta; if all three are strictly below $4.00, assess a four-horse boxed First Four. Exactly $4.00 is not below $4.00. Supporting runners must independently qualify; no forced bets. Each stage is an assessment option, not automatic betting approval. No exotic dividends are needed to decide which stage to display; actual settled dividends may still be used later for honest historical profit/loss accounting. Keep the strongest win chance first and show exactly the applicable 1, 2, 3 or 4 runners. Frozen V6 artifacts remain unchanged.
