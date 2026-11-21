@@ -78,10 +78,3 @@ def route_full_day(outputs, *, explicit_le=False):
     return SelectionRoute('NO_BET',(),False,False,False,
                           'No qualifying full-day V7 selections; LE requires explicit authorization')
 
-
-def assess_single_race_progression(primary, supporting, *, quotes, verified=False,
-                                   min_return=None, stake_per_combination=None):
-    """Shared verified-dividend policy; never approves model research rankings."""
-    from monty_exotic_ladder import dividend_progression
-    return dividend_progression(primary, supporting, quotes=quotes, verified=verified,
-                                min_return=min_return, stake_per_combination=stake_per_combination)
