@@ -1,6 +1,6 @@
 # Monty V6 → V7 promotion tracker
 
-Updated: 2026-11-21. Branch: grok-independent-repairs. Latest passing offline CI 44848255657 at commit 8785d9d (includes new diagnostic regression tests); manual Krok connection run 44847348535 failed (requires diagnosis).
+Updated: 2026-11-21. Branch: grok-independent-repairs. Latest confirmed passing offline CI 44853046477 (run #641, single-race routing regression tests); manual Krok connection run 44847348535 failed (requires diagnosis).
 Rule: mark [x] only after direct evidence; partial work stays [ ].
 Frozen V6 artifacts must never be modified.
 
@@ -13,7 +13,7 @@ Frozen V6 artifacts must never be modified.
 - [x] Offline code checks passed following live report ladder integration (GitHub Actions 44845708799).
 - [x] Add safe error-category diagnostics to manual Krok checker (commit f8a85d5; offline CI 44847770547 passed).
 - [x] Verify four safe diagnostic regression tests in CI: first run at 684ec77 failed on `paginated`; fixed at 8785d9d and CI 44848255657 **passed**.
-- [ ] Verify expanded six-test Krok diagnostic suite (empty eligible fields and invalid date cases added in commit da69b49); latest CI pending.
+- [x] Expanded Krok diagnostic suite included in passing offline CI run 44853046477 (run #641); this does not verify live Krok connectivity.
 - [x] Make blank-date fallback explicit in manual Krok workflow (commit 496e88a; offline CI 44847898309 passed). **Correction:** the failed historical run's logs already show a Queensland-date fallback, so blank input is NOT established as its root cause.
 - [x] Publish safe live verification and failure-triage runbook (KROK_LIVE_VERIFICATION.md, commit 760658b).
 - [ ] Diagnose failed manual Krok connection run 44847348535: generic validation error; rerun with new diagnostics and verify live provider response. Do not confuse this with successful offline CI.
@@ -25,7 +25,13 @@ Frozen V6 artifacts must never be modified.
 ## Authentic V6
 - [ ] Restore and integrity-check missing frozen V6 artifacts (28 of 55 absent from available backup at prior audit).
 - [ ] Reproduce genuine V6 scoring with verified historical features and demonstrate comparison-ready outputs.
-- [ ] Retain V6 immutable as baseline and fallback.
+- [x] Retain V6 model files immutable in the single-race routing changes; V6 remains the research comparison baseline. Single-race automatic V6 fallback was explicitly removed under the owner's newer V7 → V7_LE → non-V7 rule.
+
+## Single-race execution readiness
+- [x] Routing order V7 → V7_LE → independently labelled FORM_ASSESSMENT; automatic V6 single-race fallback removed (CI run 44853046477 passed).
+- [x] Router no longer claims model execution solely from a V7-labelled candidate (CI run 44853046477 passed).
+- [ ] Locate or restore executable V7 Candidate 1 scoring engine and its verified artifacts. Repository audit 2026-11-21 found `monty_v7_shadow_blend.py` (research blend only), `research_frozen_linear_replay.py` (frozen V6 coefficients), and no separate V7 scorer in the development branch. **Do not label V6 replay or a V7 shadow blend as a genuine V7 run.**
+- [ ] Implement documented relaxed-feature V7 execution using the genuine V7 engine, preserving identity/odds checks; test and capture provenance before authorising a provisional V7 label.
 
 ## V7 validation
 - [x] V7 Candidate 1 chronological walk-forward assessment performed: 2,983 races / 3 folds; 139 simulated bets; -20.53 units (-14.77% ROI). **Not promoted.**
