@@ -3,6 +3,8 @@
 Conversion never certifies source verification or timing. The caller must
 explicitly attest field verification after checking active runners and quotes.
 """
+import datetime as dt
+import numpy as np
 import pandas as pd
 
 def to_v7_fields(rows, *, date, country, source_url, field_verified=False):
@@ -10,6 +12,12 @@ def to_v7_fields(rows, *, date, country, source_url, field_verified=False):
         raise ValueError("Independent active-field verification required")
     if country not in ("AU", "NZ") or not source_url or not str(source_url).startswith("https://"):
         raise ValueError("Country and attributable HTTPS source required")
+    try:
+        parsed_date = dt.date.fromisoformat(str(date))
+    except (ValueError, TypeError):
+        raise ValueError("Invalid race date; expected YYYY-MM-DD") from None
+    if parsed_date > dt.date.today() + dt.timedelta(days=365):
+        raise ValueError("Race date implausibly far in the future")
     df = pd.DataFrame(rows).copy()
     required = {"meeting", "race", "number", "horse", "odds"}
     if not required.issubset(df.columns) or df.empty:
@@ -20,7 +28,7 @@ def to_v7_fields(rows, *, date, country, source_url, field_verified=False):
         if df[key].astype(str).str.strip().eq("").any():
             raise ValueError("Blank runner identity")
     df["fixed_win_odds"] = pd.to_numeric(df["odds"], errors="raise")
-    if not df["fixed_win_odds"].between(1.000001, 1000000).all():
+    if not np.isfinite(df["fixed_win_odds"]).all() or not df["fixed_win_odds"].gt(1).all():
         raise ValueError("Invalid fixed-win odds")
     df["race_id"] = country + "|" + df["meeting"].astype(str).str.upper() + "|" + df["race"].astype(str)
     df["runner_id"] = df["number"].astype(str)
