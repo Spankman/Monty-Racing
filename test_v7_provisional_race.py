@@ -15,7 +15,7 @@ class ProvisionalV7Test(unittest.TestCase):
                       "research_only_restricted_race":True,
                       "race_classification_unknown":False}
                      for i in range(1,5)]
-            snapshot={"races":[{"meeting":"Gosford","race":"1",
+            snapshot={"date":"2026-11-21","races":[{"meeting":"Gosford","race":"1",
                                 "expected_active_runners":4,
                                 "betting_authorised":False}],
                       "runners":runners}
