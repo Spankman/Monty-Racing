@@ -1,0 +1,58 @@
+"""Run actual experimental V7 on one provider snapshot race; research only.
+
+This never claims independent verification, betting approval or TAB coverage.
+"""
+import argparse
+import json
+from pathlib import Path
+import pandas as pd
+from .stage_krok_field import stage
+from .predict import run
+
+def execute(snapshot, meeting, race, *, date, country, output_dir,
+            allow_restricted=False, model_path=Path("v7/artifacts/fold_3_model.json")):
+    if country not in ("AU", "NZ"):
+        raise ValueError("Country must be AU or NZ")
+    out=Path(output_dir)
+    if out.exists() and any(out.iterdir()):
+        raise FileExistsError("Output directory must be empty to freeze prediction evidence")
+    out.mkdir(parents=True,exist_ok=True)
+    staged=out/"provider_field.csv"
+    stage(snapshot,meeting,str(race),staged,allow_restricted=allow_restricted)
+    df=pd.read_csv(staged,dtype={"meeting":str,"race":str,"number":str,"horse":str})
+    df["race_id"]=country+"|"+df["meeting"].astype(str).str.upper()+"|"+df["race"].astype(str)
+    df["runner_id"]=df["number"].astype(str)
+    df["fixed_win_odds"]=pd.to_numeric(df["odds"],errors="raise")
+    df["date"]=date
+    df["country"]=country
+    df["source_url"]="https://krokodds.com.au"
+    df["field_verified"]=False
+    df.to_csv(out/"provisional_input.csv",index=False)
+    run(Path(model_path),out/"provisional_input.csv",out,provisional=True)
+    scored=pd.read_csv(out/"v7_research_scores.csv")
+    scored=scored.sort_values("v7_win_probability",ascending=False)
+    result={"status":"PROVISIONAL_V7_PROVIDER_UNVERIFIED","betting_authorised":False,
+            "meeting":meeting,"race":str(race),"date":date,"country":country,
+            "ordered":[{"number":str(row.runner_id),"horse":str(row.horse),
+                        "fixed_win_odds":float(row.fixed_win_odds),
+                        "v7_win_probability":float(row.v7_win_probability)}
+                       for row in scored.itertuples(index=False)]}
+    (out/"provisional_selection.json").write_text(json.dumps(result,indent=2)+"\n")
+    return result
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument("snapshot",type=Path)
+    p.add_argument("--meeting",required=True)
+    p.add_argument("--race",required=True)
+    p.add_argument("--date",required=True)
+    p.add_argument("--country",required=True,choices=["AU","NZ"])
+    p.add_argument("--output-dir",required=True,type=Path)
+    p.add_argument("--allow-restricted",action="store_true")
+    p.add_argument("--model",type=Path,default=Path("v7/artifacts/fold_3_model.json"))
+    a=p.parse_args()
+    print(json.dumps(execute(a.snapshot,a.meeting,a.race,date=a.date,country=a.country,
+                             output_dir=a.output_dir,allow_restricted=a.allow_restricted,
+                             model_path=a.model),indent=2))
+if __name__=="__main__":
+    main()
