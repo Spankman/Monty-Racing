@@ -68,6 +68,11 @@ def execute(snapshot, meeting, race, *, date, country, output_dir,
         "positive_model_edge":value["model_expected_win_roi"]>0,
         "betting_authorised":False,
         "warning":"Uncalibrated model-only value diagnostic; NO BET"}
+    if value["model_expected_win_roi"] <= 0:
+        result["provisional_value_candidate"]=None
+        result["value_watch_status"]="NO POSITIVE MODEL EDGE — NO BET"
+    else:
+        result["value_watch_status"]="UNCALIBRATED POSITIVE MODEL EDGE — NO BET"
     # An apparent positive edge cannot authorise a wager.
     # Exotic progression uses fixed WIN prices only, never exotic dividends.
     ranked=result["ordered"]
