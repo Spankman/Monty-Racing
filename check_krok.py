@@ -38,7 +38,7 @@ def main():
             reason='no_eligible_complete_fields'
         elif 'Duplicate meeting/race identity' in str(exc):
             reason='duplicate_race_identity'
-        elif 'pagination' in str(exc).lower() or 'page limit' in str(exc).lower():
+        elif any(token in str(exc).lower() for token in ('pagination', 'paginated', 'page limit', 'next_cursor', 'full-card feed', 'cursor pages')):
             reason='incomplete_pagination'
         elif 'date' in str(exc).lower():
             reason='invalid_date_or_feed_date'
