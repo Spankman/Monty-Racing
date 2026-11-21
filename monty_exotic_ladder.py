@@ -27,7 +27,7 @@ def exotic_ladder(primary, supporting, *, short_price_limit, verified=False, sta
     if not qualified(primary):
         return {'options':[],'status':'NO BET — unverified primary'}
     options=[{'bet_type':'WIN','numbers':[primary['number']],'combinations':1}]
-    if float(primary['odds']) > short_price_limit:
+    if float(primary['odds']) >= short_price_limit:
         return {'options':options,'status':'WIN ONLY — primary not short-priced'}
     chosen=[primary];seen={str(primary['number'])}
     for r in supporting:
@@ -35,12 +35,12 @@ def exotic_ladder(primary, supporting, *, short_price_limit, verified=False, sta
         chosen.append(r);seen.add(str(r['number']))
         if len(chosen)==2:
             options.append({'bet_type':'QUINELLA','numbers':[x['number'] for x in chosen],'combinations':1})
-        elif len(chosen)==3 and all(float(x['odds'])<=short_price_limit for x in chosen[:2]):
+        elif len(chosen)==3 and all(float(x['odds'])<short_price_limit for x in chosen[:2]):
             options.append({'bet_type':'BOXED TRIFECTA','numbers':[x['number'] for x in chosen],'combinations':6})
-        elif len(chosen)==4 and all(float(x['odds'])<=short_price_limit for x in chosen[:3]):
+        elif len(chosen)==4 and all(float(x['odds'])<short_price_limit for x in chosen[:3]):
             options.append({'bet_type':'BOXED FIRST FOUR','numbers':[x['number'] for x in chosen],'combinations':24})
         if len(chosen)>=4:break
-        if float(chosen[-1]['odds'])>short_price_limit:break
+        if float(chosen[-1]['odds'])>=short_price_limit:break
     if stake_per_combination is not None:
         if stake_per_combination<=0:raise ValueError('Stake must be positive')
         for o in options:o['total_stake']=round(o['combinations']*stake_per_combination,2)
