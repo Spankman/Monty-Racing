@@ -6,6 +6,7 @@ scratchings, quote source, timestamp and country separately.
 """
 import argparse
 import json
+import math
 from pathlib import Path
 import pandas as pd
 
@@ -41,6 +42,17 @@ def stage(snapshot_path, meeting, race, output_csv):
         raise ValueError("Blank runner identity")
     if len({str(r["number"]) for r in selected})!=len(selected):
         raise ValueError("Duplicate saddlecloth")
+    try:
+        odds=[float(r["odds"]) for r in selected]
+    except (TypeError,ValueError,OverflowError) as exc:
+        raise ValueError("Invalid fixed-win odds") from exc
+    if any(not math.isfinite(o) or o<=1 for o in odds):
+        raise ValueError("Invalid fixed-win odds")
+    sources=[r.get("_price_source") for r in selected]
+    if any(not isinstance(source,str) or not source.strip() for source in sources):
+        raise ValueError("Missing fixed-win price provenance")
+    if len(set(sources))!=1:
+        raise ValueError("Mixed fixed-win price sources")
     # Never merge a snapshot containing contradictory aliases into a single field.
     # The upstream adapter excludes known aliases, but stage must fail closed too.
     if len({(str(r["meeting"]).casefold(),str(r["race"])) for r in selected})!=1:
