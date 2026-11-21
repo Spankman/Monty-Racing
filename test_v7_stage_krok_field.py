@@ -46,6 +46,16 @@ class StageKrokV7Tests(unittest.TestCase):
                 for i in range(1,5)]}))
             with self.assertRaisesRegex(ValueError,"Mixed fixed-win"):
                 stage(src,"Whanganui","3",root/"field.csv")
+    def test_rejects_restricted_race(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            src=root/"snapshot.json"
+            src.write_text(json.dumps({"races":[{"meeting":"Whanganui","race":"3","expected_active_runners":3,"betting_authorised":False}],"runners":[
+                {"meeting":"Whanganui","race":"3","number":str(i),"horse":"TEST "+str(i),
+                 "odds":i+2,"_price_source":"test-fixed","research_only_restricted_race":True,
+                 "betting_authorised":False} for i in range(1,4)]}))
+            with self.assertRaisesRegex(ValueError,"Restricted race"):
+                stage(src,"Whanganui","3",root/"field.csv")
     def test_rejects_unauthorised_identity(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)
