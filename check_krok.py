@@ -44,10 +44,13 @@ def main():
             reason='invalid_date_or_feed_date'
         else:
             reason='provider_input_validation'
+        Path(a.output).write_text(json.dumps({'requested_date':a.date,'live_request_succeeded':False,'failure_category':reason,'predictions_generated':False,'betting_authorised':False},indent=2)+'\n')
         print('BLOCKED: '+reason);return 2
     except urllib.error.HTTPError as exc:
+        Path(a.output).write_text(json.dumps({'requested_date':a.date,'live_request_succeeded':False,'failure_category':'provider_http','http_status':exc.code,'betting_authorised':False},indent=2)+'\n')
         print('BLOCKED: provider HTTP status '+str(exc.code));return 2
     except Exception as exc:
+        Path(a.output).write_text(json.dumps({'requested_date':a.date,'live_request_succeeded':False,'failure_category':'unexpected_exception','exception_type':type(exc).__name__,'betting_authorised':False},indent=2)+'\n')
         print('BLOCKED: '+type(exc).__name__);return 2
     print(json.dumps(report));return 0
 
