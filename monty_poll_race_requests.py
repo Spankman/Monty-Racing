@@ -43,50 +43,38 @@ def comment(number,body):
         Path(path).unlink(missing_ok=True)
 
 def score(track,race,date):
-    from krok_adapter import fetch,normalize
-    from research_frozen_linear_replay import run
-    from monty_single_race_research import select
-    from monty_single_race_ladder import choose
-    key=os.environ.get("KROK_API_KEY")
-    if not key:raise RuntimeError("KROK_API_KEY is missing")
-    snapshot,audit=normalize(fetch(date,key),date,allow_restricted_classes=True)
-    # Classification is deliberately not used to reject an explicit race request.
-    # Scope completeness validation to the requested race. Unrelated
-    # incomplete races must not prevent this race from being evaluated.
-    target=[r for r in snapshot["races"] if str(r["meeting"]).strip().casefold()==track.strip().casefold() and str(r["race"])==str(race)]
-    if len(target)!=1:
-        raise ValueError("Requested race absent or ambiguous")
-    runners=[r for r in snapshot["runners"] if str(r["meeting"]).strip().casefold()==track.strip().casefold() and str(r["race"])==str(race)]
-    if len(runners)!=int(target[0]["expected_active_runners"]):
-        raise ValueError("Requested race field incomplete")
-    snapshot={**snapshot,"races":target,"runners":runners}
+    """Run the genuine V7 engine from its pinned development branch checkout."""
     with tempfile.TemporaryDirectory() as tmp:
-        p=Path(tmp)
-        (p/"snapshot.json").write_text(json.dumps(snapshot))
-        run(p/"snapshot.json",p/"scores.csv")
-        result=select(p/"scores.csv",track,race)
-    # Research output cannot authorise any bet without verified odds and
-    # approved, calibrated probabilities. Never print the entire leaderboard.
-    ladder=choose([{"number":r["number"],"horse":r["horse"],
-                    "research_prob":r["research_probability"],"odds":r["odds"]}
-                   for r in result["runners"]],approved=False)
-    selections=ladder["selections"]
-    kind=ladder["bet_type"]
-    labels={"BB":"BB","QUINELLA BOXED":"Q (boxed)",
-            "TRIFECTA BOXED":"T (boxed)","FIRST FOUR BOXED":"FF (boxed)"}
+        out=Path(tmp)/"result"
+        cmd=["python","-m","v7.run_live_single_race","--meeting",track,
+             "--race",str(race),"--date",date,"--country","AU",
+             "--output-dir",str(out),"--allow-restricted"]
+        subprocess.run(cmd,cwd="v7_engine",check=True,capture_output=True,text=True)
+        p=out/"v7"/"provisional_selection.json"
+        d=json.loads(p.read_text(encoding="utf8"))
+    if d.get("status")!="PROVISIONAL_V7_PROVIDER_UNVERIFIED" or d.get("betting_authorised") is not False:
+        raise ValueError("Unexpected V7 result status")
+    ranked=d.get("ordered",[])
+    ladder=d.get("fixed_win_price_progression",{})
+    nums=[str(n) for n in ladder.get("numbers",[])]
+    if not ranked or not nums:
+        raise ValueError("V7 produced no verifiable selection ladder")
+    lookup={str(h["number"]):h for h in ranked}
+    if any(n not in lookup for n in nums):
+        raise ValueError("Progression runner absent from V7 ranking")
+    selected=[lookup[n] for n in nums]
     display=" → ".join(
-        (f"**#{r['number']} {r['horse']}**" if i==0
-         else f"#{r['number']} {r['horse']}")
-        for i,r in enumerate(selections))
-    prices="; ".join(
-        f"#{r['number']} {r['horse']} ${r['odds']:.2f}"
-        for r in ladder["ranked"][:min(4,len(ladder["ranked"]))])
-    return (f"**{track} R{race} — {labels.get(kind,kind)}**\n\n"
-            f"{display}\n\n"
-            f"Win prices used (model snapshot): {prices}\n\n"
-            "Progression uses individual win odds strictly under $4.00. "
-            "Snapshot prices can differ from current market prices. "
-            "Research selection only; not an authorised wager.")
+        (f"**#{h['number']} {h['horse']}**" if i==0
+         else f"#{h['number']} {h['horse']}")
+        for i,h in enumerate(selected))
+    prices="; ".join(f"#{h['number']} {h['horse']} ${float(h['fixed_win_odds']):.2f}"
+                     for h in selected)
+    verdict=d.get("win_value_diagnostic",{}).get("betting_decision","NO BET — unvalidated V7")
+    return (f"**{track} R{race} — genuine V7 PROVISIONAL — {ladder.get('type','UNKNOWN')}**\\n\\n"
+            f"{display}\\n\\nFixed WIN odds: {prices}\\n\\n"
+            f"**{verdict}**\\n\\n"
+            "Model probabilities are not prospectively validated; no betting authorisation. "
+            "Progression is based on fixed win prices, not exotic payouts.")
 
 
 def main():
