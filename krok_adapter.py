@@ -151,6 +151,9 @@ def normalize(payload,date,include_restricted_flat_research=False):
                     item['effective_weight']=item['allocated_weight']-item['claim_kg']
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active),'research_only_restricted_race':bool(maiden or juvenile),'race_classification_unknown':classification_unknown,'betting_authorised':False})
+    exact_keys=[(str(r['meeting']).strip().casefold(),str(r['race']).strip()) for r in races]
+    if len(exact_keys)!=len(set(exact_keys)):
+        raise ValueError('Duplicate meeting/race identity in provider feed')
     # Same meeting may appear under aliases with contradictory odds. Exclude
     # all competing versions of that race instead of picking a convenient quote.
     from collections import Counter
