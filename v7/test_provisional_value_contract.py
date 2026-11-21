@@ -1,5 +1,6 @@
 """Offline end-to-end contract test for provisional single-race value output."""
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -39,6 +40,7 @@ class ProvisionalRaceValueContract(unittest.TestCase):
             saved = json.loads((out / "provisional_selection.json").read_text())
             self.assertEqual(saved, result)
             self.assertTrue(result["scored_at_utc"].endswith("Z"))
+            self.assertEqual(result["provider_snapshot_sha256"], hashlib.sha256(snapshot.read_bytes()).hexdigest())
             self.assertIsNone(result["provider_odds_captured_at_utc"])
             self.assertFalse(result["pre_race_evidence_verified"])
             self.assertEqual(result["ordered"][0]["number"], "1")
