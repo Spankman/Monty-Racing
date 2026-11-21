@@ -196,17 +196,8 @@ jobs:
               bests=sorted(bests,key=lambda r:track_race_key(r["race_id"]))
               for best in bests:
                   group=by_race[best["race_id"]]
-                  picks=[group[0]]
-                  kind="WIN"
-                  if float(group[0]["odds"]) < 4 and len(group)>=2:
-                      picks.append(group[1])
-                      kind="Q"
-                      if float(group[1]["odds"]) < 4 and len(group)>=3:
-                          picks.append(group[2])
-                          kind="TRI BOX"
-                          if float(group[2]["odds"]) < 4 and len(group)>=4:
-                              picks.append(group[3])
-                              kind="F4 BOX"
+                  from monty_exotic_ladder import research_display_ladder
+                  kind,picks=research_display_ladder(group,short_price_limit=4)
                   horses=" · ".join("#{} {} (${:g})".format(
                       r["number"],r["horse"],float(r["odds"])) for r in picks)
                   report.append("| {} | **{}** | {} |".format(best["race_id"],kind,horses))
