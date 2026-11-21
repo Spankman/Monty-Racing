@@ -32,6 +32,10 @@ class ProvisionalV7Test(unittest.TestCase):
             self.assertAlmostEqual(sum(x["v7_win_probability"] for x in result["ordered"]),1,places=6)
             self.assertTrue((root/"scored"/"v7_research_scores.csv").exists())
             ranked=result["ordered"]
+            self.assertEqual(result["win_value_diagnostic"]["betting_decision"],"NO BET — provisional probabilities not prospectively validated")
+            for horse in ranked:
+                self.assertAlmostEqual(horse["model_expected_win_roi"],horse["v7_win_probability"]*horse["fixed_win_odds"]-1)
+                self.assertAlmostEqual(horse["market_implied_probability"],1/horse["fixed_win_odds"])
             expected=[x["number"] for x in ranked[:4]]
             self.assertEqual(result["fixed_win_price_progression"]["numbers"],expected[:len(result["fixed_win_price_progression"]["numbers"])])
             self.assertIn(result["fixed_win_price_progression"]["type"],("WIN","QUINELLA","BOXED_TRIFECTA","BOXED_FIRST_FOUR"))
