@@ -132,6 +132,30 @@ class KrokAdapterTests(unittest.TestCase):
  def test_uncertain_scratching_rejected(self):
   f=self.fixture();f['data'][0]['races'][0]['runners'][1].pop('is_scratched')
   with self.assertRaises(ValueError):normalize(f,'2026-11-14')
+ def test_conflicting_nz_aliases_are_excluded_not_double_counted(self):
+  f=self.fixture()
+  original=f['data'][0]
+  original['venue']='Pukekohe'
+  alias=json.loads(json.dumps(original))
+  alias['venue']='Pukekohe Park - NZ'
+  alias['races'][0]['runners'][0]['fixed_win']=9.0
+  other=json.loads(json.dumps(original))
+  other['venue']='Ascot'
+  f['data']=[original,alias,other]
+  snapshot,audit=normalize(f,'2026-11-14')
+  self.assertEqual(audit['ambiguous_alias_races_excluded'],1)
+  self.assertEqual(audit['races_accepted'],1)
+  self.assertEqual(snapshot['races'][0]['meeting'],'Ascot')
+  self.assertEqual(len(snapshot['runners']),2)
+  self.assertTrue(any('conflicting duplicate venue aliases' in x for x in audit['skipped']))
+ def test_wanganui_whanganui_aliases_excluded(self):
+  f=self.fixture()
+  f['data'][0]['venue']='Wanganui'
+  alias=json.loads(json.dumps(f['data'][0]))
+  alias['venue']='Whanganui'
+  f['data'].append(alias)
+  with self.assertRaisesRegex(ValueError,'No complete'):
+   normalize(f,'2026-11-14')
  def test_duplicate_race_key_rejected(self):
   f=self.fixture()
   f['data'][0]['races'].append(dict(f['data'][0]['races'][0]))
