@@ -14,11 +14,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: grok-independent-repairs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements-runner.txt
-      - name: Score requested race from current Queensland date
+      - name: Run genuine provisional V7 on requested race
         id: score
         continue-on-error: true
         env:
@@ -26,29 +28,16 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
         run: |
           python - <<'PY'
-          import datetime,json,os,re
+          import datetime,os,re,subprocess
           from zoneinfo import ZoneInfo
-          from krok_adapter import fetch,normalize
-          title=os.environ['ISSUE_TITLE']
-          match=re.fullmatch(r'Monty race: ([A-Za-z][A-Za-z .\x27-]{1,59}) ([1-9]|1[0-9]|20)',title)
-          if not match: raise SystemExit('Invalid request. Example: Monty race: Kilcoy 4')
-          if not os.getenv('KROK_API_KEY'): raise SystemExit('KROK_API_KEY missing')
-          day=datetime.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
-          snapshot,audit=normalize(fetch(day,os.environ['KROK_API_KEY']),day)
-          with open('research_snapshot.json','w') as f:json.dump(snapshot,f)
-          with open('research_source_audit.json','w') as f:json.dump(audit,f)
-          with open('requested_race.json','w') as f:json.dump({'track':match.group(1),'race':int(match.group(2))},f)
+          match=re.fullmatch(r"Monty race: ([A-Za-z][A-Za-z .'-]{1,59}) ([1-9]|1[0-9]|20)",os.environ["ISSUE_TITLE"])
+          if not match: raise SystemExit("Invalid race request title")
+          date=datetime.datetime.now(ZoneInfo("Australia/Brisbane")).date().isoformat()
+          subprocess.run(["python","-m","v7.run_live_single_race","--meeting",match.group(1),
+                          "--race",match.group(2),"--date",date,"--country","AU",
+                          "--output-dir","output_v7_single","--allow-restricted"],check=True)
           PY
-          python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
-          python - <<'PY'
-          import json
-          from monty_single_race_research import select
-          from pathlib import Path
-          request=json.loads(Path('requested_race.json').read_text())
-          result=select('research_scores.csv',request['track'],request['race'])
-          Path('single_race_research.json').write_text(json.dumps(result,indent=2)+'\n')
-          PY
-      - name: Post safe research result on issue
+      - name: Post genuine V7 provisional result on issue
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
@@ -57,26 +46,30 @@ jobs:
         run: |
           python - <<'PY'
           import json,os,pathlib
-          p=pathlib.Path('single_race_research.json')
-          if os.environ['SCORE_OUTCOME']=='success' and p.exists():
-              data=json.loads(p.read_text())
-              lines=['**Monty research only — NO BET (not approved V6 selections)**','',f"**{data['meeting']} R{data['race']}**"]
-              for r in data['runners']:
-                  lines.append(f"- #{r['number']} {r['horse']}: research probability {r['research_probability']:.1%}")
-              lines.append('\nField, odds and race status require independent verification before betting.')
-              body='\n'.join(lines)
+          p=pathlib.Path("output_v7_single/v7/provisional_selection.json")
+          if os.environ["SCORE_OUTCOME"]=="success" and p.exists():
+              d=json.loads(p.read_text())
+              lines=[f"**{d['meeting']} R{d['race']} — genuine V7 PROVISIONAL**",
+                     "**NOT BETTING AUTHORISED**",""]
+              nums=[str(n) for n in d.get("fixed_win_price_progression",{}).get("numbers",[])]
+              horses={str(h["number"]):h for h in d.get("ordered",[])}
+              for i,n in enumerate(nums):
+                  h=horses[n]
+                  line=f"#{n} {h['horse']} — fixed WIN ${float(h['fixed_win_odds']):.2f}, V7 {h['v7_win_probability']:.1%}"
+                  lines.append(f"**{line}**" if i==0 else line)
+              lines.append(f"\nProgression: {d.get('fixed_win_price_progression',{}).get('type','UNKNOWN')} {'–'.join(nums)}")
+              lines.append("\n"+d.get("win_value_diagnostic",{}).get("betting_decision","NO BET — provisional"))
+              lines.append("\nProvisional probabilities unvalidated; fixed win prices only.")
+              body="\n".join(lines)
           else:
-              body='Monty could not verify and score this race. **NO BET.** Check the workflow logs for missing data or credentials.'
-          pathlib.Path('comment.md').write_text(body)
+              body="**NO BET — V7 could not verify or score this race.** Check the linked GitHub Actions logs."
+          pathlib.Path("comment.md").write_text(body)
           PY
           gh issue comment "$ISSUE" --body-file comment.md
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: monty-issue-research-${{ github.run_id }}
-          path: |
-            research_scores.audit.json
-            research_source_audit.json
-            single_race_research.json
-          retention-days: 2
+          name: monty-v7-issue-${{ github.run_id }}
+          path: output_v7_single/
+          retention-days: 7
           if-no-files-found: ignore
