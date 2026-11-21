@@ -13,6 +13,7 @@ Frozen V6 artifacts must never be modified.
 - [x] Offline code checks passed following live report ladder integration (GitHub Actions 44845708799).
 - [x] Add safe error-category diagnostics to manual Krok checker (commit f8a85d5; offline CI 44847770547 passed).
 - [x] Verify four safe diagnostic regression tests in CI: first run at 684ec77 failed on `paginated`; fixed at 8785d9d and CI 44848255657 **passed**.
+- [ ] Verify expanded six-test Krok diagnostic suite (empty eligible fields and invalid date cases added in commit da69b49); latest CI pending.
 - [x] Make blank-date fallback explicit in manual Krok workflow (commit 496e88a; offline CI 44847898309 passed). **Correction:** the failed historical run's logs already show a Queensland-date fallback, so blank input is NOT established as its root cause.
 - [x] Publish safe live verification and failure-triage runbook (KROK_LIVE_VERIFICATION.md, commit 760658b).
 - [ ] Diagnose failed manual Krok connection run 44847348535: generic validation error; rerun with new diagnostics and verify live provider response. Do not confuse this with successful offline CI.
