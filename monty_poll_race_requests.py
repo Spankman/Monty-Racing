@@ -31,7 +31,7 @@ def pending():
 
 def already_handled(number):
     comments=json.loads(gh("api",f"repos/{REPO}/issues/{number}/comments?per_page=100"))
-    return any(MARKER in c.get("body","") for c in comments)
+    return any(MARKER in c.get("body","") or "genuine V7 PROVISIONAL" in c.get("body","") or "Monty could not verify and score this race" in c.get("body","") for c in comments)
 
 def comment(number,body):
     with tempfile.NamedTemporaryFile("w",encoding="utf8",delete=False) as f:
