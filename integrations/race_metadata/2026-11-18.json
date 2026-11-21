@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-18",
+  "source": "https://www.racingandsports.com.au/form-guide/thoroughbred/scratchings/",
+  "source_checked_date": "2026-11-18",
+  "notes": "Race codes transcribed from publicly accessible race-card summary; unlisted races remain unverified. No assumption about scratches or prices.",
+  "races": [
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 1,
+      "code": "2 OPEN",
+      "is_two_year_old": true,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 2,
+      "code": "3U MDN",
+      "is_two_year_old": false,
+      "is_maiden": true,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 3,
+      "code": "3 BM64",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 4,
+      "code": "3UFM BM70",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 5,
+      "code": "3U BM70",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 6,
+      "code": "3U BM66",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 7,
+      "code": "3U BM66",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Sandown-Lakeside",
+      "race": 8,
+      "code": "3UFM BM74",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 1,
+      "code": "3 MDN",
+      "is_two_year_old": false,
+      "is_maiden": true,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 2,
+      "code": "4U MDN",
+      "is_two_year_old": false,
+      "is_maiden": true,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 3,
+      "code": "MDN",
+      "is_two_year_old": false,
+      "is_maiden": true,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 4,
+      "code": "CL3",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 5,
+      "code": "CL2",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 6,
+      "code": "BM68",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Doomben",
+      "race": 7,
+      "code": "CL1",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Belmont Park",
+      "race": 2,
+      "code": "3U MDN",
+      "is_two_year_old": false,
+      "is_maiden": true,
+      "is_hurdle": false
+    },
+    {
+      "meeting": "Belmont Park",
+      "race": 4,
+      "code": "3UFM CL1",
+      "is_two_year_old": false,
+      "is_maiden": false,
+      "is_hurdle": false
+    }
+  ]
+}

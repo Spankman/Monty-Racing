@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1.0",
+  "service": "Monty Racing",
+  "status": "CONTRACT_ONLY_NOT_DEPLOYED",
+  "security": {
+    "transport": "HTTPS",
+    "authentication": "Bearer token for execution and nonpublic results",
+    "credentials": "Never commit tokens or third-party racing API keys",
+    "execution": "Explicit authorization required for workflow dispatch"
+  },
+  "operations": {
+    "POST /v1/runs": {
+      "request": {"date": "YYYY-MM-DD", "model": "latest_approved", "meetings": "all_au_nz", "idempotency_key": "client-generated-unique-string"},
+      "response": {"run_id": "opaque-id", "status": "queued", "model_requested": "latest_approved"},
+      "notes": "Future API only; cannot execute until authenticated dispatch bridge is deployed."
+    },
+    "GET /v1/runs/{run_id}": {
+      "response": {"run_id": "opaque-id", "status": "queued|running|completed|failed|blocked", "model_version": null, "started_at": null, "finished_at": null, "errors": []}
+    },
+    "GET /v1/runs/{run_id}/predictions": {
+      "response": {"run_id": "opaque-id", "status": "completed", "model_version": "immutable-version-id", "generated_at": "ISO-8601-UTC", "data_cutoff": "ISO-8601-UTC", "races": [], "warnings": []},
+      "notes": "Return HTTP 409 until run completed; never return fabricated empty results as completed."
+    }
+  },
+  "prediction_row": {
+    "race_id": "meeting|race",
+    "runner_number": "string",
+    "runner_name": "string",
+    "win_probability": "number|null",
+    "odds_decimal": "number|null",
+    "expected_value": "number|null",
+    "rank": "integer|null",
+    "feature_coverage": "number|null",
+    "expert_coverage": "integer",
+    "expert_requirement_satisfied": "boolean",
+    "selection_status": "BET|NO_BET|RESEARCH_ONLY"
+  },
+  "constraints": [
+    "V6 frozen artifacts must never be modified.",
+    "V7 is research-only until walk-forward validation and approval.",
+    "Never claim a model run completed if only discovery ran.",
+    "Return data provenance, timestamps, scratchings/coverage caveats.",
+    "Enforce per-client authorization, rate limits, idempotency, and run audit logging before deployment."
+  ]
+}

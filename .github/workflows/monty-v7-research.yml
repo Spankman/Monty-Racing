@@ -1,0 +1,91 @@
+name: Monty V7 research pipeline
+on:
+  push:
+    branches:
+      - experiment/expert-consensus-v7
+    paths:
+      - 'integrations/**'
+      - 'expert_consensus_experiment/**'
+      - '.github/workflows/monty-v7-research.yml'
+  workflow_dispatch:
+    inputs:
+      racing_date:
+        description: 'AU/NZ racing date (YYYY-MM-DD)'
+        required: true
+        type: string
+      source_snapshot:
+        description: 'Optional relative path to a committed JSON runner snapshot (leave blank for source discovery only)'
+        required: false
+        default: ''
+        type: string
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen V6 runtime dependencies
+        run: python -m pip install -r monty_v6/requirements.txt
+      - name: Resolve date for push CI or manual run
+        id: date
+        env:
+          REQUESTED_DATE: ${{ inputs.racing_date }}
+        run: |
+          if [ -n "$REQUESTED_DATE" ]; then
+            echo "value=$REQUESTED_DATE" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Verify date and input path
+        env:
+          RACING_DATE: ${{ steps.date.outputs.value }}
+          SOURCE_SNAPSHOT: ${{ inputs.source_snapshot }}
+        run: |
+          python - <<'PY'
+          import os, datetime, pathlib
+          datetime.date.fromisoformat(os.environ["RACING_DATE"])
+          value = os.environ["SOURCE_SNAPSHOT"]
+          if value:
+              p = pathlib.PurePosixPath(value)
+              if p.is_absolute() or ".." in p.parts or p.suffix != ".json":
+                  raise ValueError("source_snapshot must be a relative JSON file without parent traversal")
+          PY
+      - name: Test discovery and fusion
+        run: python -m unittest discover -s expert_consensus_experiment -p 'test_*.py'
+      - name: Test cross-AI integrations and artifact safeguards
+        run: python -m unittest discover -s integrations -p 'test_*.py'
+      - name: Create persistent source discovery queue
+        run: |
+          mkdir -p output
+          python -m expert_consensus_experiment.source_discovery --output output/expert_discovery_queue.json
+      - name: Execute audited snapshot or report discovery-only status
+        env:
+          RACING_DATE: ${{ inputs.racing_date }}
+          SOURCE_SNAPSHOT: ${{ inputs.source_snapshot }}
+        run: |
+          python -m integrations.run_snapshot --date "$RACING_DATE" --source-snapshot "$SOURCE_SNAPSHOT" --output-dir output
+      - name: Validate completed-run JSON consistency
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          status=json.loads(pathlib.Path("output/run_status.json").read_text())
+          if status.get("model_executed"):
+              p=json.loads(pathlib.Path("output/predictions.json").read_text())
+              assert status["status"]=="MODEL_COMPLETED"
+              assert p["model_version"]==status["model_version"]
+              assert p["research_only"] is True
+              assert p["races"]
+          else:
+              assert status["status"] in ("DISCOVERY_ONLY_NO_RUNNER_SNAPSHOT","SNAPSHOT_NOT_FOUND")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-v7-research-${{ github.run_id }}
+          path: output/
+          if-no-files-found: warn

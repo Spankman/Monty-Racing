@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "purpose": "Persistent discovery registry for Monty expert opinions; URLs are starting points, not guaranteed APIs or permission to scrape.",
+  "minimum_independent_experts_per_race": 5,
+  "maximum_independent_experts_per_race": 20,
+  "sources": [
+    {"id":"racenet","name":"Racenet","homepage":"https://www.racenet.com.au/","discovery_url":"https://www.racenet.com.au/horse-racing-tips","known_analysts":[],"priority":1,"method":"public_web_or_permitted_feed","status":"discovery_url_verify"},
+    {"id":"sky_racing","name":"Sky Racing","homepage":"https://www.skyracing.com.au/","discovery_url":"https://www.skyracing.com.au/","known_analysts":[],"priority":1,"method":"public_web_or_permitted_feed","status":"homepage_only"},
+    {"id":"punters","name":"Punters","homepage":"https://www.punters.com.au/","discovery_url":"https://www.punters.com.au/","known_analysts":[],"priority":1,"method":"public_web_or_permitted_feed","status":"homepage_only"},
+    {"id":"tab","name":"TAB","homepage":"https://www.tab.com.au/","discovery_url":"https://www.tab.com.au/","known_analysts":[],"priority":1,"method":"public_web_or_permitted_feed","status":"homepage_only"},
+    {"id":"sportsbet","name":"Sportsbet","homepage":"https://www.sportsbet.com.au/","discovery_url":"https://www.sportsbet.com.au/","known_analysts":[],"priority":2,"method":"public_web_or_permitted_feed","status":"homepage_only"},
+    {"id":"great_tipoff","name":"The Great Tip Off","homepage":"https://thegreattipoff.com/","discovery_url":"https://thegreattipoff.com/news/","known_analysts":["David Gately"],"priority":1,"method":"public_web_or_permitted_feed","status":"known_article_pattern"},
+    {"id":"racing_com","name":"Racing.com","homepage":"https://www.racing.com/","discovery_url":"https://www.racing.com/","known_analysts":[],"priority":1,"method":"public_web_or_permitted_feed","status":"homepage_only"},
+    {"id":"racingbase","name":"RacingBase","homepage":"https://www.racingbase.com.au/","discovery_url":"https://www.racingbase.com.au/latest/tips/","known_analysts":["RacingBase editorial (identity to verify)"],"priority":1,"method":"public_web_or_permitted_feed","status":"known_tips_section"},
+    {"id":"bets_com_au","name":"Bets.com.au","homepage":"https://www.bets.com.au/","discovery_url":"https://www.bets.com.au/horse-racing/","known_analysts":["Alex Marsh","Martin Pennington"],"priority":1,"method":"public_web_or_permitted_feed","status":"known_tips_section"},
+    {"id":"tab_nz","name":"TAB NZ","homepage":"https://www.tab.co.nz/","discovery_url":"https://www.tab.co.nz/punters/","known_analysts":["Ryan Cook"],"priority":1,"method":"public_web_or_permitted_feed","status":"known_tips_section"},
+    {"id":"gobet","name":"GoBet","homepage":"https://www.gobet.com.au/","discovery_url":"https://www.gobet.com.au/horse-racing-tips/","known_analysts":["GoBet editorial (independence to verify)"],"priority":2,"method":"public_web_or_permitted_feed","status":"known_tips_section"},
+    {"id":"blackbook","name":"Blackbook","homepage":"https://www.blackbook.com.au/","discovery_url":"https://www.blackbook.com.au/horse-racing-tips/","known_analysts":["Adam Cusworth"],"priority":1,"method":"public_web_or_permitted_feed","status":"known_tips_section"},
+    {"id":"racing_sa","name":"Racing SA","homepage":"https://www.racingsa.com.au/","discovery_url":"https://www.racingsa.com.au/","known_analysts":[],"priority":2,"method":"public_web_or_permitted_feed","status":"homepage_only"},
+    {"id":"before_you_bet","name":"Before You Bet","homepage":"https://www.beforeyoubet.com.au/","discovery_url":"https://www.beforeyoubet.com.au/horse-racing-tips","known_analysts":["Trent Orwin"],"priority":1,"method":"public_web_or_permitted_feed","status":"known_tips_section"}
+  ]
+}

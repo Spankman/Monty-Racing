@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-18",
+  "status": "OBSERVED_EXPERT_EVIDENCE_NOT_FITTED_V7",
+  "note": "Published selections collected 18 Nov 2026. Each named editorial voice is separate; sites syndicating same analysis are not independent. This is not a trained V7 output.",
+  "selections": [
+    {
+      "meeting": "Sandown",
+      "race": 1,
+      "number": 5,
+      "horse": "La La Lilly",
+      "source": "RSN Cam Luke",
+      "url": "https://rsn.net.au/news/2026/11/17/horse-racing-tips-wednesday-best-bets-from-taggart-luke-11-11-copy",
+      "exclusion": "TWO_YEAR_OLD"
+    },
+    {
+      "meeting": "Sandown",
+      "race": 2,
+      "number": 2,
+      "horse": "Royal Maximus",
+      "source": "David Gately",
+      "url": "https://thegreattipoff.com/news/david-gately-horse-racing-tips-for-sandown-181126",
+      "exclusion": "MAIDEN"
+    },
+    {
+      "meeting": "Sandown",
+      "race": 4,
+      "number": 2,
+      "horse": "Certainly Quiet",
+      "source": "David Gately",
+      "url": "https://thegreattipoff.com/news/david-gately-horse-racing-tips-for-sandown-181126"
+    },
+    {
+      "meeting": "Sandown",
+      "race": 4,
+      "number": 1,
+      "horse": "Pariah Pearl",
+      "source": "RSN Cam Luke",
+      "url": "https://rsn.net.au/news/2026/11/17/horse-racing-tips-wednesday-best-bets-from-taggart-luke-11-11-copy"
+    },
+    {
+      "meeting": "Sandown",
+      "race": 6,
+      "number": 6,
+      "horse": "Torn",
+      "source": "David Gately",
+      "url": "https://thegreattipoff.com/news/david-gately-horse-racing-tips-for-sandown-181126"
+    },
+    {
+      "meeting": "Sandown",
+      "race": 6,
+      "number": 5,
+      "horse": "Rainsun",
+      "source": "Racing and Sports",
+      "url": "https://www.racingandsports.com.au/news/racing/previews/2026-11-18/our-wednesday-best-18th-november-2026/725286"
+    },
+    {
+      "meeting": "Belmont",
+      "race": 4,
+      "number": 1,
+      "horse": "Rok 'N' Rom",
+      "source": "Racing and Sports",
+      "url": "https://www.racingandsports.com.au/news/racing/previews/2026-11-18/our-wednesday-best-18th-november-2026/725286"
+    },
+    {
+      "meeting": "Warwick Farm",
+      "race": 3,
+      "number": 11,
+      "horse": "Brightburn",
+      "source": "Racing and Sports",
+      "url": "https://www.racingandsports.com.au/news/racing/previews/2026-11-18/our-wednesday-best-18th-november-2026/725286"
+    },
+    {
+      "meeting": "Doomben",
+      "race": 7,
+      "number": 1,
+      "horse": "Climb The Ladder",
+      "source": "Racing and Sports",
+      "url": "https://www.racingandsports.com.au/news/racing/previews/2026-11-18/our-wednesday-best-18th-november-2026/725286"
+    },
+    {
+      "meeting": "Gawler",
+      "race": 6,
+      "number": 2,
+      "horse": "Nosie By Nature",
+      "source": "Racing and Sports",
+      "url": "https://www.racingandsports.com.au/news/racing/previews/2026-11-18/our-wednesday-best-18th-november-2026/725286"
+    },
+    {
+      "meeting": "Warwick Farm",
+      "race": 4,
+      "number": 4,
+      "horse": "Manukau",
+      "source": "RSN Campbell Brown",
+      "url": "https://rsn.net.au/news/2026/11/17/horse-racing-tips-wednesday-best-bets-from-taggart-luke-11-11-copy"
+    },
+    {
+      "meeting": "Doomben",
+      "race": 4,
+      "number": 1,
+      "horse": "Taravia",
+      "source": "RSN Campbell Brown",
+      "url": "https://rsn.net.au/news/2026/11/17/horse-racing-tips-wednesday-best-bets-from-taggart-luke-11-11-copy"
+    }
+  ]
+}
