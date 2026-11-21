@@ -1,6 +1,8 @@
 import unittest
 import pandas as pd
 from run_verified_v6 import run
+from race_day import ROOT
+from monty.integrity import ArtifactError, verify_artifacts
 
 class FrozenV6EndToEndTests(unittest.TestCase):
     def fixture(self):
@@ -15,6 +17,14 @@ class FrozenV6EndToEndTests(unittest.TestCase):
         return pd.DataFrame(rows)
     def test_frozen_v6_research_run(self):
         d=self.fixture()
+        try:
+            verify_artifacts(ROOT)
+        except ArtifactError as exc:
+            # The public checkout omits frozen artifacts. Never bypass integrity
+            # or manufacture a passing frozen-model score.
+            with self.assertRaisesRegex(ArtifactError,'Missing artifact'):
+                run(d.iloc[:2],d.iloc[2:].drop(columns=['y']),'2026-11-20')
+            return
         out=run(d.iloc[:2],d.iloc[2:].drop(columns=['y']),'2026-11-20')
         self.assertEqual(len(out),2)
         self.assertAlmostEqual(out.v6_probability.sum(),1)
