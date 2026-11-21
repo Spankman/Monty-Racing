@@ -1,5 +1,5 @@
 name: Monty live Krok connectivity smoke test
-# User-requested 2026-11-21 provisional research refresh; frozen V6 is not claimed.
+# User-requested 2026-11-21 provisional research refresh after NZ alias deduplication; frozen V6 is not claimed.
 on:
   # Evening on-demand smoke run: push on this workflow file starts a live research check.
   push:
