@@ -2,7 +2,7 @@
 
 Input predictions must pass monty_prospective_ledger.validate.
 Results CSV columns: race_id,number,finish_position,result_verified_at.
-Returns are one-unit win stakes at captured fixed odds, NOT exotic payouts.
+Only rows explicitly marked bet_authorised=yes are staked.\nReturns are one-unit win stakes at captured fixed odds, NOT exotic payouts.
 """
 import argparse
 import csv
@@ -30,6 +30,8 @@ def settle(predictions, results):
             continue  # Unverified result is never silently counted as a loss
         if parse_time(result["result_verified_at"]) <= parse_time(row["scheduled_start"]):
             raise ValueError("result verification predates race")
+        if str(row.get("bet_authorised", "")).strip().lower() not in ("yes", "true", "1"):
+            continue  # Shadow rankings and NO BET are not actual wagers
         t = totals[row["version"]]
         t["bets"] += 1
         t["staked"] += 1
