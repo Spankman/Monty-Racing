@@ -12,6 +12,14 @@ class TestPoll(unittest.TestCase):
         gh.return_value='[{"body":"<!-- monty-race-request-v1 --> done"}]'
         self.assertTrue(m.already_handled(21))
     @patch.object(m,"gh")
+    def test_issue_workflow_v7_result_prevents_duplicate(self,gh):
+        gh.return_value='[{"body":"**Ascot R1 — genuine V7 PROVISIONAL**\\n#4 Ava"}]'
+        self.assertTrue(m.already_handled(72))
+    @patch.object(m,"gh")
+    def test_issue_workflow_failed_result_prevents_duplicate(self,gh):
+        gh.return_value='[{"body":"Monty could not verify and score this race. **NO BET.**"}]'
+        self.assertTrue(m.already_handled(67))
+    @patch.object(m,"gh")
     def test_no_marker_means_pending(self,gh):
         gh.return_value='[{"body":"hello"}]'
         self.assertFalse(m.already_handled(21))
