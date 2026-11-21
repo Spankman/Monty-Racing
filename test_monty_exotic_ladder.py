@@ -28,6 +28,14 @@ class DividendProgressionTests(unittest.TestCase):
   self.assertEqual([o['bet_type'] for o in r['options']],
       ['WIN','QUINELLA','BOXED TRIFECTA','BOXED FIRST FOUR'])
   self.assertEqual(r['options'][-1]['total_stake'],24)
+ def test_under_four_checks_quinella_even_if_win_return_exceeds_floor(self):
+  r=dividend_progression(horse(1,3.5),[horse(2,6)],
+      quotes={'QUINELLA':12},verified=True,min_return=2,stake_per_combination=1)
+  self.assertEqual([o['bet_type'] for o in r['options']],['WIN','QUINELLA'])
+ def test_exactly_four_does_not_force_quinella(self):
+  r=dividend_progression(horse(1,4),[horse(2,6)],
+      quotes={'QUINELLA':12},verified=True,min_return=2,stake_per_combination=1)
+  self.assertEqual([o['bet_type'] for o in r['options']],['WIN'])
  def test_missing_dividend_stops_without_guessing(self):
   r=dividend_progression(horse(1,2),[horse(2,3),horse(3,4)],
       quotes={},verified=True,min_return=100,stake_per_combination=1)
