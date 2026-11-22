@@ -138,6 +138,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           JOB_STATUS: ${{ job.status }}
+          GH_STATUS_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
           import json, os, re
@@ -163,10 +164,36 @@ jobs:
           }
           Path('.monty/v6-latest-status.json').write_text(json.dumps(safe,indent=2)+'\n')
           PY
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add .monty/v6-latest-status.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Record sanitized V6 diagnostic status [skip ci]"
-            git push origin HEAD:main
-          fi
+          python - <<'PY'
+          import base64,json,os,time,urllib.request,urllib.error
+          from pathlib import Path
+          repository=os.environ['GITHUB_REPOSITORY']
+          endpoint='https://api.github.com/repos/'+repository+'/contents/.monty/v6-latest-status.json'
+          token=os.environ['GH_STATUS_TOKEN']
+          headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json',
+                   'X-GitHub-Api-Version':'2022-11-28','User-Agent':'Monty-readiness-status'}
+          content=base64.b64encode(Path('.monty/v6-latest-status.json').read_bytes()).decode()
+          for attempt in range(5):
+              sha=None
+              try:
+                  req=urllib.request.Request(endpoint,headers=headers)
+                  with urllib.request.urlopen(req,timeout=20) as resp:
+                      sha=json.load(resp).get('sha')
+              except urllib.error.HTTPError as exc:
+                  if exc.code!=404:raise
+              body={'message':'Record sanitized V6 readiness status [skip ci]',
+                    'content':content,'branch':'main'}
+              if sha:body['sha']=sha
+              req=urllib.request.Request(endpoint,data=json.dumps(body).encode(),headers={
+                  **headers,'Content-Type':'application/json'},method='PUT')
+              try:
+                  with urllib.request.urlopen(req,timeout=25) as resp:
+                      print('Published sanitized V6 readiness status:',resp.status)
+                  break
+              except urllib.error.HTTPError as exc:
+                  if exc.code not in (409,422) or attempt==4:
+                      print('Status publication failed; HTTP',exc.code,
+                            '(check Actions workflow write permissions)')
+                      raise
+                  time.sleep(1+attempt)
+          PY
