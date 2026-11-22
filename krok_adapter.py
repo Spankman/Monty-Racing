@@ -93,7 +93,8 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                     item['barrier_fraction']=b/max(field_size,1)
                     item['inside_three']=int(b<=3)
                     item['outside_barrier']=float(b>field_size*.75)
-                    if 'distance_km' in item:item['barrier_x_distance']=b/field_size*distance/1000
+                    if 'distance_km' in item:
+                        item['barrier_x_distance']=(b/field_size)*item['distance_km']
                 # A missing claim is unknown, not evidence of a zero claim.
                 # Never impute a frozen-model input without source evidence.
                 if 'allocated_weight' in item and 'claim_kg' in item:
