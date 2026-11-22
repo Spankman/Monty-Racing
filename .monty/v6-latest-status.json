@@ -1,11 +1,193 @@
 {
-  "run_id": "44978660883",
-  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44978660883",
+  "run_id": "44980645229",
+  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44980645229",
   "job_status": "success",
   "date": "2026-11-22",
   "artifacts_ok": true,
-  "races_accepted": 48,
+  "races_accepted": 47,
   "betting_authorised": false,
   "predictions_generated": false,
-  "blocker": ""
+  "blocker": "",
+  "feature_coverage": {
+    "log_market_probability": {
+      "runners_present": 472,
+      "status": "derivable_from_accepted_field"
+    },
+    "log_field_size": {
+      "runners_present": 472,
+      "status": "derivable_from_accepted_field"
+    },
+    "distance_km": {
+      "runners_present": 286,
+      "status": "present"
+    },
+    "barrier": {
+      "runners_present": 286,
+      "status": "present"
+    },
+    "barrier_fraction": {
+      "runners_present": 286,
+      "status": "present"
+    },
+    "inside_three": {
+      "runners_present": 286,
+      "status": "present"
+    },
+    "outside_barrier": {
+      "runners_present": 286,
+      "status": "present"
+    },
+    "barrier_x_distance": {
+      "runners_present": 286,
+      "status": "present"
+    },
+    "observed_starts_log": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "observed_win_rate": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "observed_market_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "year_starts_log": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "year_win_rate": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "year_market_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "last3_win_rate": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "last5_win_rate": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "last3_market_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "last5_market_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "track_win_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "distance_win_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "track_distance_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "going_win_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "jockey_year_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "jockey_90d_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "trainer_year_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "trainer_90d_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "jockey_trainer_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "horse_jockey_residual": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "days_since_run_log": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "resuming_60d": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "quick_backup_7d": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "distance_change_km": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "up_200m": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "down_200m": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "benchmark_class": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "benchmark_class_change": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "jockey_changed": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "trainer_changed": {
+      "runners_present": 0,
+      "status": "missing"
+    },
+    "going_good": {
+      "runners_present": 472,
+      "status": "present"
+    },
+    "going_soft": {
+      "runners_present": 472,
+      "status": "present"
+    },
+    "going_heavy": {
+      "runners_present": 472,
+      "status": "present"
+    },
+    "going_firm": {
+      "runners_present": 472,
+      "status": "present"
+    },
+    "going_synthetic": {
+      "runners_present": 472,
+      "status": "present"
+    }
+  },
+  "races_assessed": 47,
+  "readiness_reason_counts": {
+    "jump_time_unverified": 19,
+    "independent_fields_and_scratchings_unverified": 47,
+    "provider_quote_update_time_unverified": 47,
+    "active_form_features_incomplete": 47,
+    "race_already_due": 1
+  }
 }
