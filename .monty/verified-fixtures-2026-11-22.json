@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-22",
+  "source": "https://www.tabtouch.com.au/racing/future-final-field",
+  "cross_check": "https://www.racingandsports.com.au/form-guide/thoroughbred/race-time/2026-11-22",
+  "verified_at_note": "Manual independent fixture cross-check; only venues and race number ranges, not independently verified runners/odds",
+  "meetings": {
+    "ASCOT PARK": 9,
+    "BUNBURY": 8,
+    "CAIRNS": 8,
+    "CANBERRA": 8,
+    "CLARE": 7,
+    "KILMORE": 9,
+    "TAREE": 7
+  }
+}
