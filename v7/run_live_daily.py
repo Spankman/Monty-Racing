@@ -48,19 +48,37 @@ def main():
             results.append(result)
         except Exception as exc:
             failures.append({"meeting":meeting,"race":number,"error":str(exc)})
-    (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","results":results,"failures":failures},indent=2))
-    lines=["# Monty V7 — "+args.date,"","**EXPERIMENTAL — NO BET. Country attribution not verified where provider snapshot lacks country.**",""]
-    for result in sorted(results,key=lambda x:(x["meeting"],int(x["race"]) if x["race"].isdigit() else 999)):
-        top=result["ordered"][0]
-        lines.append(f'## {result["meeting"]} R{result["race"]}')
-        lines.append(f'**#{top["number"]} {top["horse"]}** — ${top["fixed_win_odds"]:.2f}, V7 {top["v7_win_probability"]:.1%}')
+    # Provisional classification is per RACE, never one-per-meeting.
+    # Require positive uncalibrated model/market edge; never authorise bets.
+    picks=[]
+    for result in results:
+        ordered=result.get("ordered") or []
+        if not ordered:
+            continue
+        top=ordered[0]
+        p=float(top["v7_win_probability"])
+        odds=float(top["fixed_win_odds"])
+        if p >= 0.25 and odds < 4 and p*odds > 1.05:
+            picks.append({"meeting":result["meeting"],"race":result["race"],"label":"BB","number":str(top["number"]),"horse":top["horse"],"fixed_win_odds":odds,"model_expected_win_roi":p*odds-1,"betting_authorised":False})
         value=result.get("provisional_value_candidate")
         if isinstance(value,dict):
-            lines.append(f'Value candidate: #{value.get("number","?")} {value.get("horse","?")} (uncalibrated)')
-        lines.append("NO BET — experimental model")
-        lines.append("")
-    lines.append(f'Scored {len(results)} races; failed {len(failures)} races. Provider country verification incomplete.')
-    (out/"selections.md").write_text("\n".join(lines)+"\n")
+            vp=float(value["v7_win_probability"])
+            vo=float(value["fixed_win_odds"])
+            if vo >= 4 and vp >= 0.08 and vp*vo > 1.05:
+                picks.append({"meeting":result["meeting"],"race":result["race"],"label":"R","number":str(value["number"]),"horse":value["horse"],"fixed_win_odds":vo,"model_expected_win_roi":vp*vo-1,"betting_authorised":False})
+    picks.sort(key=lambda x:(x["meeting"],int(x["race"]),x["label"]))
+    (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","classification_rules":{"BB":"Top V7-ranked horse in each race; probability >=25%, fixed win odds < $4, uncalibrated model ROI > 5%","R":"Highest model-ROI positive-edge candidate in each race; fixed win odds >= $4, probability >=8%, uncalibrated model ROI > 5%","selection_limit_per_track":None,"betting_authorised":False},"picks":picks,"results":results,"failures":failures},indent=2))
+    lines=["# Monty V7 BB/R — "+args.date,"","**PROVISIONAL ONLY — NO BET. Model probabilities are uncalibrated; these are research classifications, not proven betting value.**",""]
+    current=None
+    for pick in picks:
+        if pick["meeting"]!=current:
+            current=pick["meeting"]
+            lines.extend(["","## "+current])
+        lines.append(f'- R{pick["race"]} — **{pick["label"]} #{pick["number"]} {pick["horse"]}**')
+    if not picks:
+        lines.append("No qualifying provisional BB/R selections — NO BET.")
+    lines.extend(["",f'Scored {len(results)} races; excluded/failed {len(failures)} races. Independent fixture list applied; runner/odds verification incomplete.',""])
+    (out/"selections.md").write_text("\\n".join(lines)+"\\n")
     print(f"Scored {len(results)} races; failed {len(failures)}")
     if not results:
         raise RuntimeError("No races scored; see provider_audit.json and selections.json")
