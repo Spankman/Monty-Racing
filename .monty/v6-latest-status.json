@@ -1,6 +1,6 @@
 {
-  "run_id": "44981538552",
-  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44981538552",
+  "run_id": "44981691570",
+  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44981691570",
   "job_status": "success",
   "date": "2026-11-22",
   "artifacts_ok": true,
@@ -191,6 +191,6 @@
     "jump_time_unverified": 19,
     "independent_fields_and_scratchings_unverified": 46,
     "active_form_features_incomplete": 46,
-    "race_already_due": 1
+    "race_already_due": 2
   }
 }
