@@ -162,6 +162,27 @@ jobs:
             'predictions_generated':False,
             'blocker':blocker[:400],
           }
+          # Publish aggregate diagnostics only: feature names/counts and reason totals.
+          # No runner identities, raw provider records, credentials or archive contents.
+          from collections import Counter
+          coverage=report.get('active_feature_coverage') or {}
+          safe['feature_coverage']={
+            str(name): {'runners_present': int(detail.get('runners',0)),
+                        'status': str(detail.get('status','unknown'))}
+            for name,detail in coverage.items()
+            if isinstance(name,str) and re.fullmatch(r'[a-z][a-z0-9_]{0,79}',name)
+            and isinstance(detail,dict) and isinstance(detail.get('runners'),int)
+            and not isinstance(detail.get('runners'),bool)
+            and 0 <= detail['runners'] <= 100000
+            and detail.get('status') in ('present','missing','derivable_from_accepted_field')
+          }
+          races=(report.get('readiness') or {}).get('races') or []
+          safe['races_assessed']=len(races)
+          safe['readiness_reason_counts']=dict(Counter(
+            reason for race in races if isinstance(race,dict)
+            for reason in race.get('reasons',[])
+            if isinstance(reason,str) and re.fullmatch(r'[a-z][a-z0-9_]{0,79}',reason)
+          ))
           Path('.monty/v6-latest-status.json').write_text(json.dumps(safe,indent=2)+'\n')
           PY
           python - <<'PY'
