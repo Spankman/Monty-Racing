@@ -1,5 +1,5 @@
 """Run queued commands safely without executing request text as code."""
-from datetime import datetime
+from datetime import datetime, time
 import json
 import os
 from pathlib import Path
@@ -11,14 +11,23 @@ from operations.transport import requests, publish, read
 from monty_operations import command
 
 
+def daily_due(now, latest):
+    return now.time() >= time(8,10) and latest is None
+
+
 def main():
-    day=datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
+    now=datetime.now(ZoneInfo('Australia/Brisbane'))
+    day=now.date().isoformat()
     mode=os.environ.get('OPERATIONS_MODE','daily')
     items=list(requests()) if mode=='queue' else [(None,command(os.environ.get('OPERATIONS_COMMAND') or 'RM6',os.environ.get('OPERATIONS_DATE') or day))]
     # Issue events filter to their exact issue; queue schedule handles dropped
     # integration-token issue events and requests received while a job is busy.
     issue=os.environ.get('OPERATIONS_ISSUE','')
     if issue:items=[x for x in items if x[0]==int(issue)]
+    # Catch up a missed/overwritten 08:10 cron slot on the next queue tick.
+    # Never silently retry an already-published FAILED daily attempt.
+    if mode=='queue' and not issue and daily_due(now,read('daily/'+day+'/latest.json')):
+        items.insert(0,(None,command('RM6',day)))
     items=items[:10]
     for number,req in items:
         if number and read('requests/'+str(number)+'.json'):continue

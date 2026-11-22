@@ -81,9 +81,9 @@ The live runner validates the original complete manifest before inference.
 
 ## Offline/simulated evidence (not live inference)
 
-29 focused tests pass locally: command/schema/transport contracts, existing
+30 focused tests pass locally: command/schema/transport contracts, existing
 adapter parity, fixed-win progression, V6 daily receipts and ledger validation.
-14 are new operational tests; inference in those tests is MOCKED. They cover
+15 are new operational tests; inference in those tests is MOCKED. They cover
 same snapshot bytes, stale/future/post-jump rejection, altered identity/price
 rejection, missing country, missing named price, per-model failure with no
 fallback, immutable outputs, owner-only strict-JSON queue, blocked raw publication,
@@ -97,7 +97,16 @@ rather than treating this older successful run as proof of a later commit.
 An actual local invocation without KROK_API_KEY produced a FAILED receipt with
 zero selections. No live provider request was claimed for that local test.
 Stale snapshot tests advance the test clock and are SIMULATED, not a fresh live
-feed test. Real failed/old-date request evidence is recorded separately if run.
+feed test. An actual connector-created old-date request #103 was also processed in run
+45079898512: requests/103.json reports FAILED, with zero races and no fallback.
+The runner rejected the old Brisbane date before any provider fetch. The Actions
+transport job succeeded in publishing that FAILED result; consumers must inspect
+semantic forecast status, not just the green workflow icon.
+https://github.com/Spankman/Monty-Racing/actions/runs/45079898512
+
+A queue catch-up check is simulated: after 08:10, a missing daily pointer causes
+the next queue tick to execute the shared daily card. An existing FAILED attempt
+is not silently retried. Default-branch activation is still required.
 
 ## What is NOT demonstrated / remaining blockers
 

@@ -141,4 +141,14 @@ class TransportTests(unittest.TestCase):
             self.assertEqual(r['forecast_sha256'],ops.sha(p/'forecast.json'))
 
 
+class SchedulerTests(unittest.TestCase):
+    def test_catchup_after_0810_only_without_completed_attempt(self):
+        from operations.worker import daily_due
+        from datetime import datetime
+        self.assertFalse(daily_due(datetime(2026,11,23,8,9),None))
+        self.assertTrue(daily_due(datetime(2026,11,23,8,10),None))
+        self.assertTrue(daily_due(datetime(2026,11,23,8,20),None))
+        self.assertFalse(daily_due(datetime(2026,11,23,8,20),{'status':'FAILED'}))
+
+
 if __name__=='__main__':unittest.main()

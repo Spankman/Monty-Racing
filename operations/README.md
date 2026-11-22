@@ -134,7 +134,8 @@ Monty as an acronym. Plain text remains fully usable through connector reads.
 
 `10 22 * * *` is 08:10 Brisbane the following calendar day. GitHub cron is
 best-effort and can be delayed/dropped; it is not a hard 08:10 SLA. A five-minute
-queue fallback processes connector-created requests, with global concurrency,
+queue fallback catches up a missed daily slot after 08:10 if no daily attempt
+was published, and processes connector-created requests, with global concurrency,
 immutable per-request completion records and no duplicate processing on retries.
 Requests that failed are immutable completed attempts; request a new issue to retry.
 For a guaranteed 08:10 trigger, an authenticated external scheduler and alerting
