@@ -119,8 +119,16 @@ def fetch(date,key):
         if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
             raise ValueError('Invalid meeting feed page')
         meta=payload.get('meta') or {}
-        if not isinstance(meta,dict) or meta.get('truncated'):
-            raise ValueError('Meeting feed truncated or invalid metadata')
+        if not isinstance(meta,dict):
+            raise ValueError('Meeting feed metadata is '+type(meta).__name__+' (expected object)')
+        if meta.get('truncated'):
+            # Only report structure and flags, never response bodies, credentials or URLs.
+            safe_keys=sorted(str(k) for k in meta if str(k) in ('truncated','has_more','next_cursor','next_page','next','page','pages','total','total_pages','limit','offset'))
+            raise ValueError('Provider marks meeting feed truncated; pagination metadata keys='+','.join(safe_keys)+
+                             '; has_more='+str(bool(meta.get('has_more')))+
+                             '; next_cursor_present='+str(bool(meta.get('next_cursor')))+
+                             '; next_page_present='+str(bool(meta.get('next_page')))+
+                             '; next_present='+str(bool(meta.get('next'))))
         meetings.extend(payload['data'])
         if len(meetings)>5000:raise ValueError('Meeting pagination exceeds safety limit')
         cursor=meta.get('next_cursor')
