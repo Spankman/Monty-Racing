@@ -1,0 +1,60 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45079714321-1-101",
+  "date": "2026-11-23",
+  "view": "provisional",
+  "version": "V6",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Ballina",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T03:25:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Are Ee Que"
+        },
+        {
+          "number": "2",
+          "horse": "Medals"
+        },
+        {
+          "number": "5",
+          "horse": "Spirit Of Brodie"
+        },
+        {
+          "number": "7",
+          "horse": "Count Nicholas"
+        }
+      ],
+      "captured_at": "2026-11-22T22:48:29.592007+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 5,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-22T22:48:29.626777+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45079714321-1-101/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ]
+}
