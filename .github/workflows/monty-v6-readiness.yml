@@ -55,20 +55,20 @@ jobs:
                   report["blocker"]="Live intake/readiness: "+type(exc).__name__+": "+str(exc)
           Path("v6_readiness/status.json").write_text(json.dumps(report,indent=2,default=str)+"\n")
           with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a") as h:
-              h.write("## V6 readiness diagnostic (no bets)\\n\\n")
-              h.write("Artifacts verified: "+str(report.get("artifacts_ok",False))+"\\n\\n")
-              h.write("Krok races accepted: "+str(report.get("provider_races_accepted","not verified"))+"\\n\\n")
-              h.write("Live betting ready: "+str(report.get("readiness",{}).get("betting_ready",False))+"\\n\\n")
+              h.write("## V6 readiness diagnostic (no bets)\n\n")
+              h.write("Artifacts verified: "+str(report.get("artifacts_ok",False))+"\n\n")
+              h.write("Krok races accepted: "+str(report.get("provider_races_accepted","not verified"))+"\n\n")
+              h.write("Live betting ready: "+str(report.get("readiness",{}).get("betting_ready",False))+"\n\n")
               if report.get("blocker"):
-                  h.write("BLOCKER: "+report["blocker"]+"\\n\\n")
+                  h.write("BLOCKER: "+report["blocker"]+"\n\n")
               if report.get("readiness"):
                   from collections import Counter
                   races=report["readiness"].get("races",[])
                   reasons=Counter(reason for race in races for reason in race.get("reasons",[]))
-                  h.write("Races assessed: "+str(len(races))+"\\n\\n")
+                  h.write("Races assessed: "+str(len(races))+"\n\n")
                   for reason,count in reasons.items():
-                      h.write("- "+reason+": "+str(count)+"\\n")
-              h.write("\\nFull detail: uploaded status.json. No selections generated.\\n")
+                      h.write("- "+reason+": "+str(count)+"\n")
+              h.write("\nFull detail: uploaded status.json. No selections generated.\n")
           print(json.dumps({k:v for k,v in report.items() if k not in ("verified_artifacts","active_feature_coverage","readiness")},default=str))
           if not report.get("artifacts_ok") or report.get("blocker"):
               raise SystemExit(1)
