@@ -2,7 +2,7 @@
 """Krok documented /api/v1/racing/meetings adapter -> Monty v0.4 snapshot.
 Requires user-provided API key; no unofficial TAB endpoints or fabricated features.
 """
-import argparse, datetime as dt, json, os, urllib.parse, urllib.request, urllib.error, time
+import argparse, datetime as dt, json, math, os, urllib.parse, urllib.request, urllib.error, time
 from pathlib import Path
 
 import sys
@@ -70,9 +70,11 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                 item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p}
                 for source,target in [('barrier','barrier'),('weight','allocated_weight'),('age','age'),('claim_kg','claim_kg')]:
                     v=r.get(source)
-                    if isinstance(v,(int,float)) and not isinstance(v,bool):item[target]=v
+                    if isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v):
+                        item[target]=v
                 distance=race.get('distance_m',race.get('distance'))
-                if isinstance(distance,(int,float)) and distance>0:item['distance_km']=distance/1000
+                if isinstance(distance,(int,float)) and not isinstance(distance,bool) and math.isfinite(distance) and distance>0:
+                    item['distance_km']=distance/1000
                 raw_going = race.get('track_condition')
                 if raw_going is None or not str(raw_going).strip():
                     raw_going = meeting.get('track_hint')
