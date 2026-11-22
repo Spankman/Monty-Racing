@@ -10,7 +10,7 @@ import numpy as np
 from .evidence import utc
 
 
-def freeze(rows,path,models,now=None):
+def freeze(rows,path,models,now=None,*,fresh_evidence=None):
     now=now or datetime.now(timezone.utc)
     if now.tzinfo is None:raise ValueError('Timezone required')
     rows=list(rows)
@@ -41,6 +41,12 @@ def freeze(rows,path,models,now=None):
         quote_warning='Cached TAB fixed-win quotes, not refreshed at freeze. Recheck scratchings before practical use.',
         missing_features='Saved training defaults used. Sparse-input research comparison only.',
         odds_contract='TAB fixed win, zero bookmaker commission; no execution or liquidity guarantee',rows=rows)
+    if fresh_evidence is not None:
+        payload.update(
+            fresh_evidence=fresh_evidence,
+            quote_warning="Independent fixed-win and scratching captures checked before freeze. NO BET.",
+            odds_contract="Named fixed-win capture for research only. NO BET.",
+        )
     encoded=json.dumps(payload,sort_keys=True,indent=2,allow_nan=False).encode()
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     with path.open('xb') as h:h.write(encoded)

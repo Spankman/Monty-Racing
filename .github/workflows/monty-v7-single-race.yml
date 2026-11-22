@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
-          ref: grok-independent-repairs
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
           path: provisional-engine
       - uses: actions/setup-python@v5
         with:
@@ -54,6 +54,7 @@ jobs:
         run: |
           cp monty_daily_price_ladder.py monty_single_race_ladder.py provisional-engine/
           cp v7/provisional_output.py provisional-engine/v7/
+          git -C provisional-engine apply ../v7/provisional_engine.patch
           cd provisional-engine
           args=(--meeting "$MEETING" --race "$RACE" --country "$COUNTRY" --output-dir output_v7_single)
           if [ -n "$DATE" ]; then args+=(--date "$DATE"); fi

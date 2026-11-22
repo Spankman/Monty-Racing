@@ -17,7 +17,7 @@ class ProvisionalOutputTests(unittest.TestCase):
             results = [
                 dict(meeting="Example", race=race, betting_authorised=False, ordered=[
                     dict(number=number, horse=f"Runner {number}", fixed_win_odds=odds,
-                         v7_win_probability=probability)
+                         v7_win_probability=probability, evidence_verified=True)
                     for number, odds, probability in zip((9, 2, 7, 1), prices, (0.4, 0.3, 0.2, 0.1))
                 ]) for race, prices in enumerate(fields, 1)
             ]
@@ -29,7 +29,7 @@ class ProvisionalOutputTests(unittest.TestCase):
                 write_single_race(output)
                 single = json.loads((output / "selection.json").read_text())
                 copy = single["copy_text"]
-                block = copy.split("\n\n", 1)[1].strip()
+                block = copy.split("\n\n", 2)[2].strip()
                 self.assertIn(block, daily)
                 self.assertIn(f"{label} assessment · NO BET", block)
                 self.assertEqual([line.split("#")[1].split()[0] for line in block.splitlines()

@@ -131,7 +131,6 @@ def main():
     (out/"feature_coverage_audit.json").write_text(json.dumps(coverage,indent=2))
     (out/"value_diagnostics.json").write_text(json.dumps(diagnostics,indent=2))
 
-    (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","classification_rules":{"BB":"Top V7-ranked horse in each race; probability >=20%, fixed win odds < $4, uncalibrated model ROI > 0%","R":"Highest model-ROI positive-edge candidate in each race; fixed win odds >= $4, probability >=6%, uncalibrated model ROI > 0%","selection_limit_per_track":None,"betting_authorised":False},"picks":picks,"results":results,"failures":failures},indent=2))
     lines=["# Monty V7 provisional research — "+args.date,"","**PROVISIONAL ONLY — NO BET. Model probabilities are uncalibrated; these are research classifications, not proven betting value.**",""]
     if results:
         lines.extend([format_daily([shortlist(result) for result in results]), ""])
@@ -145,7 +144,9 @@ def main():
     if not picks:
         lines.append("No qualifying provisional BB/R selections — NO BET.")
     lines.extend(["",f'Scored {len(results)} races; excluded/failed {len(failures)} races. Independent fixture list applied; runner/odds verification incomplete.',""])
-    (out/"selections.md").write_text("\n".join(lines)+"\n")
+    copy_text = "\n".join(lines) + "\n"
+    (out/"selections.md").write_text(copy_text, encoding="utf-8")
+    (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","classification_rules":{"BB":"Top V7-ranked horse in each race; probability >=20%, fixed win odds < $4, uncalibrated model ROI > 0%","R":"Highest model-ROI positive-edge candidate in each race; fixed win odds >= $4, probability >=6%, uncalibrated model ROI > 0%","selection_limit_per_track":None,"betting_authorised":False},"copy_text":copy_text,"picks":picks,"results":results,"failures":failures},indent=2))
     print(f"Scored {len(results)} races; failed {len(failures)}")
     if not results:
         raise RuntimeError("No races scored; see provider_audit.json and selections.json")

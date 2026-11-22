@@ -12,7 +12,9 @@ def shortlist(result):
         classification="Class unverified",
         ranked=[
             dict(number=runner["number"], horse=runner["horse"],
-                 odds=runner["fixed_win_odds"], probability=runner["v7_win_probability"])
+                 odds=runner["fixed_win_odds"], probability=runner["v7_win_probability"],
+                 evidence_verified=runner.get("evidence_verified") is True,
+                 roughie=runner.get("roughie") is True)
             for runner in result["ordered"]
         ],
     )
@@ -21,7 +23,10 @@ def shortlist(result):
 def write_single_race(output):
     original = output / "v7" / "provisional_selection.json"
     result = json.loads(original.read_text(encoding="utf-8"))
-    result["copy_text"] = format_daily([shortlist(result)]) + "\n"
+    result["copy_text"] = (
+        "# Monty V7 provisional research — NO BET\n\n"
+        + format_daily([shortlist(result)]) + "\n"
+    )
     (output / "selection.json").write_text(
         json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (output / "selection.md").write_text(result["copy_text"], encoding="utf-8")
