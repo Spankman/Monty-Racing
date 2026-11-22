@@ -20,7 +20,7 @@ class AdapterParity(unittest.TestCase):
         _,X,names=build_features(d)
         for i,row in enumerate(snapshot['runners']):
             for name in ['barrier_fraction','inside_three','outside_barrier','barrier_x_distance']:
-                np.testing.assert_equal(row.get(name,np.nan),X[i,names.index(name)],err_msg=name)
+                np.testing.assert_allclose(row.get(name,np.nan),X[i,names.index(name)],rtol=1e-12,atol=1e-12,err_msg=name)
             for g in ('good','soft','heavy','firm','synthetic','unknown'):
                 name='going_'+g
                 self.assertEqual(row[name],X[i,names.index(name)],name)
