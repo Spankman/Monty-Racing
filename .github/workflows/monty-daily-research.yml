@@ -1,6 +1,11 @@
 name: Monty daily research shadow scoring
 on:
   workflow_dispatch:
+    inputs:
+      race_date:
+        description: 'Queensland race date (YYYY-MM-DD); blank means today'
+        required: false
+        type: string
   schedule:
     - cron: '10 22 * * *' # 08:10 Australia/Brisbane, daily expert refresh before 08:30 review
 permissions:
@@ -28,6 +33,7 @@ jobs:
       - name: Fetch Krok fields and score research-only frozen linear model
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          MONTY_RACE_DATE: ${{ inputs.race_date }}
         run: |
           python - <<'PY'
           import datetime, json, os
@@ -35,7 +41,8 @@ jobs:
           from krok_adapter import fetch, normalize
           if not os.environ.get('KROK_API_KEY'):
               raise RuntimeError('KROK_API_KEY missing')
-          date=datetime.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
+          date=os.environ.get('MONTY_RACE_DATE','').strip() or datetime.datetime.now(ZoneInfo('Australia/Brisbane')).date().isoformat()
+          datetime.date.fromisoformat(date)
           snapshot,audit=normalize(fetch(date,os.environ['KROK_API_KEY']),date)
           with open('research_snapshot.json','w') as f:json.dump(snapshot,f)
           with open('research_source_audit.json','w') as f:json.dump(audit,f,indent=2)
@@ -116,4 +123,4 @@ jobs:
             expert_candidate_field_audit.json
             expert_tips_validated.csv
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 90
