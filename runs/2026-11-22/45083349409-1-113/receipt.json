@@ -1,0 +1,13 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45083349409-1-113",
+  "date": "2026-11-22",
+  "status": "FAILED",
+  "forecast_sha256": "82d1424dd90d4455abfd25ff4c1d467e27e561db8139d8614b8e627eda0ec6b4",
+  "provider_snapshot_sha256": null,
+  "models": {},
+  "generated_at": "2026-11-22T23:28:21.743019+00:00",
+  "source_mode": "LIVE",
+  "qualifying_forecasts": 0,
+  "model_artifacts_unchanged": false
+}
