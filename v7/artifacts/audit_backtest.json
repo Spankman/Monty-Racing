@@ -1,0 +1,1103 @@
+{
+  "uncertainty": {
+    "v7_minus_v6_log_loss_day_bootstrap_95": [
+      -0.0018145985270687445,
+      0.0023507969770377086
+    ],
+    "v7_minus_market_log_loss_day_bootstrap_95": [
+      -0.002592123343146524,
+      0.003860790418430065
+    ]
+  },
+  "status": "RETROSPECTIVE_RESEARCH_NOT_APPROVED_FOR_REPLACEMENT",
+  "limitations": [
+    "Dates and features previously exposed during V5/V6 development; not fresh prospective evidence.",
+    "Chronological computation verified; historical metadata publication/as-of times not established.",
+    "Australia-only retained dataset. NZ and international transfer performance unvalidated.",
+    "Scheduled-off best-back quotes are retrospective payout proxies, not guaranteed executable trades.",
+    "5% commission assumption; no liquidity, slippage, latency or stake-impact model.",
+    "No verified finishing-order/place outcomes; place and quinella estimates not calibrated or backtested.",
+    "No historical sectionals, weather forecast vintages, interference, pace or bias inputs integrated into these fits.",
+    "Expert weighting defaults zero; no timestamped expert history available."
+  ],
+  "features": [
+    "log_market_probability",
+    "log_field_size",
+    "distance_km",
+    "barrier",
+    "barrier_fraction",
+    "inside_three",
+    "outside_barrier",
+    "barrier_x_distance",
+    "observed_starts_log",
+    "observed_win_rate",
+    "observed_market_residual",
+    "year_starts_log",
+    "year_win_rate",
+    "year_market_residual",
+    "last3_win_rate",
+    "last5_win_rate",
+    "last3_market_residual",
+    "last5_market_residual",
+    "track_win_residual",
+    "distance_win_residual",
+    "track_distance_residual",
+    "going_win_residual",
+    "jockey_year_residual",
+    "jockey_90d_residual",
+    "trainer_year_residual",
+    "trainer_90d_residual",
+    "jockey_trainer_residual",
+    "horse_jockey_residual",
+    "days_since_run_log",
+    "resuming_60d",
+    "quick_backup_7d",
+    "distance_change_km",
+    "up_200m",
+    "down_200m",
+    "benchmark_class",
+    "benchmark_class_change",
+    "jockey_changed",
+    "trainer_changed",
+    "allocated_weight",
+    "claim_kg",
+    "effective_weight",
+    "weight_change",
+    "going_good",
+    "going_soft",
+    "going_heavy",
+    "going_firm",
+    "going_synthetic",
+    "going_unknown",
+    "age",
+    "is_gelding",
+    "first_after_gelding",
+    "blinkers_first",
+    "blinkers_off",
+    "tongue_tie_first",
+    "winkers_first"
+  ],
+  "rows": 62255,
+  "races": 6422,
+  "dates": [
+    "2025-01-01",
+    "2025-06-15"
+  ],
+  "input_sha256": {
+    "development_features.csv.gz": "bcbae1ab453f126476b74a077ba36bbbfae7866b8337513916b7e313ad62d27a",
+    "joined_development_runners.csv.gz": "1618cc41fff78720418302b63fd540a35e64fe3b328a34c5b2e07385f5e70133",
+    "frozen_model.json": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7"
+  },
+  "history_inputs_sha256": {
+    "monty_v5/results/cleaned_eligible_runners.csv.gz": "f4db04034642935b4717a6605935b72e5b52886eee72d7765146861c4a3687df",
+    "monty_v6/sources/github_racing_data.csv": "995e554a0e3b554915588d4ec177a7b69acbecf05937c9a070d4eec8898ad720",
+    "monty_v6/sources/april_recovery/ANZ_Thoroughbreds_2025_04.csv": "fe21278ec9f40f8a4832c1d87f20f5a8db3c2141eb69a2e723c5e5dacd4076bd"
+  },
+  "folds": [
+    {
+      "fold": 1,
+      "train_end": "2025-02-28",
+      "selection": [
+        "2025-03-01",
+        "2025-03-15"
+      ],
+      "calibration": [
+        "2025-03-16",
+        "2025-03-31"
+      ],
+      "test": [
+        "2025-04-01",
+        "2025-04-30"
+      ],
+      "train_races": 2293,
+      "selected_penalty": 1.0,
+      "temperature": 0.9456381424337325,
+      "v7": {
+        "races": 1196,
+        "runners": 11541,
+        "log_loss": 1.74400250464345,
+        "brier_per_race": 0.76929218259496,
+        "calibration_ece_runner": 0.003950018845019718,
+        "top_pick_strike": 0.3603678929765886,
+        "top_pick_quote_proxy_roi": -0.021933528428093672,
+        "value_bets": 157,
+        "value_strike": 0.33121019108280253,
+        "value_quote_proxy_roi": 0.013818471337579574,
+        "value_profit_units": 2.169499999999993,
+        "max_daily_drawdown_units": 20.8275,
+        "no_bet_races": 1039,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 7559,
+            "prediction": 0.0366958303166484,
+            "observed": 0.039555496758830536
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 2093,
+            "prediction": 0.1429848192781359,
+            "observed": 0.14046822742474915
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 1021,
+            "prediction": 0.24306931223544231,
+            "observed": 0.24191968658178256
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 444,
+            "prediction": 0.3432190349098149,
+            "observed": 0.34459459459459457
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 223,
+            "prediction": 0.44423396488411854,
+            "observed": 0.4125560538116592
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 119,
+            "prediction": 0.5424967850222241,
+            "observed": 0.4789915966386555
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 59,
+            "prediction": 0.6455275364634819,
+            "observed": 0.6271186440677966
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 21,
+            "prediction": 0.7349230186338419,
+            "observed": 0.7619047619047619
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 2,
+            "prediction": 0.8225864827563791,
+            "observed": 0.5
+          }
+        ]
+      },
+      "market": {
+        "races": 1196,
+        "runners": 11541,
+        "log_loss": 1.7382142169784913,
+        "brier_per_race": 0.7673836253004369,
+        "calibration_ece_runner": 0.0025343754080657263,
+        "top_pick_strike": 0.36538461538461536,
+        "top_pick_quote_proxy_roi": -0.009760033444816092,
+        "value_bets": 21,
+        "value_strike": 0.47619047619047616,
+        "value_quote_proxy_roi": 0.7188809523809523,
+        "value_profit_units": 15.096499999999999,
+        "max_daily_drawdown_units": 2.0,
+        "no_bet_races": 1175,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 7514,
+            "prediction": 0.038755752657366284,
+            "observed": 0.03872770827788129
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 2171,
+            "prediction": 0.14360064135489478,
+            "observed": 0.13956701980654077
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 1051,
+            "prediction": 0.24240140551242412,
+            "observed": 0.25023786869647957
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 419,
+            "prediction": 0.3415983700384175,
+            "observed": 0.3532219570405728
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 224,
+            "prediction": 0.4448291236572892,
+            "observed": 0.42857142857142855
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 99,
+            "prediction": 0.542070157875397,
+            "observed": 0.5454545454545454
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 50,
+            "prediction": 0.6441946796034462,
+            "observed": 0.62
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 12,
+            "prediction": 0.734737236536462,
+            "observed": 0.8333333333333334
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 1,
+            "prediction": 0.8054377639110989,
+            "observed": 0.0
+          }
+        ]
+      },
+      "v6": null
+    },
+    {
+      "fold": 2,
+      "train_end": "2025-03-31",
+      "selection": [
+        "2025-04-01",
+        "2025-04-15"
+      ],
+      "calibration": [
+        "2025-04-16",
+        "2025-04-30"
+      ],
+      "test": [
+        "2025-05-01",
+        "2025-05-31"
+      ],
+      "train_races": 3439,
+      "selected_penalty": 1.0,
+      "temperature": 0.9458785666092074,
+      "v7": {
+        "races": 1203,
+        "runners": 11983,
+        "log_loss": 1.7740501598277083,
+        "brier_per_race": 0.7681627737925352,
+        "calibration_ece_runner": 0.004957935940557388,
+        "top_pick_strike": 0.36159600997506236,
+        "top_pick_quote_proxy_roi": -0.038190357439734035,
+        "value_bets": 114,
+        "value_strike": 0.2807017543859649,
+        "value_quote_proxy_roi": -0.1625482456140351,
+        "value_profit_units": -18.530500000000004,
+        "max_daily_drawdown_units": 31.631,
+        "no_bet_races": 1089,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 7975,
+            "prediction": 0.03565750775574142,
+            "observed": 0.03824451410658307
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 2175,
+            "prediction": 0.14381328705178006,
+            "observed": 0.13839080459770114
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 970,
+            "prediction": 0.24351461909031594,
+            "observed": 0.2329896907216495
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 464,
+            "prediction": 0.3438886790904746,
+            "observed": 0.3620689655172414
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 194,
+            "prediction": 0.44693502745462294,
+            "observed": 0.4381443298969072
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 120,
+            "prediction": 0.5439901868174495,
+            "observed": 0.5416666666666666
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 57,
+            "prediction": 0.6429762994774143,
+            "observed": 0.5614035087719298
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 22,
+            "prediction": 0.7437070619151066,
+            "observed": 0.7727272727272727
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 6,
+            "prediction": 0.8447544196863449,
+            "observed": 0.6666666666666666
+          }
+        ]
+      },
+      "market": {
+        "races": 1203,
+        "runners": 11983,
+        "log_loss": 1.7709123949843364,
+        "brier_per_race": 0.7674855126475566,
+        "calibration_ece_runner": 0.0031589282125607894,
+        "top_pick_strike": 0.36159600997506236,
+        "top_pick_quote_proxy_roi": -0.04222568578553619,
+        "value_bets": 22,
+        "value_strike": 0.4090909090909091,
+        "value_quote_proxy_roi": 0.22004545454545452,
+        "value_profit_units": 4.840999999999999,
+        "max_daily_drawdown_units": 4.0,
+        "no_bet_races": 1181,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 7901,
+            "prediction": 0.03740291404510999,
+            "observed": 0.03759017845842298
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 2285,
+            "prediction": 0.1436363582666848,
+            "observed": 0.13916849015317287
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 1002,
+            "prediction": 0.24345828125902477,
+            "observed": 0.23952095808383234
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 428,
+            "prediction": 0.3415463255323497,
+            "observed": 0.3644859813084112
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 199,
+            "prediction": 0.44790960331039015,
+            "observed": 0.4824120603015075
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 99,
+            "prediction": 0.5413886145940265,
+            "observed": 0.5151515151515151
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 47,
+            "prediction": 0.635047412691688,
+            "observed": 0.6170212765957447
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 18,
+            "prediction": 0.7353899643008037,
+            "observed": 0.7777777777777778
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 4,
+            "prediction": 0.8319351708305502,
+            "observed": 0.5
+          }
+        ]
+      },
+      "v6": {
+        "races": 1203,
+        "runners": 11983,
+        "log_loss": 1.7730283202753392,
+        "brier_per_race": 0.7680612523258338,
+        "calibration_ece_runner": 0.003006669329570614,
+        "top_pick_strike": 0.36159600997506236,
+        "top_pick_quote_proxy_roi": -0.038190357439734035,
+        "value_bets": 46,
+        "value_strike": 0.3695652173913043,
+        "value_quote_proxy_roi": 0.19317391304347825,
+        "value_profit_units": 8.886,
+        "max_daily_drawdown_units": 7.6485,
+        "no_bet_races": 1157,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 7891,
+            "prediction": 0.03730510727666884,
+            "observed": 0.03751108858192878
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 2308,
+            "prediction": 0.1437339978817815,
+            "observed": 0.13734835355285963
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 981,
+            "prediction": 0.24369235810350354,
+            "observed": 0.24668705402650357
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 432,
+            "prediction": 0.34077225446526044,
+            "observed": 0.35648148148148145
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 203,
+            "prediction": 0.44526420499494457,
+            "observed": 0.47783251231527096
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 104,
+            "prediction": 0.5456354050689647,
+            "observed": 0.5384615384615384
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 45,
+            "prediction": 0.6432552966484586,
+            "observed": 0.6444444444444445
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 14,
+            "prediction": 0.7415419336623257,
+            "observed": 0.6428571428571429
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 5,
+            "prediction": 0.8297445957051444,
+            "observed": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "fold": 3,
+      "train_end": "2025-04-30",
+      "selection": [
+        "2025-05-01",
+        "2025-05-15"
+      ],
+      "calibration": [
+        "2025-05-16",
+        "2025-05-31"
+      ],
+      "test": [
+        "2025-06-01",
+        "2025-06-15"
+      ],
+      "train_races": 4635,
+      "selected_penalty": 1.0,
+      "temperature": 1.0620913911959668,
+      "v7": {
+        "races": 584,
+        "runners": 6004,
+        "log_loss": 1.9042155720094007,
+        "brier_per_race": 0.8091157261865646,
+        "calibration_ece_runner": 0.010401652806020146,
+        "top_pick_strike": 0.3184931506849315,
+        "top_pick_quote_proxy_roi": -0.07879366438356167,
+        "value_bets": 25,
+        "value_strike": 0.28,
+        "value_quote_proxy_roi": -0.08008000000000003,
+        "value_profit_units": -2.0020000000000007,
+        "max_daily_drawdown_units": 8.3635,
+        "no_bet_races": 559,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 3940,
+            "prediction": 0.03969444433630673,
+            "observed": 0.04517766497461929
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 1253,
+            "prediction": 0.1418563980642249,
+            "observed": 0.1300877893056664
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 483,
+            "prediction": 0.2425024052875438,
+            "observed": 0.2546583850931677
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 207,
+            "prediction": 0.3470294102096388,
+            "observed": 0.2946859903381642
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 73,
+            "prediction": 0.4417735046218541,
+            "observed": 0.4931506849315068
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 29,
+            "prediction": 0.5457598294082912,
+            "observed": 0.4482758620689655
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 12,
+            "prediction": 0.626350383669645,
+            "observed": 0.5
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 7,
+            "prediction": 0.7573381969896084,
+            "observed": 0.5714285714285714
+          }
+        ]
+      },
+      "market": {
+        "races": 584,
+        "runners": 6004,
+        "log_loss": 1.908782473992831,
+        "brier_per_race": 0.8105977293656469,
+        "calibration_ece_runner": 0.013128732362717336,
+        "top_pick_strike": 0.3236301369863014,
+        "top_pick_quote_proxy_roi": -0.06353852739726029,
+        "value_bets": 10,
+        "value_strike": 0.3,
+        "value_quote_proxy_roi": -0.044500000000000074,
+        "value_profit_units": -0.44500000000000073,
+        "max_daily_drawdown_units": 2.0,
+        "no_bet_races": 574,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 4015,
+            "prediction": 0.0384688051738886,
+            "observed": 0.04682440846824409
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 1142,
+            "prediction": 0.1427621667625099,
+            "observed": 0.12697022767075306
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 484,
+            "prediction": 0.24174002300071773,
+            "observed": 0.25206611570247933
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 217,
+            "prediction": 0.3463855857345321,
+            "observed": 0.2903225806451613
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 81,
+            "prediction": 0.4391820177327039,
+            "observed": 0.38271604938271603
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 39,
+            "prediction": 0.541874911323393,
+            "observed": 0.5641025641025641
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 17,
+            "prediction": 0.6273339727349732,
+            "observed": 0.4117647058823529
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 5,
+            "prediction": 0.7458122108302374,
+            "observed": 0.6
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 4,
+            "prediction": 0.811226494675695,
+            "observed": 0.75
+          }
+        ]
+      },
+      "v6": {
+        "races": 584,
+        "runners": 6004,
+        "log_loss": 1.9057643331115839,
+        "brier_per_race": 0.8098328165128194,
+        "calibration_ece_runner": 0.012296542266708241,
+        "top_pick_strike": 0.3202054794520548,
+        "top_pick_quote_proxy_roi": -0.06478339041095893,
+        "value_bets": 22,
+        "value_strike": 0.3181818181818182,
+        "value_quote_proxy_roi": 0.1347499999999999,
+        "value_profit_units": 2.9644999999999975,
+        "max_daily_drawdown_units": 5.0,
+        "no_bet_races": 562,
+        "reliability": [
+          {
+            "bin": "(-0.001, 0.1]",
+            "count": 3997,
+            "prediction": 0.03816773907674301,
+            "observed": 0.04578433825369027
+          },
+          {
+            "bin": "(0.1, 0.2]",
+            "count": 1166,
+            "prediction": 0.14243651669402538,
+            "observed": 0.12864493996569468
+          },
+          {
+            "bin": "(0.2, 0.3]",
+            "count": 481,
+            "prediction": 0.24306816720234847,
+            "observed": 0.25571725571725573
+          },
+          {
+            "bin": "(0.3, 0.4]",
+            "count": 216,
+            "prediction": 0.3479110571416553,
+            "observed": 0.2824074074074074
+          },
+          {
+            "bin": "(0.4, 0.5]",
+            "count": 84,
+            "prediction": 0.44195001107047804,
+            "observed": 0.44047619047619047
+          },
+          {
+            "bin": "(0.5, 0.6]",
+            "count": 35,
+            "prediction": 0.5447396756546989,
+            "observed": 0.4857142857142857
+          },
+          {
+            "bin": "(0.6, 0.7]",
+            "count": 16,
+            "prediction": 0.6362807295328393,
+            "observed": 0.4375
+          },
+          {
+            "bin": "(0.7, 0.8]",
+            "count": 7,
+            "prediction": 0.7591816894952766,
+            "observed": 0.5714285714285714
+          },
+          {
+            "bin": "(0.8, 0.9]",
+            "count": 2,
+            "prediction": 0.8067693006352317,
+            "observed": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "pooled": {
+    "v7": {
+      "races": 2983,
+      "runners": 29528,
+      "log_loss": 1.7874861655647967,
+      "brier_per_race": 0.776633205279566,
+      "calibration_ece_runner": 0.00432480923864592,
+      "top_pick_strike": 0.352665102246061,
+      "top_pick_quote_proxy_roi": -0.039621521957760676,
+      "value_bets": 296,
+      "value_strike": 0.30743243243243246,
+      "value_quote_proxy_roi": -0.06203716216216219,
+      "value_profit_units": -18.36300000000001,
+      "max_daily_drawdown_units": 41.5905,
+      "no_bet_races": 2687,
+      "reliability": [
+        {
+          "bin": "(-0.001, 0.1]",
+          "count": 19474,
+          "prediction": 0.03687729877789009,
+          "observed": 0.04015610557666632
+        },
+        {
+          "bin": "(0.1, 0.2]",
+          "count": 5521,
+          "prediction": 0.14305509742098058,
+          "observed": 0.1372939684839703
+        },
+        {
+          "bin": "(0.2, 0.3]",
+          "count": 2474,
+          "prediction": 0.2431332296135314,
+          "observed": 0.24090541632983023
+        },
+        {
+          "bin": "(0.3, 0.4]",
+          "count": 1115,
+          "prediction": 0.34420510001016436,
+          "observed": 0.34260089686098655
+        },
+        {
+          "bin": "(0.4, 0.5]",
+          "count": 490,
+          "prediction": 0.4449368068015319,
+          "observed": 0.4346938775510204
+        },
+        {
+          "bin": "(0.5, 0.6]",
+          "count": 268,
+          "prediction": 0.543518563017086,
+          "observed": 0.503731343283582
+        },
+        {
+          "bin": "(0.6, 0.7]",
+          "count": 128,
+          "prediction": 0.6425935806687015,
+          "observed": 0.5859375
+        },
+        {
+          "bin": "(0.7, 0.8]",
+          "count": 50,
+          "prediction": 0.7419261226474058,
+          "observed": 0.74
+        },
+        {
+          "bin": "(0.8, 0.9]",
+          "count": 8,
+          "prediction": 0.8392124354538535,
+          "observed": 0.625
+        }
+      ]
+    },
+    "market": {
+      "races": 2983,
+      "runners": 29528,
+      "log_loss": 1.7847940930218722,
+      "brier_per_race": 0.7758850021870167,
+      "calibration_ece_runner": 0.003240667028798789,
+      "top_pick_strike": 0.3556821991283942,
+      "top_pick_quote_proxy_roi": -0.033381495139121725,
+      "value_bets": 53,
+      "value_strike": 0.41509433962264153,
+      "value_quote_proxy_roi": 0.36778301886792447,
+      "value_profit_units": 19.492499999999996,
+      "max_daily_drawdown_units": 4.0,
+      "no_bet_races": 2930,
+      "reliability": [
+        {
+          "bin": "(-0.001, 0.1]",
+          "count": 19430,
+          "prediction": 0.0381463408188897,
+          "observed": 0.03993823983530623
+        },
+        {
+          "bin": "(0.1, 0.2]",
+          "count": 5598,
+          "prediction": 0.14344417032219323,
+          "observed": 0.1368345837799214
+        },
+        {
+          "bin": "(0.2, 0.3]",
+          "count": 2537,
+          "prediction": 0.24269264727924633,
+          "observed": 0.24635396137169885
+        },
+        {
+          "bin": "(0.3, 0.4]",
+          "count": 1064,
+          "prediction": 0.3425537748856542,
+          "observed": 0.3449248120300752
+        },
+        {
+          "bin": "(0.4, 0.5]",
+          "count": 504,
+          "prediction": 0.4451378535602172,
+          "observed": 0.44246031746031744
+        },
+        {
+          "bin": "(0.5, 0.6]",
+          "count": 237,
+          "prediction": 0.5417533334012036,
+          "observed": 0.5358649789029536
+        },
+        {
+          "bin": "(0.6, 0.7]",
+          "count": 114,
+          "prediction": 0.6379091220454052,
+          "observed": 0.5877192982456141
+        },
+        {
+          "bin": "(0.7, 0.8]",
+          "count": 35,
+          "prediction": 0.7366550642858056,
+          "observed": 0.7714285714285715
+        },
+        {
+          "bin": "(0.8, 0.9]",
+          "count": 9,
+          "prediction": 0.8197871584373422,
+          "observed": 0.5555555555555556
+        }
+      ]
+    }
+  },
+  "common_v6_period": {
+    "dates": [
+      "2025-05-01",
+      "2025-06-15"
+    ],
+    "v7": {
+      "races": 1787,
+      "runners": 17987,
+      "log_loss": 1.8165888283862468,
+      "brier_per_race": 0.7815463911389892,
+      "calibration_ece_runner": 0.004923600800502751,
+      "top_pick_strike": 0.3475097929490767,
+      "top_pick_quote_proxy_roi": -0.05145970900951318,
+      "value_bets": 139,
+      "value_strike": 0.2805755395683453,
+      "value_quote_proxy_roi": -0.14771582733812955,
+      "value_profit_units": -20.532500000000006,
+      "max_daily_drawdown_units": 31.631,
+      "no_bet_races": 1648,
+      "reliability": [
+        {
+          "bin": "(-0.001, 0.1]",
+          "count": 11915,
+          "prediction": 0.03699242425825316,
+          "observed": 0.04053713806126731
+        },
+        {
+          "bin": "(0.1, 0.2]",
+          "count": 3428,
+          "prediction": 0.14309800645043627,
+          "observed": 0.1353558926487748
+        },
+        {
+          "bin": "(0.2, 0.3]",
+          "count": 1453,
+          "prediction": 0.24317814333894708,
+          "observed": 0.2401927047487956
+        },
+        {
+          "bin": "(0.3, 0.4]",
+          "count": 671,
+          "prediction": 0.3448575782583837,
+          "observed": 0.3412816691505216
+        },
+        {
+          "bin": "(0.4, 0.5]",
+          "count": 267,
+          "prediction": 0.4455238245827423,
+          "observed": 0.45318352059925093
+        },
+        {
+          "bin": "(0.5, 0.6]",
+          "count": 149,
+          "prediction": 0.5443346138988885,
+          "observed": 0.5234899328859061
+        },
+        {
+          "bin": "(0.6, 0.7]",
+          "count": 69,
+          "prediction": 0.6400848358586719,
+          "observed": 0.5507246376811594
+        },
+        {
+          "bin": "(0.7, 0.8]",
+          "count": 29,
+          "prediction": 0.7469973358986072,
+          "observed": 0.7241379310344828
+        },
+        {
+          "bin": "(0.8, 0.9]",
+          "count": 6,
+          "prediction": 0.8447544196863449,
+          "observed": 0.6666666666666666
+        }
+      ]
+    },
+    "market": {
+      "races": 1787,
+      "runners": 17987,
+      "log_loss": 1.8159689848785507,
+      "brier_per_race": 0.7815747877249851,
+      "calibration_ece_runner": 0.004270430810679979,
+      "top_pick_strike": 0.34918858421936205,
+      "top_pick_quote_proxy_roi": -0.04919082260772247,
+      "value_bets": 32,
+      "value_strike": 0.375,
+      "value_quote_proxy_roi": 0.13737499999999997,
+      "value_profit_units": 4.395999999999999,
+      "max_daily_drawdown_units": 4.0,
+      "no_bet_races": 1755,
+      "reliability": [
+        {
+          "bin": "(-0.001, 0.1]",
+          "count": 11916,
+          "prediction": 0.03776205745582215,
+          "observed": 0.04070157771064115
+        },
+        {
+          "bin": "(0.1, 0.2]",
+          "count": 3427,
+          "prediction": 0.14334504612843918,
+          "observed": 0.1351035891450248
+        },
+        {
+          "bin": "(0.2, 0.3]",
+          "count": 1486,
+          "prediction": 0.2428986332125775,
+          "observed": 0.24360699865410498
+        },
+        {
+          "bin": "(0.3, 0.4]",
+          "count": 645,
+          "prediction": 0.34317441772440177,
+          "observed": 0.3395348837209302
+        },
+        {
+          "bin": "(0.4, 0.5]",
+          "count": 280,
+          "prediction": 0.44538483748255947,
+          "observed": 0.45357142857142857
+        },
+        {
+          "bin": "(0.5, 0.6]",
+          "count": 138,
+          "prediction": 0.5415260462784127,
+          "observed": 0.5289855072463768
+        },
+        {
+          "bin": "(0.6, 0.7]",
+          "count": 64,
+          "prediction": 0.6329985302031856,
+          "observed": 0.5625
+        },
+        {
+          "bin": "(0.7, 0.8]",
+          "count": 23,
+          "prediction": 0.7376556700680719,
+          "observed": 0.7391304347826086
+        },
+        {
+          "bin": "(0.8, 0.9]",
+          "count": 8,
+          "prediction": 0.8215808327531225,
+          "observed": 0.625
+        }
+      ]
+    },
+    "v6": {
+      "races": 1787,
+      "runners": 17987,
+      "log_loss": 1.8164070732111908,
+      "brier_per_race": 0.7817123958542053,
+      "calibration_ece_runner": 0.005290322913471282,
+      "top_pick_strike": 0.3480693900391718,
+      "top_pick_quote_proxy_roi": -0.046881085618354815,
+      "value_bets": 68,
+      "value_strike": 0.35294117647058826,
+      "value_quote_proxy_roi": 0.1742720588235294,
+      "value_profit_units": 11.850499999999998,
+      "max_daily_drawdown_units": 7.6485,
+      "no_bet_races": 1719,
+      "reliability": [
+        {
+          "bin": "(-0.001, 0.1]",
+          "count": 11888,
+          "prediction": 0.03759514254794209,
+          "observed": 0.040292732166890985
+        },
+        {
+          "bin": "(0.1, 0.2]",
+          "count": 3474,
+          "prediction": 0.14329851628566073,
+          "observed": 0.1344271732872769
+        },
+        {
+          "bin": "(0.2, 0.3]",
+          "count": 1462,
+          "prediction": 0.2434869984431372,
+          "observed": 0.2496580027359781
+        },
+        {
+          "bin": "(0.3, 0.4]",
+          "count": 648,
+          "prediction": 0.34315185535739207,
+          "observed": 0.3317901234567901
+        },
+        {
+          "bin": "(0.4, 0.5]",
+          "count": 287,
+          "prediction": 0.4442941970170519,
+          "observed": 0.46689895470383275
+        },
+        {
+          "bin": "(0.5, 0.6]",
+          "count": 139,
+          "prediction": 0.5454098616912719,
+          "observed": 0.5251798561151079
+        },
+        {
+          "bin": "(0.6, 0.7]",
+          "count": 61,
+          "prediction": 0.6414259019951815,
+          "observed": 0.5901639344262295
+        },
+        {
+          "bin": "(0.7, 0.8]",
+          "count": 21,
+          "prediction": 0.7474218522733093,
+          "observed": 0.6190476190476191
+        },
+        {
+          "bin": "(0.8, 0.9]",
+          "count": 7,
+          "prediction": 0.8231802256851692,
+          "observed": 0.7142857142857143
+        }
+      ]
+    }
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0"
+  },
+  "protocol": {
+    "penalties": [
+      0.01,
+      0.1,
+      1.0
+    ],
+    "temperature_bounds": [
+      0.5,
+      2.0
+    ],
+    "value_edge": 0.05,
+    "commission": 0.05,
+    "stake": "one unit per race at most",
+    "expert_weight": 0
+  },
+  "preserved_artifact_hashes": 55
+}
