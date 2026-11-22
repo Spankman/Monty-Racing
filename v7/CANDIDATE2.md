@@ -193,3 +193,52 @@ an improvement and should not replace V6. Acquire usable earlier-available
 sectional/pace/rail/interference and forecast data, complete a separate NZ
 cohort, test ablations on a preregistered new period and collect outcomes against
 frozen forecasts. No protected files or historical results were changed.
+
+## 22 November development update
+
+The evidence development branch combines Candidate 2's original research with
+the current main baseline. Frozen V6 and the saved Candidate 1 and Candidate 2
+model artifacts are byte-for-byte unchanged. Candidate 2 is now accepted by
+the existing research inference command.
+
+```bash
+python -m v7.predict --model v7/candidate2_artifacts/fold_3_candidate2.json \
+  --features /path/to/independently-checked-fields.csv --output /path/to/new-research-run
+```
+
+The June artifact uses pure normalized market probabilities, as specified by
+its frozen calibration fit. It is useful as a regression test and research
+benchmark. Use the appropriate frozen configuration for each historical fold.
+Inference remains experimental and emits NO BET.
+
+The shared historical module accepts an optional country, provider namespace
+and event ID alongside the stable runner ID, preserves source and timestamp
+receipts, and selects only releases strictly before the decision. Candidate
+evidence uses the same release validation and keeps its verified-identity,
+jurisdiction, publication and offline capture checks. The upcoming-race
+decision time must come from a verified field snapshot. A source listing, file
+date or today's download cannot establish historical availability.
+
+The Racing Queensland open data listing, Brisbane Racing Club sectionals
+listing, Betfair data index and Punting Form API documentation returned HTTP
+200 in the development environment. LOVERACING.NZ RaceInfo returned HTTP
+403. These checks establish page reachability. An attributable historical
+payload, usage rights, stable ID crosswalks, and verified release timestamps
+are still required before using any new observations. The archived Betfair
+scheduled-off exchange quotes are research proxies with different semantics
+from bookmaker fixed-win odds.
+
+The public checkout contains 27 of 55 V6 manifest entries, all with matching
+SHA-256. Full replay and certification require the 28 absent files from the
+original private V6 archive. Replaying the Candidate 1 loss requires its
+original runner-level prediction file and joined feature and runner tables.
+Verifying and settling the shadow receipt requires the immutable snapshot
+bytes and verified official results with scratching dispositions. Keep those
+files in approved private storage.
+
+The approved ladder now limits exotic eligibility to the stage dictated by
+the ranked runners' fixed-win prices. Actual exotic prices, calibrated
+combination probabilities, and settlement dividends/costs remain separate
+dependencies. The existing workflow's provisional engine still runs from
+its separate branch. This work does not make the V7 daily command a
+production entry point.

@@ -2,7 +2,7 @@ name: Monty offline code checks
 on:
   pull_request:
   push:
-    branches: [main, monty-repair-2026-11-17]
+    branches: [main, monty-repair-2026-11-17, development/v7-candidate2-evidence]
 permissions:
   contents: read
 jobs:
