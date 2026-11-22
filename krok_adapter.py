@@ -124,7 +124,18 @@ def fetch(date,key):
         # A truncated page is acceptable only when an explicit continuation exists.
         # Never accept a truncated final page as a complete feed.
         if meta.get('truncated') and not (meta.get('next_cursor') or meta.get('next_page') or meta.get('next')):
-            raise ValueError('Truncated meeting page without continuation marker')
+            safe_keys=','.join(sorted(str(k) for k in meta if str(k) in
+                ('truncated','has_more','next_cursor','next_page','next','page','pages','total','total_pages','limit','offset')))
+            raise ValueError(
+                'Truncated meeting page without continuation marker'
+                +'; page_index='+str(page_index+1)
+                +'; records_on_page='+str(len(payload['data']))
+                +'; accumulated_records='+str(len(meetings))
+                +'; metadata_keys='+safe_keys
+                +'; has_more='+str(bool(meta.get('has_more')))
+                +'; next_cursor_present='+str(bool(meta.get('next_cursor')))
+                +'; next_page_present='+str(bool(meta.get('next_page')))
+                +'; total_present='+str(meta.get('total') is not None))
         meetings.extend(payload['data'])
         if len(meetings)>5000:raise ValueError('Meeting pagination exceeds safety limit')
         cursor=meta.get('next_cursor')
