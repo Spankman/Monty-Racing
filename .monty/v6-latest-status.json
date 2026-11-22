@@ -1,11 +1,11 @@
 {
-  "run_id": "44976848386",
-  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44976848386",
+  "run_id": "44976981417",
+  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44976981417",
   "job_status": "failure",
   "date": "2026-11-22",
   "artifacts_ok": true,
   "races_accepted": null,
   "betting_authorised": false,
   "predictions_generated": false,
-  "blocker": "Live intake/readiness: ValueError: Truncated meeting page without continuation marker"
+  "blocker": "Live intake/readiness: ValueError: Truncated meeting page without continuation marker; page_index=2; records_on_page=8; accumulated_records=50; metadata_keys=has_more,limit,next_cursor,total,truncated; has_more=False; next_cursor_present=False; next_page_present=False; total_present=True"
 }
