@@ -1,10 +1,14 @@
 {
-  "run_id": "44981388849",
-  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44981388849",
+  "run_id": "44981538552",
+  "run_url": "https://github.com/Spankman/Monty-Racing/actions/runs/44981538552",
   "job_status": "success",
   "date": "2026-11-22",
   "artifacts_ok": true,
   "races_accepted": 46,
+  "price_source_counts": {
+    "TAB": 197,
+    "fixed_win": 267
+  },
   "betting_authorised": false,
   "predictions_generated": false,
   "blocker": "",
