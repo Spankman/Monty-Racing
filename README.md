@@ -10,6 +10,13 @@
 
 This branch imports the saved V6 source and frozen linear model, repairs race-day feature calculations, and adds direct Krok connectivity checks. Offline historical replay is reproducible with the original private archive. Live model predictions and a betting edge have not been established.
 
+## ChatGPT operations — staged integration
+
+The operational command contract, forecast retrieval paths, activation boundary and
+safety limits are documented in [operations/README.md](operations/README.md).
+This integration is under review; its schedules and issue trigger are not yet
+activated on the default branch. Frozen models and official NO BET gates remain intact.
+
 ## What works
 
 - Race-day barrier and going features match the unchanged training builder.

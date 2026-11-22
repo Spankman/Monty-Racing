@@ -114,4 +114,31 @@ class RunTests(unittest.TestCase):
         self.assertIn('IN MONTY WE TRUST',page)
 
 
+class TransportTests(unittest.TestCase):
+    def test_owner_queue_only_and_strict_parameters(self):
+        from operations import transport
+        issues=[dict(number=n,title='Monty command: RM6PS',body=body,
+                     user=dict(login=user),created_at='2026-11-22T22:00:00Z')
+                for n,user,body in [(1,'Stranger','{}'),(2,'Spankman','{"shell":"oops"}'),(3,'Spankman','{"date":"2026-11-23"}')]]
+        with patch.object(transport,'api',return_value=issues),patch.object(transport,'read',return_value=None):
+            queue=list(transport.requests())
+        self.assertEqual([n for n,_ in queue],[3])
+
+    def test_raw_inputs_never_accepted_for_publication(self):
+        from operations import transport
+        with TemporaryDirectory() as d:
+            (Path(d)/'provider_response.json').write_text('{"private":"do not publish"}')
+            with patch.object(transport,'api',return_value={'ref':'exists'}):
+                with self.assertRaisesRegex(ValueError,'Unapproved public file'):
+                    transport.publish(d,'123','2026-11-23')
+
+    def test_failure_envelope_does_not_reuse_old_forecast(self):
+        from operations.failure import failed
+        with TemporaryDirectory() as d:
+            failed(d,'failure-run','2026-11-23','runner_startup_failed')
+            p=Path(d)/'public';f=json.loads((p/'forecast.json').read_text());r=json.loads((p/'receipt.json').read_text())
+            self.assertEqual(f['status'],'FAILED');self.assertEqual(f['races'],[])
+            self.assertEqual(r['forecast_sha256'],ops.sha(p/'forecast.json'))
+
+
 if __name__=='__main__':unittest.main()

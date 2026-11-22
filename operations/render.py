@@ -19,6 +19,9 @@ def render(view):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
                 if i==0:text='<b>'+text+'</b>'
                 parts.append('<tr><td>'+text+'</td><td>$'+format(row['odds'],'.2f')+'</td></tr>')
+            if view['view']=='provisional':
+                for roughie in result.get('roughies',[]):
+                    parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>$'+format(roughie['odds'],'.2f')+'</td></tr>')
             parts.append('</table><p>'+e('; '.join(result.get('no_bet_reasons',[])))+'</p><p>Captured '+e(str(race['captured_at']))+' · '+e(result.get('freshness_at_retrieval','UNKNOWN'))+'</p></section>')
     parts+=['<footer>IN MONTY WE TRUST</footer><h2>Copy plain text</h2><textarea readonly aria-label="Copyable Monty ticket">'+e(ticket(view))+'</textarea></main></html>']
     return ''.join(parts)

@@ -193,10 +193,11 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 generated_at=started.isoformat(),receipt=f'runs/{day}/{run_id}/receipt.json',source_mode='SIMULATED FIXTURE' if fixture else 'LIVE',
                 status='FAILED',models={},races=[],blockers=[],coverage={},qualifying_forecasts=0)
     pins={}
-    stage='frozen_artifact_verification'
+    stage='date_validation'
     try:
         if not fixture and day!=started.astimezone(TZ).date().isoformat():
             raise ValueError('Live request date is not today in Brisbane')
+        stage='frozen_artifact_verification'
         from monty.integrity import verify_artifacts
         verify_artifacts(ROOT/'monty_v6')
         pins={'V6':sha(ROOT/'monty_v6/results/frozen_model.json'),'V7':sha(v7_root/'v7/artifacts/fold_3_model.json')}
@@ -211,6 +212,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         if payload is None:
             from krok_adapter import fetch
             key=os.environ.get('KROK_API_KEY','').strip()
+            result['provider_credentials_configured']=bool(key)
             if not key:
                 raise ValueError('KROK_API_KEY absent; live request not attempted')
             payload=fetch(day,key)
@@ -299,7 +301,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
                  models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
-                 qualifying_forecasts=0,model_artifacts_unchanged=True)
+                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     for version in ['V6','V7']:
         for mode in ['official','provisional']:
@@ -319,6 +321,9 @@ def ticket(view):
             for i,r in enumerate(rows):
                 text=f"#{r['number']} {r['horse']} — ${r['odds']:.2f}"
                 lines.append(('**'+text+'**') if i==0 else text)
+        if mode=='provisional':
+            for roughie in result.get('roughies',[]):
+                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — ${roughie['odds']:.2f} · NO BET")
         lines.append('NO BET: '+', '.join(result.get('no_bet_reasons',[])))
         lines.append('Quote '+str(race['captured_at'])+' · '+result.get('freshness_at_retrieval','UNKNOWN'))
         lines.append('')
