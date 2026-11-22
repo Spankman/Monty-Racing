@@ -1,6 +1,9 @@
 name: Monty ChatGPT operations (shared snapshot)
 run-name: Monty operations ${{ inputs.command || github.event.issue.title || github.event.schedule }}
 on:
+  push:
+    branches: [integration/chatgpt-operations]
+    paths: ['.github/workflows/monty-operations.yml', '.monty/operations-staging.json']
   workflow_dispatch:
     inputs:
       command:
