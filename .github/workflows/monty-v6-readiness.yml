@@ -1,5 +1,8 @@
 name: Monty V6 readiness diagnostic (no bets)
 on:
+  push:
+    branches: [main]
+    paths: ['.monty/v6-readiness-date.txt']
   workflow_dispatch:
     inputs:
       date:
@@ -22,9 +25,10 @@ jobs:
       - name: Verify frozen artifacts and capture provider readiness
         env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-          RACE_DATE: ${{ inputs.date }}
+          RACE_DATE_INPUT: ${{ inputs.date }}
         run: |
           mkdir -p v6_readiness
+          export RACE_DATE="${RACE_DATE_INPUT:-$(head -n 1 .monty/v6-readiness-date.txt)}"
           python - <<'PY'
           import json,os,traceback
           from pathlib import Path
@@ -48,7 +52,7 @@ jobs:
                   report["readiness"]=assessment
               except Exception as exc:
                   report["blocker"]="Live intake/readiness: "+type(exc).__name__+": "+str(exc)
-          Path("v6_readiness/status.json").write_text(json.dumps(report,indent=2,default=str)+"\\n")
+          Path("v6_readiness/status.json").write_text(json.dumps(report,indent=2,default=str)+"\n")
           print(json.dumps({k:v for k,v in report.items() if k not in ("verified_artifacts","active_feature_coverage")},default=str))
           PY
       - uses: actions/upload-artifact@v4
