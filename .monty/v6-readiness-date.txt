@@ -1,2 +1,2 @@
 2026-11-22
-request: publish-self-service-v6-readiness-status-82170aa
+request: test-github-api-status-publisher-bda9829
