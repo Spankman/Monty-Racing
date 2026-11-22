@@ -18,8 +18,10 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: grok-independent-repairs
+          path: provisional-engine
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -30,12 +32,14 @@ jobs:
           REQUESTED_DATE: ${{ inputs.date }}
         run: |
           DATE="${REQUESTED_DATE:-$(head -n 1 .monty/v7-daily-date.txt)}"
+          cp v7/run_live_daily.py provisional-engine/v7/run_live_daily.py
+          cd provisional-engine
           python -m v7.run_live_daily --date "$DATE"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: v7-daily-${{ github.run_id }}
-          path: output_v7_daily/
+          path: provisional-engine/output_v7_daily/
           if-no-files-found: warn
           retention-days: 14
       - name: Publish safe provisional summary and execution status to issue 98
@@ -49,7 +53,7 @@ jobs:
           from pathlib import Path
           import os
           output=Path("monty_v7_status_comment.md")
-          report=Path("output_v7_daily/selections.md")
+          report=Path("provisional-engine/output_v7_daily/selections.md")
           header=f"### Monty V7 daily execution — {os.environ['JOB_STATUS']}\n[Workflow run]({os.environ['RUN_URL']})\n\n"
           if report.exists():
               body=report.read_text(encoding="utf-8")
