@@ -1,25 +1,36 @@
 name: Monty automatic morning live run
 on:
   schedule:
-    # 08:10 Australia/Brisbane daily (UTC+10; no daylight saving)
+    # 08:10 Australia/Brisbane (UTC+10).
     - cron: '10 22 * * *'
   workflow_dispatch:
 permissions:
   actions: write
   contents: read
 jobs:
-  dispatch-research:
+  dispatch-v6:
     runs-on: ubuntu-latest
+    timeout-minutes: 28
     steps:
-      - name: Start repair-branch live research run for Brisbane today
+      - name: Dispatch and verify the dated V6 daily run
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          TARGET_REF: ${{ github.ref_name }}
         run: |
           set -euo pipefail
           DATE=$(TZ=Australia/Brisbane date +%F)
-          echo "Requesting Monty research run for Brisbane date $DATE"
-          # Run both the operational-branch integration check and main research audit.
-          gh workflow run monty-live-smoke.yml --ref grok-independent-repairs -f date="$DATE" -f include_restricted_flat_research=false
-          gh workflow run monty-daily-research.yml --ref main
-          echo "Dispatch requested; this does not certify bets or verify downstream completion."
+          REQUEST_ID="morning-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          TITLE="Monty V6 ${DATE} ${REQUEST_ID}"
+          echo "Dispatching V6 for Brisbane date $DATE on $TARGET_REF"
+          gh workflow run monty-v6-readiness.yml --ref "$TARGET_REF" -f date="$DATE" -f daily=true -f request_id="$REQUEST_ID"
+          RUN_ID=
+          for attempt in {1..20}; do
+            RUN_ID=$(gh run list --workflow monty-v6-readiness.yml --branch "$TARGET_REF" --event workflow_dispatch --limit 30 \
+              --json databaseId,displayTitle --jq ".[] | select(.displayTitle == \"$TITLE\") | .databaseId")
+            if [[ -n "$RUN_ID" ]]; then break; fi
+            sleep 5
+          done
+          test -n "$RUN_ID"
+          echo "[V6 daily for $DATE](https://github.com/$GH_REPO/actions/runs/$RUN_ID)" >> "$GITHUB_STEP_SUMMARY"
+          gh run watch "$RUN_ID" --exit-status --interval 10

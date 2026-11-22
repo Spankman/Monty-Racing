@@ -1,0 +1,340 @@
+"""Simulated contracts only; live evidence is recorded separately."""
+from datetime import timedelta
+import hashlib
+import json
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import unittest
+from unittest.mock import patch
+
+import monty_operations as ops
+from operations.render import render
+
+
+class CommandTests(unittest.TestCase):
+    def test_all_commands_and_single_races(self):
+        for cmd,version,mode in [('RM6','V6','official'),('RM7','V7','shadow'),('RM6PS','V6','provisional'),('RM7PS','V7','provisional')]:
+            r=ops.command(cmd,'2026-11-23');self.assertEqual((r['version'],r['view']),(version,mode))
+        for cmd in ['RM6 Royal Randwick R4','RM7 Te Rapa 12']:
+            r=ops.command(cmd);self.assertTrue(r['meeting']);self.assertEqual(r['view'],'provisional')
+        self.assertEqual(ops.command('C')['view'],'status')
+        for cmd in ['RM8','RM6 x 0','RM6 $(id) 1','RM6PS track 2','RM6 track 51']:
+            with self.assertRaises(ValueError):ops.command(cmd)
+
+    def test_stale_future_and_closed(self):
+        now=ops.utcnow();row=dict(captured_at=now.isoformat(),scheduled_start=(now+timedelta(hours=1)).isoformat())
+        self.assertEqual(ops.freshness(row,now),'FRESH AT CHECK TIME')
+        self.assertIn('STALE',ops.freshness(row,now+timedelta(minutes=6)))
+        self.assertIn('STALE',ops.freshness(row,now-timedelta(seconds=1)))
+        row['scheduled_start']=now.isoformat();self.assertIn('CLOSED',ops.freshness(row,now))
+        self.assertIn('UNVERIFIED',ops.freshness({},now))
+
+    def test_price_ladder_and_roughies(self):
+        for odds,count in [([4,5,6,7],1),([3,4,5,6],2),([3,3,4,5],3),([3,3,3,4],4)]:
+            rows=[dict(number=str(i+1),horse='Horse '+str(i),odds=o,probability=p) for i,(o,p) in enumerate(zip(odds,[.4,.3,.2,.1]))]
+            r=ops.selection(rows);self.assertEqual(len(r['ordered_selections']),count)
+            self.assertEqual(r['recommended_bet_type'],'NO BET')
+            self.assertTrue(all(x['bet_type']=='WIN' for x in r['roughies']))
+
+
+class RunTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name);self.v7=self.root/'engine';(self.v7/'v7/artifacts').mkdir(parents=True)
+        model=self.v7/'v7/artifacts/fold_3_model.json';model.write_text('{}')
+        self.digest=ops.sha(model)
+        self.now=ops.utcnow();self.day=self.now.astimezone(ops.TZ).date().isoformat()
+        self.payload=dict(success=True,data=[dict(venue='Test',country='AU',date=self.day,type='T',races=[dict(number=1,name='Benchmark 60',status='open',jump_time=(self.now+timedelta(hours=1)).isoformat(),distance=1200,track_condition='Good 4',runners=[dict(number=i,name='Horse '+str(i),is_scratched=False,barrier=i,odds=[dict(bookmaker='TAB',win=o)]) for i,o in [(1,3),(2,4),(3,6)]])])],meta={})
+        self.patches=[patch('monty.integrity.verify_artifacts',return_value=55),patch.object(ops,'V7_MODEL_SHA',self.digest),patch.object(ops.subprocess,'check_output',return_value=ops.V7_COMMIT)]
+        for p in self.patches:p.start();self.addCleanup(p.stop)
+        self.calls=[]
+
+    def scorer(self,version,path,meta,directory,v7_root):
+        self.calls.append((version,path.read_bytes()))
+        d=json.loads(path.read_text())
+        return [dict(number=r['number'],horse=r['horse'],odds=r['odds'],probability=p) for r,p in zip(d['runners'],[.5,.3,.2])]
+
+    def run_it(self,**kw):
+        params=dict(payload=self.payload,captured=self.now,fixture=True,scorer=self.scorer)
+        params.update(kw)
+        return ops.execute(self.day,self.root/'output',self.v7,run_id='test',**params)
+
+    def test_shared_snapshot_official_provisional_and_integrity(self):
+        f=self.run_it();self.assertEqual(f['status'],'COMPLETED_NO_BET')
+        self.assertEqual([c[0] for c in self.calls],['V6','V7']);self.assertEqual(self.calls[0][1],self.calls[1][1])
+        p=self.root/'output/public';receipt=json.loads((p/'receipt.json').read_text())
+        self.assertEqual(receipt['forecast_sha256'],ops.sha(p/'forecast.json'))
+        official=ops.projection(f,dict(version='V6',view='official'));provisional=ops.projection(f,dict(version='V7',view='provisional'))
+        self.assertEqual(official['races'][0]['result']['ordered_selections'],[])
+        self.assertTrue(provisional['races'][0]['result']['ordered_selections'])
+        self.assertFalse(provisional['races'][0]['result']['betting_authorised'])
+        self.assertIn('STALE',ops.projection(f,dict(version='V7',view='provisional'),self.now+timedelta(minutes=6))['races'][0]['result']['freshness_at_retrieval'])
+        self.assertEqual(f['source_mode'],'SIMULATED FIXTURE')
+        with self.assertRaises(FileExistsError):self.run_it()
+
+    def test_no_silent_model_fallback(self):
+        def broken(v,*args):
+            if v=='V7':raise RuntimeError('DO NOT PUBLISH secret')
+            return self.scorer(v,*args)
+        f=self.run_it(scorer=broken)
+        self.assertEqual(f['races'][0]['models']['V7']['status'],'FAILED')
+        self.assertEqual(f['races'][0]['models']['V6']['status'],'SCORED')
+        self.assertNotIn('secret',json.dumps(f));self.assertEqual(f['status'],'PARTIAL_OR_BLOCKED')
+
+    def test_identity_and_price_changes_rejected(self):
+        def bad(v,*args):
+            rows=self.scorer(v,*args);rows[0]['odds']=999;return rows
+        f=self.run_it(scorer=bad)
+        self.assertTrue(all(m['status']=='FAILED' for m in f['races'][0]['models'].values()))
+
+    def test_stale_capture_never_scored(self):
+        f=self.run_it(captured=self.now-timedelta(minutes=6))
+        self.assertEqual(f['status'],'FAILED');self.assertFalse(self.calls)
+
+    def test_single_race_missing_and_country_ambiguity(self):
+        f=self.run_it(request=ops.command('RM6 Missing 2',self.day))
+        self.assertEqual(f['status'],'FAILED');self.assertFalse(self.calls)
+
+    def test_unknown_country_not_guessed(self):
+        self.payload['data'][0]['country']=None
+        f=self.run_it();self.assertFalse(f['races']);self.assertFalse(self.calls)
+
+    def test_no_named_price_blocks_both(self):
+        self.payload['data'][0]['races'][0]['runners'][0]['odds']=[]
+        self.payload['data'][0]['races'][0]['runners'][0]['fixed_win']=3
+        f=self.run_it();self.assertFalse(self.calls)
+        self.assertEqual(f['races'][0]['models']['V6']['status'],'BLOCKED')
+
+    def test_render_escapes_names_and_has_copyable_ticket(self):
+        f=self.run_it();v=ops.projection(f,dict(version='V7',view='provisional'))
+        v['races'][0]['result']['ordered_selections'][0]['horse']='<script>alert(1)</script>'
+        page=render(v)
+        self.assertIn('&lt;script&gt;',page);self.assertNotIn('<script>',page)
+        self.assertIn('text-align:right',page);self.assertIn('<textarea readonly',page)
+        self.assertIn('IN MONTY WE TRUST',page)
+
+
+class TransportTests(unittest.TestCase):
+    def test_owner_queue_only_and_strict_parameters(self):
+        from operations import transport
+        issues=[dict(number=n,title='Monty command: RM6PS',body=body,
+                     user=dict(login=user),created_at='2026-11-22T22:00:00Z')
+                for n,user,body in [(1,'Stranger','{}'),(2,'Spankman','{"shell":"oops"}'),(3,'Spankman','{"date":"2026-11-23"}')]]
+        with patch.object(transport,'api',return_value=issues),patch.object(transport,'read',return_value=None):
+            queue=list(transport.requests())
+        self.assertEqual([n for n,_ in queue],[3])
+
+    def test_raw_inputs_never_accepted_for_publication(self):
+        from operations import transport
+        with TemporaryDirectory() as d:
+            (Path(d)/'provider_response.json').write_text('{"private":"do not publish"}')
+            with patch.object(transport,'api',return_value={'ref':'exists'}):
+                with self.assertRaisesRegex(ValueError,'Unapproved public file'):
+                    transport.publish(d,'123','2026-11-23')
+
+    def test_failure_envelope_does_not_reuse_old_forecast(self):
+        from operations.failure import failed
+        with TemporaryDirectory() as d:
+            failed(d,'failure-run','2026-11-23','runner_startup_failed')
+            p=Path(d)/'public';f=json.loads((p/'forecast.json').read_text());r=json.loads((p/'receipt.json').read_text())
+            self.assertEqual(f['status'],'FAILED');self.assertEqual(f['races'],[])
+            self.assertEqual(r['forecast_sha256'],ops.sha(p/'forecast.json'))
+
+
+class SchedulerTests(unittest.TestCase):
+    def test_catchup_after_0810_only_without_completed_attempt(self):
+        from operations.worker import daily_due
+        from datetime import datetime
+        self.assertFalse(daily_due(datetime(2026,11,23,8,9),None))
+        self.assertTrue(daily_due(datetime(2026,11,23,8,10),None))
+        self.assertTrue(daily_due(datetime(2026,11,23,8,20),None))
+        self.assertFalse(daily_due(datetime(2026,11,23,8,20),{'status':'FAILED'}))
+
+
+
+class ConnectorClientTests(unittest.TestCase):
+    """Simulate GitHub reads and writes. No connectors, providers or inference are called."""
+
+    def setUp(self):
+        from operations import client, transport
+        self.client = client
+        self.transport = transport
+        self.day = '2026-11-23'
+        self.capture = ops.timestamp(self.day + 'T08:10:00+10:00')
+        self.jump = self.capture + timedelta(hours=4)
+        self.files = {}
+        self.enqueue = self.enterContext(patch.object(transport, 'enqueue', return_value=200))
+        self.enterContext(patch.object(transport, 'read', side_effect=self.files.get))
+        self.enterContext(patch.object(transport, 'read_bytes', side_effect=self.files.get))
+
+    def save(self, index_path, run_id, captured, *, status='COMPLETED_NO_BET'):
+        selections = ops.selection([
+            dict(number='1', horse='Leading Horse', odds=4, probability=.5),
+            dict(number='2', horse='Other Horse', odds=5, probability=.3),
+            dict(number='3', horse='Third Horse', odds=6, probability=.2),
+        ])
+        race = dict(meeting='Ballina', race='1', country='AU', captured_at=captured.isoformat(),
+                    scheduled_start=self.jump.isoformat(), models={'V6': selections, 'V7': selections})
+        forecast = dict(run_id=run_id, status=status, date=self.day, source_mode='LIVE',
+                        captured_at=captured.isoformat(), races=[race] if status != 'FAILED' else [],
+                        valid_until=(captured + timedelta(minutes=5)).isoformat())
+        raw = json.dumps(forecast).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        receipt = dict(run_id=run_id, status=status, forecast_sha256=digest)
+        self.files[f'{run_id}/forecast.json'] = raw
+        self.files[f'{run_id}/receipt.json'] = receipt
+        self.files[index_path] = dict(run_id=run_id, status=status, forecast_sha256=digest,
+                                      forecast_path=f'{run_id}/forecast.json', receipt_path=f'{run_id}/receipt.json')
+
+    def test_0830_daily_request_uses_new_id_and_rechecks_completed_capture(self):
+        at_0830 = self.capture + timedelta(minutes=20)
+        daily = f'daily/{self.day}/latest.json'
+        self.save(daily, 'previous', self.capture)
+        for name in ('RM6', 'RM7'):
+            self.enqueue.reset_mock()
+            self.assertEqual(self.client.handle(name, now=at_0830)['request_id'], 200)
+            self.enqueue.assert_called_once()
+        pending = self.client.handle('RM7', request_id=200, now=at_0830)
+        self.assertEqual(pending['request_status'], 'QUEUED')
+        self.assertIsNone(pending['run_id'])
+        key = 'requests/200.json'
+        self.files[key] = dict(request_status='RUNNING', run_id='current', workflow_url='workflow')
+        running = self.client.handle('RM7', request_id=200, now=at_0830)
+        self.assertEqual((running['request_status'], running['workflow_url']), ('RUNNING', 'workflow'))
+        self.save(key, 'current', at_0830)
+        result = self.client.handle('RM7', request_id=200, now=at_0830 + timedelta(minutes=1))
+        self.assertEqual((result['request_status'], result['run_id']), ('COMPLETED', 'current'))
+        self.assertEqual(result['capture_age_seconds'], 60)
+        self.assertIn('SHADOW SELECTION SLIP', result['ticket'])
+        self.assertIn('Leading Horse', result['ticket'])
+        self.assertIn('NO BET', result['ticket'])
+        expired = self.client.handle('RM7', request_id=200, now=at_0830 + timedelta(minutes=6))
+        self.assertEqual(expired['freshness'], 'EXPIRED')
+        self.assertNotIn('ticket', expired)
+        self.enqueue.assert_called_once()
+
+    def test_c_follows_latest_or_explicit_request_and_never_submits(self):
+        self.save(f'daily/{self.day}/latest.json', 'daily', self.capture)
+        self.save('requests/201.json', 'failed', self.capture, status='FAILED')
+        self.files['requests/202.json'] = dict(request_status='RUNNING', run_id='current',
+                                               workflow_url='workflow')
+        entries = [(202, ops.command('RM6', self.day)), (201, ops.command('RM7', self.day))]
+        with patch.object(self.transport, 'requests', return_value=iter(entries)):
+            status = self.client.handle('C', now=self.capture)
+        self.assertEqual((status['request_id'], status['request_status']), (202, 'RUNNING'))
+        failed = self.client.handle('C', request_id=201, now=self.capture)
+        self.assertEqual((failed['request_status'], failed['semantic_outcome']), ('FAILED', 'FAILED'))
+        self.assertIsNotNone(failed['receipt'])
+        self.assertEqual(failed['captured_at'], self.capture.isoformat())
+        self.assertEqual(failed['capture_age_seconds'], 0)
+        self.assertIsNotNone(failed['valid_until'])
+        self.assertNotIn('ticket', failed)
+        self.enqueue.assert_not_called()
+
+    def test_every_selection_command_retrieves_its_view(self):
+        self.save('requests/200.json', 'completed', self.capture)
+        for name, expected in [('RM6', 'official'), ('RM7', 'shadow'), ('RM6PS', 'provisional'),
+                               ('RM7PS', 'provisional'), ('RM6 Ballina 1', 'provisional'),
+                               ('RM7 Ballina 1', 'provisional')]:
+            with self.subTest(name=name):
+                response = self.client.handle(name, request_id=200, now=self.capture)
+                self.assertEqual(response['view']['view'], expected)
+                self.assertEqual(len(response['view']['races']), 1)
+                self.assertEqual('Leading Horse' in response['ticket'], expected != 'official')
+        self.enqueue.assert_not_called()
+
+    def test_failed_request_never_falls_back_and_cannot_requeue(self):
+        self.save(f'daily/{self.day}/latest.json', 'daily', self.capture)
+        self.save('requests/200.json', 'failed', self.capture, status='FAILED')
+        status = self.client.handle('RM6', request_id=200, now=self.capture)
+        self.assertEqual(status['semantic_outcome'], 'FAILED')
+        self.assertNotIn('view', status)
+        self.enqueue.assert_not_called()
+
+    def test_workflow_ending_without_publication_is_explicit(self):
+        self.files['requests/200.json'] = dict(request_status='RUNNING', run_id='123-1-200',
+                                             workflow_url='workflow')
+        with patch.object(self.transport, 'api', return_value={'status': 'completed', 'conclusion': 'failure'}):
+            response = self.client.handle('RM6', request_id=200, now=self.capture)
+        self.assertEqual(response['request_status'], 'FAILED')
+        self.assertEqual(response['workflow_conclusion'], 'failure')
+        self.assertEqual(response['semantic_outcome'], 'WORKFLOW_ENDED_WITHOUT_PUBLICATION')
+        self.assertNotIn('ticket', response)
+        self.enqueue.assert_not_called()
+
+    def test_corrupt_receipt_prevents_display(self):
+        self.save('requests/200.json', 'saved', self.capture)
+        self.files['saved/receipt.json']['forecast_sha256'] = 'tampered'
+        result = self.client.handle('RM7', request_id=200, now=self.capture)
+        self.assertEqual(result['semantic_outcome'], 'INTEGRITY_CHECK_FAILED')
+        self.assertNotIn('ticket', result)
+
+    def test_render_rechecks_old_saved_view_without_mutating_it(self):
+        self.save('requests/200.json', 'saved', self.capture)
+        view = self.client.handle('RM7', request_id=200, now=self.capture)['view']
+        original = json.dumps(view)
+        later = self.capture + timedelta(minutes=20)
+        for content in (ops.ticket(view, now=later), render(view, now=later)):
+            self.assertIn('STALE', content)
+            self.assertNotIn('Leading Horse', content)
+        self.assertEqual(json.dumps(view), original)
+
+
+class WorkerFailureTests(unittest.TestCase):
+    def test_queue_persists_request_id_and_workflow_url_before_inference(self):
+        import os
+        from operations import worker
+        req = ops.command('RM6', '2026-11-23')
+        records = []
+
+        def run(req, number, run_id, url, out):
+            self.assertEqual(records[0]['request_status'], 'QUEUED')
+            self.assertEqual(records[0]['request_id'], number)
+            self.assertEqual(records[0]['workflow_url'], url)
+            self.assertEqual(records[0]['run_id'], run_id)
+            return records[0]
+
+        with (patch.dict(os.environ, dict(OPERATIONS_MODE='queue', OPERATIONS_ISSUE='200', GITHUB_RUN_ID='123')),
+              patch.object(worker, 'requests', return_value=[(200, req)]),
+              patch.object(worker, 'read', return_value=None),
+              patch.object(worker, 'record_request', side_effect=records.append),
+              patch.object(worker, 'operate', side_effect=run) as operate,
+              patch('builtins.print')):
+            worker.main()
+        operate.assert_called_once()
+
+    def test_timeout_and_launch_failure_produce_immutable_failure_envelope(self):
+        import subprocess
+        from operations import worker
+        day = '2026-11-23'
+        for error, reason in [(subprocess.TimeoutExpired('runner', 1000), 'runner_timeout'),
+                              (OSError('private diagnostic'), 'runner_launch_failed')]:
+            with self.subTest(reason=reason), TemporaryDirectory() as directory:
+                out = Path(directory) / 'run'
+                with (patch.object(worker, 'lifecycle') as lifecycle,
+                      patch.object(worker.subprocess, 'run', side_effect=error),
+                      patch.object(worker, 'publish') as publish):
+                    worker.operate(ops.command('RM6', day), 200, 'run', 'workflow', out)
+                    lifecycle.assert_called_once_with(ops.command('RM6', day), 200, 'run', 'workflow', 'RUNNING')
+                    publish.assert_called_once()
+                forecast = json.loads((out / 'public/forecast.json').read_text())
+                self.assertEqual(forecast['status'], 'FAILED')
+                self.assertEqual(forecast['blockers'], [reason])
+
+    def test_publication_failure_exposes_terminal_failure_without_old_output(self):
+        from operations import worker
+        day = '2026-11-23'
+        req = ops.command('RM6', day)
+        with TemporaryDirectory() as directory:
+            out = Path(directory) / 'run'
+            with (patch.object(worker, 'lifecycle') as lifecycle,
+                  patch.object(worker.subprocess, 'run', side_effect=OSError),
+                  patch.object(worker, 'read', return_value={'run_id': 'old', 'receipt_path': 'old'}),
+                  patch.object(worker, 'publish', side_effect=RuntimeError('private diagnostic'))):
+                with self.assertRaisesRegex(RuntimeError, '^publication_failed$'):
+                    worker.operate(req, 200, 'new', 'workflow', out)
+            lifecycle.assert_called_with(req, 200, 'new', 'workflow', 'FAILED', 'publication_failed')
+
+
+if __name__ == '__main__':
+    unittest.main()

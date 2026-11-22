@@ -1,4 +1,5 @@
 name: Monty V6 readiness diagnostic (no bets)
+run-name: Monty V6 ${{ inputs.date }} ${{ inputs.request_id }}
 on:
   push:
     branches: [main]
@@ -9,6 +10,14 @@ on:
         description: Queensland race date YYYY-MM-DD
         required: true
         type: string
+      daily:
+        description: Publish the research-only V6 daily report and pre-race receipt
+        type: boolean
+        default: false
+      request_id:
+        description: Dispatcher correlation ID
+        type: string
+        required: false
 permissions:
   contents: write
 jobs:
@@ -78,12 +87,13 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}/monty_v6:${{ github.workspace }}
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          DAILY_OUTPUT: ${{ inputs.daily }}
           RACE_DATE_INPUT: ${{ inputs.date }}
         run: |
           mkdir -p v6_readiness
           export RACE_DATE="${RACE_DATE_INPUT:-$(head -n 1 .monty/v6-readiness-date.txt)}"
           python - <<'PY'
-          import json,os,traceback
+          import datetime,json,os
           from pathlib import Path
           from monty.integrity import verify_artifacts
           root=Path("monty_v6")
@@ -106,6 +116,30 @@ jobs:
                   report["readiness"]=assessment
               except Exception as exc:
                   report["blocker"]="Live intake/readiness: "+type(exc).__name__+": "+str(exc)
+          if os.environ.get("DAILY_OUTPUT")=="true" and datetime.date.fromisoformat(report["date"]).isoformat()==report["date"]:
+              from v6_daily import coverage, publish, write_json
+              date=report["date"]
+              root=Path("v6_readiness/daily_staging")
+              fixture_file=Path(".monty")/f"verified-fixtures-{date}.json"
+              fixtures=json.loads(fixture_file.read_text()) if fixture_file.exists() else None
+              if report.get("readiness"):
+                  try:
+                      card=publish(date,out,assessment,root,commit=os.environ["GITHUB_SHA"],fixtures=fixtures)
+                      root.rename(Path("v6_readiness/daily"))
+                      report["predictions_generated"]=bool(card["frozen_races"])
+                  except Exception as exc:
+                      report["blocker"]="Daily V6 scoring/publication: "+type(exc).__name__
+              if report.get("blocker"):
+                  # Publish only safe failure metadata; tolerate partial output from a failed scorer.
+                  root=Path("v6_readiness/daily_blocked")
+                  root.mkdir()
+                  card=coverage(date,fixtures,{}, {})
+                  card["capture_failed_or_unavailable"]=True
+                  for race in card["races"]:
+                      race["reasons"]=["provider_evidence_unavailable_in_completed_run"]
+                  write_json(root/"coverage.json",card)
+                  (root/"report.md").write_text(f"# Monty V6 daily — {date}\n\n**NO BET**\n\nDaily output blocked. See readiness status.\n")
+              report["coverage_counts"]={k:card[k] for k in ("expected","provider_races","independently_verified","counts","no_bet")}
           Path("v6_readiness/status.json").write_text(json.dumps(report,indent=2,default=str)+"\n")
           with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a") as h:
               h.write("## V6 readiness diagnostic (no bets)\n\n")
@@ -121,7 +155,7 @@ jobs:
                   h.write("Races assessed: "+str(len(races))+"\n\n")
                   for reason,count in reasons.items():
                       h.write("- "+reason+": "+str(count)+"\n")
-              h.write("\nFull detail: uploaded status.json. No selections generated.\n")
+              h.write("\nFull detail: uploaded status.json.\n")
           print(json.dumps({k:v for k,v in report.items() if k not in ("verified_artifacts","active_feature_coverage","readiness")},default=str))
           if not report.get("artifacts_ok") or report.get("blocker"):
               raise SystemExit(1)
@@ -133,8 +167,21 @@ jobs:
           path: v6_readiness/status.json
           if-no-files-found: warn
           retention-days: 14
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.daily
+        with:
+          name: v6-daily-${{ github.run_id }}
+          path: |
+            v6_readiness/daily/coverage.json
+            v6_readiness/daily/report.md
+            v6_readiness/daily/forecast.json
+            v6_readiness/daily/receipt.json
+            v6_readiness/daily_blocked/coverage.json
+            v6_readiness/daily_blocked/report.md
+          if-no-files-found: error
+          retention-days: 14
       - name: Publish sanitized latest readiness status for automatic checking
-        if: always()
+        if: always() && github.ref_name == 'main' && !inputs.daily
         env:
           RUN_ID: ${{ github.run_id }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
