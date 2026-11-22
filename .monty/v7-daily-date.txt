@@ -1,1 +1,2 @@
 2026-11-22
+request: full-card-retry-with-status
