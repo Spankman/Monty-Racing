@@ -1,2 +1,2 @@
 2026-11-22
-request: initial-v6-artifact-and-provider-readiness
+request: rerun-after-pythonpath-fix
