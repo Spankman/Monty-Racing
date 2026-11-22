@@ -1,2 +1,2 @@
 2026-11-22
-request: quote-provenance-audit-fa35ed5
+request: finite-krok-numeric-input-a36cf20
