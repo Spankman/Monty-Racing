@@ -34,7 +34,8 @@ jobs:
           DATE="${REQUESTED_DATE:-$(head -n 1 .monty/v7-daily-date.txt)}"
           cp v7/run_live_daily.py provisional-engine/v7/run_live_daily.py
           cd provisional-engine
-          python -m v7.run_live_daily --date "$DATE"
+          cp ../.monty/verified-fixtures-"$DATE".json verified-fixtures.json
+          python -m v7.run_live_daily --date "$DATE" --verified-fixtures verified-fixtures.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
