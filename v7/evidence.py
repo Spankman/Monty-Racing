@@ -3,19 +3,13 @@
 Source adapters normalize into this contract; source branding alone is not
 proof of identity, chronology, racing code or historical availability.
 """
-from datetime import datetime, timezone
+from historical_asof import utc_instant as utc, verified_release
 import numpy as np
 import pandas as pd
 
 FEATURES = ('last600_seconds','early_pace_mps','prior_interference_score',
             'prior_track_bias_residual','forecast_rain_mm','forecast_wind_kmh',
             'jockey_90d_strike','trainer_90d_strike')
-
-
-def utc(s):
-    d=datetime.fromisoformat(str(s).replace('Z','+00:00'))
-    if d.tzinfo is None:raise ValueError('Timezone required')
-    return d.astimezone(timezone.utc)
 
 
 def join_evidence(runners, observations):
@@ -32,7 +26,7 @@ def join_evidence(runners, observations):
     if r.duplicated(['race_id','runner_id']).any():raise ValueError('Duplicate runners')
     for f in FEATURES:r[f]=np.nan
     index={(str(x.race_id),str(x.runner_id)):i for i,x in r.iterrows()}
-    accepted=set();audit=[]
+    accepted={}; ambiguous=set();audit=[]
     for o in observations:
         reason=None; key=(str(o.get('race_id')),str(o.get('runner_id')))
         try:
@@ -42,25 +36,30 @@ def join_evidence(runners, observations):
             if o.get('identity_verified') is not True or o.get('country')!=r.at[i,'country']:
                 raise ValueError('Unverified identity/country')
             if not str(o.get('source_url','')).startswith('https://'):raise ValueError('Missing source URL')
-            if utc(o['available_at'])>cutoff or utc(o['published_at'])>cutoff:
-                raise ValueError('Evidence unavailable at decision')
-            if utc(o['captured_at'])<utc(o['available_at']):raise ValueError('Capture precedes availability')
+            available=verified_release(o['published_at'],o['available_at'],cutoff)
+            if utc(o['captured_at'])<available:raise ValueError('Capture precedes availability')
             if o['event_kind'] not in ('forecast','prior_race'):raise ValueError('Unknown event kind')
             if f.startswith('forecast_') and o['event_kind']!='forecast':raise ValueError('Observed weather is not a forecast')
             if not f.startswith('forecast_') and o['event_kind']!='prior_race':raise ValueError('Prior-race feature requires earlier race')
-            if o['event_kind']=='prior_race' and utc(o['event_at'])>=cutoff:
-                raise ValueError('Current/future race outcome leakage')
+            if o['event_kind']=='prior_race' and utc(o['event_at'])>utc(o['published_at']):
+                raise ValueError('Prior race occurs after evidence publication')
+            if isinstance(o['value'],bool):raise ValueError('Boolean is not a measurement')
             value=float(o['value'])
             if not np.isfinite(value):raise ValueError('Nonfinite value')
-            if (key,f) in accepted:raise ValueError('Ambiguous duplicate evidence')
-            r.at[i,f]=value;accepted.add((key,f))
-        except (KeyError,ValueError,TypeError) as e:
+            slot=(key,f)
+            if slot in accepted:
+                ambiguous.add(slot)
+                raise ValueError('Ambiguous duplicate evidence')
+            accepted[slot]=(i,value,len(audit))
+        except (KeyError,ValueError,TypeError,OverflowError) as e:
             reason=str(e)
-            # Duplicate evidence cannot leave an arbitrary first source active.
-            if key in index and o.get('feature') in FEATURES and (key,o['feature']) in accepted:
-                r.at[index[key],o['feature']]=np.nan
         audit.append({'race_id':key[0],'runner_id':key[1],'feature':o.get('feature'),
                       'status':'REJECTED' if reason else 'ACCEPTED','reason':reason})
+    for (key,feature),(index,value,audit_index) in accepted.items():
+        if (key,feature) in ambiguous:
+            audit[audit_index].update(status='REJECTED',reason='Ambiguous duplicate evidence')
+        else:
+            r.at[index,feature]=value
     return r,audit
 
 

@@ -1,8 +1,11 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import numpy as np
 import pandas as pd
 from .core import probability,fit,predict,calibrate,exotics,blend_expert,value_decision
 from .evidence import join_evidence,blackbook_matches
+from .predict import run
 
 class ProbabilityTests(unittest.TestCase):
     def test_extremes_and_group_sums(self):
@@ -41,11 +44,45 @@ class EvidenceTests(unittest.TestCase):
         r,a=join_evidence(self.r,[dict(self.o,event_at='2026-11-18T00:00:00Z')]);self.assertTrue(np.isnan(r.last600_seconds[0]))
     def test_duplicate_is_missing(self):
         r,a=join_evidence(self.r,[self.o,dict(self.o,value=34)]);self.assertTrue(np.isnan(r.last600_seconds[0]))
+    def test_evidence_strict_boundary_and_publication_sequence(self):
+        for change in [
+            dict(available_at='2026-11-18T00:00:00Z', captured_at='2026-11-18T00:00:00Z'),
+            dict(published_at='2026-11-02T00:00:00Z'),
+            dict(event_at='2026-11-01T12:00:00Z'),
+        ]:
+            r,a=join_evidence(self.r,[dict(self.o,**change)])
+            self.assertTrue(np.isnan(r.last600_seconds[0]))
+            self.assertEqual(a[0]['status'],'REJECTED')
+
+    def test_late_observation_cannot_invalidate_prior_evidence(self):
+        late=dict(self.o, available_at='2026-11-20T00:00:00Z')
+        r,a=join_evidence(self.r,[self.o,late])
+        self.assertEqual(r.last600_seconds[0],35.2)
+        self.assertEqual([row['status'] for row in a],['ACCEPTED','REJECTED'])
+
     def test_country_identity_and_weather(self):
         for change in [dict(country='NZ'),dict(identity_verified=False),dict(feature='forecast_rain_mm')]:
             r,a=join_evidence(self.r,[dict(self.o,**change)]);self.assertEqual(a[0]['status'],'REJECTED')
     def test_blackbook_scratchings_and_no_auto_bet(self):
         a=blackbook_matches([dict(horse="Bred ’em All",source_url='https://example.test',race_id='x',date='2026-11-18',scratched=True)])
         self.assertEqual(a[0]['status'],'SCRATCHED');self.assertFalse(a[0]['automatic_bet'])
+
+class CandidateInferenceTests(unittest.TestCase):
+    def test_candidate2_june_config_replays_pure_market_in_research_cli(self):
+        model=Path(__file__).parent/'candidate2_artifacts'/'fold_3_candidate2.json'
+        with TemporaryDirectory() as directory:
+            out=Path(directory)
+            field=out/'field.csv'
+            rows=[dict(race_id='r', runner_id=str(i), horse=f'Horse {i}',
+                       date='2026-11-23', country='AU', fixed_win_odds=odds,
+                       source_url='https://example.test/field', field_verified=True)
+                  for i,odds in enumerate([2.,3.,6.],1)]
+            pd.DataFrame(rows).to_csv(field,index=False)
+            run(model,field,out)
+            scored=pd.read_csv(out/'v7_research_scores.csv')
+            np.testing.assert_allclose(scored.v7_win_probability,[.5,1/3,1/6])
+            self.assertTrue(scored.research_model.eq('Candidate 2').all())
+            self.assertTrue(scored.deployment_decision.str.startswith('NO BET').all())
+
 
 if __name__=='__main__':unittest.main()

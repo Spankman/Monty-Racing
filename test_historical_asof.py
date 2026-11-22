@@ -37,6 +37,31 @@ class AsOfJoinTests(unittest.TestCase):
                      available_at="2026-11-19T02:00:00+00:00")
         self.assertEqual(self.join([older, BASE])[0]["observed_win_rate"], 0.25)
 
+    def test_missing_malformed_or_equal_release_never_leaks(self):
+        rows = [
+            dict(BASE, available_at=CUT),
+            dict(BASE, available_at="unknown"),
+            dict(BASE, observed_at="2026-11-21T01:00:00+00:00"),
+            dict(BASE, source=5),
+        ]
+        self.assertNotIn("observed_win_rate", self.join(rows)[0])
+
+    def test_equal_release_with_differing_observations_is_ambiguous(self):
+        row = dict(BASE, observed_at="2026-11-19T01:00:00+00:00", value=0.9)
+        self.assertNotIn("observed_win_rate", self.join([BASE, row])[0])
+
+    def test_namespaced_identity_and_provenance(self):
+        runner = {"runner_id": "horse-123", "country": "NZ", "namespace": "registry"}
+        valid = dict(BASE, **runner)
+        wrong = dict(valid, country="AU", value=0.8)
+        provenance = []
+        result = join_asof([runner], [BASE, wrong, valid], cutoff_utc=CUT,
+                           feature_names=["observed_win_rate"], provenance=provenance)
+        self.assertEqual(result[0]["observed_win_rate"], 0.25)
+        self.assertEqual(provenance, [{k: v for k, v in valid.items() if k != "value"}])
+        self.assertEqual(self.join([dict(BASE, runner_id="")], [{"runner_id": ""}]),
+                         [{"runner_id": ""}])
+
 
 if __name__ == "__main__":
     unittest.main()

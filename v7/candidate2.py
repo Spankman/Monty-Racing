@@ -11,6 +11,8 @@ from .diagnose import day_bootstrap
 def score(config,X,market,races):
     p=predict(config['candidate1_model'],X,market,races)
     w=config['form_weight']
+    if isinstance(w,bool) or not isinstance(w,(int,float)) or not 0 <= w <= 1:
+        raise ValueError('Invalid Candidate 2 form weight')
     return w*p+(1-w)*np.asarray(market)
 
 

@@ -4,14 +4,18 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from .core import predict,exotics,value_decision
+from .candidate2 import score as score_candidate2
 from .evidence import blackbook_matches
 
 
 def run(model_path,features_path,out):
-    m=json.loads(model_path.read_text());d=pd.read_csv(features_path,dtype={'race_id':str,'runner_id':str})
+    config=json.loads(model_path.read_text())
+    candidate2='candidate1_model' in config
+    m=config['candidate1_model'] if candidate2 else config
+    d=pd.read_csv(features_path,dtype={'race_id':str,'runner_id':str})
     needed={'race_id','runner_id','horse','date','country','fixed_win_odds','source_url'}
     if not needed.issubset(d):raise ValueError('Missing required field/quote provenance columns')
-    if d[list(needed)].isna().any().any() or d.duplicated(['race_id','runner_id']).any():raise ValueError('Incomplete or duplicate field records')
+    if d.empty or d[list(needed)].isna().any().any() or d.duplicated(['race_id','runner_id']).any():raise ValueError('Incomplete or duplicate field records')
     if not d.country.isin(['AU','NZ']).all():raise ValueError('Other jurisdictions need explicit validation')
     if not d.groupby('race_id').date.nunique().eq(1).all() or not d.groupby('race_id').country.nunique().eq(1).all():raise ValueError('Conflicting race metadata')
     if (d.groupby('race_id').size()<3).any():raise ValueError('Need at least three active runners')
@@ -25,7 +29,8 @@ def run(model_path,features_path,out):
     # Current market and field size are deterministic contemporaneous inputs.
     for name,values in [('log_market_probability',np.log(base)),('log_field_size',np.log(d.groupby('race_id').runner_id.transform('size')))]:
         if name in m['names']:X[:,m['names'].index(name)]=values
-    d['v7_win_probability']=predict(m,X,base,d.race_id)
+    d['v7_win_probability']=score_candidate2(config,X,base,d.race_id) if candidate2 else predict(m,X,base,d.race_id)
+    d['research_model']='Candidate 2' if candidate2 else 'Candidate 1'
     d['known_feature_count']=np.isfinite(X).sum(1)
     d['within_race_rank']=d.groupby('race_id').v7_win_probability.rank(method='first',ascending=False).astype(int)
     d['status']='EXPERIMENTAL_V7_NOT_APPROVED_REPLACEMENT'

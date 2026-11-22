@@ -37,7 +37,7 @@ def choose(runners, *, approved=False, min_edge=0.05, short_price=4.0,
             raise ValueError("Invalid runner")
         ranked.append({"number":number,"horse":horse,"probability":p,
                        "odds":odds,"edge":p*odds-1})
-    ranked.sort(key=lambda r:(-r["probability"],-r["edge"],int(r["number"]) if r["number"].isdigit() else r["number"]))
+    ranked.sort(key=lambda r:(-r["probability"],-r["edge"],(0,int(r["number"])) if r["number"].isdigit() else (1,r["number"])))
     if sum(r["probability"] for r in ranked) > 1.02:
         raise ValueError("Inconsistent race probabilities")
     best=ranked[0]
@@ -52,20 +52,18 @@ def choose(runners, *, approved=False, min_edge=0.05, short_price=4.0,
     if best["edge"] >= min_edge and best["odds"] >= short_price:
         return {**result,"bet_type":"WIN","selections":[best],"bet_authorised":True,
                 "reason":"Top-ranked runner has verified positive estimated win edge"}
-    # The highest probability horse remains first in every exotic display.
-    # Exotic quotes must explicitly supply verified edge and approved joint probability.
-    for kind,n in (("QUINELLA BOXED",2),("TRIFECTA BOXED",3),("FIRST FOUR BOXED",4)):
-        if len(ranked)<n:continue
-        quote=(exotic_quotes or {}).get(kind)
-        if not isinstance(quote,dict) or quote.get("verified") is not True:
-            continue
-        joint=quote.get("calibrated_probability")
-        dividend=quote.get("decimal_dividend")
-        if joint is None or dividend is None:continue
-        joint=float(joint);dividend=float(dividend)
-        if not (math.isfinite(joint) and 0<joint<=1 and math.isfinite(dividend) and dividend>1):
-            continue
-        if joint*dividend-1 >= min_edge:
-            return {**result,"bet_type":kind,"selections":ranked[:n],
-                    "bet_authorised":True,"reason":"Verified exotic quote and calibrated combination edge"}
+    # An exotic is eligible only at the stage selected by the fixed-win prices.
+    ladder=price_ladder(ranked,short_price=short_price)
+    kind=ladder["bet_type"]
+    quote=(exotic_quotes or {}).get(kind)
+    if kind!="BB" and isinstance(quote,dict) and quote.get("verified") is True:
+        try:
+            joint=float(quote.get("calibrated_probability"))
+            dividend=float(quote.get("decimal_dividend"))
+        except (TypeError,ValueError,OverflowError):
+            joint=dividend=math.nan
+        if 0<joint<=1 and math.isfinite(dividend) and dividend>1 and joint*dividend-1>=min_edge:
+            return {**result,"bet_type":kind,"selections":ladder["selections"],
+                    "bet_authorised":True,
+                    "reason":"Verified exotic quote and calibrated combination edge"}
     return {**result,"reason":"Best runner identified; no verified positive-value wager. NO BET"}

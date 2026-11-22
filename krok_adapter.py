@@ -62,6 +62,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
             # Counts can include scratchings; do not equate them to active counts.
             if isinstance(declared,int) and declared<len(active):
                 skipped.append(f'{venue} R{n}: contradictory runner count');continue
+            distance=race.get('distance_m',race.get('distance'))
             parsed=[]
             for r in active:
                 p,origin=price(r)
@@ -72,7 +73,6 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                     v=r.get(source)
                     if isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v):
                         item[target]=v
-                distance=race.get('distance_m',race.get('distance'))
                 if isinstance(distance,(int,float)) and not isinstance(distance,bool) and math.isfinite(distance) and distance>0:
                     item['distance_km']=distance/1000
                 raw_going = race.get('track_condition')
@@ -96,7 +96,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                     item['inside_three']=int(b<=3)
                     item['outside_barrier']=float(b>field_size*.75)
                     if 'distance_km' in item:
-                        item['barrier_x_distance']=(b/field_size)*item['distance_km']
+                        item['barrier_x_distance']=(b/field_size)*distance/1000
                 # A missing claim is unknown, not evidence of a zero claim.
                 # Never impute a frozen-model input without source evidence.
                 if 'allocated_weight' in item and 'claim_kg' in item:

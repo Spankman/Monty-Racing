@@ -37,6 +37,18 @@ class TestLadder(unittest.TestCase):
         r=choose(field(),approved=True,min_edge=0.9,exotic_quotes=q)
         self.assertEqual(r["bet_type"],"QUINELLA BOXED")
         self.assertEqual([x["number"] for x in r["selections"]],["5","2"])
+    def test_verified_exotic_cannot_skip_price_progression(self):
+        quote={"verified":True,"calibrated_probability":0.2,"decimal_dividend":10}
+        with self.subTest("best runner at exactly four"):
+            rows=field()
+            rows[0].update(odds=4.0,research_prob=0.30)
+            result=choose(rows,approved=True,min_edge=0.9,
+                          exotic_quotes={"QUINELLA BOXED":quote})
+            self.assertFalse(result["bet_authorised"])
+        with self.subTest("second runner at or above four"):
+            result=choose(field(),approved=True,exotic_quotes={"TRIFECTA BOXED":quote})
+            self.assertFalse(result["bet_authorised"])
+
     def test_invalid_probabilities_rejected(self):
         bad=field();bad[0]["research_prob"]=0.9
         with self.assertRaises(ValueError):choose(bad)
