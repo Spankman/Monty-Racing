@@ -1,0 +1,60 @@
+name: Monty V6 readiness diagnostic (no bets)
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Queensland race date YYYY-MM-DD
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  v6-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen V6 runner dependencies
+        run: python -m pip install -r requirements-runner.txt
+      - name: Verify frozen artifacts and capture provider readiness
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          RACE_DATE: ${{ inputs.date }}
+        run: |
+          mkdir -p v6_readiness
+          python - <<'PY'
+          import json,os,traceback
+          from pathlib import Path
+          from monty.integrity import verify_artifacts
+          root=Path("monty_v6")
+          report={"date":os.environ["RACE_DATE"],"v6_unchanged":True,"predictions_generated":False,"betting_authorised":False}
+          try:
+              report["verified_artifacts"]=verify_artifacts(root)
+              report["artifacts_ok"]=True
+          except Exception as exc:
+              report["artifacts_ok"]=False
+              report["blocker"]="Frozen archive/artifact verification: "+type(exc).__name__+": "+str(exc)
+          if report["artifacts_ok"]:
+              try:
+                  from intake_only import capture
+                  from assess_day import assess
+                  out,intake=capture(os.environ["RACE_DATE"],"v6_readiness/private_capture")
+                  assessment=assess(json.loads((out/"assessment_bundle.json").read_text()))
+                  report["provider_races_accepted"]=intake["adapter_audit"].get("races_accepted")
+                  report["active_feature_coverage"]=intake["active_feature_coverage"]
+                  report["readiness"]=assessment
+              except Exception as exc:
+                  report["blocker"]="Live intake/readiness: "+type(exc).__name__+": "+str(exc)
+          Path("v6_readiness/status.json").write_text(json.dumps(report,indent=2,default=str)+"\\n")
+          print(json.dumps({k:v for k,v in report.items() if k not in ("verified_artifacts","active_feature_coverage")},default=str))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v6-readiness-${{ github.run_id }}
+          path: v6_readiness/status.json
+          if-no-files-found: warn
+          retention-days: 14
