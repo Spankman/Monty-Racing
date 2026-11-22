@@ -1,0 +1,37 @@
+name: Monty V7 provisional daily full card
+on:
+  push:
+    branches: [main]
+    paths: ['.monty/v7-daily-date.txt']
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Queensland race date YYYY-MM-DD
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  provisional-daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Score full dated provider card with genuine provisional V7
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          REQUESTED_DATE: ${{ inputs.date }}
+        run: |
+          DATE="${REQUESTED_DATE:-$(head -n 1 .monty/v7-daily-date.txt)}"
+          python -m v7.run_live_daily --date "$DATE"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v7-daily-${{ github.run_id }}
+          path: output_v7_daily/
+          if-no-files-found: warn
+          retention-days: 14
