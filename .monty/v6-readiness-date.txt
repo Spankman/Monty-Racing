@@ -1,2 +1,2 @@
 2026-11-22
-request: feature-coverage-diagnostics-c97ae7e
+request: capture-only-quote-policy-21be798
