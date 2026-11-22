@@ -107,6 +107,7 @@ def fetch(date,key):
     params={'date':date,'race_type':'T','limit':50}
     seen=set()
     meetings=[]
+    declared_total=None
     for page_index in range(100):
         url=BASE+'?'+urllib.parse.urlencode(params)
         if url in seen:raise ValueError('Repeated meeting pagination pointer')
@@ -123,19 +124,20 @@ def fetch(date,key):
             raise ValueError('Meeting feed metadata is '+type(meta).__name__+' (expected object)')
         # A truncated page is acceptable only when an explicit continuation exists.
         # Never accept a truncated final page as a complete feed.
+        total=meta.get('total')
+        if isinstance(total,bool) or not isinstance(total,int) or total<0:
+            raise ValueError('Krok meeting total missing or invalid')
+        if declared_total is None:
+            declared_total=total
+        elif total!=declared_total:
+            raise ValueError('Krok meeting total changed between pages')
         if meta.get('truncated') and not (meta.get('next_cursor') or meta.get('next_page') or meta.get('next')):
-            safe_keys=','.join(sorted(str(k) for k in meta if str(k) in
-                ('truncated','has_more','next_cursor','next_page','next','page','pages','total','total_pages','limit','offset')))
-            raise ValueError(
-                'Truncated meeting page without continuation marker'
-                +'; page_index='+str(page_index+1)
-                +'; records_on_page='+str(len(payload['data']))
-                +'; accumulated_records='+str(len(meetings))
-                +'; metadata_keys='+safe_keys
-                +'; has_more='+str(bool(meta.get('has_more')))
-                +'; next_cursor_present='+str(bool(meta.get('next_cursor')))
-                +'; next_page_present='+str(bool(meta.get('next_page')))
-                +'; total_present='+str(meta.get('total') is not None))
+            if meta.get('has_more') is not False or len(meetings)+len(payload['data'])!=declared_total:
+                raise ValueError('Truncated meeting page without continuation and verified total'
+                    +'; page_index='+str(page_index+1)
+                    +'; received='+str(len(meetings)+len(payload['data']))
+                    +'; declared_total='+str(declared_total)
+                    +'; has_more='+str(meta.get('has_more')))
         meetings.extend(payload['data'])
         if len(meetings)>5000:raise ValueError('Meeting pagination exceeds safety limit')
         cursor=meta.get('next_cursor')
@@ -144,8 +146,13 @@ def fetch(date,key):
         more=meta.get('has_more')
         pointers=[x for x in (cursor,next_page,next_marker) if x not in (None,'',False)]
         if not pointers and not more:
-            if meta.get('truncated'):
-                raise ValueError('Final meeting page remains truncated')
+            if meta.get('has_more') is not False:
+                raise ValueError('Final meeting page has no explicit has_more=false')
+            if len(meetings)!=declared_total:
+                raise ValueError('Meeting count mismatch: received '+str(len(meetings))+
+                                 ', declared '+str(declared_total))
+            # Provider may mark a final page truncated even after the exact
+            # declared total is retrieved; counts and has_more must agree.
             # Only this fully fetched aggregate may reach normalize().
             # Duplicate meetings are unsafe because their race data may differ.
             keys=set()
