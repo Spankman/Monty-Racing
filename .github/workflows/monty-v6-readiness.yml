@@ -24,6 +24,7 @@ jobs:
         run: python -m pip install -r requirements-runner.txt
       - name: Verify frozen artifacts and capture provider readiness
         env:
+          PYTHONPATH: ${{ github.workspace }}/monty_v6:${{ github.workspace }}
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
           RACE_DATE_INPUT: ${{ inputs.date }}
         run: |
