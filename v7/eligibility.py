@@ -1,6 +1,8 @@
 """Shared eligibility for dated, independently classified races."""
 import re
 
+MIN_ACTIVE_RUNNERS = 3
+
 RESTRICTED = re.compile(
     r"\b(?:maiden|mdn|maid|2[ -]?y[ -]?o|juvenile|(?:two|2)[ -]*year[ -]*olds?|"
     r"hurdles?|steeple(?:chase)?s?|chase|jumps?|jumping)\b",

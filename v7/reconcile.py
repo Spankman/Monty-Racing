@@ -18,7 +18,29 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from historical_asof import utc_instant
-from v7.eligibility import eligibility
+from v7.eligibility import MIN_ACTIVE_RUNNERS, eligibility
+
+TAB_FIXTURE_SOURCES = {
+    "AU": {
+        "tab.com.au": {"tab", "tab au"},
+        "tabtouch.com.au": {"tabtouch"},
+    },
+    "NZ": {"tab.co.nz": {"tab", "tab nz"}},
+}
+
+
+def approved_tab_fixture(source, country):
+    """Match the fixture publisher and its official hostname to the jurisdiction."""
+    try:
+        url = urlsplit(source["source_url"])
+        host = (url.hostname or "").removeprefix("www.")
+        publisher = source["provider"]
+        names = TAB_FIXTURE_SOURCES.get(country, {}).get(host, set())
+        return (url.scheme == "https" and url.username is None and url.password is None
+                and url.port in (None, 443) and identity(publisher)
+                and publisher.casefold() in names)
+    except (KeyError, TypeError, ValueError, AttributeError):
+        return False
 
 
 def capture(receipt_path, cutoff):
@@ -92,7 +114,9 @@ def reconcile(krok, fixtures, quotes, *, date, decision_at, allow_restricted=Fal
                              class_verified=tab.get("class_verified"),
                              allow_restricted=allow_restricted)
         status = "PROVISIONAL"
-        if reason == "restricted race class":
+        if not approved_tab_fixture(fixtures, key[0]):
+            reason = "Fixture source is not approved independent TAB for jurisdiction"
+        elif reason == "restricted race class":
             status = "EXCLUDED"
         elif tab.get("status") in ("ABANDONED", "CANCELLED"):
             status, reason = "EXCLUDED", "official fixture void"
@@ -161,7 +185,9 @@ def verify_field(tab, provider, prices, cutoff):
         if not odds_valid(odds):
             raise ValueError("Active runner missing named fixed-win odds")
         active.append(dict(runner, fixed_win_odds=odds))
-    if len(active) < 2 or priced.keys() != {(r["runner_id"],) for r in active}:
+    if len(active) < MIN_ACTIVE_RUNNERS:
+        raise ValueError(f"Need at least {MIN_ACTIVE_RUNNERS} active runners")
+    if priced.keys() != {(r["runner_id"],) for r in active}:
         raise ValueError("Bookmaker and TAB active fields differ")
     return active
 

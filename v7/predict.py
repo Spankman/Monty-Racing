@@ -6,7 +6,8 @@ import pandas as pd
 from .core import predict,exotics,value_decision
 from .candidate2 import score as score_candidate2
 from .evidence import blackbook_matches
-from .eligibility import eligibility
+from .eligibility import MIN_ACTIVE_RUNNERS, eligibility
+from .reconcile import approved_tab_fixture
 from monty_v6.monty.normalization import condition, numeric_class
 
 
@@ -16,6 +17,8 @@ def read_verified_card(path):
     quote_source = card['sources']['fixed_win']
     rows, blackbook = [], []
     for race in card['verified']:
+        if not approved_tab_fixture(fixture_source, race['country']):
+            raise ValueError('Fixture source is not approved independent TAB for jurisdiction')
         for runner in race['runners'] + race['scratched_runners']:
             if runner['scratched']:
                 blackbook.append(dict(runner, race_id=race['race_id'], date=card['date'],
@@ -65,7 +68,8 @@ def run(model_path,features_path,out,*,allow_restricted=False):
         out.mkdir(parents=True, exist_ok=True)
         (out/'blackbook_next_starts.json').write_text(json.dumps(alerts, indent=2))
         raise ValueError('No eligible race after classification filter')
-    if (d.groupby('race_id').size()<3).any():raise ValueError('Need at least three active runners')
+    if (d.groupby('race_id').size() < MIN_ACTIVE_RUNNERS).any():
+        raise ValueError(f'Need at least {MIN_ACTIVE_RUNNERS} active runners')
     if (d.date<=m['calibration_end']).any():raise ValueError('Inference must follow model calibration period')
     odds=pd.to_numeric(d.fixed_win_odds,errors='coerce')
     if not np.isfinite(odds).all() or (odds<=1).any():raise ValueError('Invalid fixed win quote')
