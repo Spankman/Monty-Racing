@@ -75,6 +75,37 @@ def main():
         rois=[float(r["v7_win_probability"])*float(r["fixed_win_odds"])-1 for r in runners]
         diagnostics["positive_top_edge"]+=int(rois[0]>0)
         diagnostics["positive_any_edge"]+=int(any(roi>0 for roi in rois))
+    # Distinguish bookmaker overround, missing form features, and model adjustments.
+    import math
+    detailed=[]
+    for result in results:
+        runners=result.get("ordered") or []
+        if not runners:
+            continue
+        inv=[1/float(r["fixed_win_odds"]) for r in runners]
+        overround=sum(inv)
+        if not math.isfinite(overround) or overround<=0:
+            continue
+        comparisons=[]
+        for r,raw in zip(runners,inv):
+            p=float(r["v7_win_probability"])
+            odds=float(r["fixed_win_odds"])
+            comparisons.append({"number":r["number"],"horse":r["horse"],
+                "odds":odds,"model_p":p,"raw_market_p":raw,
+                "normalized_market_p":raw/overround,
+                "model_minus_normalized_market_p":p-raw/overround,
+                "model_roi":p*odds-1})
+        detailed.append({"meeting":result["meeting"],"race":result["race"],
+            "market_overround":overround,
+            "model_probability_sum":sum(x["model_p"] for x in comparisons),
+            "max_model_minus_normalized_market_p":max(x["model_minus_normalized_market_p"] for x in comparisons),
+            "max_model_roi":max(x["model_roi"] for x in comparisons),
+            "runners":comparisons})
+    (out/"market_probability_audit.json").write_text(json.dumps(detailed,indent=2))
+    diagnostics["overround_min"]=min((x["market_overround"] for x in detailed),default=None)
+    diagnostics["overround_max"]=max((x["market_overround"] for x in detailed),default=None)
+    diagnostics["model_p_sum_invalid_races"]=sum(not math.isclose(x["model_probability_sum"],1,abs_tol=1e-5) for x in detailed)
+    diagnostics["max_model_minus_normalized_market_p"]=max((x["max_model_minus_normalized_market_p"] for x in detailed),default=None)
     (out/"value_diagnostics.json").write_text(json.dumps(diagnostics,indent=2))
 
     (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","classification_rules":{"BB":"Top V7-ranked horse in each race; probability >=20%, fixed win odds < $4, uncalibrated model ROI > 0%","R":"Highest model-ROI positive-edge candidate in each race; fixed win odds >= $4, probability >=6%, uncalibrated model ROI > 0%","selection_limit_per_track":None,"betting_authorised":False},"picks":picks,"results":results,"failures":failures},indent=2))
