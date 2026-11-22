@@ -13,8 +13,13 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--date",default=dt.datetime.now(ZoneInfo("Australia/Brisbane")).date().isoformat())
     p.add_argument("--output-dir",default="output_v7_daily")
+    p.add_argument("--verified-fixtures",required=True,type=Path)
     args=p.parse_args()
     dt.date.fromisoformat(args.date)
+    fixtures=json.loads(args.verified_fixtures.read_text())
+    if fixtures.get("date") != args.date or not fixtures.get("meetings"):
+        raise ValueError("Missing or mismatched independently verified fixtures")
+    verified={str(k).upper():int(v) for k,v in fixtures["meetings"].items()}
     key=os.environ.get("KROK_API_KEY")
     if not key:
         raise RuntimeError("KROK_API_KEY missing")
@@ -29,6 +34,9 @@ def main():
     for race in snapshot["races"]:
         meeting=race["meeting"]
         number=str(race["race"])
+        if meeting.strip().upper() not in verified or not number.isdigit() or not 1<=int(number)<=verified[meeting.strip().upper()]:
+            failures.append({"meeting":meeting,"race":number,"error":"Excluded: not on independently verified dated fixture"})
+            continue
         country="NZ" if any(r.get("country")=="NZ" for r in snapshot["runners"] if r["meeting"]==meeting and r["race"]==number) else "AU"
         # Provider snapshot may not contain country. Do not guess NZ/AU identity.
         if not any(r.get("country") in ("AU","NZ") for r in snapshot["runners"] if r["meeting"]==meeting and r["race"]==number):
