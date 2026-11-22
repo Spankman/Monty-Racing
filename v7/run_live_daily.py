@@ -67,6 +67,16 @@ def main():
             if vo >= 4 and vp >= 0.06 and vp*vo > 1.0:
                 picks.append({"meeting":result["meeting"],"race":result["race"],"label":"R","number":str(value["number"]),"horse":value["horse"],"fixed_win_odds":vo,"model_expected_win_roi":vp*vo-1,"betting_authorised":False})
     picks.sort(key=lambda x:(x["meeting"],int(x["race"]),x["label"]))
+    diagnostics={"races":len(results),"positive_top_edge":0,"positive_any_edge":0}
+    for result in results:
+        runners=result.get("ordered") or []
+        if not runners:
+            continue
+        rois=[float(r["v7_win_probability"])*float(r["fixed_win_odds"])-1 for r in runners]
+        diagnostics["positive_top_edge"]+=int(rois[0]>0)
+        diagnostics["positive_any_edge"]+=int(any(roi>0 for roi in rois))
+    (out/"value_diagnostics.json").write_text(json.dumps(diagnostics,indent=2))
+
     (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","classification_rules":{"BB":"Top V7-ranked horse in each race; probability >=20%, fixed win odds < $4, uncalibrated model ROI > 0%","R":"Highest model-ROI positive-edge candidate in each race; fixed win odds >= $4, probability >=6%, uncalibrated model ROI > 0%","selection_limit_per_track":None,"betting_authorised":False},"picks":picks,"results":results,"failures":failures},indent=2))
     lines=["# Monty V7 BB/R — "+args.date,"","**PROVISIONAL ONLY — NO BET. Model probabilities are uncalibrated; these are research classifications, not proven betting value.**",""]
     current=None
@@ -78,7 +88,8 @@ def main():
     if not picks:
         lines.append("No qualifying provisional BB/R selections — NO BET.")
     lines.extend(["",f'Scored {len(results)} races; excluded/failed {len(failures)} races. Independent fixture list applied; runner/odds verification incomplete.',""])
-    (out/"selections.md").write_text("\\n".join(lines)+"\\n")
+    lines.append("Value diagnostic: "+json.dumps(diagnostics,sort_keys=True))
+    (out/"selections.md").write_text("\n".join(lines)+"\n")
     print(f"Scored {len(results)} races; failed {len(failures)}")
     if not results:
         raise RuntimeError("No races scored; see provider_audit.json and selections.json")
