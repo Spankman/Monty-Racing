@@ -2,6 +2,7 @@
 import argparse
 import datetime as dt
 import json
+import math
 import os
 from pathlib import Path
 import sys
@@ -42,7 +43,11 @@ def capture(date, output, fixture=None):
         if name in ('log_market_probability', 'log_field_size'):
             coverage[name] = {'status': 'derivable_from_accepted_field', 'runners': len(snapshot['runners'])}
         else:
-            count = sum(name in row for row in snapshot['runners'])
+            # Count usable numeric inputs, not merely present keys. Booleans,
+            # NaN and infinity cannot satisfy the frozen model contract.
+            count = sum(isinstance(row.get(name), (int, float))
+                        and not isinstance(row.get(name), bool)
+                        and math.isfinite(row[name]) for row in snapshot['runners'])
             coverage[name] = {'status': 'present' if count else 'missing', 'runners': count}
     report = dict(requested_date=date, fetch_started_utc=started, captured_at_utc=captured.isoformat(),
                   source='local_fixture' if fixture else 'Krok Odds API', live=fixture is None,
