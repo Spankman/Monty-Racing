@@ -101,6 +101,7 @@ jobs:
                   out,intake=capture(os.environ["RACE_DATE"],"v6_readiness/private_capture")
                   assessment=assess(json.loads((out/"assessment_bundle.json").read_text()))
                   report["provider_races_accepted"]=intake["adapter_audit"].get("races_accepted")
+                  report["price_source_counts"]=intake["adapter_audit"].get("price_source_counts",{})
                   report["active_feature_coverage"]=intake["active_feature_coverage"]
                   report["readiness"]=assessment
               except Exception as exc:
@@ -158,6 +159,7 @@ jobs:
             'date':report.get('date'),
             'artifacts_ok':report.get('artifacts_ok',False),
             'races_accepted':report.get('provider_races_accepted'),
+            'price_source_counts':{k:int(v) for k,v in (report.get('price_source_counts') or {}).items() if k in ('TAB','fixed_win','best_win') and isinstance(v,int) and not isinstance(v,bool) and 0<=v<=100000},
             'betting_authorised':False,
             'predictions_generated':False,
             'blocker':blocker[:400],
