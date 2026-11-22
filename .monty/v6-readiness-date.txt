@@ -1,2 +1,2 @@
 2026-11-22
-request: test-krok-cursor-pagination-cc6a382
+request: publish-self-service-v6-readiness-status-82170aa
