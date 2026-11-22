@@ -11,6 +11,7 @@ on:
         type: string
 permissions:
   contents: read
+  issues: write
 jobs:
   provisional-daily:
     runs-on: ubuntu-latest
@@ -35,3 +36,23 @@ jobs:
           path: output_v7_daily/
           if-no-files-found: warn
           retention-days: 14
+      - name: Publish safe provisional summary and execution status to issue 98
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          output=Path("monty_v7_status_comment.md")
+          report=Path("output_v7_daily/selections.md")
+          header=f"### Monty V7 daily execution — {os.environ['JOB_STATUS']}\n[Workflow run]({os.environ['RUN_URL']})\n\n"
+          if report.exists():
+              body=report.read_text(encoding="utf-8")
+              output.write_text((header+body)[:60000],encoding="utf-8")
+          else:
+              output.write_text(header+"No selections report generated. Inspect workflow job logs for the failure.\n",encoding="utf-8")
+          PY
+          gh issue comment 98 --body-file monty_v7_status_comment.md
