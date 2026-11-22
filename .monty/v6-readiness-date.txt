@@ -1,2 +1,2 @@
 2026-11-22
-request: rerun-after-pythonpath-fix
+request: expose-v6-blockers-and-fail-closed
