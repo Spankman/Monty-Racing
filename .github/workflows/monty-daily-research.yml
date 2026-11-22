@@ -90,6 +90,9 @@ jobs:
             echo 'NO VERIFIED EXPERT INPUT: 0% expert, 100% model research scores'
             python monty_v7_shadow_blend.py research_scores.csv --output v7_shadow.csv
           fi
+      - name: Render actual V7 shadow rankings (research only)
+        if: success()
+        run: python monty_v7_shadow_report.py v7_shadow.csv --output v7_shadow_report.md
       - name: Verify required daily research outputs exist and are nonempty
         if: success()
         run: |
@@ -103,6 +106,7 @@ jobs:
               'daily_summary.json',
               'daily_ladder_research_preview.csv',
               'v7_shadow.csv',
+              'v7_shadow_report.md',
           ]
           missing = [name for name in required if not Path(name).is_file() or Path(name).stat().st_size == 0]
           if missing:
@@ -126,6 +130,7 @@ jobs:
             daily_summary.json
             daily_ladder_research_preview.csv
             v7_shadow.csv
+            v7_shadow_report.md
             expert_comparison_audit.json
             expert_article_leads.json
             expert_article_candidates.json
