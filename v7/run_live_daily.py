@@ -45,6 +45,12 @@ def main():
         try:
             result=execute(snapshot_path,meeting,number,date=args.date,country=country if country!="UNVERIFIED" else "AU",output_dir=out/"races"/slug)
             result["country_provider_verified"]=country!="UNVERIFIED"
+            import csv
+            with (out/"races"/slug/"v7_research_scores.csv").open(newline="") as handle:
+                scored_rows=list(csv.DictReader(handle))
+            counts=[float(row["known_feature_count"]) for row in scored_rows]
+            result["feature_coverage"]={"min":min(counts),"max":max(counts),"mean":sum(counts)/len(counts),"source_columns":list(scored_rows[0])}
+
             results.append(result)
         except Exception as exc:
             failures.append({"meeting":meeting,"race":number,"error":str(exc)})
@@ -106,6 +112,11 @@ def main():
     diagnostics["overround_max"]=max((x["market_overround"] for x in detailed),default=None)
     diagnostics["model_p_sum_invalid_races"]=sum(not math.isclose(x["model_probability_sum"],1,abs_tol=1e-5) for x in detailed)
     diagnostics["max_model_minus_normalized_market_p"]=max((x["max_model_minus_normalized_market_p"] for x in detailed),default=None)
+    coverage=[r["feature_coverage"] for r in results if "feature_coverage" in r]
+    diagnostics["known_features_min"]=min((c["min"] for c in coverage),default=None)
+    diagnostics["known_features_max"]=max((c["max"] for c in coverage),default=None)
+    diagnostics["known_features_mean"]=sum(c["mean"] for c in coverage)/len(coverage) if coverage else None
+    (out/"feature_coverage_audit.json").write_text(json.dumps(coverage,indent=2))
     (out/"value_diagnostics.json").write_text(json.dumps(diagnostics,indent=2))
 
     (out/"selections.json").write_text(json.dumps({"date":args.date,"status":"PROVISIONAL RESEARCH ONLY — NO BET","classification_rules":{"BB":"Top V7-ranked horse in each race; probability >=20%, fixed win odds < $4, uncalibrated model ROI > 0%","R":"Highest model-ROI positive-edge candidate in each race; fixed win odds >= $4, probability >=6%, uncalibrated model ROI > 0%","selection_limit_per_track":None,"betting_authorised":False},"picks":picks,"results":results,"failures":failures},indent=2))
