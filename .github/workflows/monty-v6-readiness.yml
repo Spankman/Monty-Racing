@@ -22,6 +22,42 @@ jobs:
           python-version: '3.12'
       - name: Install frozen V6 runner dependencies
         run: python -m pip install -r requirements-runner.txt
+      - name: Restore private frozen V6 archive (if configured)
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os, tempfile, urllib.request, urllib.parse
+          from pathlib import Path
+          url=os.environ.get("V6_ARCHIVE_URL","").strip()
+          if not url:
+              print("No V6_ARCHIVE_URL configured: verification will report missing original artifacts.")
+          else:
+              parsed=urllib.parse.urlsplit(url)
+              if parsed.scheme!="https" or not parsed.hostname or parsed.username or parsed.password:
+                  raise SystemExit("V6 archive source must be an HTTPS URL without embedded credentials")
+              headers={"User-Agent":"Monty-V6-private-archive-restore","Accept":"application/octet-stream"}
+              token=os.environ.get("V6_ARCHIVE_TOKEN","").strip()
+              if token: headers["Authorization"]="Bearer "+token
+              req=urllib.request.Request(url,headers=headers)
+              class NoRedirect(urllib.request.HTTPRedirectHandler):
+                  def redirect_request(self,req,fp,code,msg,headers,newurl):
+                      raise ValueError("Archive download redirects are not allowed")
+              opener=urllib.request.build_opener(NoRedirect)
+              with tempfile.TemporaryDirectory() as td:
+                  dest=Path(td)/"v6-original.zip"
+                  with opener.open(req,timeout=45) as response, dest.open("wb") as out:
+                      size=0
+                      while True:
+                          chunk=response.read(1024*1024)
+                          if not chunk:break
+                          size+=len(chunk)
+                          if size>100_000_000:raise ValueError("Archive exceeds 100 MB limit")
+                          out.write(chunk)
+                  from restore_archive import restore
+                  print("Original SHA-256 verified artifacts restored:",restore(dest))
+          PY
       - name: Verify frozen artifacts and capture provider readiness
         env:
           PYTHONPATH: ${{ github.workspace }}/monty_v6:${{ github.workspace }}
