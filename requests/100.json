@@ -1,0 +1,11 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-23",
+  "run_id": "45079564800-1-100",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-23/45079564800-1-100/receipt.json",
+  "forecast_path": "runs/2026-11-23/45079564800-1-100/forecast.json",
+  "forecast_sha256": "b2fd584f52b043fbdf7b27e2c1380c0b468791b15cf635a0ff55be49c20df74e",
+  "generated_at": "2026-11-22T22:47:37.679614+00:00"
+}
