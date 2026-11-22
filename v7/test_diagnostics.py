@@ -1,3 +1,6 @@
+import json
+import subprocess
+import sys
 import tempfile,unittest
 from pathlib import Path
 from datetime import datetime,timezone
@@ -17,5 +20,40 @@ class EvidenceAudit(unittest.TestCase):
             with self.assertRaises(ValueError):freeze(rows,Path(temp)/'late.json',{},datetime(2030,1,3,tzinfo=timezone.utc))
             r=record_results(p,[dict(race_id='synthetic',verified=True,source_url='https://example.test/results',available_at='2030-01-02T01:00:00Z',status='FINAL',winner_runner_id='1')],Path(temp)/'r.json',datetime(2030,1,3,tzinfo=timezone.utc))
             self.assertEqual(original['sha256'],r['forecast_sha256'])
+
+    def test_result_cli_receipt_and_unchanged_field_comparison(self):
+        rows=[dict(race_id='r',runner_id=str(i),country='NZ',
+                   scheduled_start_utc='2025-06-02T00:00:00Z',
+                   odds_captured_at_utc='2025-06-01T00:00:00Z',
+                   source_url='https://example.test/quotes',odds=2,
+                   v6_probability=p,v7_probability=p,candidate2_probability=p,
+                   market_probability=.5) for i,p in enumerate([.75,.25],1)]
+        with tempfile.TemporaryDirectory() as temp:
+            p,receipt,results,output=(Path(temp)/name for name in ['f.json','receipt.json','r.json','out.json'])
+            now=datetime(2025,6,1,1,tzinfo=timezone.utc)
+            with self.assertRaisesRegex(ValueError,'normalized field'):
+                freeze([rows[0],{k:v for k,v in rows[1].items() if k!='candidate2_probability'}],p,{},now)
+            self.assertFalse(p.exists())
+            receipt.write_text(json.dumps(freeze(iter(rows),p,{},now)))
+            result=dict(race_id='r',verified=True,source_url='https://example.test/results',
+                        available_at='2025-06-02T01:00:00Z',status='FINAL',
+                        winner_runner_id='2',scratched_runner_ids=[])
+            results.write_text(json.dumps([result]))
+            with self.assertRaisesRegex(ValueError,'differs from its receipt'):
+                record_results(p,[result],output,expected_sha256='wrong')
+            self.assertFalse(output.exists())
+            before=p.read_bytes()
+            subprocess.run([sys.executable,'-m','v7.shadow','--forecast',str(p),
+                            '--receipt',str(receipt),'--results',str(results),
+                            '--output',str(output)],check=True,capture_output=True)
+            self.assertEqual(p.read_bytes(),before)
+            nz=json.loads(output.read_text())['probability_comparison']['by_country']['NZ']
+            self.assertEqual(nz['candidate2']['races'],1)
+            self.assertEqual(nz['candidate2']['top_pick_strike'],0)
+            self.assertAlmostEqual(nz['candidate2']['brier_per_race'],1.125)
+            void=record_results(p,[dict(result,winner_runner_id='1',scratched_runner_ids=['2'])],
+                                Path(temp)/'void.json')
+            self.assertEqual(void['probability_comparison']['excluded'],{'scratchings_present':1})
+            self.assertEqual(void['probability_comparison']['by_country'],{})
 
 if __name__=='__main__':unittest.main()

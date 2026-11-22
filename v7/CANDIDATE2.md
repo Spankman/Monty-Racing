@@ -242,3 +242,29 @@ combination probabilities, and settlement dividends/costs remain separate
 dependencies. The existing workflow's provisional engine still runs from
 its separate branch. This work does not make the V7 daily command a
 production entry point.
+
+### Import verified prospective results
+
+Once the original private forecast is available, use its published receipt
+to bind the result file to the original bytes.
+
+```bash
+python -m v7.shadow \
+  --forecast /private/2026-11-18_AU_frozen.json \
+  --receipt v7/candidate2_artifacts/shadow_receipt.json \
+  --results /private/verified-official-results.json \
+  --output /private/new-result-record.json
+```
+
+Supply a JSON list with the frozen `race_id`, `status` (`FINAL` or
+`ABANDONED`), `source_url`, timezone-aware `available_at`, and
+`verified: true` after reconciling the official source. For a final race,
+include its single `winner_runner_id` and verified
+`scratched_runner_ids`. Use an empty list only when the final active field
+matches the frozen field. Resolve substitutions and unsupported outcomes
+such as dead heats before importing them.
+
+The command checks the forecast digest, writes a separate result file, and
+reports log loss, race Brier score and top-pick strike by country. Abandoned
+races and fields with changed or unverified scratchings are counted separately.
+The comparison preserves the frozen probabilities and reports no wager returns.
