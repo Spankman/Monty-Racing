@@ -7,7 +7,7 @@ from monty_single_race_ladder import price_ladder
 
 LABELS={"BB":"BB","QUINELLA BOXED":"Q (boxed)","TRIFECTA BOXED":"T (boxed)","FIRST FOUR BOXED":"FF (boxed)"}
 
-def format_daily(shortlists):
+def format_daily(shortlists, *, details=False):
     """Group qualified race picks by meeting, retaining race order."""
     groups={}
     for item in shortlists:
@@ -23,7 +23,15 @@ def format_daily(shortlists):
         line=f"R{race} — {LABELS[result['bet_type']]}: "+ " → ".join(
             (f"**#{r['number']} {r['horse']}**" if i==0 else f"#{r['number']} {r['horse']}")
             for i,r in enumerate(selected))
+        if details:
+            classification = item.get("classification") or "Class unverified"
+            lines = [f"R{race} · {classification} · {LABELS[result['bet_type']]} assessment · NO BET", ""]
+            for index, runner in enumerate(selected):
+                text = f"#{runner['number']} {runner['horse']} ${float(runner['odds']):.2f}"
+                lines.append(f"- **Best Bet · {text}**" if index == 0 else f"- {text}")
+            line = "\n".join(lines)
         groups.setdefault(meeting,[]).append((race,line))
+    separator = "\n\n" if details else "\n"
     return "\n\n".join(
-        "**"+meeting+"**\n"+"\n".join(line for _,line in sorted(lines))
+        "**"+meeting+"**"+separator+separator.join(line for _,line in sorted(lines))
         for meeting,lines in groups.items())
