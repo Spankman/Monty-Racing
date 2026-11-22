@@ -121,14 +121,10 @@ def fetch(date,key):
         meta=payload.get('meta') or {}
         if not isinstance(meta,dict):
             raise ValueError('Meeting feed metadata is '+type(meta).__name__+' (expected object)')
-        if meta.get('truncated'):
-            # Only report structure and flags, never response bodies, credentials or URLs.
-            safe_keys=sorted(str(k) for k in meta if str(k) in ('truncated','has_more','next_cursor','next_page','next','page','pages','total','total_pages','limit','offset'))
-            raise ValueError('Provider marks meeting feed truncated; pagination metadata keys='+','.join(safe_keys)+
-                             '; has_more='+str(bool(meta.get('has_more')))+
-                             '; next_cursor_present='+str(bool(meta.get('next_cursor')))+
-                             '; next_page_present='+str(bool(meta.get('next_page')))+
-                             '; next_present='+str(bool(meta.get('next'))))
+        # A truncated page is acceptable only when an explicit continuation exists.
+        # Never accept a truncated final page as a complete feed.
+        if meta.get('truncated') and not (meta.get('next_cursor') or meta.get('next_page') or meta.get('next')):
+            raise ValueError('Truncated meeting page without continuation marker')
         meetings.extend(payload['data'])
         if len(meetings)>5000:raise ValueError('Meeting pagination exceeds safety limit')
         cursor=meta.get('next_cursor')
@@ -137,6 +133,8 @@ def fetch(date,key):
         more=meta.get('has_more')
         pointers=[x for x in (cursor,next_page,next_marker) if x not in (None,'',False)]
         if not pointers and not more:
+            if meta.get('truncated'):
+                raise ValueError('Final meeting page remains truncated')
             # Only this fully fetched aggregate may reach normalize().
             # Duplicate meetings are unsafe because their race data may differ.
             keys=set()
