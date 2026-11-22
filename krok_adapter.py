@@ -2,12 +2,13 @@
 """Krok documented /api/v1/racing/meetings adapter -> Monty v0.4 snapshot.
 Requires user-provided API key; no unofficial TAB endpoints or fabricated features.
 """
-import argparse, datetime as dt, json, math, os, urllib.parse, urllib.request, urllib.error, time
+import argparse, datetime as dt, hashlib, json, math, os, urllib.parse, urllib.request, urllib.error, time
 from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent / 'monty_v6'))
 from monty.normalization import condition
+from v7.eligibility import RESTRICTED
 
 BASE='https://krokodds.com.au/api/v1/racing/meetings'
 
@@ -49,7 +50,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                 continue
             # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
-            if not allow_restricted_classes and any(x in label for x in ('maiden','2yo','2 year old','two year old','hurdle','steeple','jumping')):
+            if not allow_restricted_classes and RESTRICTED.search(label):
                 skipped.append(f'{venue} R{n}: prohibited race type');continue
             rr=race.get('runners')
             if not isinstance(rr,list) or len(rr)<2:
@@ -68,7 +69,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                 p,origin=price(r)
                 if p is None or r.get('number') is None or not r.get('name'):
                     break
-                item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p}
+                item={'meeting':venue,'race':str(n),'number':str(r['number']), 'horse':r['name'],'odds':p, 'classification':label or 'Unverified'}
                 for source,target in [('barrier','barrier'),('weight','allocated_weight'),('age','age'),('claim_kg','claim_kg')]:
                     v=r.get(source)
                     if isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v):
@@ -106,9 +107,12 @@ def normalize(payload,date,*,allow_restricted_classes=False):
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
     return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows)), 'price_source_counts':{source:sum(r['_price_source']==source for r in rows) for source in sorted(set(r['_price_source'] for r in rows))}}
 
-def fetch(date,key):
+def fetch(date,key,*,raw_dir=None):
     """Follow explicit pagination markers; never accept an incomplete meeting feed."""
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
+    if raw_dir is not None:
+        raw_dir = Path(raw_dir)
+        raw_dir.mkdir(parents=True, exist_ok=False)
     params={'date':date,'race_type':'T','limit':50}
     seen=set()
     meetings=[]
@@ -121,6 +125,16 @@ def fetch(date,key):
         with urllib.request.urlopen(req,timeout=35) as resp:
             body=resp.read(20_000_001)
         if len(body)>20_000_000:raise ValueError('Response too large')
+        if raw_dir is not None:
+            captured_at = dt.datetime.now(dt.timezone.utc).isoformat()
+            filename = f"page-{page_index + 1:03d}.json"
+            (raw_dir / filename).write_bytes(body)
+            receipt = {
+                "provider": "Krok", "date": date, "source_url": url,
+                "captured_at": captured_at, "published_at": None,
+                "raw_file": filename, "raw_sha256": hashlib.sha256(body).hexdigest(),
+            }
+            (raw_dir / f"{filename}.receipt").write_text(json.dumps(receipt, indent=2))
         payload=json.loads(body)
         if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
             raise ValueError('Invalid meeting feed page')
@@ -188,7 +202,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--date',required=True);p.add_argument('--fixture',help='Use a local API JSON fixture instead of live fetch');p.add_argument('--output-dir',default='output_v05');a=p.parse_args()
     dt.date.fromisoformat(a.date)
     out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True)
-    raw=json.loads(Path(a.fixture).read_text()) if a.fixture else fetch(a.date,os.environ.get('KROK_API_KEY'))
+    raw=json.loads(Path(a.fixture).read_text()) if a.fixture else fetch(a.date,os.environ.get('KROK_API_KEY'),raw_dir=out/'raw_pages')
     snapshot,audit=normalize(raw,a.date)
     (out/'krok_raw.json').write_text(json.dumps(raw,indent=2))
     (out/'krok_snapshot.json').write_text(json.dumps(snapshot,indent=2))

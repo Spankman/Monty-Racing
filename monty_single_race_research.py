@@ -6,6 +6,8 @@ import argparse
 import csv
 import json
 from pathlib import Path
+from monty_single_race_ladder import choose
+from monty_daily_price_ladder import format_daily
 
 def select(path, track, race):
     with Path(path).open(newline="", encoding="utf-8") as f:
@@ -20,10 +22,18 @@ def select(path, track, race):
     for r in matches:
         r["research_prob"]=float(r["research_prob"])
         r["edge"]=float(r["edge"])
-    matches.sort(key=lambda r:(-r["research_prob"],int(r["number"])))
+    assessment = choose(matches)
+    order = {row["number"]: i for i, row in enumerate(assessment["ranked"])}
+    matches.sort(key=lambda row: order[row["number"]])
     return {"meeting":matches[0]["meeting"],"race":str(race),
             "status":"NO BET — UNAPPROVED RESEARCH",
             "source":"research_frozen_linear_replay.py",
+            "price_assessment":assessment["bet_type"],
+            "classification": matches[0].get("classification", "Unverified"),
+            "copy_text": format_daily([dict(meeting=matches[0]["meeting"], race=race,
+                classification=matches[0].get("classification", "Unverified"),
+                ranked=assessment["ranked"], qualified=True)]),
+            "assessment_runners":[row["number"] for row in assessment["selections"]],
             "runners":[{"number":r["number"],"horse":r["horse"],
                         "research_probability":r["research_prob"],"odds":float(r["odds"]),
                         "edge":r["edge"]} for r in matches]}

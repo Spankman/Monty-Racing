@@ -23,6 +23,11 @@ class AsOfJoinTests(unittest.TestCase):
         row = dict(BASE, observed_at=CUT, available_at=CUT)
         self.assertNotIn("observed_win_rate", self.join([row])[0])
 
+    def test_prepopulated_feature_requires_the_same_evidence(self):
+        runner = {"runner_id": "horse-123", "observed_win_rate": 1.0}
+        self.assertNotIn("observed_win_rate", self.join([], [runner])[0])
+        self.assertEqual(self.join([BASE], [runner])[0]["observed_win_rate"], 0.25)
+
     def test_missing_identity_not_joined(self):
         self.assertNotIn("observed_win_rate", self.join([BASE], [{}])[0])
 

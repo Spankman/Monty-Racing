@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from monty_single_race_research import select
+from monty_daily_research_preview import preview
 
 class TestSingleRace(unittest.TestCase):
     def setUp(self):
@@ -18,6 +19,12 @@ class TestSingleRace(unittest.TestCase):
         out=select(self.path,"kilcoy",4)
         self.assertEqual(out["runners"][0]["number"],"2")
         self.assertIn("NO BET",out["status"])
+    def test_daily_and_single_race_share_copy_text(self):
+        report = self.path.with_suffix(".md")
+        preview(self.path, report_path=report)
+        self.assertEqual(select(self.path, "Kilcoy", 4)["copy_text"] + "\n",
+                         report.read_text(encoding="utf-8"))
+
     def test_missing_race_rejected(self):
         with self.assertRaises(ValueError):select(self.path,"Kilcoy",9)
     def test_unapproved_only(self):

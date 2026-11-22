@@ -18,7 +18,7 @@ class EvidenceAudit(unittest.TestCase):
             original=freeze(rows,p,{'synthetic':True},now)
             with self.assertRaises(FileExistsError):freeze(rows,p,{},now)
             with self.assertRaises(ValueError):freeze(rows,Path(temp)/'late.json',{},datetime(2030,1,3,tzinfo=timezone.utc))
-            r=record_results(p,[dict(race_id='synthetic',verified=True,source_url='https://example.test/results',available_at='2030-01-02T01:00:00Z',status='FINAL',winner_runner_id='1')],Path(temp)/'r.json',datetime(2030,1,3,tzinfo=timezone.utc))
+            r=record_results(p,[dict(race_id='synthetic',verified=True,source_url='https://example.test/results',available_at='2030-01-02T01:00:00Z',status='FINAL',winner_runner_id='1',scratched_runner_ids=[])],Path(temp)/'r.json',datetime(2030,1,3,tzinfo=timezone.utc),expected_sha256=original['sha256'])
             self.assertEqual(original['sha256'],r['forecast_sha256'])
 
     def test_result_cli_receipt_and_unchanged_field_comparison(self):
@@ -52,7 +52,7 @@ class EvidenceAudit(unittest.TestCase):
             self.assertEqual(nz['candidate2']['top_pick_strike'],0)
             self.assertAlmostEqual(nz['candidate2']['brier_per_race'],1.125)
             void=record_results(p,[dict(result,winner_runner_id='1',scratched_runner_ids=['2'])],
-                                Path(temp)/'void.json')
+                                Path(temp)/'void.json', expected_sha256=json.loads(receipt.read_text())['sha256'])
             self.assertEqual(void['probability_comparison']['excluded'],{'scratchings_present':1})
             self.assertEqual(void['probability_comparison']['by_country'],{})
 

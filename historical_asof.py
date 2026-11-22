@@ -42,7 +42,7 @@ def _key(row):
 
 
 def join_asof(runners, history, *, cutoff_utc, feature_names, provenance=None):
-    """Join earlier finite observations by exact identity, preserving supplied values.
+    """Join earlier finite observations by exact identity, ignoring unverified supplied values.
 
     Scope keys country, namespace and race_id must match when used. The caller
     establishes identity and source authenticity. Malformed rows stay missing.
@@ -51,7 +51,7 @@ def join_asof(runners, history, *, cutoff_utc, feature_names, provenance=None):
     """
     cutoff = utc_instant(cutoff_utc)
     allowed = set(feature_names)
-    output = [dict(row) for row in runners]
+    output = [{k: v for k, v in row.items() if k not in allowed} for row in runners]
     keys = {_key(row) for row in output} - {None}
     candidates = {}
     for entry in history:

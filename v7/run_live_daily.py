@@ -25,7 +25,15 @@ def main():
         raise RuntimeError("KROK_API_KEY missing")
     out=Path(args.output_dir)
     out.mkdir(parents=True,exist_ok=True)
-    snapshot,audit=normalize(fetch(args.date,key),args.date)
+    raw = fetch(args.date, key)
+    snapshot,audit=normalize(raw,args.date)
+    provider_countries = {}
+    for meeting in raw["data"]:
+        if str(meeting.get("date", ""))[:10] != args.date or meeting.get("type") not in ("T", "R"):
+            continue
+        for race in meeting.get("races", []):
+            identity = (meeting.get("venue"), str(race.get("number")))
+            provider_countries.setdefault(identity, set()).add(meeting.get("country"))
     snapshot_path=out/"provider_snapshot.json"
     snapshot_path.write_text(json.dumps(snapshot,indent=2))
     (out/"provider_audit.json").write_text(json.dumps(audit,indent=2))
@@ -37,14 +45,16 @@ def main():
         if meeting.strip().upper() not in verified or not number.isdigit() or not 1<=int(number)<=verified[meeting.strip().upper()]:
             failures.append({"meeting":meeting,"race":number,"error":"Excluded: not on independently verified dated fixture"})
             continue
-        country="NZ" if any(r.get("country")=="NZ" for r in snapshot["runners"] if r["meeting"]==meeting and r["race"]==number) else "AU"
-        # Provider snapshot may not contain country. Do not guess NZ/AU identity.
-        if not any(r.get("country") in ("AU","NZ") for r in snapshot["runners"] if r["meeting"]==meeting and r["race"]==number):
-            country="UNVERIFIED"
+        countries = provider_countries.get((meeting, number), set())
+        if countries not in ({"AU"}, {"NZ"}):
+            failures.append({"meeting": meeting, "race": number,
+                             "status": "PROVISIONAL", "error": "Provider country unresolved"})
+            continue
+        country = countries.pop()
         slug=str(len(results)+len(failures)+1).zfill(3)
         try:
-            result=execute(snapshot_path,meeting,number,date=args.date,country=country if country!="UNVERIFIED" else "AU",output_dir=out/"races"/slug)
-            result["country_provider_verified"]=country!="UNVERIFIED"
+            result=execute(snapshot_path,meeting,number,date=args.date,country=country,output_dir=out/"races"/slug)
+            result["country_provider_verified"]=True
             import csv
             with (out/"races"/slug/"v7_research_scores.csv").open(newline="") as handle:
                 scored_rows=list(csv.DictReader(handle))

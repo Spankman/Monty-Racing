@@ -58,7 +58,7 @@ jobs:
           PY
           python research_frozen_linear_replay.py research_snapshot.json --output research_scores.csv
           python research_daily_audit.py research_scores.csv research_scores.audit.json research_source_audit.json --output daily_summary.json
-          python monty_daily_research_preview.py research_scores.csv --output daily_ladder_research_preview.csv
+          python monty_daily_research_preview.py research_scores.csv --output daily_ladder_research_preview.csv --report daily_ladder_research_preview.md
           if [ -f expert_article_candidates.json ]; then
             python monty_expert_candidate_field_audit.py expert_article_candidates.json research_scores.csv --output expert_candidate_field_audit.json
           fi
@@ -76,7 +76,7 @@ jobs:
           if [ -f expert_tips_validated.csv ]; then
             # Expert validation errors must never prevent a model-only run.
             # Avoid leaving a partial expert blend or audit after rejection.
-            if python monty_v7_shadow_blend.py research_scores.csv --experts expert_tips_validated.csv --output v7_shadow_candidate.csv && \
+            if python monty_v7_shadow_blend.py research_scores.csv --experts expert_tips_validated.csv --weight 0 --output v7_shadow_candidate.csv && \
                python monty_expert_comparison.py research_scores.csv expert_tips_validated.csv --output expert_comparison_candidate.json; then
               mv v7_shadow_candidate.csv v7_shadow.csv
               mv expert_comparison_candidate.json expert_comparison_audit.json
@@ -105,6 +105,7 @@ jobs:
               'research_source_audit.json',
               'daily_summary.json',
               'daily_ladder_research_preview.csv',
+              'daily_ladder_research_preview.md',
               'v7_shadow.csv',
               'v7_shadow_report.md',
           ]
@@ -129,6 +130,7 @@ jobs:
             research_source_audit.json
             daily_summary.json
             daily_ladder_research_preview.csv
+            daily_ladder_research_preview.md
             v7_shadow.csv
             v7_shadow_report.md
             expert_comparison_audit.json

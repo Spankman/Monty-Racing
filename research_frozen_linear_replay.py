@@ -64,9 +64,11 @@ def run(snapshot_path, output):
     df['market_prob']=base;df['research_prob']=pred
     df['edge']=df.odds*pred-1
     df['feature_coverage']=finite.sum(axis=1)/len(names)
+    if 'classification' not in df:
+        df['classification'] = 'Unverified'
     df['status']='UNAPPROVED RESEARCH — NO BET'
     output=Path(output);output.parent.mkdir(parents=True,exist_ok=True)
-    df[['meeting','race','number','horse','odds','market_prob','research_prob','edge','feature_coverage','status']].to_csv(output,index=False)
+    df[['meeting','race','number','horse','odds','market_prob','research_prob','edge','feature_coverage','status','classification']].to_csv(output,index=False)
     audit={'date':snapshot['date'],'races':len(actual),'runners':len(df),
         'frozen_model_sha256':manifest['results/frozen_model.json'],
         'full_55_artifact_integrity':'NOT VERIFIED',

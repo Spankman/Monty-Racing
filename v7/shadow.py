@@ -47,7 +47,17 @@ def freeze(rows,path,models,now=None):
     return dict(path=str(path),sha256=hashlib.sha256(encoded).hexdigest(),races=len(groups),runners=len(rows),frozen_at_utc=payload['frozen_at_utc'],first_start_utc=min(utc(r['scheduled_start_utc']) for r in rows).isoformat())
 
 
-def record_results(forecast_path,results,path,now=None,*,expected_sha256=None):
+def verified_forecast(path, expected_sha256):
+    """Read the original bytes and require the published forecast digest."""
+    raw = Path(path).read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if digest != expected_sha256:
+        raise ValueError('Frozen forecast differs from its receipt')
+    forecast = json.loads(raw)
+    return forecast, digest
+
+
+def record_results(forecast_path,results,path,now=None,*,expected_sha256):
     """Append a separate verified-result file, preserving original probabilities.
 
     results are one per race with verified=True, source_url, available_at,
@@ -56,12 +66,8 @@ def record_results(forecast_path,results,path,now=None,*,expected_sha256=None):
     re-rank remaining horses after the outcome to manufacture a replacement.
     """
     now=now or datetime.now(timezone.utc)
-    raw=Path(forecast_path).read_bytes()
-    digest=hashlib.sha256(raw).hexdigest()
-    if expected_sha256 is not None and digest!=expected_sha256:
-        raise ValueError('Frozen forecast differs from its receipt')
-    forecast=json.loads(raw)
-    if forecast.get('status')!='PROSPECTIVE_SHADOW_NO_REAL_BETS':
+    forecast, digest = verified_forecast(forecast_path, expected_sha256)
+    if forecast.get('status') != 'PROSPECTIVE_SHADOW_NO_REAL_BETS':
         raise ValueError('Expected an immutable shadow forecast')
     frozen_at=utc(forecast['frozen_at_utc'])
     races=defaultdict(list)
@@ -86,9 +92,27 @@ def record_results(forecast_path,results,path,now=None,*,expected_sha256=None):
             raise ValueError('Result predates forecast or recorded start')
         ids={r['runner_id'] for r in races[race]}
         if result['status']=='FINAL' and result.get('winner_runner_id') not in ids:raise ValueError('Winner not in frozen field')
-        if not set(result.get('scratched_runner_ids',[]))<=ids:raise ValueError('Unknown scratching')
-        if result.get('winner_runner_id') in result.get('scratched_runner_ids',[]):raise ValueError('Winner marked scratched')
+        scratched = result.get('scratched_runner_ids')
+        if result['status'] == 'FINAL' and not isinstance(scratched, list):
+            raise ValueError('Official scratching reconciliation required for final race')
+        if scratched is not None and (not isinstance(scratched, list)
+                or len(set(scratched)) != len(scratched) or not set(scratched) <= ids):
+            raise ValueError('Unknown or duplicate scratching')
+        if result.get('winner_runner_id') in (result.get('scratched_runner_ids') or []):raise ValueError('Winner marked scratched')
+    dispositions = {}
+    for result in results:
+        race = result['race_id']
+        scratched = set(result.get('scratched_runner_ids') or [])
+        disposition = 'VOID' if result['status'] == 'ABANDONED' else 'CHANGED_FIELD' if scratched else 'UNCHANGED'
+        tops = {}
+        for key in ('v6_probability', 'v7_probability', 'candidate2_probability', 'market_probability'):
+            if all(key in row for row in races[race]):
+                original = max(races[race], key=lambda row: row[key])
+                tops[key] = dict(runner_id=original['runner_id'],
+                                 void=disposition == 'VOID' or original['runner_id'] in scratched)
+        dispositions[race] = dict(status=disposition, original_top_picks=tops)
     output=dict(forecast_sha256=digest,recorded_at_utc=now.isoformat(),results=results,
+                dispositions=dispositions,
                 probability_comparison=_compare(races,results))
     path=Path(path)
     if path.resolve()==Path(forecast_path).resolve():
@@ -141,10 +165,16 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--forecast',type=Path,required=True)
     parser.add_argument('--receipt',type=Path,required=True)
-    parser.add_argument('--results',type=Path,required=True,help='Verified result records as a JSON list')
-    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--results',type=Path,help='Verified result records as a JSON list')
+    parser.add_argument('--output',type=Path)
     args=parser.parse_args()
     receipt=json.loads(args.receipt.read_text())
+    if args.results is None and args.output is None:
+        _, digest = verified_forecast(args.forecast, receipt['sha256'])
+        print(f"Verified original forecast digest {digest}")
+        return
+    if args.results is None or args.output is None:
+        parser.error('--results and --output must be supplied together')
     results=json.loads(args.results.read_text())
     if not isinstance(results,list) or any(not isinstance(result,dict) for result in results):
         parser.error('results must be a JSON list of objects')

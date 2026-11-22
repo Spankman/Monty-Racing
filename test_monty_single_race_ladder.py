@@ -33,12 +33,12 @@ class TestLadder(unittest.TestCase):
         r=choose(field(),approved=True,min_edge=0.9)
         self.assertFalse(r["bet_authorised"])
     def test_verified_quinella(self):
-        q={"QUINELLA BOXED":{"verified":True,"calibrated_probability":0.2,"decimal_dividend":10}}
+        q={"QUINELLA BOXED":{"verified":True,"calibrated_probability":0.2,"return_units":10,"cost_units":1,"runner_numbers":[5,2]}}
         r=choose(field(),approved=True,min_edge=0.9,exotic_quotes=q)
         self.assertEqual(r["bet_type"],"QUINELLA BOXED")
         self.assertEqual([x["number"] for x in r["selections"]],["5","2"])
     def test_verified_exotic_cannot_skip_price_progression(self):
-        quote={"verified":True,"calibrated_probability":0.2,"decimal_dividend":10}
+        quote={"verified":True,"calibrated_probability":0.2,"return_units":10,"cost_units":1,"runner_numbers":[5,2]}
         with self.subTest("best runner at exactly four"):
             rows=field()
             rows[0].update(odds=4.0,research_prob=0.30)
@@ -47,6 +47,20 @@ class TestLadder(unittest.TestCase):
             self.assertFalse(result["bet_authorised"])
         with self.subTest("second runner at or above four"):
             result=choose(field(),approved=True,exotic_quotes={"TRIFECTA BOXED":quote})
+            self.assertFalse(result["bet_authorised"])
+
+    def test_unsupported_next_runner_stops_progression(self):
+        for flag, value in (("evidence_verified", False), ("roughie", True)):
+            rows = field()
+            rows[1][flag] = value
+            self.assertEqual(choose(rows)["bet_type"], "NO BET")
+
+    def test_exotic_quote_requires_exact_box_and_positive_value_after_cost(self):
+        quote = {"verified": True, "calibrated_probability": 0.2,
+                 "return_units": 10, "cost_units": 2, "runner_numbers": [5, 2]}
+        for update in ({}, {"cost_units": 1, "runner_numbers": [5, 7]}):
+            result = choose(field(), approved=True,
+                            exotic_quotes={"QUINELLA BOXED": dict(quote, **update)})
             self.assertFalse(result["bet_authorised"])
 
     def test_invalid_probabilities_rejected(self):
