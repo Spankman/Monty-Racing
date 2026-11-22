@@ -148,8 +148,8 @@ jobs:
           # Only known diagnostic messages are published; never publish private data or API responses.
           if blocker and not (blocker.startswith('Live intake/readiness: ') or blocker.startswith('Frozen archive/artifact verification: ') or blocker.startswith('Readiness step did not')):
               blocker='Unclassified diagnostic error; see private workflow logs'
-          blocker=re.sub(r'https?://\\S+', '[URL REDACTED]', blocker)
-          blocker=re.sub(r'(?i)(api[_-]?key|token|authorization)[=: ]+\\S+', r'\\1=[REDACTED]', blocker)
+          blocker=re.sub(r'https?://\S+', '[URL REDACTED]', blocker)
+          blocker=re.sub(r'(?i)(api[_-]?key|token|authorization)[=: ]+\S+', r'\1=[REDACTED]', blocker)
           safe={
             'run_id':os.environ['RUN_ID'],
             'run_url':os.environ['RUN_URL'],
@@ -161,7 +161,7 @@ jobs:
             'predictions_generated':False,
             'blocker':blocker[:400],
           }
-          Path('.monty/v6-latest-status.json').write_text(json.dumps(safe,indent=2)+'\\n')
+          Path('.monty/v6-latest-status.json').write_text(json.dumps(safe,indent=2)+'\n')
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
