@@ -102,7 +102,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active)})
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
-    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
+    return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows)), 'price_source_counts':{source:sum(r['_price_source']==source for r in rows) for source in sorted(set(r['_price_source'] for r in rows))}}
 
 def fetch(date,key):
     """Follow explicit pagination markers; never accept an incomplete meeting feed."""
