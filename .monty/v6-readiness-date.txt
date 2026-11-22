@@ -1,2 +1,2 @@
 2026-11-22
-request: inspect-sanitized-krok-truncation-b0b9141
+request: test-krok-cursor-pagination-cc6a382
