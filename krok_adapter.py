@@ -102,13 +102,58 @@ def normalize(payload,date,*,allow_restricted_classes=False):
     return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows))}
 
 def fetch(date,key):
+    """Follow explicit pagination markers; never accept an incomplete meeting feed."""
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
-    url=BASE+'?'+urllib.parse.urlencode({'date':date,'race_type':'T','limit':50})
-    req=urllib.request.Request(url,headers={'X-API-Key':key,'Accept':'application/json','User-Agent':'Monty-V6/0.5'})
-    with urllib.request.urlopen(req,timeout=35) as resp:
-        body=resp.read(20_000_001)
-    if len(body)>20_000_000:raise ValueError('Response too large')
-    return json.loads(body)
+    params={'date':date,'race_type':'T','limit':50}
+    seen=set()
+    meetings=[]
+    for page_index in range(100):
+        url=BASE+'?'+urllib.parse.urlencode(params)
+        if url in seen:raise ValueError('Repeated meeting pagination pointer')
+        seen.add(url)
+        req=urllib.request.Request(url,headers={'X-API-Key':key,'Accept':'application/json','User-Agent':'Monty-V6/0.5'})
+        with urllib.request.urlopen(req,timeout=35) as resp:
+            body=resp.read(20_000_001)
+        if len(body)>20_000_000:raise ValueError('Response too large')
+        payload=json.loads(body)
+        if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
+            raise ValueError('Invalid meeting feed page')
+        meta=payload.get('meta') or {}
+        if not isinstance(meta,dict) or meta.get('truncated'):
+            raise ValueError('Meeting feed truncated or invalid metadata')
+        meetings.extend(payload['data'])
+        if len(meetings)>5000:raise ValueError('Meeting pagination exceeds safety limit')
+        cursor=meta.get('next_cursor')
+        next_page=meta.get('next_page')
+        next_marker=meta.get('next')
+        more=meta.get('has_more')
+        pointers=[x for x in (cursor,next_page,next_marker) if x not in (None,'',False)]
+        if not pointers and not more:
+            # Only this fully fetched aggregate may reach normalize().
+            # Duplicate meetings are unsafe because their race data may differ.
+            keys=set()
+            for m in meetings:
+                if not isinstance(m,dict):raise ValueError('Invalid meeting record')
+                identity=(str(m.get('date')),str(m.get('country')),str(m.get('venue')),str(m.get('type')))
+                if identity in keys:raise ValueError('Duplicate meeting across pages: '+str(identity))
+                keys.add(identity)
+            return {'success':True,'data':meetings,'meta':{'has_more':False,'pages_fetched':page_index+1}}
+        if cursor not in (None,'',False):
+            params.pop('page',None)
+            params['cursor']=str(cursor)
+        elif next_page not in (None,'',False):
+            if isinstance(next_page,bool) or not str(next_page).isdigit():
+                raise ValueError('Unrecognized next_page pagination marker')
+            params.pop('cursor',None)
+            params['page']=str(next_page)
+        elif next_marker not in (None,'',False):
+            if isinstance(next_marker,bool) or not str(next_marker).isdigit():
+                raise ValueError('Unrecognized next pagination marker')
+            params.pop('cursor',None)
+            params['page']=str(next_marker)
+        else:
+            raise ValueError('Meeting feed has_more but no usable next-page marker')
+    raise ValueError('Meeting pagination exceeded 100 pages')
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--date',required=True);p.add_argument('--fixture',help='Use a local API JSON fixture instead of live fetch');p.add_argument('--output-dir',default='output_v05');a=p.parse_args()
