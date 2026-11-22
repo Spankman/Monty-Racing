@@ -1,0 +1,68 @@
+name: Monty ChatGPT operations (shared snapshot)
+run-name: Monty operations ${{ inputs.command || github.event.issue.title || github.event.schedule }}
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: RM6 / RM7 / RM6PS / RM7PS / RM6 track race / RM7 track race
+        default: RM6
+        type: string
+      date:
+        description: Brisbane date (empty means today)
+        type: string
+      request_issue:
+        description: Staging queue request issue number (optional)
+        type: string
+  issues:
+    types: [opened]
+  schedule:
+    - cron: '10 22 * * *'
+    - cron: '*/5 * * * *'
+permissions:
+  contents: write
+  issues: read
+concurrency:
+  group: monty-operations-queue
+  cancel-in-progress: false
+jobs:
+  operate:
+    if: >-
+      github.event_name != 'issues' ||
+      (startsWith(github.event.issue.title, 'Monty command: ') && github.event.issue.user.login == 'Spankman')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
+          path: v7_engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing frozen runtime (startup failures reported by worker)
+        continue-on-error: true
+        run: python -m pip install -r requirements-runner.txt
+      - name: Restore original private artifacts without changing manifest
+        continue-on-error: true
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+        run: python operations/restore_private.py
+      - name: Process authenticated commands or shared daily card
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          OPERATIONS_COMMAND: ${{ inputs.command }}
+          OPERATIONS_DATE: ${{ inputs.date }}
+          OPERATIONS_ISSUE: ${{ inputs.request_issue || github.event.issue.number }}
+          OPERATIONS_MODE: ${{ (github.event_name == 'issues' || inputs.request_issue || github.event.schedule == '*/5 * * * *') && 'queue' || 'daily' }}
+        run: python operations/worker.py
+      - name: Derived receipt and forecast artifact (no private snapshots)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monty-operations-${{ github.run_id }}-${{ github.run_attempt }}
+          path: operations_output/*/public/
+          if-no-files-found: warn
+          retention-days: 90
