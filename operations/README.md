@@ -58,13 +58,13 @@ The workflow uses subprocess argument lists, not shell interpolation of commands
 
 | User command | Result |
 | --- | --- |
-| RM6 | Fresh dual capture/inference; return V6 official NO BET/qualified view |
-| RM7 | Fresh dual capture/inference; return V7 research official NO BET view |
+| RM6 | Return the current V6 official view, refreshing the daily capture if stale or unavailable |
+| RM7 | Return the current V7 shadow selections, refreshing the daily capture if stale or unavailable. Official decision stays NO BET |
 | RM6PS | Fresh dual run; return V6 provisional ordered assessments |
 | RM7PS | Fresh dual run; return genuine V7 provisional research assessments |
 | RM6 Ballina 3 | Fresh capture; both models assess only Ballina R3; show V6 |
 | RM7 Te Rapa 4 | Fresh capture; both models assess only requested race; show V7 |
-| C | Read status/index/receipt; do not dispatch or reuse old odds as fresh |
+| C | Read the latest relevant request, its status, capture times and receipt |
 
 Every run computes BOTH versions so their comparison uses the same timestamped
 source and byte-identical per-race JSON, including available source features.
@@ -73,25 +73,53 @@ race, as in the existing owner rule. All official outputs remain NO BET under
 current model/evidence gates; requesting provisional output does not change them.
 Single-race commands default to provisional assessment with explicit NO BET.
 
-After creating issue N, use `github_fetch_file` with:
+### Connector retrieval and freshness
 
-```
-repository_full_name: Spankman/Monty-Racing
-ref: monty-operations-results
-path: requests/N.json
-```
+For a new daily RM6/RM7 command, check
+`daily/YYYY-MM-DD/latest.json` for the Brisbane date on
+`monty-operations-results`. Read the linked forecast and receipt on that same
+ref. Compare the actual retrieval time against `captured_at`, `valid_until`,
+the five-minute cap, and each race's scheduled jump. A usable live forecast
+can be displayed. Otherwise create one fresh command issue using the format
+above. RM6PS, RM7PS and single-race commands start their own request.
 
-If not found: PENDING, not failed and not successful. Check workflow jobs or
-retry after the queue interval. Do not invent a receipt. The index gives
-`forecast_path`, `receipt_path`, run_id, date, status and SHA-256. Retrieve these
-with the SAME explicit ref. For daily results use `daily/YYYY-MM-DD/latest.json`.
-Forecast views alongside those paths are `v6-official.json`,
-`v6-provisional.json`, `v7-official.json`, `v7-provisional.json`; plain-text
-and HTML ticket equivalents use `.txt`/`.html`. No manual download is required.
+After creating issue N, retain its number in the conversation and fetch
+`requests/N.json` on `monty-operations-results`. Until an index appears,
+report QUEUED with the issue number. The worker writes QUEUED and RUNNING
+indices with the request ID, run ID and workflow URL. Read this same index
+while it is pending and use only its linked forecast and receipt when it
+completes. Never switch back to the daily index while following an issue.
+If the terminal attempt failed or its output expired, report that outcome.
+If status publication was unavailable and the linked workflow has ended,
+re-read the index once to account for a concurrent terminal write. If it
+still shows RUNNING, report that the workflow ended without publishing a
+terminal status.
 
-C example: "Run 123-1-456 completed; V6 scored 8, V7 scored 8; both official
-NO BET. Prices captured at 08:10 AEST, now STALE; use RM6PS/RM7PS for fresh output."
-Numbers in this example are illustrative, not execution evidence.
+For C, use the request number from the current conversation when available.
+Otherwise find the latest owner-authored Monty command for the relevant
+Brisbane date and scope, including pending requests. Use the daily index
+only when there is no matching issue. Report request ID and status, run ID
+and workflow status where available, semantic outcome, captured_at,
+capture_age_seconds, valid_until and receipt. Leave unavailable fields
+explicitly blank. C uses connector reads only.
+
+The index gives `forecast_path`, `receipt_path`, run_id, date, status and
+SHA-256. Stored previews alongside those paths are `v6-official.json`,
+`v6-provisional.json`, `v7-shadow.json`, `v7-official.json` and
+`v7-provisional.json`, with plain-text and HTML equivalents. RM7 displays
+the shadow view and retains V7 research-only and official NO BET labels.
+Use the immutable forecast to re-evaluate freshness before displaying
+a view or ticket. Archived HTML/text tickets carry historical quote labels.
+For earlier runs without a shadow file, use the V7 provisional view after
+rechecking freshness. A fresh card can still contain races that have jumped;
+omit their runner selections and identify them as closed.
+
+`python -m operations.client` is an executable reference for this contract.
+It uses an authenticated GitHub CLI. For example, to follow an existing
+request without submitting another, run
+`python -m operations.client RM7 --request-id N`. Use
+`python -m operations.client C --request-id N` to read its status. The
+ordinary ChatGPT client uses the equivalent connector operations.
 
 Receipts store the SHA-256 of the exact forecast.json bytes. There is no
 self-referential hash inside that file. Verify bytes in a compute-capable client;
@@ -108,8 +136,12 @@ threshold. A stale historic forecast stays immutable but must be labelled STALE
 and NO BET when retrieved; a before-jump capture does not stay fresh all day.
 Failed attempts publish FAILED with no substitute selections; per-model failures
 remain separate, and are never replaced with another model or tipsters.
-Publication errors fail the workflow; the absence of a new completed request
-index is not permission to show a previous success as that request's result.
+The worker records timeouts and launch failures as FAILED with a sanitized
+receipt. If publishing the forecast fails, the worker records terminal
+FAILED with the workflow URL and no forecast or receipt pointer, if GitHub
+accepts the status write. During broader publication outages, the workflow
+fails and logs a sanitized status marker. Completed request indices and
+forecast files are immutable.
 
 The runner is not an independent TAB verifier. Coverage includes observed AU/NZ
 meetings and provider skips, with `complete_au_nz_coverage_verified=false`.

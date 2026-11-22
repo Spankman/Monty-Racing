@@ -58,7 +58,7 @@ def command(text, date=None, country=None):
     if country not in (None, 'AU', 'NZ'):
         raise ValueError('country must be AU or NZ')
     return dict(command=text.strip().upper(), version=model[:3].upper().replace('RM','V'),
-                view='provisional' if model.upper().endswith('PS') or track else 'official',
+                view='provisional' if model.upper().endswith('PS') or track else 'shadow' if model.upper() == 'RM7' else 'official',
                 date=day, meeting=track, race=race, country=country)
 
 
@@ -75,10 +75,31 @@ def freshness(record, now=None):
     return 'FRESH AT CHECK TIME'
 
 
+def current_result(race, saved, mode, now):
+    result = dict(saved)
+    result['freshness_at_retrieval']=freshness(race, now)
+    result['freshness_checked_at']=now.isoformat()
+    if mode=='official' or result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
+        for key in ('best_bets', 'ordered_selections', 'roughies'):
+            result[key] = []
+        result.pop('best_chance', None)
+        result['progression_bet_type'] = result['recommended_bet_type'] = 'NO BET'
+    return result
+
+
+def refresh_view(view, now=None):
+    now = now or utcnow()
+    return dict(view, races=[
+        dict(race, result=current_result(race, race['result'], view['view'], now))
+        for race in view['races']
+    ])
+
+
 def projection(forecast, request, now=None):
     """Explicit official/provisional view; never turn a stale price into a current tip."""
     if request.get('view') == 'status':
         return {k:forecast.get(k) for k in ('schema','run_id','status','date','generated_at','models','blockers','receipt')}
+    now = now or utcnow()
     selected=[]
     for race in forecast.get('races', []):
         if request.get('meeting') and race['meeting'].casefold() != request['meeting'].casefold():
@@ -88,19 +109,14 @@ def projection(forecast, request, now=None):
         if request.get('country') and race['country'] != request['country']:
             continue
         item=dict(race)
-        result=dict(race['models'][request['version']])
-        result['freshness_at_retrieval']=freshness(race, now)
-        result['freshness_checked_at']=(now or utcnow()).isoformat()
-        if request['view']=='official':
-            # Current gates never authorise deployment. Preserve provisional output separately.
-            result['ordered_selections']=[]
-            result['recommended_bet_type']='NO BET'
+        result = current_result(race, race['models'][request['version']], request['view'], now)
         item['result']=result
         item.pop('models')
         selected.append(item)
     return dict(schema=SCHEMA,run_id=forecast['run_id'],date=forecast['date'],view=request['view'],
                 version=request['version'],status=forecast['status'],races=selected,
-                receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]))
+                receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]),
+                captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'))
 
 
 def normalized_snapshot(payload, day, allow_restricted=False):
@@ -304,15 +320,21 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     for version in ['V6','V7']:
-        for mode in ['official','provisional']:
-            write(public/(version.lower()+'-'+mode+'.json'),projection(result,dict(version=version,view=mode)))
+        modes = ['official', 'provisional', 'shadow'] if version == 'V7' else ['official', 'provisional']
+        for mode in modes:
+            view = projection(result, dict(version=version, view=mode))
+            write(public/(version.lower()+'-'+mode+'.json'), dict(view, snapshot_only=True))
     return result
 
 
-def ticket(view):
+def ticket(view, *, archived=False, now=None):
+    if not archived:
+        view = refresh_view(view, now)
     version=view['version'];mode=view['view']
     title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
     lines=[title,view['date']+' · Australia/Brisbane','NO BET — no qualified wagers','']
+    if archived:
+        lines.insert(2, 'ARCHIVED SNAPSHOT — check request freshness before use')
     for race in view['races']:
         lines.append(race['meeting']+' R'+str(race['race']))
         result=race['result'];rows=result.get('ordered_selections',[])
@@ -321,11 +343,12 @@ def ticket(view):
             for i,r in enumerate(rows):
                 text=f"#{r['number']} {r['horse']} — ${r['odds']:.2f}"
                 lines.append(('**'+text+'**') if i==0 else text)
-        if mode=='provisional':
+        if mode in ('provisional', 'shadow'):
             for roughie in result.get('roughies',[]):
                 lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — ${roughie['odds']:.2f} · NO BET")
         lines.append('NO BET: '+', '.join(result.get('no_bet_reasons',[])))
-        lines.append('Quote '+str(race['captured_at'])+' · '+result.get('freshness_at_retrieval','UNKNOWN'))
+        timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
+        lines.append('Quote '+str(race['captured_at'])+' · '+timing)
         lines.append('')
     lines.append('IN MONTY WE TRUST')
     return '\n'.join(lines)+'\n'
@@ -339,10 +362,9 @@ def main():
     if req.get('view')=='status':raise SystemExit('C reads published latest.json; it never starts inference')
     payload=json.loads(a.fixture.read_text()) if a.fixture else None
     result=execute(req['date'],a.output,a.v7_root,run_id=a.run_id,request=req,payload=payload,fixture=bool(a.fixture))
-    for v in ['V6','V7']:
-        for mode in ['official','provisional']:
-            view=projection(result,dict(version=v,view=mode))
-            (a.output/'public'/f'{v.lower()}-{mode}.txt').write_text(ticket(view))
+    for path in (a.output/'public').glob('v[67]-*.json'):
+        view = json.loads(path.read_text())
+        path.with_suffix('.txt').write_text(ticket(view, archived=True))
     from operations.render import render_all
     render_all(a.output/'public')
     print(json.dumps({'run_id':a.run_id,'status':result['status'],'races':len(result['races']),'source_mode':result['source_mode']}))

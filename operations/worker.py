@@ -1,48 +1,150 @@
-"""Run queued commands safely without executing request text as code."""
+"""Run queued commands without executing request text as code."""
 from datetime import datetime, time
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
+from time import monotonic
 from zoneinfo import ZoneInfo
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from operations.transport import requests, publish, read
-from monty_operations import command
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from monty_operations import command, utcnow
+from operations.failure import failed
+from operations.transport import publish, read, record_request, request_state, requests, write_index
+
+
+RUNNER_TIMEOUT = 1000
 
 
 def daily_due(now, latest):
-    return now.time() >= time(8,10) and latest is None
+    return now.time() >= time(8, 10) and latest is None
+
+
+def lifecycle(req, issue, run_id, workflow_url, state, reason=None):
+    index = dict(schema='monty.operations.index.v1', date=req['date'], request_id=issue,
+                 run_id=run_id, workflow_url=workflow_url, request_status=state,
+                 status=state, updated_at=utcnow().isoformat())
+    if reason:
+        index['blockers'] = [reason]
+    if issue is not None:
+        record_request(index)
+    else:
+        write_index(f"daily/{req['date']}/latest.json", index)
+    return index
+
+
+def operate(req, issue, run_id, workflow_url, out):
+    if issue is not None:
+        try:
+            lifecycle(req, issue, run_id, workflow_url, 'RUNNING')
+        except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
+            record_publication_failure(req, issue, run_id, workflow_url)
+            raise RuntimeError('publication_failed') from None
+    args = [sys.executable, 'monty_operations.py', '--command', req['command'],
+            '--date', req['date'], '--output', str(out), '--v7-root', 'v7_engine', '--run-id', run_id]
+    if req.get('country'):
+        args += ['--country', req['country']]
+
+    public = out / 'public'
+    reason = None
+    try:
+        run = subprocess.run(args, capture_output=True, text=True, timeout=RUNNER_TIMEOUT)
+        if not (public / 'receipt.json').exists() or not (public / 'forecast.json').exists():
+            reason = 'runner_startup_failed'
+        elif run.returncode and json.loads((public / 'receipt.json').read_text())['status'] != 'FAILED':
+            reason = 'runner_exited_without_clean_completion'
+    except subprocess.TimeoutExpired:
+        reason = 'runner_timeout'
+    except OSError:
+        reason = 'runner_launch_failed'
+    except (ValueError, KeyError):
+        reason = 'runner_invalid_receipt'
+    if reason:
+        # Keep partial files out of the published failure and uploaded public directory.
+        if public.exists():
+            public.rename(out / 'incomplete')
+        failed(out, run_id, req['date'], reason)
+
+    try:
+        return publish(public, run_id, req['date'], issue, workflow_url)
+    except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
+        completed = record_publication_failure(req, issue, run_id, workflow_url)
+        if completed:
+            return completed
+        raise RuntimeError('publication_failed') from None
+
+
+def record_publication_failure(req, issue, run_id, workflow_url):
+    # A response may have been lost after a successful terminal write.
+    path = f'requests/{issue}.json' if issue is not None else f"daily/{req['date']}/latest.json"
+    try:
+        index = read(path)
+        if index and index.get('run_id') == run_id and index.get('receipt_path'):
+            return index
+        lifecycle(req, issue, run_id, workflow_url, 'FAILED', 'publication_failed')
+    except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
+        print(json.dumps(dict(request_id=issue, run_id=run_id, workflow_url=workflow_url,
+                              status='FAILED', blocker='publication_status_unavailable')), file=sys.stderr)
+    return None
 
 
 def main():
-    now=datetime.now(ZoneInfo('Australia/Brisbane'))
-    day=now.date().isoformat()
-    mode=os.environ.get('OPERATIONS_MODE','daily')
-    items=list(requests()) if mode=='queue' else [(None,command(os.environ.get('OPERATIONS_COMMAND') or 'RM6',os.environ.get('OPERATIONS_DATE') or day))]
-    # Issue events filter to their exact issue; queue schedule handles dropped
-    # integration-token issue events and requests received while a job is busy.
-    issue=os.environ.get('OPERATIONS_ISSUE','')
-    if issue:items=[x for x in items if x[0]==int(issue)]
-    # Catch up a missed/overwritten 08:10 cron slot on the next queue tick.
-    # Never silently retry an already-published FAILED daily attempt.
-    if mode=='queue' and not issue and daily_due(now,read('daily/'+day+'/latest.json')):
-        items.insert(0,(None,command('RM6',day)))
-    items=items[:10]
-    for number,req in items:
-        if number and read('requests/'+str(number)+'.json'):continue
-        run_id=os.environ['GITHUB_RUN_ID']+'-'+os.environ.get('GITHUB_RUN_ATTEMPT','1')+'-'+(str(number) if number else 'daily')
-        out=Path('operations_output')/run_id
-        args=[sys.executable,'monty_operations.py','--command',req['command'],'--date',req['date'],
-              '--output',str(out),'--v7-root','v7_engine','--run-id',run_id]
-        if req.get('country'):args+=['--country',req['country']]
-        p=subprocess.run(args,capture_output=True,text=True,timeout=1000)
-        if not (out/'public/receipt.json').exists():
-            # A dependency/interpreter failure must replace the latest-attempt
-            # pointer with failure, not leave yesterday's success looking fresh.
-            from operations.failure import failed
-            failed(out,run_id,req['date'],'runner_startup_failed')
-        index=publish(out/'public',run_id,req['date'],number)
-        print(json.dumps(index))
+    started = monotonic()
+    now = datetime.now(ZoneInfo('Australia/Brisbane'))
+    day = now.date().isoformat()
+    mode = os.environ.get('OPERATIONS_MODE', 'daily')
+    issue = os.environ.get('OPERATIONS_ISSUE', '')
+    workflow_id = os.environ['GITHUB_RUN_ID']
+    attempt = os.environ.get('GITHUB_RUN_ATTEMPT', '1')
+    workflow_url = f'https://github.com/Spankman/Monty-Racing/actions/runs/{workflow_id}'
+    if mode == 'queue':
+        items = [(n, req) for n, req in requests() if not issue or n == int(issue)]
+        items.sort(key=lambda item: item[0])
+        items = items[:10]
+        if not issue and daily_due(now, read(f'daily/{day}/latest.json')):
+            items.insert(0, (None, command('RM6', day)))
+    else:
+        items = [(None, command(os.environ.get('OPERATIONS_COMMAND') or 'RM6',
+                                os.environ.get('OPERATIONS_DATE') or day))]
+    pending = []
+    for number, req in items:
+        if req['view'] == 'status':
+            continue
+        run_id = f'{workflow_id}-{attempt}-{number if number else "daily"}'
+        if number is not None:
+            index = read(f'requests/{number}.json')
+            state = request_state(index)
+            if state == 'RUNNING':
+                # Global workflow concurrency means the previous worker has ended.
+                lifecycle(req, number, index['run_id'], index['workflow_url'], 'FAILED', 'worker_interrupted')
+                continue
+            if state != 'QUEUED':
+                continue
+            try:
+                lifecycle(req, number, run_id, workflow_url, 'QUEUED')
+            except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
+                record_publication_failure(req, number, run_id, workflow_url)
+                raise RuntimeError('publication_failed') from None
+        pending.append((number, req, run_id))
 
-if __name__=='__main__':main()
+    publication_failed = False
+    for number, req, run_id in pending:
+        # Leave work queued for the next tick if another full inference may exceed the job budget.
+        if monotonic() - started > RUNNER_TIMEOUT:
+            break
+        out = Path('operations_output') / run_id
+        try:
+            print(json.dumps(operate(req, number, run_id, workflow_url, out)))
+        except RuntimeError as exc:
+            if str(exc) != 'publication_failed':
+                raise
+            publication_failed = True
+            print(json.dumps(dict(request_id=number, run_id=run_id, workflow_url=workflow_url,
+                                  status='FAILED', blocker='publication_failed')), file=sys.stderr)
+    if publication_failed:
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()

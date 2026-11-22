@@ -126,3 +126,20 @@ Minimum next action is review/approval of production activation, including the
 existing V6 acceptance baseline and new workflow/code. Existing repository
 secrets already enabled live staging; no new API key in chat, MCPBackend service,
 external server or manual file transfer is required for the queued design.
+
+
+## Operational gap regression coverage (simulated)
+
+The expanded `test_monty_operations` suite simulates 08:30 Brisbane retrieval
+against an 08:10 capture, request-bound QUEUED/RUNNING/COMPLETED/FAILED and
+expired results, read-only C, receipt integrity, timeout/launch/publication
+failures, and each command's view. It also exercises rendering a stored view
+after the capture expires. This is simulated evidence only. The live staging
+runs documented above predate these changes.
+
+After explicit approval and activation, create a command from ordinary
+ChatGPT without manual or workspace dispatch. Follow its request ID and
+retrieve both slips and their integrity receipts in ChatGPT. Observe the
+08:10 Brisbane schedule and the scheduled queue catch-up unattended. Record
+request IDs, workflow URLs, capture and retrieval times, semantic outcomes,
+and receipt hashes for each check.

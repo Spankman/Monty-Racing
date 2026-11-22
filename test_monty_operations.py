@@ -13,7 +13,7 @@ from operations.render import render
 
 class CommandTests(unittest.TestCase):
     def test_all_commands_and_single_races(self):
-        for cmd,version,mode in [('RM6','V6','official'),('RM7','V7','official'),('RM6PS','V6','provisional'),('RM7PS','V7','provisional')]:
+        for cmd,version,mode in [('RM6','V6','official'),('RM7','V7','shadow'),('RM6PS','V6','provisional'),('RM7PS','V7','provisional')]:
             r=ops.command(cmd,'2026-11-23');self.assertEqual((r['version'],r['view']),(version,mode))
         for cmd in ['RM6 Royal Randwick R4','RM7 Te Rapa 12']:
             r=ops.command(cmd);self.assertTrue(r['meeting']);self.assertEqual(r['view'],'provisional')
@@ -151,4 +151,190 @@ class SchedulerTests(unittest.TestCase):
         self.assertFalse(daily_due(datetime(2026,11,23,8,20),{'status':'FAILED'}))
 
 
-if __name__=='__main__':unittest.main()
+
+class ConnectorClientTests(unittest.TestCase):
+    """Simulate GitHub reads and writes. No connectors, providers or inference are called."""
+
+    def setUp(self):
+        from operations import client, transport
+        self.client = client
+        self.transport = transport
+        self.day = '2026-11-23'
+        self.capture = ops.timestamp(self.day + 'T08:10:00+10:00')
+        self.jump = self.capture + timedelta(hours=4)
+        self.files = {}
+        self.enqueue = self.enterContext(patch.object(transport, 'enqueue', return_value=200))
+        self.enterContext(patch.object(transport, 'read', side_effect=self.files.get))
+        self.enterContext(patch.object(transport, 'read_bytes', side_effect=self.files.get))
+
+    def save(self, index_path, run_id, captured, *, status='COMPLETED_NO_BET'):
+        selections = ops.selection([
+            dict(number='1', horse='Leading Horse', odds=4, probability=.5),
+            dict(number='2', horse='Other Horse', odds=5, probability=.3),
+            dict(number='3', horse='Third Horse', odds=6, probability=.2),
+        ])
+        race = dict(meeting='Ballina', race='1', country='AU', captured_at=captured.isoformat(),
+                    scheduled_start=self.jump.isoformat(), models={'V6': selections, 'V7': selections})
+        forecast = dict(run_id=run_id, status=status, date=self.day, source_mode='LIVE',
+                        captured_at=captured.isoformat(), races=[race] if status != 'FAILED' else [],
+                        valid_until=(captured + timedelta(minutes=5)).isoformat())
+        raw = json.dumps(forecast).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        receipt = dict(run_id=run_id, status=status, forecast_sha256=digest)
+        self.files[f'{run_id}/forecast.json'] = raw
+        self.files[f'{run_id}/receipt.json'] = receipt
+        self.files[index_path] = dict(run_id=run_id, status=status, forecast_sha256=digest,
+                                      forecast_path=f'{run_id}/forecast.json', receipt_path=f'{run_id}/receipt.json')
+
+    def test_0830_daily_request_uses_new_id_and_rechecks_completed_capture(self):
+        at_0830 = self.capture + timedelta(minutes=20)
+        daily = f'daily/{self.day}/latest.json'
+        self.save(daily, 'previous', self.capture)
+        for name in ('RM6', 'RM7'):
+            self.enqueue.reset_mock()
+            self.assertEqual(self.client.handle(name, now=at_0830)['request_id'], 200)
+            self.enqueue.assert_called_once()
+        pending = self.client.handle('RM7', request_id=200, now=at_0830)
+        self.assertEqual(pending['request_status'], 'QUEUED')
+        self.assertIsNone(pending['run_id'])
+        key = 'requests/200.json'
+        self.files[key] = dict(request_status='RUNNING', run_id='current', workflow_url='workflow')
+        running = self.client.handle('RM7', request_id=200, now=at_0830)
+        self.assertEqual((running['request_status'], running['workflow_url']), ('RUNNING', 'workflow'))
+        self.save(key, 'current', at_0830)
+        result = self.client.handle('RM7', request_id=200, now=at_0830 + timedelta(minutes=1))
+        self.assertEqual((result['request_status'], result['run_id']), ('COMPLETED', 'current'))
+        self.assertEqual(result['capture_age_seconds'], 60)
+        self.assertIn('SHADOW SELECTION SLIP', result['ticket'])
+        self.assertIn('Leading Horse', result['ticket'])
+        self.assertIn('NO BET', result['ticket'])
+        expired = self.client.handle('RM7', request_id=200, now=at_0830 + timedelta(minutes=6))
+        self.assertEqual(expired['freshness'], 'EXPIRED')
+        self.assertNotIn('ticket', expired)
+        self.enqueue.assert_called_once()
+
+    def test_c_follows_latest_or_explicit_request_and_never_submits(self):
+        self.save(f'daily/{self.day}/latest.json', 'daily', self.capture)
+        self.save('requests/201.json', 'failed', self.capture, status='FAILED')
+        self.files['requests/202.json'] = dict(request_status='RUNNING', run_id='current',
+                                               workflow_url='workflow')
+        entries = [(202, ops.command('RM6', self.day)), (201, ops.command('RM7', self.day))]
+        with patch.object(self.transport, 'requests', return_value=iter(entries)):
+            status = self.client.handle('C', now=self.capture)
+        self.assertEqual((status['request_id'], status['request_status']), (202, 'RUNNING'))
+        failed = self.client.handle('C', request_id=201, now=self.capture)
+        self.assertEqual((failed['request_status'], failed['semantic_outcome']), ('FAILED', 'FAILED'))
+        self.assertIsNotNone(failed['receipt'])
+        self.assertEqual(failed['captured_at'], self.capture.isoformat())
+        self.assertEqual(failed['capture_age_seconds'], 0)
+        self.assertIsNotNone(failed['valid_until'])
+        self.assertNotIn('ticket', failed)
+        self.enqueue.assert_not_called()
+
+    def test_every_selection_command_retrieves_its_view(self):
+        self.save('requests/200.json', 'completed', self.capture)
+        for name, expected in [('RM6', 'official'), ('RM7', 'shadow'), ('RM6PS', 'provisional'),
+                               ('RM7PS', 'provisional'), ('RM6 Ballina 1', 'provisional'),
+                               ('RM7 Ballina 1', 'provisional')]:
+            with self.subTest(name=name):
+                response = self.client.handle(name, request_id=200, now=self.capture)
+                self.assertEqual(response['view']['view'], expected)
+                self.assertEqual(len(response['view']['races']), 1)
+                self.assertEqual('Leading Horse' in response['ticket'], expected != 'official')
+        self.enqueue.assert_not_called()
+
+    def test_failed_request_never_falls_back_and_cannot_requeue(self):
+        self.save(f'daily/{self.day}/latest.json', 'daily', self.capture)
+        self.save('requests/200.json', 'failed', self.capture, status='FAILED')
+        status = self.client.handle('RM6', request_id=200, now=self.capture)
+        self.assertEqual(status['semantic_outcome'], 'FAILED')
+        self.assertNotIn('view', status)
+        self.enqueue.assert_not_called()
+
+    def test_workflow_ending_without_publication_is_explicit(self):
+        self.files['requests/200.json'] = dict(request_status='RUNNING', run_id='123-1-200',
+                                             workflow_url='workflow')
+        with patch.object(self.transport, 'api', return_value={'status': 'completed', 'conclusion': 'failure'}):
+            response = self.client.handle('RM6', request_id=200, now=self.capture)
+        self.assertEqual(response['request_status'], 'FAILED')
+        self.assertEqual(response['workflow_conclusion'], 'failure')
+        self.assertEqual(response['semantic_outcome'], 'WORKFLOW_ENDED_WITHOUT_PUBLICATION')
+        self.assertNotIn('ticket', response)
+        self.enqueue.assert_not_called()
+
+    def test_corrupt_receipt_prevents_display(self):
+        self.save('requests/200.json', 'saved', self.capture)
+        self.files['saved/receipt.json']['forecast_sha256'] = 'tampered'
+        result = self.client.handle('RM7', request_id=200, now=self.capture)
+        self.assertEqual(result['semantic_outcome'], 'INTEGRITY_CHECK_FAILED')
+        self.assertNotIn('ticket', result)
+
+    def test_render_rechecks_old_saved_view_without_mutating_it(self):
+        self.save('requests/200.json', 'saved', self.capture)
+        view = self.client.handle('RM7', request_id=200, now=self.capture)['view']
+        original = json.dumps(view)
+        later = self.capture + timedelta(minutes=20)
+        for content in (ops.ticket(view, now=later), render(view, now=later)):
+            self.assertIn('STALE', content)
+            self.assertNotIn('Leading Horse', content)
+        self.assertEqual(json.dumps(view), original)
+
+
+class WorkerFailureTests(unittest.TestCase):
+    def test_queue_persists_request_id_and_workflow_url_before_inference(self):
+        import os
+        from operations import worker
+        req = ops.command('RM6', '2026-11-23')
+        records = []
+
+        def run(req, number, run_id, url, out):
+            self.assertEqual(records[0]['request_status'], 'QUEUED')
+            self.assertEqual(records[0]['request_id'], number)
+            self.assertEqual(records[0]['workflow_url'], url)
+            self.assertEqual(records[0]['run_id'], run_id)
+            return records[0]
+
+        with (patch.dict(os.environ, dict(OPERATIONS_MODE='queue', OPERATIONS_ISSUE='200', GITHUB_RUN_ID='123')),
+              patch.object(worker, 'requests', return_value=[(200, req)]),
+              patch.object(worker, 'read', return_value=None),
+              patch.object(worker, 'record_request', side_effect=records.append),
+              patch.object(worker, 'operate', side_effect=run) as operate,
+              patch('builtins.print')):
+            worker.main()
+        operate.assert_called_once()
+
+    def test_timeout_and_launch_failure_produce_immutable_failure_envelope(self):
+        import subprocess
+        from operations import worker
+        day = '2026-11-23'
+        for error, reason in [(subprocess.TimeoutExpired('runner', 1000), 'runner_timeout'),
+                              (OSError('private diagnostic'), 'runner_launch_failed')]:
+            with self.subTest(reason=reason), TemporaryDirectory() as directory:
+                out = Path(directory) / 'run'
+                with (patch.object(worker, 'lifecycle') as lifecycle,
+                      patch.object(worker.subprocess, 'run', side_effect=error),
+                      patch.object(worker, 'publish') as publish):
+                    worker.operate(ops.command('RM6', day), 200, 'run', 'workflow', out)
+                    lifecycle.assert_called_once_with(ops.command('RM6', day), 200, 'run', 'workflow', 'RUNNING')
+                    publish.assert_called_once()
+                forecast = json.loads((out / 'public/forecast.json').read_text())
+                self.assertEqual(forecast['status'], 'FAILED')
+                self.assertEqual(forecast['blockers'], [reason])
+
+    def test_publication_failure_exposes_terminal_failure_without_old_output(self):
+        from operations import worker
+        day = '2026-11-23'
+        req = ops.command('RM6', day)
+        with TemporaryDirectory() as directory:
+            out = Path(directory) / 'run'
+            with (patch.object(worker, 'lifecycle') as lifecycle,
+                  patch.object(worker.subprocess, 'run', side_effect=OSError),
+                  patch.object(worker, 'read', return_value={'run_id': 'old', 'receipt_path': 'old'}),
+                  patch.object(worker, 'publish', side_effect=RuntimeError('private diagnostic'))):
+                with self.assertRaisesRegex(RuntimeError, '^publication_failed$'):
+                    worker.operate(req, 200, 'new', 'workflow', out)
+            lifecycle.assert_called_with(req, 200, 'new', 'workflow', 'FAILED', 'publication_failed')
+
+
+if __name__ == '__main__':
+    unittest.main()
