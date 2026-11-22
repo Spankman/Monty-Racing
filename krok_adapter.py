@@ -94,8 +94,10 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                     item['inside_three']=int(b<=3)
                     item['outside_barrier']=float(b>field_size*.75)
                     if 'distance_km' in item:item['barrier_x_distance']=b/field_size*distance/1000
-                if 'allocated_weight' in item:
-                    item['effective_weight']=item['allocated_weight']-item.get('claim_kg',0)
+                # A missing claim is unknown, not evidence of a zero claim.
+                # Never impute a frozen-model input without source evidence.
+                if 'allocated_weight' in item and 'claim_kg' in item:
+                    item['effective_weight']=item['allocated_weight']-item['claim_kg']
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active)})
     if not rows:raise ValueError('No complete, priced, active thoroughbred fields found')
