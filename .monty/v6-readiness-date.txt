@@ -1,2 +1,2 @@
 2026-11-22
-request: finite-feature-coverage-e47f5b1
+request: quote-provenance-audit-fa35ed5
