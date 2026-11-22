@@ -1,2 +1,2 @@
 2026-11-22
-request: classify-all-races-bb-roughie-no-track-quota
+request: relaxed-bb-roughie-thresholds-run
