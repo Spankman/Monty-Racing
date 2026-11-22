@@ -20,6 +20,12 @@ class EvidenceAudit(unittest.TestCase):
             with self.assertRaises(ValueError):freeze(rows,Path(temp)/'late.json',{},datetime(2030,1,3,tzinfo=timezone.utc))
             r=record_results(p,[dict(race_id='synthetic',verified=True,source_url='https://example.test/results',available_at='2030-01-02T01:00:00Z',status='FINAL',winner_runner_id='1',scratched_runner_ids=[])],Path(temp)/'r.json',datetime(2030,1,3,tzinfo=timezone.utc),expected_sha256=original['sha256'])
             self.assertEqual(original['sha256'],r['forecast_sha256'])
+            self.assertEqual(r['unresolved'], [])
+            pending = record_results(p, [], Path(temp)/'pending.json',
+                                     expected_sha256=original['sha256'])
+            self.assertEqual(pending['unresolved'], [
+                {'race_id': 'synthetic', 'reason': 'No verified official disposition supplied'}])
+            self.assertEqual(pending['dispositions'], {})
 
     def test_result_cli_receipt_and_unchanged_field_comparison(self):
         rows=[dict(race_id='r',runner_id=str(i),country='NZ',

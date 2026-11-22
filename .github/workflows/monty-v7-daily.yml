@@ -32,7 +32,8 @@ jobs:
           REQUESTED_DATE: ${{ inputs.date }}
         run: |
           DATE="${REQUESTED_DATE:-$(head -n 1 .monty/v7-daily-date.txt)}"
-          cp v7/run_live_daily.py provisional-engine/v7/run_live_daily.py
+          cp monty_daily_price_ladder.py monty_single_race_ladder.py provisional-engine/
+          cp v7/run_live_daily.py v7/provisional_output.py provisional-engine/v7/
           cd provisional-engine
           cp ../.monty/verified-fixtures-"$DATE".json verified-fixtures.json
           python -m v7.run_live_daily --date "$DATE" --verified-fixtures verified-fixtures.json

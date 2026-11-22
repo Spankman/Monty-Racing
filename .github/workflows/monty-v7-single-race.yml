@@ -34,8 +34,10 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: grok-independent-repairs
+          path: provisional-engine
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -50,14 +52,18 @@ jobs:
           COUNTRY: ${{ inputs.country }}
           ALLOW_RESTRICTED: ${{ inputs.allow_restricted }}
         run: |
+          cp monty_daily_price_ladder.py monty_single_race_ladder.py provisional-engine/
+          cp v7/provisional_output.py provisional-engine/v7/
+          cd provisional-engine
           args=(--meeting "$MEETING" --race "$RACE" --country "$COUNTRY" --output-dir output_v7_single)
           if [ -n "$DATE" ]; then args+=(--date "$DATE"); fi
           if [ "$ALLOW_RESTRICTED" = "true" ]; then args+=(--allow-restricted); fi
           python -m v7.run_live_single_race "${args[@]}"
+          python -m v7.provisional_output --output-dir output_v7_single
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: v7-single-race-${{ github.run_id }}
-          path: output_v7_single/
+          path: provisional-engine/output_v7_single/
           if-no-files-found: warn
           retention-days: 7

@@ -74,8 +74,6 @@ def record_results(forecast_path,results,path,now=None,*,expected_sha256):
     for row in forecast['rows']:
         races[row['race_id']].append(row)
     results=list(results)
-    if not results:
-        raise ValueError('No verified results supplied')
     seen=set()
     for result in results:
         race=result['race_id']
@@ -113,6 +111,8 @@ def record_results(forecast_path,results,path,now=None,*,expected_sha256):
         dispositions[race] = dict(status=disposition, original_top_picks=tops)
     output=dict(forecast_sha256=digest,recorded_at_utc=now.isoformat(),results=results,
                 dispositions=dispositions,
+                unresolved=[dict(race_id=race, reason='No verified official disposition supplied')
+                            for race in sorted(races.keys() - seen)],
                 probability_comparison=_compare(races,results))
     path=Path(path)
     if path.resolve()==Path(forecast_path).resolve():

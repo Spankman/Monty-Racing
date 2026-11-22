@@ -21,12 +21,12 @@ def format_daily(shortlists):
         result=price_ladder(ranked)
         selected=result["selections"]
         classification = item.get("classification") or "Unverified"
-        lines = [f"R{race} · {classification} · {LABELS[result['bet_type']]} assessment · NO BET"]
+        lines = [f"R{race} · {classification} · {LABELS[result['bet_type']]} assessment · NO BET", ""]
         for index, row in enumerate(selected):
             display = f"#{row['number']} {row['horse']} ${float(row['odds']):.2f}"
             lines.append(f"- **Best Bet · {display}**" if index == 0 else f"- {display}")
         line = "\n".join(lines)
         groups.setdefault(meeting,[]).append((race,line))
     return "\n\n".join(
-        "**"+meeting+"**\n"+"\n".join(line for _,line in sorted(lines))
+        "**"+meeting+"**\n\n"+"\n\n".join(line for _,line in sorted(lines))
         for meeting,lines in groups.items())
