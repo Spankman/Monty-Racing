@@ -31,6 +31,9 @@ def capture(date, output, fixture=None):
         encoded = encoded.replace(key, '[REDACTED]')
     payload = json.loads(encoded)
     snapshot, audit = normalize(payload, date)
+    # User-approved capture-time-only fixed-win quote policy. This is a policy
+    # declaration, NOT proof of the bookmaker's last quote update or TAB verification.
+    audit['quote_time_policy'] = 'capture_only'
     captured = dt.datetime.now(dt.timezone.utc)
     out = Path(output) / (captured.strftime('%Y%m%dT%H%M%S%fZ') + '-' + uuid.uuid4().hex[:8])
     out.mkdir(parents=True, exist_ok=False)
