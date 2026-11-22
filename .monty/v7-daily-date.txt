@@ -1,2 +1,2 @@
 2026-11-22
-request: retry-with-provisional-engine-checkout
+request: independent-fixture-verified-rerun
