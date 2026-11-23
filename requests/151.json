@@ -1,0 +1,19 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-23",
+  "request_id": 151,
+  "run_id": "45116618500-1-151",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45116618500",
+  "request_status": "QUEUED",
+  "status": "QUEUED",
+  "updated_at": "2026-11-23T05:16:01.065220+00:00",
+  "request": {
+    "command": "RM7 BARCALDINE 5",
+    "version": "V7",
+    "view": "provisional",
+    "date": "2026-11-23",
+    "meeting": "Barcaldine",
+    "race": "5",
+    "country": "AU"
+  }
+}
