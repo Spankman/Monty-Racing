@@ -1,0 +1,19 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-23",
+  "request_id": 141,
+  "run_id": "45108159496-1-141",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45108159496",
+  "request_status": "QUEUED",
+  "status": "QUEUED",
+  "updated_at": "2026-11-23T03:49:31.315011+00:00",
+  "request": {
+    "command": "RM6",
+    "version": "V6",
+    "view": "official",
+    "date": "2026-11-23",
+    "meeting": null,
+    "race": null,
+    "country": "AU"
+  }
+}
