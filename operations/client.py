@@ -130,10 +130,12 @@ def handle(text, *, date=None, country=None, request_id=None, now=None):
         saved=retrieve(transport.read(f'requests/{number}.json'),number,req,now)
         if saved['request_status'] in transport.PENDING:
             return with_workflow_status(saved,req,now) if saved['request_status']=='RUNNING' else saved
-        if saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
     elif req['command'] in ('RM6','RM7') and not country:
         saved=retrieve(transport.read(f'daily/{day}/latest.json'),req=req,now=now)
-        if saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
     number=transport.enqueue(req)
     return retrieve(None,number,now=now)
 

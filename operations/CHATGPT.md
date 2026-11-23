@@ -104,7 +104,9 @@ activation. No manual workflow dispatch is used for live command acceptance.
 
 This section applies only to individual-race commands. Full-day rules and
 thresholds are unchanged. Do not stop at BLOCKED or an official NO BET when a
-useful assessment can still be made.
+useful assessment can still be made. A legacy single-race BLOCKED/FAILED view
+without assessment_level predates this hierarchy: a selection command should
+request a fresh run once, rather than cache that old gate. C never requeues it.
 
 1. OFFICIAL: use a genuine model result only when the existing official evidence,
    value and betting gates actually approve it. This change creates no new
