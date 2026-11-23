@@ -97,3 +97,10 @@ Plus/iPhone tool invocation, fresh-conversation retrieval, live latency targets,
 automatic provider recovery against a genuine transient outage, operational
 monitoring, automatic daily scheduling and unattended restart/catch-up.
 No paid hosting or deployment was started. No wagers were placed.
+
+The first container CI build caught an overly broad archive exclusion: the
+public tracked starter ZIP was absent, so the exact-source check rejected the
+image. Only that existing public file is now explicitly included; private ZIPs
+remain excluded. Non-root git safe-directory configuration and an in-container
+provenance/contract smoke test were added. This packaging fix does not relax
+the source or frozen artifact checks.

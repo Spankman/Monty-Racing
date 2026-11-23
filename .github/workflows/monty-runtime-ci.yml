@@ -18,3 +18,7 @@ jobs:
       - run: python -m unittest test_runtime -v
       - name: Build portable container (no secrets, provider access or deployment)
         run: docker build --build-arg MONTY_SOURCE_COMMIT=${{ github.sha }} -f runtime/Dockerfile -t monty-runtime:ci .
+      - name: Verify non-root source provenance and serving contracts
+        run: |
+          docker run --rm -e MONTY_SOURCE_COMMIT=${{ github.sha }} --entrypoint python monty-runtime:ci -c 'import os,subprocess; assert subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()==os.environ["MONTY_SOURCE_COMMIT"]; assert subprocess.check_output(["git","rev-parse","HEAD"],cwd="/opt/monty-v7",text=True).strip()=="efc51abb1595ef1eb8417e2d4e0d591f6d3c9378"'
+          docker run --rm --entrypoint python monty-runtime:ci -m unittest test_runtime -q

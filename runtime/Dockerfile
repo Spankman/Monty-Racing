@@ -12,7 +12,7 @@ ARG MONTY_SOURCE_COMMIT
 # The existing executor records git HEAD. Retain its exact provenance contract
 # rather than substituting an environment string or weakening that check.
 RUN python -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["MONTY_SOURCE_COMMIT"])' && git init /app && git remote add origin https://github.com/Spankman/Monty-Racing.git && git fetch --depth=1 origin "$MONTY_SOURCE_COMMIT" && git reset --mixed FETCH_HEAD && git diff --exit-code && test -z "$(git ls-files --others --exclude-standard)"
-RUN useradd --uid 10001 --create-home monty && mkdir -m 0700 /state && chown monty:monty /state
+RUN useradd --uid 10001 --create-home monty && mkdir -m 0700 /state && chown monty:monty /state && git config --system --add safe.directory /app && git config --system --add safe.directory /opt/monty-v7
 USER monty
 EXPOSE 8080
 # Supply original manifest-matching private artifacts by secure mount/init.
