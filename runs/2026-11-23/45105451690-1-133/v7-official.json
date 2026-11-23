@@ -1,0 +1,66 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45105451690-1-133",
+  "date": "2026-11-23",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Barcaldine",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T04:20:00.000Z",
+      "scratchings": [
+        {
+          "number": "12",
+          "horse": "Tell Us Toll"
+        },
+        {
+          "number": "11",
+          "horse": "Bel Song"
+        }
+      ],
+      "captured_at": "2026-11-23T03:21:38.969936+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "a618dadcf19a1b453c66072d4f6cf6237f94b34a0185c61132d3aa23f63afedf",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-23T03:21:40.302724+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-23T03:21:38.969936+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:21:40.303909+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45105451690-1-133/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T03:21:38.969936+00:00",
+  "valid_until": "2026-11-23T03:26:38.969936+00:00",
+  "snapshot_only": true
+}
