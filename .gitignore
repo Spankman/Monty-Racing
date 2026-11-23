@@ -20,3 +20,8 @@ operations_output/
 v7_engine/
 monty_v6/results/*.csv.gz
 monty_v6/results/*.npz
+
+# Private runtime state and reports
+runtime_state/
+*.sqlite-wal
+*.sqlite-shm

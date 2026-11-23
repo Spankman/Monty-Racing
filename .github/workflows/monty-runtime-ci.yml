@@ -1,0 +1,20 @@
+name: Monty portable runtime checks
+on:
+  pull_request:
+    paths: ['runtime/**', 'test_runtime.py', '.dockerignore', '.github/workflows/monty-runtime-ci.yml']
+  push:
+    branches: [integration/permanent-runtime]
+permissions:
+  contents: read
+jobs:
+  serving-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest test_runtime -v
+      - name: Build portable container (no secrets, provider access or deployment)
+        run: docker build --build-arg MONTY_SOURCE_COMMIT=${{ github.sha }} -f runtime/Dockerfile -t monty-runtime:ci .
