@@ -180,3 +180,35 @@ connector retrieval and CI references are recorded separately in ACCEPTANCE.md.
 A live run that fails provider pagination or verification is a genuine failed
 attempt, not a passing end-to-end inference test. Do not equate passing CI with
 an operationally activated ordinary-ChatGPT service.
+
+
+## Single-race fallback hierarchy
+
+RM6/RM7 track race now select the highest valid tier automatically: existing
+OFFICIAL requirements, genuine frozen-model PROVISIONAL rankings, or an explicit
+independent FORM ASSESSMENT handoff to ChatGPT. The latter is not a completed
+model forecast: ChatGPT must research the exact race, cite actual sources and
+then provide the independent assessment without asking for an extra command.
+
+Both frozen models require whole-field market probabilities. Never invent odds,
+uniform priors, incomplete-field normalization or replacement weights. Complete
+provider quotes may support provisional inference without independent TAB
+attribution. Missing prices/identities/scratchings and V7's original minimum-
+field/consistent-provenance restrictions remain genuine model limitations; they
+trigger public form research rather than a falsely labelled Monty prediction.
+Technical failures stay visible. Official NO BET and full-day rules are unchanged.
+
+Only selected factual evidence is included in the handoff: known runner identity,
+observed quote/source, scratching flags and available basic race facts. No raw
+provider envelope, credentials, private historical form records or fake ranked
+predictions are published. Independent sources must be accessed with tools that
+actually exist; missing research access must be disclosed.
+
+The unchanged $4 ladder applies only when its required actual prices are present.
+Without them, independent form rankings can show ODDS UNAVAILABLE and a deferred
+bet type. Distinguish most-likely winner from value; value cannot be fabricated
+when price/comparison evidence is absent. See CHATGPT.md for automatic handling.
+
+This branch's live push test uses the existing workflow and existing secrets for
+RM6 Ballina 7, isolated on monty-single-staging-results. It does not activate the
+new single-race behaviour on production without an approved merge.

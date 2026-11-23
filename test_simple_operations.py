@@ -39,6 +39,18 @@ class SimplifiedClientTests(unittest.TestCase):
         with patch.object(transport,'requests',return_value=[(201,ops.command('RM6',self.day))]):
             result=client.handle('RM7',now=self.capture+ops.timedelta(minutes=6))
         self.assertEqual(result['request_id'],200);self.enqueue.assert_called_once()
+    def test_legacy_blocked_single_refreshes_under_new_hierarchy(self):
+        self.save('requests/201.json','legacy',self.capture,status='PARTIAL_OR_BLOCKED')
+        f=json.loads(self.files['legacy/forecast.json'])
+        for result in f['races'][0]['models'].values():result.update(status='BLOCKED',ordered_selections=[])
+        raw=json.dumps(f).encode();self.files['legacy/forecast.json']=raw
+        from hashlib import sha256
+        digest=sha256(raw).hexdigest();self.files['legacy/receipt.json']['forecast_sha256']=digest
+        self.files['requests/201.json']['forecast_sha256']=digest
+        with patch.object(transport,'requests',return_value=[(201,ops.command('RM6 Ballina 1',self.day))]):
+            result=client.handle('RM7 Ballina 1',now=self.capture)
+        self.assertEqual(result['request_id'],200);self.enqueue.assert_called_once()
+
     def test_single_race_and_country_are_not_daily_cache(self):
         self.save('requests/201.json','unrelated',self.capture)
         with patch.object(transport,'requests',return_value=[(201,ops.command('RM6',self.day,'NZ'))]):

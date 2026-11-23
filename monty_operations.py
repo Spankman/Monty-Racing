@@ -45,15 +45,15 @@ def write(path, value):
 
 
 def command(text, date=None, country=None):
-    text = {'RMV6PS':'RM6PS', 'RMV7PS':'RM7PS'}.get(text.strip().upper(), text)
+    text=re.sub(r'^RMV([67])PS(?=\s|$)',r'RM\1PS',text.strip(),flags=re.I)
+    if re.fullmatch(r"[A-Za-z][A-Za-z .\x27-]{0,59}\s+R?([1-9]|[1-4][0-9]|50)",text,re.I):
+        text='RM6 '+text
     match = re.fullmatch(r'(RM[67](?:PS)?)(?:\s+([A-Za-z][A-Za-z .\x27-]{0,59})\s+R?([1-9]|[1-4][0-9]|50))?', text.strip(), re.I)
     if text.strip().upper() == 'C':
         return dict(command='C', view='status')
     if not match:
         raise ValueError('Use RM6, RM7, RM6PS, RM7PS, RM6 track race, RM7 track race, or C')
     model, track, race = match.groups()
-    if model.upper().endswith('PS') and track:
-        raise ValueError('Use RM6/RM7 track race for a single-race assessment')
     day = date or utcnow().astimezone(TZ).date().isoformat()
     datetime.strptime(day, '%Y-%m-%d')
     if country not in (None, 'AU', 'NZ'):
@@ -84,6 +84,7 @@ def current_result(race, saved, mode, now):
         for key in ('best_bets', 'ordered_selections', 'roughies'):
             result[key] = []
         result.pop('best_chance', None)
+        for key in ('ranked_runners','most_likely','value_selection'):result.pop(key,None)
         result['progression_bet_type'] = result['recommended_bet_type'] = 'NO BET'
     return result
 
@@ -241,7 +242,20 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             raise ValueError('Stale or future-dated provider snapshot')
         stage='snapshot_validation'
         meta=metadata(payload,day)
-        snapshot,audit=normalized_snapshot(payload,day,bool(request.get('meeting')))
+        single=bool(request.get('meeting'))
+        facts=None;model_ready=True
+        if single:
+            from operations.single_race import prepare
+            source,facts=prepare(payload,day,request)
+        else:source=payload
+        from krok_adapter import IncompleteFields
+        try:
+            snapshot,audit=normalized_snapshot(source,day,single)
+        except IncompleteFields:
+            if not single:raise
+            model_ready=False
+            snapshot=dict(runners=[],races=[dict(meeting=facts['meeting'],race=facts['race'])])
+            audit={'skipped':['Requested field lacks complete valid active identities/prices or is closed']}
         result['coverage']=dict(provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
             accepted_races=len(snapshot['races']),scored_both=0,independently_verified=0,
             complete_au_nz_coverage_verified=False,provider_skips=audit['skipped'],
@@ -263,21 +277,32 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             record=dict(**{n:m[n] for n in ['meeting','race','country','scheduled_start','scratchings']},
                         captured_at=captured.isoformat(),independent_verification=False,
                         scratching_status='PROVIDER ASSERTION ONLY',models={})
+            if single:
+                record['single_race_assessment']=True
+                record['assessment_facts']=dict(facts,captured_at=captured.isoformat(),scheduled_start=m['scheduled_start'])
             reasons=['independent_fields_scratchings_and_going_unverified','historical_form_incomplete','prospective_value_unverified']
+            if single and not model_ready:reasons.append('complete_market_field_required_by_frozen_models')
             if any(r.get('_price_source')!='TAB' for r in runners):
                 reasons.append('named_bookmaker_fixed_win_not_available_for_entire_field')
             try:
                 if timestamp(m['scheduled_start'])<=utcnow():reasons.append('race_already_due')
             except (TypeError,ValueError):reasons.append('jump_time_unverified')
-            if len(runners)<3:reasons.append('common_V7_minimum_three_runners_not_met')
-            record['data_completeness']=dict(active_runners=len(runners),form_history_verified=False)
-            if not any(x in reasons for x in ['named_bookmaker_fixed_win_not_available_for_entire_field','race_already_due','jump_time_unverified','common_V7_minimum_three_runners_not_met']):
+            if not single and len(runners)<3:reasons.append('common_V7_minimum_three_runners_not_met')
+            record['data_completeness']=dict(active_runners=facts['active_runners'] if single else len(runners),form_history_verified=False)
+            blocked_by=['race_already_due','jump_time_unverified','complete_market_field_required_by_frozen_models']
+            if not single:blocked_by+=['named_bookmaker_fixed_win_not_available_for_entire_field','common_V7_minimum_three_runners_not_met']
+            if not any(x in reasons for x in blocked_by):
                 private=output/'private'/str(len(result['races']))
                 common=private/'snapshot.json'
                 write(common,dict(date=day,runners=runners,races=[race]))
                 record['shared_model_input_sha256']=sha(common)
                 for version in ['V6','V7']:
                     try:
+                        if single and version=='V7':
+                            v7_gap='V7_minimum_three_runners_not_met' if len(runners)<3 else 'V7_requires_consistent_price_provenance' if len({r['_price_source'] for r in runners})!=1 else None
+                            if v7_gap:
+                                record['models'][version]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons+[v7_gap],betting_authorised=False)
+                                continue
                         rows=scorer(version,common,m,private/version,v7_root)
                         if sha(common)!=record['shared_model_input_sha256']:
                             raise ValueError('Shared input mutated')
@@ -286,8 +311,13 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                         if freshness(record)!='FRESH AT CHECK TIME':
                             raise ValueError('Race closed or snapshot expired during inference')
                         view=selection(rows,version)
+                        if single:
+                            origins={r['number']:r['_price_source'] for r in runners}
+                            ranked=[dict(r,price_source=origins[r['number']]) for r in sorted(rows,key=lambda r:-r['probability'])]
+                            candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
+                            view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
                         view.update(status='SCORED',decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
-                                    bookmaker='TAB (Krok attributed)',quoted_at=captured.isoformat(),
+                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
                                     model_version=version,model_commit=result['models'][version]['commit'])
                         if version=='V7':view['no_bet_reasons'].append('V7_RESEARCH_ONLY_NOT_APPROVED')
                         record['models'][version]=view
@@ -298,6 +328,9 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             else:
                 for v in ['V6','V7']:
                     record['models'][v]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons.copy(),betting_authorised=False)
+            if single:
+                from operations.single_race import annotate
+                for version in ['V6','V7']:annotate(record,version)
             result['races'].append(record)
         for version in ['V6','V7']:
             scored=sum(r['models'][version]['status']=='SCORED' for r in result['races'])
@@ -336,17 +369,28 @@ def ticket(view, *, archived=False, now=None):
     lines=[title,view['date']+' · Australia/Brisbane','NO BET — no qualified wagers','']
     if archived:
         lines.insert(2, 'ARCHIVED SNAPSHOT — check request freshness before use')
+    from operations.single_race import quote_text
     for race in view['races']:
         lines.append(race['meeting']+' R'+str(race['race']))
         result=race['result'];rows=result.get('ordered_selections',[])
+        if race.get('single_race_assessment'):
+            lines.append(result.get('assessment_level','NO CURRENT ASSESSMENT'))
+            lines.append('REDUCED CONFIDENCE — missing data disclosed; official NO BET')
+        if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
+            lines.append('FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION')
+            lines.append('Continue with current fields/form research automatically; no model rankings generated.')
         if rows:
             lines.append(result['progression_bet_type']+' assessment only — NO BET')
             for i,r in enumerate(rows):
-                text=f"#{r['number']} {r['horse']} — ${r['odds']:.2f}"
+                text=f"#{r['number']} {r['horse']} — {quote_text(r)}"
                 lines.append(('**'+text+'**') if i==0 else text)
+        if race.get('single_race_assessment') and rows:
+            value=result.get('value_selection')
+            lines.append('MOST LIKELY: #'+str(rows[0]['number'])+' '+rows[0]['horse']+' — not automatically a value bet')
+            lines.append(('PROVISIONAL VALUE WATCH · WIN ONLY · #'+str(value['number'])+' '+value['horse']+' — '+quote_text(value)+' · NO BET') if value else 'VALUE: no supported positive-edge candidate')
         if mode in ('provisional', 'shadow'):
             for roughie in result.get('roughies',[]):
-                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — ${roughie['odds']:.2f} · NO BET")
+                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)} · NO BET")
         lines.append('NO BET: '+', '.join(result.get('no_bet_reasons',[])))
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)

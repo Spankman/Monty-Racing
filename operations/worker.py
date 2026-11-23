@@ -143,7 +143,7 @@ def main():
             source=completed.get(scope(req))
             if number is not None and source and source.get('request_status')=='COMPLETED':
                 cached=retrieve(source,req=req)
-                if cached.get('source_mode')=='LIVE' and 'view' in cached:
+                if cached.get('source_mode')=='LIVE' and ('view' in cached or 'form_assessment_requests' in cached):
                     reused=dict(source,request_id=number,request=req,reused_from_request=source.get('request_id'))
                     record_request(reused)
                     print(json.dumps(reused))

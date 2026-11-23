@@ -2,7 +2,7 @@ name: Monty ChatGPT operations (shared snapshot)
 run-name: Monty operations ${{ inputs.command || github.event.issue.title || github.event.schedule }}
 on:
   push:
-    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests]
+    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback]
     paths: ['.github/workflows/monty-operations.yml', '.monty/operations-staging.json']
   workflow_dispatch:
     inputs:
@@ -55,9 +55,9 @@ jobs:
       - name: Process authenticated commands or shared daily card
         env:
           GH_TOKEN: ${{ github.token }}
-          OPERATIONS_RESULTS_BRANCH: ${{ github.event_name == 'push' && 'monty-simple-staging-results' || 'monty-operations-results' }}
+          OPERATIONS_RESULTS_BRANCH: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'monty-single-staging-results' || 'monty-simple-staging-results') || 'monty-operations-results' }}
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
-          OPERATIONS_COMMAND: ${{ github.event_name == 'push' && 'RMV6PS' || inputs.command }}
+          OPERATIONS_COMMAND: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'RM6 Ballina 7' || 'RMV6PS') || inputs.command }}
           OPERATIONS_DATE: ${{ inputs.date }}
           OPERATIONS_ISSUE: ${{ inputs.request_issue || github.event.issue.number }}
           OPERATIONS_MODE: ${{ (github.event_name == 'issues' || inputs.request_issue || github.event.schedule == '*/5 * * * *') && 'queue' || 'daily' }}

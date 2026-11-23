@@ -14,4 +14,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements-runner.txt
-      - run: python -m unittest test_simple_operations test_monty_operations test_adapter_parity test_v06 test_v6_daily test_monty_daily_price_ladder test_monty_prospective_ledger -v
+      - run: python -m unittest test_single_race_fallback test_simple_operations test_monty_operations test_adapter_parity test_v06 test_v6_daily test_monty_daily_price_ladder test_monty_prospective_ledger -v

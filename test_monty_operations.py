@@ -18,8 +18,20 @@ class CommandTests(unittest.TestCase):
         for cmd in ['RM6 Royal Randwick R4','RM7 Te Rapa 12']:
             r=ops.command(cmd);self.assertTrue(r['meeting']);self.assertEqual(r['view'],'provisional')
         self.assertEqual(ops.command('C')['view'],'status')
-        for cmd in ['RM8','RM6 x 0','RM6 $(id) 1','RM6PS track 2','RM6 track 51']:
+        for cmd in ['RM8','RM6 x 0','RM6 $(id) 1','RM6 track 51']:
             with self.assertRaises(ValueError):ops.command(cmd)
+
+    def test_shorthand_and_explicit_provisional_single_races(self):
+        for text,version in [('Ballina 4','V6'),('Ballina R4','V6'),('RM6PS Ballina 4','V6'),
+                             ('RM7PS Ballina 4','V7'),('RMV6PS Ballina 4','V6'),('RMV7PS Ballina R4','V7')]:
+            with self.subTest(command=text):
+                req=ops.command(text,'2026-11-23','AU')
+                self.assertEqual((req['version'],req['view'],req['meeting'],req['race']),(version,'provisional','Ballina','4'))
+        self.assertEqual(ops.command('C')['view'],'status')
+
+    def test_shorthand_does_not_accept_unsafe_or_invalid_races(self):
+        for text in ['Ballina 0','Ballina 51','Ballina 4; id','RM8 Ballina 4','RM7PS $(id) 4']:
+            with self.subTest(command=text),self.assertRaises(ValueError):ops.command(text)
 
     def test_stale_future_and_closed(self):
         now=ops.utcnow();row=dict(captured_at=now.isoformat(),scheduled_start=(now+timedelta(hours=1)).isoformat())
@@ -77,18 +89,20 @@ class RunTests(unittest.TestCase):
         f=self.run_it(request=ops.command('RM6',self.day,'AU'))
         self.assertEqual(f['races'],[]);self.assertFalse(self.calls)
 
-    def test_same_capture_daily_and_single_have_identical_price_gate(self):
+    def test_same_capture_features_preserved_and_single_provisional_gate_is_separate(self):
         full=self.run_it()
         single=ops.execute(self.day,self.root/'single',self.v7,run_id='single',payload=self.payload,
                            captured=self.now,request=ops.command('RM6 Test 1',self.day),fixture=True,scorer=self.scorer)
         self.assertEqual(full['races'][0]['shared_model_input_sha256'],single['races'][0]['shared_model_input_sha256'])
         for version in ['V6','V7']:
             self.assertEqual(single['races'][0]['models'][version]['status'],'SCORED')
-        self.payload['data'][0]['races'][0]['runners'][0].update(odds=[],fixed_win=3)
+        for runner in self.payload['data'][0]['races'][0]['runners']:
+            runner.update(fixed_win=runner['odds'][0]['win'],odds=[])
         for name,req in [('blocked-full',ops.command('RM6',self.day)),('blocked-single',ops.command('RM6 Test 1',self.day))]:
             f=ops.execute(self.day,self.root/name,self.v7,run_id=name,payload=self.payload,captured=self.now,
                           request=req,fixture=True,scorer=self.scorer)
-            self.assertTrue(all(r['status']=='BLOCKED' for r in f['races'][0]['models'].values()))
+            self.assertTrue(all(r['status']==('BLOCKED' if name=='blocked-full' else 'SCORED') for r in f['races'][0]['models'].values()))
+            self.assertTrue(all(r['official_classification']=='NO BET' for r in f['races'][0]['models'].values()))
 
     def test_no_silent_model_fallback(self):
         def broken(v,*args):
