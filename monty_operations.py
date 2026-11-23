@@ -45,15 +45,15 @@ def write(path, value):
 
 
 def command(text, date=None, country=None):
-    text = {'RMV6PS':'RM6PS', 'RMV7PS':'RM7PS'}.get(text.strip().upper(), text)
+    text=re.sub(r'^RMV([67])PS(?=\s|$)',r'RM\1PS',text.strip(),flags=re.I)
+    if re.fullmatch(r"[A-Za-z][A-Za-z .\x27-]{0,59}\s+R?([1-9]|[1-4][0-9]|50)",text,re.I):
+        text='RM6 '+text
     match = re.fullmatch(r'(RM[67](?:PS)?)(?:\s+([A-Za-z][A-Za-z .\x27-]{0,59})\s+R?([1-9]|[1-4][0-9]|50))?', text.strip(), re.I)
     if text.strip().upper() == 'C':
         return dict(command='C', view='status')
     if not match:
         raise ValueError('Use RM6, RM7, RM6PS, RM7PS, RM6 track race, RM7 track race, or C')
     model, track, race = match.groups()
-    if model.upper().endswith('PS') and track:
-        raise ValueError('Use RM6/RM7 track race for a single-race assessment')
     day = date or utcnow().astimezone(TZ).date().isoformat()
     datetime.strptime(day, '%Y-%m-%d')
     if country not in (None, 'AU', 'NZ'):

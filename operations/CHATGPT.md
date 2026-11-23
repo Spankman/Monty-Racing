@@ -11,7 +11,9 @@ connect/select GitHub; do not claim the request was submitted.
 - RM7: V7 shadow/research full remaining race day.
 - RM6PS / RMV6PS: V6 provisional assessments.
 - RM7PS / RMV7PS: V7 provisional research assessments.
-- RM6 [track] [race], RM7 [track] [race]: the exact single race, provisional.
+- RM6 [track] [race], RM7 [track] [race]: the exact single race, applying the hierarchy below.
+- [track] [race] (for example Ballina 4): defaults to V6.
+- RM6PS/RMV6PS [track] [race] and RM7PS/RMV7PS [track] [race]: explicit provisional single-race requests, with the same automatic form fallback.
 - C: read/check/retrieve the outstanding request. Never start or rerun anything.
 
 Normalize RMV6PS to RM6PS and RMV7PS to RM7PS before issue creation. PS means
@@ -100,7 +102,7 @@ code is tested through branch push in `monty-operations.yml`, publishing ONLY to
 `monty-simple-staging-results`; this is staging evidence, not default-branch
 activation. No manual workflow dispatch is used for live command acceptance.
 
-## Automatic single-race hierarchy (RM6/RM7 track race)
+## Automatic single-race hierarchy (all single-race command forms)
 
 This section applies only to individual-race commands. Full-day rules and
 thresholds are unchanged. Do not stop at BLOCKED or an official NO BET when a

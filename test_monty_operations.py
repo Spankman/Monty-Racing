@@ -18,8 +18,20 @@ class CommandTests(unittest.TestCase):
         for cmd in ['RM6 Royal Randwick R4','RM7 Te Rapa 12']:
             r=ops.command(cmd);self.assertTrue(r['meeting']);self.assertEqual(r['view'],'provisional')
         self.assertEqual(ops.command('C')['view'],'status')
-        for cmd in ['RM8','RM6 x 0','RM6 $(id) 1','RM6PS track 2','RM6 track 51']:
+        for cmd in ['RM8','RM6 x 0','RM6 $(id) 1','RM6 track 51']:
             with self.assertRaises(ValueError):ops.command(cmd)
+
+    def test_shorthand_and_explicit_provisional_single_races(self):
+        for text,version in [('Ballina 4','V6'),('Ballina R4','V6'),('RM6PS Ballina 4','V6'),
+                             ('RM7PS Ballina 4','V7'),('RMV6PS Ballina 4','V6'),('RMV7PS Ballina R4','V7')]:
+            with self.subTest(command=text):
+                req=ops.command(text,'2026-11-23','AU')
+                self.assertEqual((req['version'],req['view'],req['meeting'],req['race']),(version,'provisional','Ballina','4'))
+        self.assertEqual(ops.command('C')['view'],'status')
+
+    def test_shorthand_does_not_accept_unsafe_or_invalid_races(self):
+        for text in ['Ballina 0','Ballina 51','Ballina 4; id','RM8 Ballina 4','RM7PS $(id) 4']:
+            with self.subTest(command=text),self.assertRaises(ValueError):ops.command(text)
 
     def test_stale_future_and_closed(self):
         now=ops.utcnow();row=dict(captured_at=now.isoformat(),scheduled_start=(now+timedelta(hours=1)).isoformat())
