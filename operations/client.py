@@ -61,6 +61,8 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'EXPIRED' if all(
                 race['result']['freshness_at_retrieval'].startswith(('CLOSED', 'STALE'))
                 for race in view['races']) else 'UNVERIFIED'
+        elif not view['races']:
+            result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT', freshness='UNVERIFIED')
         else:
             result.update(view=view, ticket=ticket(view, now=now), html=render(view, now=now))
     return result
@@ -87,27 +89,46 @@ def with_workflow_status(result, req=None, now=None):
     return result
 
 
+def scope(req):
+    # Each execution already computes both frozen versions and all views.
+    return (req['date'], (req.get('meeting') or '').casefold(), req.get('race'), req.get('country'))
+
+
 def handle(text, *, date=None, country=None, request_id=None, now=None):
     day = date or (now or utcnow()).astimezone(TZ).date().isoformat()
     req = command(text, day, country)
-    if req['view'] == 'status':
-        if request_id is None:
-            request_id = next((n for n, item in transport.requests(include_processed=True)
-                               if item['date'] == day and (not country or item['country'] == country)), None)
-        if request_id is None:
-            return with_workflow_status(retrieve(transport.read(f'daily/{day}/latest.json'), now=now))
+    status_only=req['view']=='status'
+    target=None
+    if status_only and request_id is None:
+        match=next(((n,item) for n,item in transport.requests(include_processed=True)
+                    if item['date']==day and (not country or item['country']==country)),None)
+        if match:request_id,target=match
+        else:
+            index=transport.read(f'daily/{day}/latest.json')
+            return with_workflow_status(retrieve(index,req=index.get('request') if index else None,now=now))
     if request_id is not None:
-        result = retrieve(transport.read(f'requests/{request_id}.json'), request_id,
-                          None if req['view'] == 'status' else req, now)
-        return with_workflow_status(result, req, now) if req['view'] == 'status' or result['request_status'] == 'RUNNING' else result
+        index=transport.read(f'requests/{request_id}.json')
+        target=(target or (index.get('request') if index else None)) if status_only else req
+        if status_only and target is None:
+            target=next((item for n,item in transport.requests(include_processed=True) if n==request_id),None)
+        result=retrieve(index,request_id,target,now)
+        return with_workflow_status(result,target,now) if status_only or result['request_status']=='RUNNING' else result
 
-    if req['command'] in ('RM6', 'RM7') and not country:
-        saved = retrieve(transport.read(f'daily/{day}/latest.json'), req=req, now=now)
-        if saved.get('source_mode') == 'LIVE' and 'view' in saved:
-            return saved
-    # Following this exact ID is a separate read, never an automatic requeue.
-    number = transport.enqueue(req)
-    return retrieve(None, number, now=now)
+    # Reuse only the newest matching scope, never an unrelated/older request.
+    # A failed/expired newest request does not fall back to earlier selections.
+    match=next(((n,item) for n,item in transport.requests(include_processed=True)
+                if scope(item)==scope(req)),None)
+    if match:
+        number,_=match
+        saved=retrieve(transport.read(f'requests/{number}.json'),number,req,now)
+        if saved['request_status'] in transport.PENDING:
+            return with_workflow_status(saved,req,now) if saved['request_status']=='RUNNING' else saved
+        if saved.get('source_mode')=='LIVE' and 'view' in saved:return saved
+    elif req['command'] in ('RM6','RM7') and not country:
+        saved=retrieve(transport.read(f'daily/{day}/latest.json'),req=req,now=now)
+        if saved.get('source_mode')=='LIVE' and 'view' in saved:return saved
+    number=transport.enqueue(req)
+    return retrieve(None,number,now=now)
 
 
 def main():

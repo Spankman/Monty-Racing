@@ -163,6 +163,7 @@ class ConnectorClientTests(unittest.TestCase):
         self.capture = ops.timestamp(self.day + 'T08:10:00+10:00')
         self.jump = self.capture + timedelta(hours=4)
         self.files = {}
+        self.enterContext(patch.object(transport, 'requests', return_value=[]))
         self.enqueue = self.enterContext(patch.object(transport, 'enqueue', return_value=200))
         self.enterContext(patch.object(transport, 'read', side_effect=self.files.get))
         self.enterContext(patch.object(transport, 'read_bytes', side_effect=self.files.get))

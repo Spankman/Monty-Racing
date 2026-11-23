@@ -1,6 +1,9 @@
-# ChatGPT operational interface (staging)
+# ChatGPT operational interface — GitHub Actions
 
-This branch adds transport/orchestration only. Frozen V6 and the V7 fold-3
+Production PR #104 is active. The small reliability repair remains on a separate
+unmerged branch; see `CHATGPT.md` for the ordinary-chat operating instructions.
+PR #123 was closed: dedicated hosting, custom services and private plugins are
+not being pursued. This branch changes transport/orchestration only. Frozen V6 and the V7 fold-3
 candidate remain unchanged. This does not authorise wagers or V7 deployment.
 
 ## Architecture and audited alternatives
@@ -10,10 +13,9 @@ candidate remain unchanged. This does not authorise wagers or V7 deployment.
 - No connector workflow-dispatch method is exposed. `gh workflow run` works
   in the Codex execution workspace, but that is NOT proof ordinary ChatGPT can
   dispatch without that workspace.
-- Existing default-branch issue handling supports only V7 single races. Existing
-  polling exists because integration-created issues may not fire issue events.
-  Existing daily jobs fetch separately; V6 readiness/daily and V7 shadow jobs
-  do not provide one shared source snapshot contract.
+- The activated `monty-operations.yml` handles owner command issues and runs
+  both frozen engines from one timestamped capture. Live issue-event execution
+  has been demonstrated. Scheduled catch-up remains separately unproved.
 - Simplest supported route: connector creates a structured owner request issue;
   an Actions issue handler plus scheduled queue fallback runs the command with
   existing repository secrets. Connector reads a small immutable result index
@@ -60,8 +62,8 @@ The workflow uses subprocess argument lists, not shell interpolation of commands
 | --- | --- |
 | RM6 | Return the current V6 official view, refreshing the daily capture if stale or unavailable |
 | RM7 | Return the current V7 shadow selections, refreshing the daily capture if stale or unavailable. Official decision stays NO BET |
-| RM6PS | Fresh dual run; return V6 provisional ordered assessments |
-| RM7PS | Fresh dual run; return genuine V7 provisional research assessments |
+| RM6PS / RMV6PS | Return fresh V6 provisional ordered assessments; reuse a valid matching capture |
+| RM7PS / RMV7PS | Return fresh V7 provisional research assessments; reuse a valid matching capture |
 | RM6 Ballina 3 | Fresh capture; both models assess only Ballina R3; show V6 |
 | RM7 Te Rapa 4 | Fresh capture; both models assess only requested race; show V7 |
 | C | Read the latest relevant request, its status, capture times and receipt |
@@ -81,7 +83,10 @@ For a new daily RM6/RM7 command, check
 ref. Compare the actual retrieval time against `captured_at`, `valid_until`,
 the five-minute cap, and each race's scheduled jump. A usable live forecast
 can be displayed. Otherwise create one fresh command issue using the format
-above. RM6PS, RM7PS and single-race commands start their own request.
+above. For any selection command, reuse the newest matching pending or still-fresh
+request first, including across model/provisional views of the same scope.
+Otherwise create a fresh request. Never fall back past a newer failed/expired
+request to older selections.
 
 After creating issue N, retain its number in the conversation and fetch
 `requests/N.json` on `monty-operations-results`. Until an index appears,

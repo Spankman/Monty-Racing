@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from monty_operations import command
 REPO='Spankman/Monty-Racing'
-BRANCH='monty-operations-results'
+BRANCH=os.environ.get('OPERATIONS_RESULTS_BRANCH','monty-operations-results')
 PREFIX='Monty command: '
 PENDING = {'QUEUED', 'RUNNING'}
 
@@ -101,33 +101,54 @@ def record_request(index):
     write_index(f"requests/{index['request_id']}.json", index, immutable_terminal=True)
 
 
-def publish(directory, run_id, day, issue=None, workflow_url=None):
-    # The results branch contains sanitized derived views only.
-    ensure_results_branch()
+def publish(directory, run_id, day, issue=None, workflow_url=None, *, request=None):
+    # Validate the entire allowlist BEFORE touching GitHub. A single tree/commit
+    # publishes the complete forecast, receipt, views and terminal index together.
     allowed={'forecast.json','receipt.json','v6-official.json','v6-provisional.json',
              'v7-official.json','v7-provisional.json','v6-official.txt','v6-provisional.txt',
              'v7-official.txt','v7-provisional.txt','v6-official.html','v6-provisional.html',
              'v7-official.html','v7-provisional.html', 'v7-shadow.json','v7-shadow.txt','v7-shadow.html'}
-    prefix='runs/'+day+'/'+run_id+'/'
-    for file in sorted(Path(directory).iterdir()):
-        if file.name not in allowed:raise ValueError('Unapproved public file')
-        path=prefix+file.name
-        if api('contents/'+path+'?ref='+BRANCH,optional=True) is not None:
-            raise ValueError('Immutable forecast path already exists')
-        api('contents/'+path,'PUT',dict(message='Record immutable Monty derived forecast [skip ci]',
-             branch=BRANCH,content=base64.b64encode(file.read_bytes()).decode()))
+    files=sorted(Path(directory).iterdir())
+    if any(not file.is_file() or file.is_symlink() or file.name not in allowed for file in files):
+        raise ValueError('Unapproved public file')
     receipt=json.loads((Path(directory)/'receipt.json').read_text())
+    import hashlib
+    forecast=(Path(directory)/'forecast.json').read_bytes()
+    saved_forecast=json.loads(forecast)
+    if (receipt['forecast_sha256']!=hashlib.sha256(forecast).hexdigest() or receipt['run_id']!=run_id
+        or saved_forecast.get('run_id')!=run_id or saved_forecast.get('status')!=receipt['status']
+        or saved_forecast.get('date')!=day or receipt.get('date')!=day):
+        raise ValueError('Forecast/receipt integrity mismatch')
+    prefix='runs/'+day+'/'+run_id+'/'
     index=dict(schema='monty.operations.index.v1',date=day,run_id=run_id,
                status=receipt['status'],source_mode=receipt['source_mode'],
                receipt_path=prefix+'receipt.json',forecast_path=prefix+'forecast.json',
-               forecast_sha256=receipt['forecast_sha256'],generated_at=receipt['generated_at'])
+               forecast_sha256=receipt['forecast_sha256'],generated_at=receipt['generated_at'],
+               workflow_url=workflow_url, captured_at=saved_forecast.get('captured_at'),
+               valid_until=saved_forecast.get('valid_until'),models=receipt.get('models',{}),
+               forecast_integrity_verified=True,
+               receipt_sha256=hashlib.sha256((Path(directory)/'receipt.json').read_bytes()).hexdigest())
+    if request is not None:index['request']=request
     if issue is not None:
         state = 'FAILED' if receipt['status'] == 'FAILED' else 'COMPLETED'
-        index.update(request_id=issue, request_status=state, workflow_url=workflow_url)
-        record_request(index)
-    else:
-        index['workflow_url'] = workflow_url
-        write_index(f'daily/{day}/latest.json', index)
+        index.update(request_id=issue, request_status=state)
+        path=f'requests/{issue}.json'
+    else:path=f'daily/{day}/latest.json'
+    ensure_results_branch()
+    # Pin reads and the commit parent to the same branch tip. No force pushes.
+    parent=api('git/ref/heads/'+BRANCH)['object']['sha']
+    if api('contents/'+prefix.rstrip('/')+'?ref='+parent,optional=True) is not None:
+        raise ValueError('Immutable forecast path already exists')
+    existing=api('contents/'+path+'?ref='+parent,optional=True)
+    if issue is not None and existing:
+        saved=json.loads(base64.b64decode(existing['content']))
+        if request_state(saved) not in PENDING:raise ValueError('Request already settled')
+    tree=api('git/commits/'+parent)['tree']['sha']
+    entries=[dict(path=prefix+file.name,mode='100644',type='blob',content=file.read_text()) for file in files]
+    entries.append(dict(path=path,mode='100644',type='blob',content=json.dumps(index,indent=2)+'\n'))
+    tree=api('git/trees','POST',dict(base_tree=tree,tree=entries))['sha']
+    commit=api('git/commits','POST',dict(message='Record immutable Monty forecast and receipt [skip ci]',tree=tree,parents=[parent]))['sha']
+    api('git/refs/heads/'+BRANCH,'PATCH',dict(sha=commit,force=False))
     return index
 
 

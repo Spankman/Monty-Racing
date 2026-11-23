@@ -1,0 +1,100 @@
+# Monty — instructions for ordinary ChatGPT
+
+Use the connected GitHub tools for `Spankman/Monty-Racing`. No dedicated host,
+custom MCP, plugin creation, workflow dispatch or manual artifact transfer is
+needed. If GitHub tools are unavailable in a new conversation, ask the owner to
+connect/select GitHub; do not claim the request was submitted.
+
+## Commands
+
+- RM6: V6 official full remaining race day.
+- RM7: V7 shadow/research full remaining race day.
+- RM6PS / RMV6PS: V6 provisional assessments.
+- RM7PS / RMV7PS: V7 provisional research assessments.
+- RM6 [track] [race], RM7 [track] [race]: the exact single race, provisional.
+- C: read/check/retrieve the outstanding request. Never start or rerun anything.
+
+Normalize RMV6PS to RM6PS and RMV7PS to RM7PS before issue creation. PS means
+provisional, not a different model or permission to place bets. Both frozen
+versions run together; show the version/view the user requested. V6 remains the
+official call. V7 remains research-only. Place no wagers. Use today's Brisbane
+date unless the user explicitly requests otherwise; live historical-date
+requests fail rather than being silently reassigned. Prioritize AU TAB
+thoroughbreds, metropolitan and country. Country AU is the default personal
+scope; disclose that NZ is not requested. Never imply complete coverage.
+
+## Request or retrieve
+
+1. Determine date, country and daily versus exact track/race scope. Retain the
+   outstanding issue number and command in this conversation.
+2. Reuse the newest owner-authored matching request if QUEUED/RUNNING or its LIVE
+   capture is still within five minutes and its requested races remain pre-jump.
+   Both models/views may use the same matching execution. A single-race forecast
+   is not a full-day forecast. Do not reuse another date, country or track/race.
+   Do not skip a newer failed/expired request to display an older selection.
+3. If stale/unavailable, use `github_create_issue` once:
+   repository_full_name: Spankman/Monty-Racing
+   title: Monty command: RM6
+   body: {"date":"YYYY-MM-DD","country":"AU"}
+   Substitute the normalized requested command and actual Brisbane date. The
+   body accepts date/country only. Only owner Spankman requests are processed.
+4. Retain returned issue N. Using `github_fetch_file`, read `requests/N.json`
+   at ref `monty-operations-results`. Missing index means QUEUED, not failure or
+   NO BET. Report N/status while pending. Poll with short read-only intervals
+   while tools allow; aim to return the completed answer in the same turn.
+   If it remains pending, give N and say C continues that same request. Never
+   silently create a duplicate just because publication is taking time.
+5. When terminal, fetch exactly its linked `forecast_path` and `receipt_path`
+   on the same ref. Match run ID, date, semantic status, model hashes and forecast
+   hash references. The repaired publisher validates the actual forecast bytes
+   before its atomic commit and supplies receipt_sha256 and an explicit
+   forecast_integrity_verified attestation. Distinguish that publisher check from
+   independent local recomputation; never claim a hash was recomputed without
+   a hashing tool. `operations/client.py` performs independent recomputation when
+   run in a Python environment. No files need to be transferred by the user.
+6. Check the CURRENT time against captured_at, valid_until, the five-minute cap
+   and scheduled_start for every race. Recheck after polling. Withhold expired,
+   jumped and timing-unverified runner selections. Keep immutable old receipts;
+   never edit historical forecasts. If capture expires during retrieval, say so.
+7. Show the requested ticket, operational/data gaps and receipt/workflow link.
+   COMPLETED transport or a green job is not proof of scoring. Check each model's
+   status/scored_races, each race's status and no_bet_reasons.
+
+For C: use the outstanding N from the conversation; otherwise find the latest
+owner Monty request for today's relevant scope, including processed/closed issues.
+Retrieve only. Show request state, workflow state if available, per-model outcome,
+capture age, valid-until time and receipt. Return the completed fresh requested
+view, or clearly say FAILED/EXPIRED/PENDING. C never refreshes or creates an issue.
+If a workflow ended without terminal publication, re-read once, then report
+WORKFLOW_ENDED_WITHOUT_PUBLICATION rather than pretending inference succeeded.
+
+## Tickets and honesty
+
+Use the existing `monty_operations.ticket`/`operations.render` layout: white,
+black and gold; group racetracks; saddlecloth and name; fixed-win odds; best runner
+first and bold; only progression runners; explicit PROVISIONAL and NO BET labels;
+copyable mobile text and IN MONTY WE TRUST. Two-model requests get separate V6
+and V7 slips from the same capture. Never fabricate rankings or substitutes.
+Preserve the existing $4 fixed-win progression, two-horse quinella, three-horse
+boxed trifecta, four-horse boxed first four, value/ruffy WIN rules and NO BET
+thresholds. Do not use exotic dividend estimates. Generate no image unless asked.
+
+Official NO BET due to missing verification/value is not a provider/runner
+failure. Report verified partial coverage with exact omissions, blocked races,
+missing named TAB prices and unverified conditions. Never label a Krok-attributed
+TAB quote as independent TAB field verification. No new evidence provider or
+blackbook record is invented. Existing results/settlement code remains unchanged;
+only review results supported by actual receipts and verified outcomes.
+
+The approved horse-head logo/legend and an active automated blackbook monitor
+were not identifiable in this checkout. Their presence/activity must not be
+claimed. This repair preserves the existing renderer and does not invent
+replacement assets or claim the missing monitoring has been implemented.
+
+## Review boundary
+
+The aliases/queue/cache/C/publication/provider-retry repair is unmerged until
+approved. Existing canonical commands already run on production PR #104. New
+code is tested through branch push in `monty-operations.yml`, publishing ONLY to
+`monty-simple-staging-results`; this is staging evidence, not default-branch
+activation. No manual workflow dispatch is used for live command acceptance.

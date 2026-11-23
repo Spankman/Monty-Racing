@@ -45,6 +45,7 @@ def write(path, value):
 
 
 def command(text, date=None, country=None):
+    text = {'RMV6PS':'RM6PS', 'RMV7PS':'RM7PS'}.get(text.strip().upper(), text)
     match = re.fullmatch(r'(RM[67](?:PS)?)(?:\s+([A-Za-z][A-Za-z .\x27-]{0,59})\s+R?([1-9]|[1-4][0-9]|50))?', text.strip(), re.I)
     if text.strip().upper() == 'C':
         return dict(command='C', view='status')
@@ -253,7 +254,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         for race in snapshot['races']:
             k=(race['meeting'].casefold(),str(race['race']))
             m=meta.get(k)
-            if not m:
+            if not m or request.get('country') and m['country'] != request['country']:
                 continue
             if request.get('meeting') and (k!=(request['meeting'].casefold(),str(request['race'])) or request.get('country') not in (None,m['country'])):
                 continue
