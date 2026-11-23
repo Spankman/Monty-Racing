@@ -1,0 +1,417 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45113350144-1-146",
+  "date": "2026-11-23",
+  "view": "provisional",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Ballina",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T06:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Brass Band"
+        },
+        {
+          "number": "15",
+          "horse": "Righteous Legend"
+        },
+        {
+          "number": "2",
+          "horse": "Wittelsbach"
+        },
+        {
+          "number": "11",
+          "horse": "Langan"
+        }
+      ],
+      "captured_at": "2026-11-23T04:42:32.784890+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-23",
+        "meeting": "Ballina",
+        "race": "8",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "4",
+            "horse": "Glounthaune",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "TAB",
+            "barrier": 13,
+            "weight": 61,
+            "age": 7,
+            "jockey": "Matthew Palmer",
+            "trainer": "Kelly Purdy"
+          },
+          {
+            "number": "7",
+            "horse": "Azuki",
+            "scratched": false,
+            "odds": 3.7,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 59.5,
+            "age": 6,
+            "jockey": "Jess Emmerson",
+            "trainer": "John Dann"
+          },
+          {
+            "number": "5",
+            "horse": "Minimal",
+            "scratched": false,
+            "odds": 46.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 60.5,
+            "age": 8,
+            "jockey": "Nozi Tomizawa",
+            "trainer": "Sonya Dixon"
+          },
+          {
+            "number": "8",
+            "horse": "Brass Band",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "age": 6,
+            "jockey": "N.r",
+            "trainer": "Renita Beaton"
+          },
+          {
+            "number": "1",
+            "horse": "Coccinella",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 62.5,
+            "age": 4,
+            "jockey": "William Galloway",
+            "trainer": "Allan Chau"
+          },
+          {
+            "number": "15",
+            "horse": "Righteous Legend",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "age": 5,
+            "jockey": "N.r",
+            "trainer": "Billy Healey"
+          },
+          {
+            "number": "2",
+            "horse": "Wittelsbach",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "age": 5,
+            "jockey": "Paige Fergusson-Smith",
+            "trainer": "A & T Sweeney"
+          },
+          {
+            "number": "11",
+            "horse": "Langan",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "age": 3,
+            "jockey": "Archie McColm",
+            "trainer": "Chris & Corey Munce"
+          },
+          {
+            "number": "9",
+            "horse": "Madame Cody",
+            "scratched": false,
+            "odds": 4.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Emily Lang",
+            "trainer": "Cameron Richardson"
+          },
+          {
+            "number": "6",
+            "horse": "Our Grecia Girl",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 60.5,
+            "age": 4,
+            "jockey": "Danny Peisley",
+            "trainer": "Paul L Shailer"
+          },
+          {
+            "number": "10",
+            "horse": "Magic Moz",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Gary Geran",
+            "trainer": "C & K Geran"
+          },
+          {
+            "number": "13",
+            "horse": "Whisky Train",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 55,
+            "age": 7,
+            "jockey": "Jett Newman",
+            "trainer": "Billy Healey"
+          },
+          {
+            "number": "12",
+            "horse": "Risk For Reward",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 56,
+            "age": 6,
+            "jockey": "Siabh Rigley",
+            "trainer": "Stephen & Jordan Lee"
+          },
+          {
+            "number": "14",
+            "horse": "Dupont",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 55,
+            "age": 7,
+            "jockey": "Noriyuki Masuda",
+            "trainer": "Dennis Dwane"
+          },
+          {
+            "number": "3",
+            "horse": "Dark Chill",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "TAB",
+            "barrier": 15,
+            "weight": 61.5,
+            "age": 7,
+            "jockey": "Jasper Franklin",
+            "trainer": "Ethan Ensby"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1600,
+        "track_condition": "Good3",
+        "captured_at": "2026-11-23T04:42:32.784890+00:00",
+        "scheduled_start": "2026-11-23T06:30:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "16e9c2131af94341ff6fbcc7054fc1459f40537cf8c82f518a0438faefca5d62",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "7",
+            "horse": "Azuki",
+            "odds": 3.7,
+            "probability": 0.2017957253672128,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "9",
+            "horse": "Madame Cody",
+            "odds": 4.0,
+            "probability": 0.1873037298858658,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "7",
+          "horse": "Azuki",
+          "odds": 3.7,
+          "probability": 0.2017957253672128,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "7",
+            "horse": "Azuki",
+            "odds": 3.7,
+            "probability": 0.2017957253672128,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Madame Cody",
+            "odds": 4.0,
+            "probability": 0.1873037298858658,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "Magic Moz",
+            "odds": 5.0,
+            "probability": 0.1519319133385632,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "3",
+            "horse": "Dark Chill",
+            "odds": 8.5,
+            "probability": 0.09205475197143055,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "13",
+            "horse": "Whisky Train",
+            "odds": 11.0,
+            "probability": 0.07233323691275138,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "12",
+            "horse": "Risk For Reward",
+            "odds": 11.0,
+            "probability": 0.07223674638547138,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Our Grecia Girl",
+            "odds": 11.0,
+            "probability": 0.07094013270113846,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "1",
+            "horse": "Coccinella",
+            "odds": 13.0,
+            "probability": 0.06062186197369906,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "Glounthaune",
+            "odds": 14.0,
+            "probability": 0.05755714981613562,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "5",
+            "horse": "Minimal",
+            "odds": 46.0,
+            "probability": 0.018804081670435378,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "14",
+            "horse": "Dupont",
+            "odds": 61.0,
+            "probability": 0.014420669977296421,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "7",
+          "horse": "Azuki",
+          "odds": 3.7,
+          "probability": 0.2017957253672128,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-23T04:42:33.672660+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-23T04:42:32.784890+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T04:42:33.674340+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45113350144-1-146/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T04:42:32.784890+00:00",
+  "valid_until": "2026-11-23T04:47:32.784890+00:00",
+  "snapshot_only": true
+}
