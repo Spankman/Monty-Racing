@@ -1,12 +1,34 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-23",
-  "request_id": 147,
-  "run_id": "45113350144-1-147",
+  "run_id": "45113350144-1-146",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-23/45113350144-1-146/receipt.json",
+  "forecast_path": "runs/2026-11-23/45113350144-1-146/forecast.json",
+  "forecast_sha256": "66c59d63590f248a45bb27b7bb967d926cf24e88214be0dd55f227295976f814",
+  "generated_at": "2026-11-23T04:42:33.672761+00:00",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45113350144",
-  "request_status": "QUEUED",
-  "status": "QUEUED",
-  "updated_at": "2026-11-23T04:42:11.859376+00:00",
+  "captured_at": "2026-11-23T04:42:32.784890+00:00",
+  "valid_until": "2026-11-23T04:47:32.784890+00:00",
+  "models": {
+    "V6": {
+      "commit": "75924a40da88746214b12436a525ad30dcf5f24b",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "625a7b444c95d3fa1d5fb8fcab2d27cd6679bd0fa5466118dfa7f02fd2d3fa57",
   "request": {
     "command": "RM7PS BALLINA 8",
     "version": "V7",
@@ -15,5 +37,8 @@
     "meeting": "Ballina",
     "race": "8",
     "country": "AU"
-  }
+  },
+  "request_id": 147,
+  "request_status": "COMPLETED",
+  "reused_from_request": 146
 }
