@@ -1,0 +1,527 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-23",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45111557907-1-daily",
+  "generated_at": "2026-11-23T04:23:59.410164+00:00",
+  "receipt": "runs/2026-11-23/45111557907-1-daily/receipt.json",
+  "source_mode": "LIVE",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "ea87994b329bc8019a24ddb3551103b6f433e99d",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "races": [
+    {
+      "meeting": "Ballina",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T05:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Dancing By"
+        },
+        {
+          "number": "12",
+          "horse": "Flying Phoenix"
+        },
+        {
+          "number": "9",
+          "horse": "Hawaiian Bloom"
+        },
+        {
+          "number": "4",
+          "horse": "Silver Spoon"
+        },
+        {
+          "number": "7",
+          "horse": "Gold Puma"
+        },
+        {
+          "number": "8",
+          "horse": "Naystar"
+        },
+        {
+          "number": "3",
+          "horse": "Nomomeikushi"
+        }
+      ],
+      "captured_at": "2026-11-23T04:23:58.163194+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "1",
+              "horse": "Godtfred Kirk",
+              "odds": 2.1,
+              "probability": 0.37622707231631247,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "2",
+              "horse": "The Minstrel Boy",
+              "odds": 3.0,
+              "probability": 0.26369029586039644,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "5",
+              "horse": "Denver Bronco",
+              "odds": 5.0,
+              "probability": 0.16273934779772592,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "TRIFECTA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "1",
+            "horse": "Godtfred Kirk",
+            "odds": 2.1,
+            "probability": 0.37622707231631247,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "1",
+              "horse": "Godtfred Kirk",
+              "odds": 2.1,
+              "probability": 0.37622707231631247,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "2",
+              "horse": "The Minstrel Boy",
+              "odds": 3.0,
+              "probability": 0.26369029586039644,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "Denver Bronco",
+              "odds": 5.0,
+              "probability": 0.16273934779772592,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "10",
+              "horse": "Monte Carlo Miss",
+              "odds": 6.5,
+              "probability": 0.12424325825861843,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "13",
+              "horse": "Virginia Breezes",
+              "odds": 16.0,
+              "probability": 0.04931775407640609,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "11",
+              "horse": "Mystical Gem",
+              "odds": 34.0,
+              "probability": 0.02378227169054076,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "1",
+            "horse": "Godtfred Kirk",
+            "odds": 2.1,
+            "probability": 0.37622707231631247,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-23T04:23:58.600585+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-23T04:23:58.163194+00:00",
+          "model_version": "V6",
+          "model_commit": "ea87994b329bc8019a24ddb3551103b6f433e99d",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "1",
+              "horse": "Godtfred Kirk",
+              "odds": 2.1,
+              "probability": 0.36478941529606296,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "2",
+              "horse": "The Minstrel Boy",
+              "odds": 3.0,
+              "probability": 0.26081536102569475,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "5",
+              "horse": "Denver Bronco",
+              "odds": 5.0,
+              "probability": 0.16487564663876872,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "TRIFECTA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "1",
+            "horse": "Godtfred Kirk",
+            "odds": 2.1,
+            "probability": 0.36478941529606296,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "1",
+              "horse": "Godtfred Kirk",
+              "odds": 2.1,
+              "probability": 0.36478941529606296,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "2",
+              "horse": "The Minstrel Boy",
+              "odds": 3.0,
+              "probability": 0.26081536102569475,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "Denver Bronco",
+              "odds": 5.0,
+              "probability": 0.16487564663876872,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "10",
+              "horse": "Monte Carlo Miss",
+              "odds": 6.5,
+              "probability": 0.12854400137981853,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "13",
+              "horse": "Virginia Breezes",
+              "odds": 16.0,
+              "probability": 0.053896630840056636,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "11",
+              "horse": "Mystical Gem",
+              "odds": 34.0,
+              "probability": 0.027078944819598428,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "1",
+            "horse": "Godtfred Kirk",
+            "odds": 2.1,
+            "probability": 0.36478941529606296,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-23T04:23:59.410041+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-23T04:23:58.163194+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        }
+      },
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-23",
+        "meeting": "Ballina",
+        "race": "7",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "2",
+            "horse": "The Minstrel Boy",
+            "scratched": false,
+            "odds": 3.0,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Andrew Mallyon",
+            "trainer": "Stephen & Jordan Lee"
+          },
+          {
+            "number": "11",
+            "horse": "Mystical Gem",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Nozi Tomizawa",
+            "trainer": "Allan Chau"
+          },
+          {
+            "number": "6",
+            "horse": "Dancing By",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Adam Campton"
+          },
+          {
+            "number": "5",
+            "horse": "Denver Bronco",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "TAB",
+            "barrier": 13,
+            "weight": 56,
+            "age": 3,
+            "jockey": "Danny Peisley",
+            "trainer": "Paul L Shailer"
+          },
+          {
+            "number": "12",
+            "horse": "Flying Phoenix",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 9,
+            "weight": 55,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Brock Everingham"
+          },
+          {
+            "number": "9",
+            "horse": "Hawaiian Bloom",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 5,
+            "weight": 55,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Renita Beaton"
+          },
+          {
+            "number": "4",
+            "horse": "Silver Spoon",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 4,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Daiki Chujo"
+          },
+          {
+            "number": "7",
+            "horse": "Gold Puma",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Violet Soulsby",
+            "trainer": "Ethan Ensby"
+          },
+          {
+            "number": "8",
+            "horse": "Naystar",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 12,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Jake Bayliss",
+            "trainer": "Matthew Dunn"
+          },
+          {
+            "number": "13",
+            "horse": "Virginia Breezes",
+            "scratched": false,
+            "odds": 16.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 55,
+            "age": 4,
+            "jockey": "Micheal Hellyer",
+            "trainer": "Leo Clapham"
+          },
+          {
+            "number": "1",
+            "horse": "Godtfred Kirk",
+            "scratched": false,
+            "odds": 2.1,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Gary Geran",
+            "trainer": "C & K Geran"
+          },
+          {
+            "number": "10",
+            "horse": "Monte Carlo Miss",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 55,
+            "age": 4,
+            "jockey": "McKenzie Apel",
+            "trainer": "Jonny Field"
+          },
+          {
+            "number": "3",
+            "horse": "Nomomeikushi",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Benjamin Osmond",
+            "trainer": "Kris Lees"
+          }
+        ],
+        "active_runners": 6,
+        "priced_active_runners": 6,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1410,
+        "track_condition": "Good3",
+        "captured_at": "2026-11-23T04:23:58.163194+00:00",
+        "scheduled_start": "2026-11-23T05:50:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "f0c90e303f3579ef829c269ae0b79aed3ab96bef759bb2f19a18f7da568f3f4c"
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 3,
+    "provider_races": 15,
+    "accepted_races": 1,
+    "scored_both": 1,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "0ea95ce39cd6b33fbc87f1367cfca5b7398bfe81e81718ae86ed595051026ceb",
+  "captured_at": "2026-11-23T04:23:58.163194+00:00",
+  "valid_until": "2026-11-23T04:28:58.163194+00:00"
+}

@@ -1,19 +1,19 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-23",
-  "run_id": "45110799775-1-daily",
+  "run_id": "45111557907-1-daily",
   "status": "COMPLETED_NO_BET",
   "source_mode": "LIVE",
-  "receipt_path": "runs/2026-11-23/45110799775-1-daily/receipt.json",
-  "forecast_path": "runs/2026-11-23/45110799775-1-daily/forecast.json",
-  "forecast_sha256": "c5daac32a5ce4e40273fe403fafd49ff973ab7f29e4be937b9c77382ccb1055e",
-  "generated_at": "2026-11-23T04:16:36.078551+00:00",
-  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45110799775",
-  "captured_at": "2026-11-23T04:16:34.897356+00:00",
-  "valid_until": "2026-11-23T04:21:34.897356+00:00",
+  "receipt_path": "runs/2026-11-23/45111557907-1-daily/receipt.json",
+  "forecast_path": "runs/2026-11-23/45111557907-1-daily/forecast.json",
+  "forecast_sha256": "e1709ba307d264d8e5aba6e3424b0faca38b47bd47793dcbd615ea6a4fb980aa",
+  "generated_at": "2026-11-23T04:23:59.410164+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45111557907",
+  "captured_at": "2026-11-23T04:23:58.163194+00:00",
+  "valid_until": "2026-11-23T04:28:58.163194+00:00",
   "models": {
     "V6": {
-      "commit": "d100f06ae7b37b0eba276e2ca752d6e39c4bfd9a",
+      "commit": "ea87994b329bc8019a24ddb3551103b6f433e99d",
       "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
       "status": "SCORED",
       "research_only": false,
@@ -28,7 +28,7 @@
     }
   },
   "forecast_integrity_verified": true,
-  "receipt_sha256": "032e47612bf5f6286cbd39cbf53a46045dbfa3c85fd24981c9a684d3c3dad491",
+  "receipt_sha256": "1a466e67a9f20e7cef210d0e551a0042606dd9b2c8fac17cedac822310a84202",
   "request": {
     "command": "RM6 BALLINA 7",
     "version": "V6",
