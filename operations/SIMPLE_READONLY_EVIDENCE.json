@@ -1,0 +1,122 @@
+{
+  "results": [
+    {
+      "command": "C",
+      "request_id": 133,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:21:38.969936+00:00",
+      "capture_age_seconds": 130.874725,
+      "valid_until": "2026-11-23T03:26:38.969936+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V6",
+      "view": "provisional",
+      "checked_at": "2026-11-23T03:23:50.215253+00:00"
+    },
+    {
+      "command": "RM7 Barcaldine 3",
+      "request_id": 133,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:21:38.969936+00:00",
+      "capture_age_seconds": 133.11869,
+      "valid_until": "2026-11-23T03:26:38.969936+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V7",
+      "view": "provisional",
+      "checked_at": "2026-11-23T03:23:52.088761+00:00"
+    },
+    {
+      "command": "RM6",
+      "request_id": 132,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:19:08.792502+00:00",
+      "capture_age_seconds": 285.24538,
+      "valid_until": "2026-11-23T03:24:08.792502+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V6",
+      "view": "official",
+      "checked_at": "2026-11-23T03:23:54.038160+00:00"
+    },
+    {
+      "command": "RM7",
+      "request_id": 132,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:19:08.792502+00:00",
+      "capture_age_seconds": 287.037386,
+      "valid_until": "2026-11-23T03:24:08.792502+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V7",
+      "view": "shadow",
+      "checked_at": "2026-11-23T03:23:55.830200+00:00"
+    },
+    {
+      "command": "RM6PS",
+      "request_id": 132,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:19:08.792502+00:00",
+      "capture_age_seconds": 288.875041,
+      "valid_until": "2026-11-23T03:24:08.792502+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V6",
+      "view": "provisional",
+      "checked_at": "2026-11-23T03:23:57.667883+00:00"
+    },
+    {
+      "command": "RMV6PS",
+      "request_id": 132,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:19:08.792502+00:00",
+      "capture_age_seconds": 290.644035,
+      "valid_until": "2026-11-23T03:24:08.792502+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V6",
+      "view": "provisional",
+      "checked_at": "2026-11-23T03:23:59.436861+00:00"
+    },
+    {
+      "command": "RM7PS",
+      "request_id": 132,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:19:08.792502+00:00",
+      "capture_age_seconds": 292.647248,
+      "valid_until": "2026-11-23T03:24:08.792502+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V7",
+      "view": "provisional",
+      "checked_at": "2026-11-23T03:24:01.440061+00:00"
+    },
+    {
+      "command": "RMV7PS",
+      "request_id": 132,
+      "request_status": "COMPLETED",
+      "semantic_outcome": "COMPLETED_NO_BET",
+      "captured_at": "2026-11-23T03:19:08.792502+00:00",
+      "capture_age_seconds": 294.341515,
+      "valid_until": "2026-11-23T03:24:08.792502+00:00",
+      "freshness": "FRESH",
+      "returned_view": true,
+      "version": "V7",
+      "view": "provisional",
+      "checked_at": "2026-11-23T03:24:03.134332+00:00"
+    }
+  ],
+  "github_methods": [
+    "GET"
+  ],
+  "github_read_count": 33,
+  "writes": 0,
+  "new_issues": 0
+}

@@ -21,26 +21,20 @@ candidate remain unchanged. This does not authorise wagers or V7 deployment.
   existing repository secrets. Connector reads a small immutable result index
   and derived forecasts on `monty-operations-results`. No new API server,
   MCPBackend, PAT in chat, or manual artifact transfer is required.
-- Secure callable API/custom MCP is an alternative only if its authenticated
-  action/tool is actually installed and granted access. None has been
-  demonstrated here. A GitHub App using short-lived installation tokens and
-  scoped Actions/contents permissions would avoid long-lived client keys, but
-  adds hosting/authentication and is unnecessary for the queued route.
 
 ## Activation boundary
 
-New issue triggers and schedules load from GitHub's DEFAULT branch. They do not
-activate simply because this integration branch passes CI. Do not merge without
-owner approval. Manual branch workflow dispatch can test staging; it cannot prove
-unattended default-branch activation. The existing issue workflows remain intact.
-The issue title prefix `Monty command: ` avoids invoking legacy handlers.
+Production PR #104 is already activated. The reliability repair's issue-event
+queue handling and aliases load from GitHub's default branch only after an
+approved merge. Branch push tests run real frozen inference in isolation and
+publish to `monty-simple-staging-results`; they do not activate the new default-
+branch issue handler. Do not merge without owner approval.
 
-Minimum production action after review: approve activation of the new workflow
-and its code on the default branch, with Actions contents-write and issues-read
-permissions and the existing KROK_API_KEY, V6_ARCHIVE_URL and V6_ARCHIVE_TOKEN.
-Results publish on a separate branch, never as forecast commits on main.
-Existing scheduled jobs are not disabled here; consolidate redundant production
-schedules only in that reviewed activation change to avoid duplicate API usage.
+The existing KROK_API_KEY, V6_ARCHIVE_URL and V6_ARCHIVE_TOKEN remain in Actions
+secrets. No new credentials, hosting, subscription or manual user dispatch is
+required for normal commands. Results remain on a separate branch, never main.
+Existing schedules and results-review workflows are preserved. Morning/queue
+cron success must be separately observed before claiming unattended recovery.
 
 ## Exact ChatGPT invocation
 
