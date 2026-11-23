@@ -1,0 +1,316 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45113350144-1-148",
+  "date": "2026-11-23",
+  "view": "provisional",
+  "version": "V6",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Taree",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Morpeth"
+        },
+        {
+          "number": "3",
+          "horse": "Apache Prancer"
+        },
+        {
+          "number": "8",
+          "horse": "Nasa Blueberry"
+        }
+      ],
+      "captured_at": "2026-11-23T04:42:41.163518+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-23",
+        "meeting": "Taree",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Morpeth",
+            "scratched": true,
+            "odds": null,
+            "price_source": null
+          },
+          {
+            "number": "2",
+            "horse": "Star Of Vega",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Apache Prancer",
+            "scratched": true,
+            "odds": null,
+            "price_source": null
+          },
+          {
+            "number": "4",
+            "horse": "Sideact",
+            "scratched": false,
+            "odds": 4.2,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Airburst",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Angel Stella Belle",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "7",
+            "horse": "Cherry Jubilee",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "8",
+            "horse": "Nasa Blueberry",
+            "scratched": true,
+            "odds": null,
+            "price_source": null
+          },
+          {
+            "number": "9",
+            "horse": "Plume",
+            "scratched": false,
+            "odds": 4.0,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "10",
+            "horse": "Royal Ribbons",
+            "scratched": false,
+            "odds": 91.0,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "11",
+            "horse": "Flowerhead",
+            "scratched": false,
+            "odds": 3.6,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "12",
+            "horse": "Xfiltration",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "fixed_win"
+          }
+        ],
+        "active_runners": 9,
+        "priced_active_runners": 9,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "track_condition": "Good to Soft",
+        "captured_at": "2026-11-23T04:42:41.163518+00:00",
+        "scheduled_start": ""
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "jump_time_unverified"
+        ],
+        "betting_authorised": false,
+        "assessment_level": "FORM ASSESSMENT REQUIRED",
+        "model_inference": false,
+        "form_assessment_request": {
+          "classification": "FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION",
+          "model_version_requested": "V6",
+          "model_inference": false,
+          "model_status": "BLOCKED",
+          "target": {
+            "date": "2026-11-23",
+            "meeting": "Taree",
+            "race": "2",
+            "country": "AU"
+          },
+          "reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "jump_time_unverified"
+          ],
+          "facts": {
+            "date": "2026-11-23",
+            "meeting": "Taree",
+            "race": "2",
+            "country": "AU",
+            "source": "Krok provider assertions; not independently TAB verified",
+            "provider_status": "open",
+            "known_runners": [
+              {
+                "number": "1",
+                "horse": "Morpeth",
+                "scratched": true,
+                "odds": null,
+                "price_source": null
+              },
+              {
+                "number": "2",
+                "horse": "Star Of Vega",
+                "scratched": false,
+                "odds": 17.0,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "3",
+                "horse": "Apache Prancer",
+                "scratched": true,
+                "odds": null,
+                "price_source": null
+              },
+              {
+                "number": "4",
+                "horse": "Sideact",
+                "scratched": false,
+                "odds": 4.2,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "5",
+                "horse": "Airburst",
+                "scratched": false,
+                "odds": 6.5,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "6",
+                "horse": "Angel Stella Belle",
+                "scratched": false,
+                "odds": 6.0,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "7",
+                "horse": "Cherry Jubilee",
+                "scratched": false,
+                "odds": 8.5,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "8",
+                "horse": "Nasa Blueberry",
+                "scratched": true,
+                "odds": null,
+                "price_source": null
+              },
+              {
+                "number": "9",
+                "horse": "Plume",
+                "scratched": false,
+                "odds": 4.0,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "10",
+                "horse": "Royal Ribbons",
+                "scratched": false,
+                "odds": 91.0,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "11",
+                "horse": "Flowerhead",
+                "scratched": false,
+                "odds": 3.6,
+                "price_source": "fixed_win"
+              },
+              {
+                "number": "12",
+                "horse": "Xfiltration",
+                "scratched": false,
+                "odds": 101.0,
+                "price_source": "fixed_win"
+              }
+            ],
+            "active_runners": 9,
+            "priced_active_runners": 9,
+            "field_identity_ambiguous": false,
+            "unknown_scratching_count": 0,
+            "historical_form_available": false,
+            "required_research": [
+              "current fields and scratchings",
+              "recent and relevant form",
+              "jockeys and trainers",
+              "barriers and weights",
+              "track conditions and distance suitability",
+              "available market prices and capture times"
+            ],
+            "track_condition": "Good to Soft",
+            "captured_at": "2026-11-23T04:42:41.163518+00:00",
+            "scheduled_start": ""
+          },
+          "required_research": [
+            "current fields and scratchings",
+            "recent and relevant form",
+            "jockeys and trainers",
+            "barriers and weights",
+            "track conditions and distance suitability",
+            "available market prices and capture times"
+          ],
+          "requires_fresh_public_sources": true,
+          "instruction": "Automatically research and assess this exact race using reliable accessible sources. Do not ask for a further command. Cite sources and times. Separate most-likely winner from value. Rank supported runners even without odds; never invent quotes, form or probabilities. If evidence remains insufficient or the race is closed, explain why no meaningful selection is possible."
+        },
+        "freshness_at_retrieval": "UNVERIFIED TIMING — NO BET",
+        "freshness_checked_at": "2026-11-23T04:42:41.200389+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45113350144-1-148/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T04:42:41.163518+00:00",
+  "valid_until": "2026-11-23T04:47:41.163518+00:00",
+  "snapshot_only": true
+}
