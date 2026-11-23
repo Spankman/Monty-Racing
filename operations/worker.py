@@ -24,7 +24,7 @@ def daily_due(now, latest):
 def lifecycle(req, issue, run_id, workflow_url, state, reason=None):
     index = dict(schema='monty.operations.index.v1', date=req['date'], request_id=issue,
                  run_id=run_id, workflow_url=workflow_url, request_status=state,
-                 status=state, updated_at=utcnow().isoformat())
+                 status=state, updated_at=utcnow().isoformat(), request=req)
     if reason:
         index['blockers'] = [reason]
     if issue is not None:
@@ -67,7 +67,7 @@ def operate(req, issue, run_id, workflow_url, out):
         failed(out, run_id, req['date'], reason)
 
     try:
-        return publish(public, run_id, req['date'], issue, workflow_url)
+        return publish(public, run_id, req['date'], issue, workflow_url, request=req)
     except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
         completed = record_publication_failure(req, issue, run_id, workflow_url)
         if completed:
@@ -99,8 +99,11 @@ def main():
     attempt = os.environ.get('GITHUB_RUN_ATTEMPT', '1')
     workflow_url = f'https://github.com/Spankman/Monty-Racing/actions/runs/{workflow_id}'
     if mode == 'queue':
-        items = [(n, req) for n, req in requests() if not issue or n == int(issue)]
-        items.sort(key=lambda item: item[0])
+        items = list(requests())
+        # The event's request goes first; also drain older pending requests.
+        # GitHub retains only one pending job in a concurrency group, so a
+        # worker restricted to its own issue can strand cancelled burst events.
+        items.sort(key=lambda item: (bool(issue) and item[0] != int(issue), item[0]))
         items = items[:10]
         if not issue and daily_due(now, read(f'daily/{day}/latest.json')):
             items.insert(0, (None, command('RM6', day)))
@@ -129,13 +132,25 @@ def main():
         pending.append((number, req, run_id))
 
     publication_failed = False
+    completed = {}
+    from operations.client import scope, retrieve
     for number, req, run_id in pending:
         # Leave work queued for the next tick if another full inference may exceed the job budget.
         if monotonic() - started > RUNNER_TIMEOUT:
             break
         out = Path('operations_output') / run_id
         try:
-            print(json.dumps(operate(req, number, run_id, workflow_url, out)))
+            source=completed.get(scope(req))
+            if number is not None and source and source.get('request_status')=='COMPLETED':
+                cached=retrieve(source,req=req)
+                if cached.get('source_mode')=='LIVE' and 'view' in cached:
+                    reused=dict(source,request_id=number,request=req,reused_from_request=source.get('request_id'))
+                    record_request(reused)
+                    print(json.dumps(reused))
+                    continue
+            result=operate(req, number, run_id, workflow_url, out)
+            completed[scope(req)]=result
+            print(json.dumps(result))
         except RuntimeError as exc:
             if str(exc) != 'publication_failed':
                 raise

@@ -1,6 +1,9 @@
-# ChatGPT operational interface (staging)
+# ChatGPT operational interface — GitHub Actions
 
-This branch adds transport/orchestration only. Frozen V6 and the V7 fold-3
+Production PR #104 is active. The small reliability repair remains on a separate
+unmerged branch; see `CHATGPT.md` for the ordinary-chat operating instructions.
+PR #123 was closed: dedicated hosting, custom services and private plugins are
+not being pursued. This branch changes transport/orchestration only. Frozen V6 and the V7 fold-3
 candidate remain unchanged. This does not authorise wagers or V7 deployment.
 
 ## Architecture and audited alternatives
@@ -10,35 +13,28 @@ candidate remain unchanged. This does not authorise wagers or V7 deployment.
 - No connector workflow-dispatch method is exposed. `gh workflow run` works
   in the Codex execution workspace, but that is NOT proof ordinary ChatGPT can
   dispatch without that workspace.
-- Existing default-branch issue handling supports only V7 single races. Existing
-  polling exists because integration-created issues may not fire issue events.
-  Existing daily jobs fetch separately; V6 readiness/daily and V7 shadow jobs
-  do not provide one shared source snapshot contract.
+- The activated `monty-operations.yml` handles owner command issues and runs
+  both frozen engines from one timestamped capture. Live issue-event execution
+  has been demonstrated. Scheduled catch-up remains separately unproved.
 - Simplest supported route: connector creates a structured owner request issue;
   an Actions issue handler plus scheduled queue fallback runs the command with
   existing repository secrets. Connector reads a small immutable result index
   and derived forecasts on `monty-operations-results`. No new API server,
   MCPBackend, PAT in chat, or manual artifact transfer is required.
-- Secure callable API/custom MCP is an alternative only if its authenticated
-  action/tool is actually installed and granted access. None has been
-  demonstrated here. A GitHub App using short-lived installation tokens and
-  scoped Actions/contents permissions would avoid long-lived client keys, but
-  adds hosting/authentication and is unnecessary for the queued route.
 
 ## Activation boundary
 
-New issue triggers and schedules load from GitHub's DEFAULT branch. They do not
-activate simply because this integration branch passes CI. Do not merge without
-owner approval. Manual branch workflow dispatch can test staging; it cannot prove
-unattended default-branch activation. The existing issue workflows remain intact.
-The issue title prefix `Monty command: ` avoids invoking legacy handlers.
+Production PR #104 is already activated. The reliability repair's issue-event
+queue handling and aliases load from GitHub's default branch only after an
+approved merge. Branch push tests run real frozen inference in isolation and
+publish to `monty-simple-staging-results`; they do not activate the new default-
+branch issue handler. Do not merge without owner approval.
 
-Minimum production action after review: approve activation of the new workflow
-and its code on the default branch, with Actions contents-write and issues-read
-permissions and the existing KROK_API_KEY, V6_ARCHIVE_URL and V6_ARCHIVE_TOKEN.
-Results publish on a separate branch, never as forecast commits on main.
-Existing scheduled jobs are not disabled here; consolidate redundant production
-schedules only in that reviewed activation change to avoid duplicate API usage.
+The existing KROK_API_KEY, V6_ARCHIVE_URL and V6_ARCHIVE_TOKEN remain in Actions
+secrets. No new credentials, hosting, subscription or manual user dispatch is
+required for normal commands. Results remain on a separate branch, never main.
+Existing schedules and results-review workflows are preserved. Morning/queue
+cron success must be separately observed before claiming unattended recovery.
 
 ## Exact ChatGPT invocation
 
@@ -60,8 +56,8 @@ The workflow uses subprocess argument lists, not shell interpolation of commands
 | --- | --- |
 | RM6 | Return the current V6 official view, refreshing the daily capture if stale or unavailable |
 | RM7 | Return the current V7 shadow selections, refreshing the daily capture if stale or unavailable. Official decision stays NO BET |
-| RM6PS | Fresh dual run; return V6 provisional ordered assessments |
-| RM7PS | Fresh dual run; return genuine V7 provisional research assessments |
+| RM6PS / RMV6PS | Return fresh V6 provisional ordered assessments; reuse a valid matching capture |
+| RM7PS / RMV7PS | Return fresh V7 provisional research assessments; reuse a valid matching capture |
 | RM6 Ballina 3 | Fresh capture; both models assess only Ballina R3; show V6 |
 | RM7 Te Rapa 4 | Fresh capture; both models assess only requested race; show V7 |
 | C | Read the latest relevant request, its status, capture times and receipt |
@@ -81,7 +77,10 @@ For a new daily RM6/RM7 command, check
 ref. Compare the actual retrieval time against `captured_at`, `valid_until`,
 the five-minute cap, and each race's scheduled jump. A usable live forecast
 can be displayed. Otherwise create one fresh command issue using the format
-above. RM6PS, RM7PS and single-race commands start their own request.
+above. For any selection command, reuse the newest matching pending or still-fresh
+request first, including across model/provisional views of the same scope.
+Otherwise create a fresh request. Never fall back past a newer failed/expired
+request to older selections.
 
 After creating issue N, retain its number in the conversation and fetch
 `requests/N.json` on `monty-operations-results`. Until an index appears,

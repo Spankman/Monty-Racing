@@ -72,6 +72,24 @@ class RunTests(unittest.TestCase):
         self.assertEqual(f['source_mode'],'SIMULATED FIXTURE')
         with self.assertRaises(FileExistsError):self.run_it()
 
+    def test_full_day_country_scope_does_not_include_other_jurisdiction(self):
+        self.payload['data'][0]['country']='NZ'
+        f=self.run_it(request=ops.command('RM6',self.day,'AU'))
+        self.assertEqual(f['races'],[]);self.assertFalse(self.calls)
+
+    def test_same_capture_daily_and_single_have_identical_price_gate(self):
+        full=self.run_it()
+        single=ops.execute(self.day,self.root/'single',self.v7,run_id='single',payload=self.payload,
+                           captured=self.now,request=ops.command('RM6 Test 1',self.day),fixture=True,scorer=self.scorer)
+        self.assertEqual(full['races'][0]['shared_model_input_sha256'],single['races'][0]['shared_model_input_sha256'])
+        for version in ['V6','V7']:
+            self.assertEqual(single['races'][0]['models'][version]['status'],'SCORED')
+        self.payload['data'][0]['races'][0]['runners'][0].update(odds=[],fixed_win=3)
+        for name,req in [('blocked-full',ops.command('RM6',self.day)),('blocked-single',ops.command('RM6 Test 1',self.day))]:
+            f=ops.execute(self.day,self.root/name,self.v7,run_id=name,payload=self.payload,captured=self.now,
+                          request=req,fixture=True,scorer=self.scorer)
+            self.assertTrue(all(r['status']=='BLOCKED' for r in f['races'][0]['models'].values()))
+
     def test_no_silent_model_fallback(self):
         def broken(v,*args):
             if v=='V7':raise RuntimeError('DO NOT PUBLISH secret')
@@ -163,6 +181,7 @@ class ConnectorClientTests(unittest.TestCase):
         self.capture = ops.timestamp(self.day + 'T08:10:00+10:00')
         self.jump = self.capture + timedelta(hours=4)
         self.files = {}
+        self.enterContext(patch.object(transport, 'requests', return_value=[]))
         self.enqueue = self.enterContext(patch.object(transport, 'enqueue', return_value=200))
         self.enterContext(patch.object(transport, 'read', side_effect=self.files.get))
         self.enterContext(patch.object(transport, 'read_bytes', side_effect=self.files.get))

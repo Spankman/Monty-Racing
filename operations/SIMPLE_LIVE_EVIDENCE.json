@@ -1,0 +1,482 @@
+[
+  {
+    "request_id": 124,
+    "command": "RM6",
+    "created_at": "2026-11-23T03:04:11Z",
+    "published_at": "2026-11-23T03:05:16Z",
+    "publication_seconds": 65.0,
+    "captured_at": "2026-11-23T03:04:52.518636+00:00",
+    "valid_until": "2026-11-23T03:09:52.518636+00:00",
+    "status": "COMPLETED_NO_BET",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 4
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 4
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 10,
+      "scored_both": 4,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [
+        "Ballina R4: prohibited race type",
+        "Ballina R6: prohibited race type",
+        "Barcaldine R1: prohibited race type"
+      ],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45103755782",
+    "forecast_path": "runs/2026-11-23/45103755782-1-124/forecast.json",
+    "receipt_path": "runs/2026-11-23/45103755782-1-124/receipt.json",
+    "forecast_sha256": "d0bc469f264dbe5fc911c3f35a6d3f1a65401ad46eccbc41c9fb7f426219c1f7",
+    "receipt_sha256": "4a2dc4ef49ea96453b5461c4388933a072fd82833c2900e26eb6413fb32c0399",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 125,
+    "command": "RM7",
+    "created_at": "2026-11-23T03:05:53Z",
+    "published_at": "2026-11-23T03:06:59Z",
+    "publication_seconds": 66.0,
+    "captured_at": "2026-11-23T03:06:33.200260+00:00",
+    "valid_until": "2026-11-23T03:11:33.200260+00:00",
+    "status": "COMPLETED_NO_BET",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 4
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 4
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 10,
+      "scored_both": 4,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [
+        "Ballina R4: prohibited race type",
+        "Ballina R6: prohibited race type",
+        "Barcaldine R1: prohibited race type"
+      ],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45103927205",
+    "forecast_path": "runs/2026-11-23/45103927205-1-125/forecast.json",
+    "receipt_path": "runs/2026-11-23/45103927205-1-125/receipt.json",
+    "forecast_sha256": "c9533393736c03a049727161832fdee1ec4ab5d0efe19f38b4edc7d587eac59b",
+    "receipt_sha256": "ce5625f50cf956e5cfc4fdd8ce9bb6abbfb7e10620015e2591a943263de90586",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 126,
+    "command": "RM6PS",
+    "created_at": "2026-11-23T03:07:29Z",
+    "published_at": "2026-11-23T03:08:30Z",
+    "publication_seconds": 61.0,
+    "captured_at": "2026-11-23T03:08:06.732579+00:00",
+    "valid_until": "2026-11-23T03:13:06.732579+00:00",
+    "status": "COMPLETED_NO_BET",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 4
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 4
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 10,
+      "scored_both": 4,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [
+        "Ballina R4: prohibited race type",
+        "Ballina R6: prohibited race type",
+        "Barcaldine R1: prohibited race type"
+      ],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104087603",
+    "forecast_path": "runs/2026-11-23/45104087603-1-126/forecast.json",
+    "receipt_path": "runs/2026-11-23/45104087603-1-126/receipt.json",
+    "forecast_sha256": "24d11ef356ed044f25b42dcb5e0b0fe51adc549f29307f321b3f33d15b8c3def",
+    "receipt_sha256": "fa5606dda84604437aa491130af44cb4f6c600ef42f74541d7264cc9203a1a22",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 127,
+    "command": "RM7PS",
+    "created_at": "2026-11-23T03:08:57Z",
+    "published_at": "2026-11-23T03:10:03Z",
+    "publication_seconds": 66.0,
+    "captured_at": "2026-11-23T03:09:36.500860+00:00",
+    "valid_until": "2026-11-23T03:14:36.500860+00:00",
+    "status": "COMPLETED_NO_BET",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 4
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 4
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 10,
+      "scored_both": 4,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [
+        "Ballina R4: prohibited race type",
+        "Ballina R6: prohibited race type",
+        "Barcaldine R1: prohibited race type"
+      ],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104234057",
+    "forecast_path": "runs/2026-11-23/45104234057-1-127/forecast.json",
+    "receipt_path": "runs/2026-11-23/45104234057-1-127/receipt.json",
+    "forecast_sha256": "67b6ec79f185d3e499c57fab6242cd8d02572bd0bf0d0fd8c287cd749d570468",
+    "receipt_sha256": "35c90b50600030ee967640ef4490f726b9b9c5299dad5ef7d68802c58b16cc96",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 128,
+    "command": "RM6 Ballina 5",
+    "created_at": "2026-11-23T03:10:35Z",
+    "published_at": "2026-11-23T03:11:40Z",
+    "publication_seconds": 65.0,
+    "captured_at": "2026-11-23T03:11:18.555421+00:00",
+    "valid_until": "2026-11-23T03:16:18.555421+00:00",
+    "status": "PARTIAL_OR_BLOCKED",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "BLOCKED",
+        "research_only": false,
+        "scored_races": 0
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "BLOCKED",
+        "research_only": true,
+        "scored_races": 0
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 13,
+      "scored_both": 0,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104406265",
+    "forecast_path": "runs/2026-11-23/45104406265-1-128/forecast.json",
+    "receipt_path": "runs/2026-11-23/45104406265-1-128/receipt.json",
+    "forecast_sha256": "ca8b498ff81b4b823a1516eefc57adf650c2804239febde56cbcbfa396c4a18e",
+    "receipt_sha256": "17a74c8f88fde3dd8db1c789463ec9ee810d6fdc0ab67022e0204e941b6efbd3",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 129,
+    "command": "RM7 Ballina 5",
+    "created_at": "2026-11-23T03:13:08Z",
+    "published_at": "2026-11-23T03:14:07Z",
+    "publication_seconds": 59.0,
+    "captured_at": "2026-11-23T03:13:45.830469+00:00",
+    "valid_until": "2026-11-23T03:18:45.830469+00:00",
+    "status": "PARTIAL_OR_BLOCKED",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "BLOCKED",
+        "research_only": false,
+        "scored_races": 0
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "BLOCKED",
+        "research_only": true,
+        "scored_races": 0
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 13,
+      "scored_both": 0,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104659153",
+    "forecast_path": "runs/2026-11-23/45104659153-1-129/forecast.json",
+    "receipt_path": "runs/2026-11-23/45104659153-1-129/receipt.json",
+    "forecast_sha256": "3f270b5ea9b7487969b6c55e0f80d32ee158f2f50f42770d5d5ed71fbde220ee",
+    "receipt_sha256": "b2118b3baffdb80c09553cbaf9a1e0fd61870a056f4b793e2b1d88242541d2cb",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 130,
+    "command": "RM6 Barcaldine 2",
+    "created_at": "2026-11-23T03:14:45Z",
+    "published_at": "2026-11-23T03:15:42Z",
+    "publication_seconds": 57.0,
+    "captured_at": "2026-11-23T03:15:24.158820+00:00",
+    "valid_until": "2026-11-23T03:20:24.158820+00:00",
+    "status": "PARTIAL_OR_BLOCKED",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "BLOCKED",
+        "research_only": false,
+        "scored_races": 0
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "BLOCKED",
+        "research_only": true,
+        "scored_races": 0
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 13,
+      "scored_both": 0,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104819156",
+    "forecast_path": "runs/2026-11-23/45104819156-1-130/forecast.json",
+    "receipt_path": "runs/2026-11-23/45104819156-1-130/receipt.json",
+    "forecast_sha256": "cee05f0b598562af82d0faef266e8f537e28dc5e1be4726698919f1cf44dd6a7",
+    "receipt_sha256": "5134e140972aa416d813c59220b2e979ce589087ec88ed12da6105a8d2955377",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 131,
+    "command": "RM7 Barcaldine 2",
+    "created_at": "2026-11-23T03:16:28Z",
+    "published_at": "2026-11-23T03:17:33Z",
+    "publication_seconds": 65.0,
+    "captured_at": "2026-11-23T03:17:15.345782+00:00",
+    "valid_until": "2026-11-23T03:22:15.345782+00:00",
+    "status": "PARTIAL_OR_BLOCKED",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "BLOCKED",
+        "research_only": false,
+        "scored_races": 0
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "BLOCKED",
+        "research_only": true,
+        "scored_races": 0
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 13,
+      "scored_both": 0,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104998516",
+    "forecast_path": "runs/2026-11-23/45104998516-1-131/forecast.json",
+    "receipt_path": "runs/2026-11-23/45104998516-1-131/receipt.json",
+    "forecast_sha256": "44fa2f31ca7a18bd5938aa03dadc59a03b5cc24604127eaec55959bc559cd42a",
+    "receipt_sha256": "b9fd8588226327bc11c3d4b0572dd60804c9797dbad63f6b39349d077864cffc",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 132,
+    "command": "RM6",
+    "created_at": "2026-11-23T03:18:27Z",
+    "published_at": "2026-11-23T03:19:30Z",
+    "publication_seconds": 63.0,
+    "captured_at": "2026-11-23T03:19:08.792502+00:00",
+    "valid_until": "2026-11-23T03:24:08.792502+00:00",
+    "status": "COMPLETED_NO_BET",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 1
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 1
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 10,
+      "scored_both": 1,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [
+        "Ballina R4: prohibited race type",
+        "Ballina R6: prohibited race type",
+        "Barcaldine R1: prohibited race type"
+      ],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45105196847",
+    "forecast_path": "runs/2026-11-23/45105196847-1-132/forecast.json",
+    "receipt_path": "runs/2026-11-23/45105196847-1-132/receipt.json",
+    "forecast_sha256": "b5b730574b77a49b346cbe71f72cf27341eee5f2a3813f373e153e9bd8729314",
+    "receipt_sha256": "a318f20bae1be71568b34f5137805151c6cc55b649802b27823c5b7d61084587",
+    "forecast_hash_matches_index_and_receipt": true
+  },
+  {
+    "request_id": 133,
+    "command": "RM6 Barcaldine 3",
+    "created_at": "2026-11-23T03:20:56Z",
+    "published_at": "2026-11-23T03:22:03Z",
+    "publication_seconds": 67.0,
+    "captured_at": "2026-11-23T03:21:38.969936+00:00",
+    "valid_until": "2026-11-23T03:26:38.969936+00:00",
+    "status": "COMPLETED_NO_BET",
+    "models": {
+      "V6": {
+        "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 1
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 1
+      }
+    },
+    "coverage": {
+      "provider_meetings": 3,
+      "provider_races": 15,
+      "accepted_races": 12,
+      "scored_both": 1,
+      "independently_verified": 0,
+      "complete_au_nz_coverage_verified": false,
+      "provider_skips": [],
+      "jurisdictions_observed": [
+        "AU"
+      ],
+      "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+    },
+    "workflow_event": "issues",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45105451690",
+    "forecast_path": "runs/2026-11-23/45105451690-1-133/forecast.json",
+    "receipt_path": "runs/2026-11-23/45105451690-1-133/receipt.json",
+    "forecast_sha256": "f359cfa87642d8620e2e6207727de338359491c9fdcbe74747228b76dab6f832",
+    "receipt_sha256": "7722156ce04c3091390a8996e75030e7f76274bf568c409fcc673ce1a4b30ed7",
+    "forecast_hash_matches_index_and_receipt": true
+  }
+]

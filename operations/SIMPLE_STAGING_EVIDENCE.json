@@ -1,0 +1,53 @@
+{
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45105292235",
+  "event": "push",
+  "tested_commit": "53f02cda9538e47f30b41a515749f07706db5f41",
+  "command": "RMV6PS",
+  "results_ref": "monty-simple-staging-results",
+  "captured_at": "2026-11-23T03:20:07.266783+00:00",
+  "valid_until": "2026-11-23T03:25:07.266783+00:00",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "53f02cda9538e47f30b41a515749f07706db5f41",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "published_at": "2026-11-23T03:20:13Z",
+  "created_at": "2026-11-23T03:19:27Z",
+  "publication_commit": "2b9871c5028efadbd18cc6934c7a52619e49291e",
+  "publication_files": [
+    "daily/2026-11-23/latest.json",
+    "runs/2026-11-23/45105292235-1-daily/forecast.json",
+    "runs/2026-11-23/45105292235-1-daily/receipt.json",
+    "runs/2026-11-23/45105292235-1-daily/v6-official.html",
+    "runs/2026-11-23/45105292235-1-daily/v6-official.json",
+    "runs/2026-11-23/45105292235-1-daily/v6-official.txt",
+    "runs/2026-11-23/45105292235-1-daily/v6-provisional.html",
+    "runs/2026-11-23/45105292235-1-daily/v6-provisional.json",
+    "runs/2026-11-23/45105292235-1-daily/v6-provisional.txt",
+    "runs/2026-11-23/45105292235-1-daily/v7-official.html",
+    "runs/2026-11-23/45105292235-1-daily/v7-official.json",
+    "runs/2026-11-23/45105292235-1-daily/v7-official.txt",
+    "runs/2026-11-23/45105292235-1-daily/v7-provisional.html",
+    "runs/2026-11-23/45105292235-1-daily/v7-provisional.json",
+    "runs/2026-11-23/45105292235-1-daily/v7-provisional.txt",
+    "runs/2026-11-23/45105292235-1-daily/v7-shadow.html",
+    "runs/2026-11-23/45105292235-1-daily/v7-shadow.json",
+    "runs/2026-11-23/45105292235-1-daily/v7-shadow.txt"
+  ],
+  "publication_file_count": 18,
+  "forecast_sha256": "8c17d8716fa30e2d9b1308bda8c7c226ebde06c684cb18b954ba27a8c64ffbad",
+  "receipt_sha256": "06dacd40c62f879976be670baf4cd38c415975bc449462141933f575cd53c758",
+  "workflow_creation_to_publication_seconds": 46.0
+}
