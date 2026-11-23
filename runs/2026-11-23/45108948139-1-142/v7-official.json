@@ -1,0 +1,67 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45108948139-1-142",
+  "date": "2026-11-23",
+  "view": "official",
+  "version": "V7",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Ballina",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T04:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Le Starcell"
+        },
+        {
+          "number": "8",
+          "horse": "Limbazi"
+        },
+        {
+          "number": "7",
+          "horse": "Deep Affection"
+        },
+        {
+          "number": "4",
+          "horse": "Prestige Reign"
+        }
+      ],
+      "captured_at": "2026-11-23T03:58:02.512675+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:58:02.544830+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45108948139-1-142/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T03:58:02.512675+00:00",
+  "valid_until": "2026-11-23T04:03:02.512675+00:00",
+  "snapshot_only": true
+}
