@@ -4,9 +4,9 @@
   "request_id": 146,
   "run_id": "45113350144-1-146",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45113350144",
-  "request_status": "QUEUED",
-  "status": "QUEUED",
-  "updated_at": "2026-11-23T04:42:10.186097+00:00",
+  "request_status": "RUNNING",
+  "status": "RUNNING",
+  "updated_at": "2026-11-23T04:42:29.436359+00:00",
   "request": {
     "command": "RM6PS BALLINA 8",
     "version": "V6",
