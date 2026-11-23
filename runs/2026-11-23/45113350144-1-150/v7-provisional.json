@@ -1,0 +1,239 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45113350144-1-150",
+  "date": "2026-11-23",
+  "view": "provisional",
+  "version": "V7",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Ballina",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T04:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Le Starcell"
+        },
+        {
+          "number": "8",
+          "horse": "Limbazi"
+        },
+        {
+          "number": "7",
+          "horse": "Deep Affection"
+        },
+        {
+          "number": "4",
+          "horse": "Prestige Reign"
+        }
+      ],
+      "captured_at": "2026-11-23T04:42:56.488210+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-23",
+        "meeting": "Ballina",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "resulted",
+        "known_runners": [
+          {
+            "number": "2",
+            "horse": "In Full Swing",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Andrew Mallyon",
+            "trainer": "Stephen & Jordan Lee"
+          },
+          {
+            "number": "6",
+            "horse": "Vroom Bloom",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Noriyuki Masuda",
+            "trainer": "Daiki Chujo"
+          },
+          {
+            "number": "11",
+            "horse": "Em Pee",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Ben Looker",
+            "trainer": "Sharon Pepper"
+          },
+          {
+            "number": "5",
+            "horse": "Time Has Come",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Danny Peisley",
+            "trainer": "Fleur Henley"
+          },
+          {
+            "number": "10",
+            "horse": "Ayaka",
+            "scratched": false,
+            "odds": 2.3,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Nozi Tomizawa",
+            "trainer": "Daiki Chujo"
+          },
+          {
+            "number": "1",
+            "horse": "Sea Turtle",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 59,
+            "age": 5,
+            "jockey": "Jake Bayliss",
+            "trainer": "Aiden St Vincent"
+          },
+          {
+            "number": "12",
+            "horse": "Tsukahara",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Jett Newman",
+            "trainer": "Matthew Dunn"
+          },
+          {
+            "number": "3",
+            "horse": "Le Starcell",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 2,
+            "weight": 57.5,
+            "jockey": "N.r",
+            "trainer": "Daiki Chujo"
+          },
+          {
+            "number": "8",
+            "horse": "Limbazi",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 9,
+            "weight": 57,
+            "jockey": "Jasper Franklin",
+            "trainer": "Ethan Ensby"
+          },
+          {
+            "number": "9",
+            "horse": "Paris Victory",
+            "scratched": false,
+            "odds": 67.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Micheal Hellyer",
+            "trainer": "Pat Randall"
+          },
+          {
+            "number": "7",
+            "horse": "Deep Affection",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 57,
+            "jockey": "Violet Soulsby",
+            "trainer": "Ethan Ensby"
+          },
+          {
+            "number": "4",
+            "horse": "Prestige Reign",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 12,
+            "weight": 57.5,
+            "jockey": "N.r",
+            "trainer": "Stephen & Jordan Lee"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1310,
+        "track_condition": "GOOD3",
+        "captured_at": "2026-11-23T04:42:56.488210+00:00",
+        "scheduled_start": "2026-11-23T04:00:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "complete_market_field_required_by_frozen_models",
+          "race_already_due",
+          "provider_reports_race_closed"
+        ],
+        "betting_authorised": false,
+        "assessment_level": "NO CURRENT ASSESSMENT — RACE CLOSED",
+        "model_inference": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-23T04:42:56.525362+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45113350144-1-150/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T04:42:56.488210+00:00",
+  "valid_until": "2026-11-23T04:47:56.488210+00:00",
+  "snapshot_only": true
+}
