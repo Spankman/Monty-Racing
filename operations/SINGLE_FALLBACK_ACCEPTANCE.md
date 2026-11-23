@@ -81,3 +81,21 @@ consistent quote provenance. Where V6 can score and V7 cannot, V7 receives its
 own independent-form handoff, not V6 probabilities. Full-day gates, official
 betting requirements, freshness/post-jump checks and the $4 progression are
 preserved. Only single-race ranking availability changes.
+
+## Final legacy-cache regression and verification
+
+A still-fresh legacy BLOCKED/FAILED single-race view without assessment_level
+must not hide the new hierarchy after activation. A selection command now
+requests one fresh run for that legacy result; C remains read-only. A new
+regression test verifies the refresh. Updated relevant suite: 109 tests pass.
+
+The complete runtime including that fix was genuinely tested again at
+`ea87994b329bc8019a24ddb3551103b6f433e99d`:
+https://github.com/Spankman/Monty-Racing/actions/runs/45111557907
+
+Both engines again SCORED Ballina R7 provisionally with official NO BET, using
+capture 2026-11-23T04:23:58.163194+00:00, valid until 04:28:58.163194+00:00.
+The native connector retrieved both views and exact forecast/receipt while
+fresh; hashes were independently recomputed. This is isolated push staging,
+not production activation. The additional details are appended to the evidence
+JSON; the earlier evidence is preserved. PR CI also passed for this runtime.

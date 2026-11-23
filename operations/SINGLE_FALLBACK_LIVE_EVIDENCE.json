@@ -40,5 +40,30 @@
     }
   ],
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45110799775",
-  "results_ref": "monty-single-staging-results"
+  "results_ref": "monty-single-staging-results",
+  "followup_after_legacy_cache_fix": {
+    "tested_commit": "ea87994b329bc8019a24ddb3551103b6f433e99d",
+    "run_id": "45111557907-1-daily",
+    "captured_at": "2026-11-23T04:23:58.163194+00:00",
+    "valid_until": "2026-11-23T04:28:58.163194+00:00",
+    "forecast_sha256": "e1709ba307d264d8e5aba6e3424b0faca38b47bd47793dcbd615ea6a4fb980aa",
+    "receipt_sha256": "1a466e67a9f20e7cef210d0e551a0042606dd9b2c8fac17cedac822310a84202",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45111557907",
+    "models": {
+      "V6": {
+        "commit": "ea87994b329bc8019a24ddb3551103b6f433e99d",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 1
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 1
+      }
+    }
+  }
 }
