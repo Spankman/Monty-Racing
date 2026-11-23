@@ -54,6 +54,13 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'FRESH' if age >= 0 and now <= valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
+    if req and req.get('meeting') and result.get('freshness')=='FRESH':
+        from operations.single_race import handoffs
+        pending=handoffs(projection(forecast,req,now))
+        if pending:result['form_assessment_requests']=pending
+    if req and req.get('meeting') and state=='FAILED' and not result.get('form_assessment_requests'):
+        from operations.single_race import research_request
+        result['form_assessment_requests']=[research_request(req,result.get('blockers',[]),'FAILED')]
     if state == 'COMPLETED' and result.get('freshness') == 'FRESH' and req:
         view = projection(forecast, req, now)
         if view['races'] and all(race['result']['freshness_at_retrieval'] != 'FRESH AT CHECK TIME'
@@ -123,10 +130,10 @@ def handle(text, *, date=None, country=None, request_id=None, now=None):
         saved=retrieve(transport.read(f'requests/{number}.json'),number,req,now)
         if saved['request_status'] in transport.PENDING:
             return with_workflow_status(saved,req,now) if saved['request_status']=='RUNNING' else saved
-        if saved.get('source_mode')=='LIVE' and 'view' in saved:return saved
+        if saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
     elif req['command'] in ('RM6','RM7') and not country:
         saved=retrieve(transport.read(f'daily/{day}/latest.json'),req=req,now=now)
-        if saved.get('source_mode')=='LIVE' and 'view' in saved:return saved
+        if saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
     number=transport.enqueue(req)
     return retrieve(None,number,now=now)
 

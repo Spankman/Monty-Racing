@@ -3,6 +3,7 @@ import html
 import json
 from pathlib import Path
 from monty_operations import refresh_view, ticket
+from operations.single_race import quote_text
 
 
 def render(view, *, archived=False, now=None):
@@ -18,14 +19,22 @@ def render(view, *, archived=False, now=None):
     for meeting in dict.fromkeys(r['meeting'] for r in view['races']):
         parts.append('<h2>'+e(meeting)+'</h2>')
         for race in [r for r in view['races'] if r['meeting']==meeting]:
-            result=race['result'];parts.append('<section><p>R'+e(str(race['race']))+' · '+e(result.get('progression_bet_type','NO BET'))+' assessment · <b>NO BET</b></p><table>')
+            result=race['result'];parts.append('<section><p>R'+e(str(race['race']))+' · '+e(result.get('progression_bet_type','NO BET'))+' assessment · <b>NO BET</b></p>')
+            if race.get('single_race_assessment'):
+                parts.append('<p><b>'+e(result.get('assessment_level','NO CURRENT ASSESSMENT'))+'</b> · REDUCED CONFIDENCE</p>')
+            if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
+                parts.append('<p><b>FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION</b>. Continue with current fields/form research automatically; model rankings unavailable.</p>')
+            parts.append('<table>')
             for i,row in enumerate(result.get('ordered_selections',[])):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
                 if i==0:text='<b>'+text+'</b>'
-                parts.append('<tr><td>'+text+'</td><td>$'+format(row['odds'],'.2f')+'</td></tr>')
+                parts.append('<tr><td>'+text+'</td><td>'+e(quote_text(row))+'</td></tr>')
             if view['view'] in ('provisional', 'shadow'):
                 for roughie in result.get('roughies',[]):
                     parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>$'+format(roughie['odds'],'.2f')+'</td></tr>')
+            value=result.get('value_selection')
+            if race.get('single_race_assessment') and result.get('ordered_selections'):
+                parts.append('<tr><td>VALUE WATCH · WIN ONLY · '+e('#'+str(value['number'])+' '+value['horse'])+'</td><td>'+e(quote_text(value))+'</td></tr>' if value else '<tr><td colspan="2">VALUE: no supported positive-edge candidate</td></tr>')
             parts.append('</table><p>'+e('; '.join(result.get('no_bet_reasons',[])))+'</p><p>Captured '+e(str(race['captured_at']))+' · '+e('Historical quote' if archived else result.get('freshness_at_retrieval','UNKNOWN'))+'</p></section>')
     parts+=['<footer>IN MONTY WE TRUST</footer><h2>Copy plain text</h2><textarea readonly aria-label="Copyable Monty ticket">'+e(ticket(view, archived=archived, now=now))+'</textarea></main></html>']
     return ''.join(parts)
