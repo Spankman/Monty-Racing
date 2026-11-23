@@ -1,0 +1,103 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-23",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45104819156-1-130",
+  "generated_at": "2026-11-23T03:15:24.201992+00:00",
+  "receipt": "runs/2026-11-23/45104819156-1-130/receipt.json",
+  "source_mode": "LIVE",
+  "status": "PARTIAL_OR_BLOCKED",
+  "models": {
+    "V6": {
+      "commit": "a5a6e0f2ac7fab040251b7c1ba70f694274c1a17",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "BLOCKED",
+      "research_only": false,
+      "scored_races": 0
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "BLOCKED",
+      "research_only": true,
+      "scored_races": 0
+    }
+  },
+  "races": [
+    {
+      "meeting": "Barcaldine",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T03:45:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Oakfield Badger"
+        },
+        {
+          "number": "10",
+          "horse": "Ricallen"
+        },
+        {
+          "number": "1",
+          "horse": "Kat Chinna"
+        }
+      ],
+      "captured_at": "2026-11-23T03:15:24.158820+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field"
+          ],
+          "betting_authorised": false
+        },
+        "V7": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field"
+          ],
+          "betting_authorised": false
+        }
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      }
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 3,
+    "provider_races": 15,
+    "accepted_races": 13,
+    "scored_both": 0,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "5ea847b66448afe3000db8e8351daee549027bd8f83fd8ab1b1d765e9aca8e16",
+  "captured_at": "2026-11-23T03:15:24.158820+00:00",
+  "valid_until": "2026-11-23T03:20:24.158820+00:00"
+}
