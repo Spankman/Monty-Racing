@@ -4,9 +4,9 @@
   "request_id": 139,
   "run_id": "45107541315-1-139",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45107541315",
-  "request_status": "QUEUED",
-  "status": "QUEUED",
-  "updated_at": "2026-11-23T03:43:02.321313+00:00",
+  "request_status": "RUNNING",
+  "status": "RUNNING",
+  "updated_at": "2026-11-23T03:43:22.570921+00:00",
   "request": {
     "command": "RM6 BARCALDINE 3",
     "version": "V6",
