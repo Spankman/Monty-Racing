@@ -4,9 +4,9 @@
   "request_id": 154,
   "run_id": "45289310341-1-154",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45289310341",
-  "request_status": "QUEUED",
-  "status": "QUEUED",
-  "updated_at": "2026-11-23T23:30:29.107788+00:00",
+  "request_status": "RUNNING",
+  "status": "RUNNING",
+  "updated_at": "2026-11-23T23:30:30.628382+00:00",
   "request": {
     "command": "RM7",
     "version": "V7",
