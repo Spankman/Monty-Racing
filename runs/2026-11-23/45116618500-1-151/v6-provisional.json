@@ -1,0 +1,455 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45116618500-1-151",
+  "date": "2026-11-23",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Barcaldine",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T05:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Soopat"
+        },
+        {
+          "number": "14",
+          "horse": "Single Honor"
+        },
+        {
+          "number": "6",
+          "horse": "Papasito"
+        },
+        {
+          "number": "13",
+          "horse": "Heavenly Legend"
+        },
+        {
+          "number": "16",
+          "horse": "Horrible Hank"
+        },
+        {
+          "number": "17",
+          "horse": "Oakfield Badger"
+        },
+        {
+          "number": "15",
+          "horse": "Kat Chinna"
+        }
+      ],
+      "captured_at": "2026-11-23T05:16:07.039377+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-23",
+        "meeting": "Barcaldine",
+        "race": "5",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Soopat",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 17,
+            "weight": 64.5,
+            "age": 8,
+            "jockey": "Jason Miller",
+            "trainer": "Bevan Johnson"
+          },
+          {
+            "number": "11",
+            "horse": "I Am A Marvel",
+            "scratched": false,
+            "odds": 12.0,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 56,
+            "age": 7,
+            "jockey": "John Rudd",
+            "trainer": "Shryn Royes"
+          },
+          {
+            "number": "2",
+            "horse": "Mr Metrics",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "TAB",
+            "barrier": 13,
+            "weight": 60.5,
+            "age": 8,
+            "jockey": "Tessa Townsend",
+            "trainer": "Shryn Royes"
+          },
+          {
+            "number": "5",
+            "horse": "Mon Pierre",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 59,
+            "age": 7,
+            "jockey": "Paul Hamblin",
+            "trainer": "Alistair Webb"
+          },
+          {
+            "number": "7",
+            "horse": "I'm Zac",
+            "scratched": false,
+            "odds": 3.6,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Raul Silvera Olivera",
+            "trainer": "Henry Forster"
+          },
+          {
+            "number": "12",
+            "horse": "Revalene",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "TAB",
+            "barrier": 15,
+            "weight": 56,
+            "age": 6,
+            "jockey": "Darren Evans",
+            "trainer": "Toni Schofield"
+          },
+          {
+            "number": "9",
+            "horse": "Boomroux",
+            "scratched": false,
+            "odds": 3.3,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 56,
+            "age": 5,
+            "jockey": "Quayde Krogh",
+            "trainer": "Terry Hall"
+          },
+          {
+            "number": "14",
+            "horse": "Single Honor",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 56,
+            "age": 8,
+            "jockey": "Warwick Satherley",
+            "trainer": "Mark Oates"
+          },
+          {
+            "number": "4",
+            "horse": "Magical Slipper",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 59,
+            "age": 7,
+            "jockey": "Amie Meissner",
+            "trainer": "Bevan Johnson"
+          },
+          {
+            "number": "8",
+            "horse": "Media Empire",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 56.5,
+            "age": 8,
+            "jockey": "David Sparks",
+            "trainer": "Shryn Royes"
+          },
+          {
+            "number": "3",
+            "horse": "Rise Of The Masses",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 60.5,
+            "age": 7,
+            "jockey": "Chris Bryen",
+            "trainer": "Toni Schofield"
+          },
+          {
+            "number": "10",
+            "horse": "Invictus Lad",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 56,
+            "age": 7,
+            "jockey": "Emma Bell",
+            "trainer": "Glenda Bell"
+          },
+          {
+            "number": "6",
+            "horse": "Papasito",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 7,
+            "weight": 58.5,
+            "age": 6,
+            "jockey": "N.r",
+            "trainer": "Ms M Skillington"
+          },
+          {
+            "number": "13",
+            "horse": "Heavenly Legend",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 16,
+            "weight": 56,
+            "age": 6,
+            "jockey": "Brooke Stower",
+            "trainer": "Bevan Johnson"
+          },
+          {
+            "number": "16",
+            "horse": "Horrible Hank",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 8,
+            "weight": 56,
+            "age": 5,
+            "jockey": "N.r",
+            "trainer": "Glenn Richardson"
+          },
+          {
+            "number": "17",
+            "horse": "Oakfield Badger",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 1,
+            "weight": 56,
+            "age": 7,
+            "jockey": "N.r",
+            "trainer": "Leslie Baker"
+          },
+          {
+            "number": "15",
+            "horse": "Kat Chinna",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 56,
+            "age": 8,
+            "jockey": "N.r",
+            "trainer": "Leslie Baker"
+          }
+        ],
+        "active_runners": 10,
+        "priced_active_runners": 10,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1000,
+        "track_condition": "Soft5",
+        "captured_at": "2026-11-23T05:16:07.039377+00:00",
+        "scheduled_start": "2026-11-23T05:30:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "8e19bc83b5f1b3bd0e5ce164e69dd3ccdb405239a1665db691da2855db261648",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "9",
+            "horse": "Boomroux",
+            "odds": 3.3,
+            "probability": 0.23852875879530933,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "7",
+            "horse": "I'm Zac",
+            "odds": 3.6,
+            "probability": 0.21872662932575765,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Magical Slipper",
+            "odds": 5.5,
+            "probability": 0.14572190430458792,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "9",
+          "horse": "Boomroux",
+          "odds": 3.3,
+          "probability": 0.23852875879530933,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "9",
+            "horse": "Boomroux",
+            "odds": 3.3,
+            "probability": 0.23852875879530933,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "I'm Zac",
+            "odds": 3.6,
+            "probability": 0.21872662932575765,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "Magical Slipper",
+            "odds": 5.5,
+            "probability": 0.14572190430458792,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "Invictus Lad",
+            "odds": 7.5,
+            "probability": 0.10697312497130736,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "5",
+            "horse": "Mon Pierre",
+            "odds": 11.0,
+            "probability": 0.07291112312923752,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "I Am A Marvel",
+            "odds": 12.0,
+            "probability": 0.0668743954224585,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "3",
+            "horse": "Rise Of The Masses",
+            "odds": 17.0,
+            "probability": 0.04722170528569738,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "12",
+            "horse": "Revalene",
+            "odds": 19.0,
+            "probability": 0.04226985559088791,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "2",
+            "horse": "Mr Metrics",
+            "odds": 23.0,
+            "probability": 0.03489454848630146,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "8",
+            "horse": "Media Empire",
+            "odds": 31.0,
+            "probability": 0.02587795468845489,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "9",
+          "horse": "Boomroux",
+          "odds": 3.3,
+          "probability": 0.23852875879530933,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-23T05:16:07.455617+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-23T05:16:07.039377+00:00",
+        "model_version": "V6",
+        "model_commit": "75924a40da88746214b12436a525ad30dcf5f24b",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T05:16:08.222787+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45116618500-1-151/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T05:16:07.039377+00:00",
+  "valid_until": "2026-11-23T05:21:07.039377+00:00",
+  "snapshot_only": true
+}
