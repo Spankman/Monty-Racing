@@ -1,0 +1,505 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45107541315-1-135",
+  "date": "2026-11-23",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Ballina",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T03:25:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Are Ee Que"
+        },
+        {
+          "number": "2",
+          "horse": "Medals"
+        },
+        {
+          "number": "5",
+          "horse": "Spirit Of Brodie"
+        },
+        {
+          "number": "7",
+          "horse": "Count Nicholas"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 5,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Ballina",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T04:35:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Explosive Power"
+        },
+        {
+          "number": "10",
+          "horse": "Jieba"
+        },
+        {
+          "number": "11",
+          "horse": "Josephine Of Tuffy"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Ballina",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T05:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Dancing By"
+        },
+        {
+          "number": "12",
+          "horse": "Flying Phoenix"
+        },
+        {
+          "number": "9",
+          "horse": "Hawaiian Bloom"
+        },
+        {
+          "number": "4",
+          "horse": "Silver Spoon"
+        },
+        {
+          "number": "7",
+          "horse": "Gold Puma"
+        },
+        {
+          "number": "8",
+          "horse": "Naystar"
+        },
+        {
+          "number": "3",
+          "horse": "Nomomeikushi"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Ballina",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T06:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Brass Band"
+        },
+        {
+          "number": "15",
+          "horse": "Righteous Legend"
+        },
+        {
+          "number": "2",
+          "horse": "Wittelsbach"
+        },
+        {
+          "number": "11",
+          "horse": "Langan"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Barcaldine",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T03:45:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Oakfield Badger"
+        },
+        {
+          "number": "10",
+          "horse": "Ricallen"
+        },
+        {
+          "number": "1",
+          "horse": "Kat Chinna"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Barcaldine",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T04:20:00.000Z",
+      "scratchings": [
+        {
+          "number": "12",
+          "horse": "Tell Us Toll"
+        },
+        {
+          "number": "11",
+          "horse": "Bel Song"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "a618dadcf19a1b453c66072d4f6cf6237f94b34a0185c61132d3aa23f63afedf",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "10",
+            "horse": "Holy Holy Holy",
+            "odds": 3.3,
+            "probability": 0.23452413308616352,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Zoustrong",
+            "odds": 4.4,
+            "probability": 0.17599127962962316,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "10",
+          "horse": "Holy Holy Holy",
+          "odds": 3.3,
+          "probability": 0.23452413308616352,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-23T03:43:13.093208+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-23T03:43:12.715271+00:00",
+        "model_version": "V6",
+        "model_commit": "4a26075fed02e89cbdd75738175c1dcff1bd9b86",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Barcaldine",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T04:55:00.000Z",
+      "scratchings": [
+        {
+          "number": "12",
+          "horse": "Milk Maid"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Barcaldine",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T05:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Soopat"
+        },
+        {
+          "number": "6",
+          "horse": "Papasito"
+        },
+        {
+          "number": "13",
+          "horse": "Heavenly Legend"
+        },
+        {
+          "number": "16",
+          "horse": "Horrible Hank"
+        },
+        {
+          "number": "17",
+          "horse": "Oakfield Badger"
+        },
+        {
+          "number": "15",
+          "horse": "Kat Chinna"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Barcaldine",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T06:10:00.000Z",
+      "scratchings": [
+        {
+          "number": "10",
+          "horse": "June"
+        },
+        {
+          "number": "13",
+          "horse": "Autumn Miss"
+        },
+        {
+          "number": "6",
+          "horse": "Deciduous"
+        },
+        {
+          "number": "14",
+          "horse": "Jamacri"
+        },
+        {
+          "number": "11",
+          "horse": "Run Rory Run"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00"
+      }
+    },
+    {
+      "meeting": "Taree",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Morpeth"
+        },
+        {
+          "number": "3",
+          "horse": "Apache Prancer"
+        },
+        {
+          "number": "8",
+          "horse": "Nasa Blueberry"
+        }
+      ],
+      "captured_at": "2026-11-23T03:43:12.715271+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "jump_time_unverified"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "UNVERIFIED TIMING — NO BET",
+        "freshness_checked_at": "2026-11-23T03:43:13.738314+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-23/45107541315-1-135/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-23T03:43:12.715271+00:00",
+  "valid_until": "2026-11-23T03:48:12.715271+00:00",
+  "snapshot_only": true
+}
