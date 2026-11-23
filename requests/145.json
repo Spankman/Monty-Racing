@@ -1,0 +1,19 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-23",
+  "request_id": 145,
+  "run_id": "45113350144-1-145",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45113350144",
+  "request_status": "QUEUED",
+  "status": "QUEUED",
+  "updated_at": "2026-11-23T04:42:08.348698+00:00",
+  "request": {
+    "command": "RM7PS BALLINA 7",
+    "version": "V7",
+    "view": "provisional",
+    "date": "2026-11-23",
+    "meeting": "Ballina",
+    "race": "7",
+    "country": "AU"
+  }
+}
