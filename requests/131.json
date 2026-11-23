@@ -1,10 +1,14 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-23",
-  "request_id": 131,
   "run_id": "45104998516-1-131",
-  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104998516",
-  "request_status": "RUNNING",
-  "status": "RUNNING",
-  "updated_at": "2026-11-23T03:17:11.206761+00:00"
+  "status": "PARTIAL_OR_BLOCKED",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-23/45104998516-1-131/receipt.json",
+  "forecast_path": "runs/2026-11-23/45104998516-1-131/forecast.json",
+  "forecast_sha256": "44fa2f31ca7a18bd5938aa03dadc59a03b5cc24604127eaec55959bc559cd42a",
+  "generated_at": "2026-11-23T03:17:15.379147+00:00",
+  "request_id": 131,
+  "request_status": "COMPLETED",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45104998516"
 }
