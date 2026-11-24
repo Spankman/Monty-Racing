@@ -9,8 +9,10 @@ from datetime import datetime
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
+from time import sleep
 from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from monty_operations import command
@@ -20,14 +22,40 @@ PREFIX='Monty command: '
 PENDING = {'QUEUED', 'RUNNING'}
 
 
+class GitHubError(RuntimeError):
+    def __init__(self, status):
+        self.status = status
+        super().__init__(f'GitHub HTTP {status}' if status else 'GitHub transport unavailable')
+
+
 def api(endpoint, method='GET', body=None, optional=False):
     args=['gh','api','repos/'+REPO+'/'+endpoint,'--method',method]
     if body is not None:args+=['--input','-']
-    p=subprocess.run(args,input=json.dumps(body) if body is not None else None,capture_output=True,text=True,timeout=20)
+    p=subprocess.run(args,input=json.dumps(body) if body is not None else None,capture_output=True,text=True,timeout=10)
     if p.returncode:
-        if optional and 'HTTP 404' in p.stderr:return None
-        raise RuntimeError('GitHub transport failed')
+        match = re.search(r'\bHTTP (\d{3})\b', p.stderr)
+        status = int(match.group(1)) if match else None
+        if optional and status == 404:
+            return None
+        raise GitHubError(status)
     return json.loads(p.stdout) if p.stdout.strip() else None
+
+
+def retry(operation, *, conflicts=False):
+    """Retry transient transport errors and atomic ref conflicts only."""
+    transient = {None, 408, 429, 500, 502, 503, 504}
+    if conflicts:
+        transient.update({409, 422})
+    for attempt in range(3):
+        try:
+            return operation()
+        except GitHubError as exc:
+            if exc.status not in transient or attempt == 2:
+                raise
+        except subprocess.TimeoutExpired:
+            if attempt == 2:
+                raise
+        sleep(0.5 * (attempt + 1))
 
 
 def read_bytes(path):

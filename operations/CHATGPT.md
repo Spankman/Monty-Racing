@@ -41,10 +41,14 @@ scope; disclose that NZ is not requested. Never imply complete coverage.
    Substitute the normalized requested command and actual Brisbane date. The
    body accepts date/country only. Only owner Spankman requests are processed.
 4. Acknowledge the returned issue number N immediately and keep working in the
-   same turn. Using `github_fetch_file`, poll `requests/N.json` at ref
-   `monty-operations-results` every few seconds for up to two minutes. A missing
-   index means the issue was accepted but the worker has yet to publish an
-   acknowledgement. Follow this exact issue even if a newer request appears.
+   same turn. Use `github_fetch_issue_comments` for issue N every few seconds
+   for up to two minutes. Read comments from `github-actions[bot]`. Prefer the
+   marked terminal comment over running and acknowledgement comments, regardless
+   of ordering. The terminal comment includes the requested selection slip or
+   the failure reason, freshness timestamps, workflow and integrity reference.
+   Follow this exact issue even if a newer request appears.
+   If comments are missing, check `requests/N.json` at ref
+   `monty-operations-results` with `github_fetch_file` as a fallback.
    If a known workflow ends, re-read the index once before reporting
    WORKFLOW_ENDED_WITHOUT_PUBLICATION. At the deadline report
    WORKER_ACKNOWLEDGEMENT_TIMEOUT, RESULT_PUBLICATION_TIMEOUT, or
@@ -52,8 +56,8 @@ scope; disclose that NZ is not requested. Never imply complete coverage.
    delivery timeout does not change the worker state. C can retrieve a late
    result. Never create a duplicate for a polling error. If the chat surface
    cannot poll, identify that limitation explicitly with the accepted issue ID.
-5. When terminal, fetch exactly its linked `forecast_path` and `receipt_path`
-   on the same ref. Match run ID, date, semantic status, model hashes and forecast
+5. When terminal, read the issue's slip. If its linked forecast and receipt
+   files are available, match run ID, date, semantic status, model hashes and forecast
    hash references. The repaired publisher validates the actual forecast bytes
    before its atomic commit and supplies receipt_sha256 and an explicit
    forecast_integrity_verified attestation. Distinguish that publisher check from
@@ -72,7 +76,7 @@ scope; disclose that NZ is not requested. Never imply complete coverage.
    COMPLETED transport or a green job is not proof of scoring. Check each model's
    status/scored_races, each race's status and no_bet_reasons.
 
-For C: use the outstanding N from the conversation; otherwise find the latest
+For C: read the outstanding issue's bot comments first. Otherwise find the latest
 owner Monty request for today's relevant scope, including processed/closed issues.
 Retrieve only. Show request state, workflow state if available, per-model outcome,
 capture age, valid-until time and receipt. Return the completed fresh requested
