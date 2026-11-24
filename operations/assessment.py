@@ -73,9 +73,12 @@ def provider_inventory(payload, day):
     """Aggregate observed availability, never confuse availability with validation."""
     from collections import Counter
     from krok_adapter import price, named_bookmaker
-    meetings=[];fields=Counter();conditions=0;named=0;priced=0;unknown_scratchings=0
+    meetings=[];fields=Counter();conditions=0;named=0;priced=0;unknown_scratchings=0;outside=0
     for meeting in payload.get('data',[]):
         if str(meeting.get('date',''))[:10]!=day or meeting.get('type') not in ('T','R'):continue
+        if meeting.get('country') not in ('AU','NZ'):
+            outside+=1
+            continue
         races=meeting.get('races') or []
         meetings.append(dict(meeting=meeting.get('venue'),country=meeting.get('country'),races=len(races)))
         for race in races:
@@ -89,6 +92,7 @@ def provider_inventory(payload, day):
                 if quote is not None:
                     priced+=1;named+=named_bookmaker(runner,quote,origin) is not None
     return dict(pages_fetched=(payload.get('meta') or {}).get('pages_fetched'),meetings=meetings,
+                outside_au_nz_meetings=outside,
                 provider_condition_observations=conditions,runner_field_availability=dict(fields),
                 priced_active_runners=priced,named_selected_price_runners=named,
                 unknown_scratching_statuses=unknown_scratchings,

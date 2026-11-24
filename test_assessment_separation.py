@@ -33,6 +33,7 @@ class AssessmentTests(unittest.TestCase):
         for current in [view,ops.refresh_view(view,self.now),ops.refresh_view(ops.refresh_view(view,self.now),self.now)]:
             text=ops.ticket(current,now=self.now)
             self.assertIn('DIAGNOSTIC PROVISIONAL',text)
+            self.assertIn('QUINELLA BOXED assessment only',text)
             self.assertIn('Horse 1',text)
             self.assertIn('DIAGNOSTIC PROVISIONAL',render(current,now=self.now))
         for mode in ['official','provisional','shadow']:

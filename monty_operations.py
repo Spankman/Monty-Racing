@@ -421,7 +421,7 @@ def ticket(view, *, archived=False, now=None):
         if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
             lines.append('No Monty model rankings were generated.')
         if rows:
-            lines.append(result['progression_bet_type']+' assessment only — no wager authorised')
+            lines.append((diag['progression_bet_type'] if diag else result['progression_bet_type'])+' assessment only — no wager authorised')
             for i,r in enumerate(rows):
                 text=f"#{r['number']} {r['horse']} — {quote_text(r)}"
                 lines.append(('**'+text+'**') if i==0 else text)

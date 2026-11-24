@@ -20,7 +20,7 @@ def render(view, *, archived=False, now=None):
     for meeting in dict.fromkeys(r['meeting'] for r in view['races']):
         parts.append('<h2>'+e(meeting)+'</h2>')
         for race in [r for r in view['races'] if r['meeting']==meeting]:
-            result=race['result'];parts.append('<section><p>R'+e(str(race['race']))+' · '+e(result.get('progression_bet_type','NO BET'))+' assessment · <b>'+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</b></p>')
+            result=race['result'];diag=result.get('diagnostic_assessment');parts.append('<section><p>R'+e(str(race['race']))+' · '+e(diag['progression_bet_type'] if diag else result.get('progression_bet_type','NO BET'))+' assessment · <b>'+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</b></p>')
             parts.append('<p>Prediction: '+e(result.get('prediction_classification',result.get('status','UNKNOWN')))+' · Betting: '+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</p>')
             diag=result.get('diagnostic_assessment')
             if diag:parts.append('<p><b>DIAGNOSTIC '+e(diag['classification'])+' — NOT QUALIFIED</b></p>')
