@@ -1,0 +1,426 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45327745923-1-190",
+  "date": "2026-11-24",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Tamworth",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T04:40:00.000Z",
+      "scratchings": [
+        {
+          "number": "15",
+          "horse": "Captainthunderbolt"
+        },
+        {
+          "number": "14",
+          "horse": "Tease The Breeze"
+        },
+        {
+          "number": "16",
+          "horse": "Street Legend"
+        },
+        {
+          "number": "13",
+          "horse": "Shaikitallover"
+        },
+        {
+          "number": "3",
+          "horse": "Seditio"
+        },
+        {
+          "number": "12",
+          "horse": "Stryke An Icon"
+        },
+        {
+          "number": "1",
+          "horse": "Madollmia"
+        }
+      ],
+      "captured_at": "2026-11-24T04:38:35.483559+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-24",
+        "meeting": "Tamworth",
+        "race": "5",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "15",
+            "horse": "Captainthunderbolt",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 59,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Scott Singleton"
+          },
+          {
+            "number": "14",
+            "horse": "Tease The Breeze",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 9,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Mikayla Weir",
+            "trainer": "Scott Singleton"
+          },
+          {
+            "number": "8",
+            "horse": "Nautical Twilight",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Kody Nestor",
+            "trainer": "Sally Torrens"
+          },
+          {
+            "number": "6",
+            "horse": "Oakfield Alabama",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Aaron Bullock",
+            "trainer": "Kris Lees"
+          },
+          {
+            "number": "2",
+            "horse": "Sasqua",
+            "scratched": false,
+            "odds": 4.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Luke Rolls",
+            "trainer": "Jake Hull"
+          },
+          {
+            "number": "7",
+            "horse": "Time For Speed",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Rory Hutchings",
+            "trainer": "Todd Howlett"
+          },
+          {
+            "number": "5",
+            "horse": "Escalopecan",
+            "scratched": false,
+            "odds": 1.75,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Andrew Gibbons",
+            "trainer": "Kris Lees"
+          },
+          {
+            "number": "10",
+            "horse": "She's Ourvalentine",
+            "scratched": false,
+            "odds": 81.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Anna Weatherlake",
+            "trainer": "Sally Torrens"
+          },
+          {
+            "number": "4",
+            "horse": "The Last Romanov",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Jenny Duggan",
+            "trainer": "Troy O'Neile"
+          },
+          {
+            "number": "11",
+            "horse": "Songbird Yessiree",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Liam Riordan",
+            "trainer": "Jay Hopkins"
+          },
+          {
+            "number": "9",
+            "horse": "Phoenician Star",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Braith Nock",
+            "trainer": "Wes Boyd"
+          },
+          {
+            "number": "16",
+            "horse": "Street Legend",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 5,
+            "weight": 59,
+            "age": 5,
+            "jockey": "Gabrielle Johnston",
+            "trainer": "Sally Torrens"
+          },
+          {
+            "number": "13",
+            "horse": "Shaikitallover",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 15,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Kim Waugh"
+          },
+          {
+            "number": "3",
+            "horse": "Seditio",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 59,
+            "age": 5,
+            "jockey": "Gabrielle Johnston",
+            "trainer": "Wayne Wilkes"
+          },
+          {
+            "number": "12",
+            "horse": "Stryke An Icon",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 57,
+            "age": 5,
+            "jockey": "N.r",
+            "trainer": "Sue Grills"
+          },
+          {
+            "number": "1",
+            "horse": "Madollmia",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 16,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Zac Wadick",
+            "trainer": "Lou Mary"
+          }
+        ],
+        "active_runners": 9,
+        "priced_active_runners": 9,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Good3",
+        "captured_at": "2026-11-24T04:38:35.483559+00:00",
+        "scheduled_start": "2026-11-24T04:40:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "e96c4f0c3a347d32e7e4b817d2b7824b6e509efa60855959f19920dc3c08fe81",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "5",
+            "horse": "Escalopecan",
+            "odds": 1.75,
+            "probability": 0.4636983251809539,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Sasqua",
+            "odds": 4.0,
+            "probability": 0.20294045377434267,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "5",
+          "horse": "Escalopecan",
+          "odds": 1.75,
+          "probability": 0.4636983251809539,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "5",
+            "horse": "Escalopecan",
+            "odds": 1.75,
+            "probability": 0.4636983251809539,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "2",
+            "horse": "Sasqua",
+            "odds": 4.0,
+            "probability": 0.20294045377434267,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Oakfield Alabama",
+            "odds": 7.0,
+            "probability": 0.11366983853361602,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "Time For Speed",
+            "odds": 7.5,
+            "probability": 0.10835914593698781,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "The Last Romanov",
+            "odds": 21.0,
+            "probability": 0.03861936886645976,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Phoenician Star",
+            "odds": 26.0,
+            "probability": 0.0312821550737481,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "8",
+            "horse": "Nautical Twilight",
+            "odds": 31.0,
+            "probability": 0.026221601296554913,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "She's Ourvalentine",
+            "odds": 81.0,
+            "probability": 0.009828955602818792,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "Songbird Yessiree",
+            "odds": 151.0,
+            "probability": 0.005380155734517978,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "5",
+          "horse": "Escalopecan",
+          "odds": 1.75,
+          "probability": 0.4636983251809539,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-24T04:38:35.887639+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-24T04:38:35.483559+00:00",
+        "model_version": "V6",
+        "model_commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-24T04:38:36.578176+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-24/45327745923-1-190/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-24T04:38:35.483559+00:00",
+  "valid_until": "2026-11-24T04:43:35.483559+00:00",
+  "snapshot_only": true
+}
