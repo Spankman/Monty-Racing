@@ -1,0 +1,321 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45331657939-1-192",
+  "date": "2026-11-24",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Tamworth",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:15:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-24T05:13:02.108882+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-24",
+        "meeting": "Tamworth",
+        "race": "6",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "4",
+            "horse": "Vierville",
+            "scratched": false,
+            "odds": 12.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 56,
+            "age": 5,
+            "jockey": "Nick Palmer",
+            "trainer": "Brett & Georgie Cavanough"
+          },
+          {
+            "number": "3",
+            "horse": "Prince Of Sepang",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 56.5,
+            "age": 7,
+            "jockey": "Gabrielle Johnston",
+            "trainer": "Jane Clement"
+          },
+          {
+            "number": "7",
+            "horse": "He's My Warrior",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Jake Pracey-Holmes",
+            "trainer": "Craig Martin"
+          },
+          {
+            "number": "5",
+            "horse": "Enniroc",
+            "scratched": false,
+            "odds": 9.5,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Zac Wadick",
+            "trainer": "David Hatch"
+          },
+          {
+            "number": "1",
+            "horse": "Arctic Legend",
+            "scratched": false,
+            "odds": 3.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Braith Nock",
+            "trainer": "Cody Morgan"
+          },
+          {
+            "number": "2",
+            "horse": "Night Fighter",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Jenny Duggan",
+            "trainer": "Sue Grills"
+          },
+          {
+            "number": "6",
+            "horse": "Need A Miracle",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 55,
+            "age": 7,
+            "jockey": "Rory Hutchings",
+            "trainer": "Paul Isaac"
+          },
+          {
+            "number": "9",
+            "horse": "Tomoe Gozen",
+            "scratched": false,
+            "odds": 71.0,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Grant Buckley",
+            "trainer": "Michelle Fleming"
+          },
+          {
+            "number": "8",
+            "horse": "Halo Phenomena",
+            "scratched": false,
+            "odds": 3.1,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Mikayla Weir",
+            "trainer": "Cameron Crockett"
+          }
+        ],
+        "active_runners": 9,
+        "priced_active_runners": 9,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Good3",
+        "captured_at": "2026-11-24T05:13:02.108882+00:00",
+        "scheduled_start": "2026-11-24T05:15:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "981af48d795ff16175681cb64021b2445dfd8cf6ec2d900593839b4b42caa3ba",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Arctic Legend",
+            "odds": 3.0,
+            "probability": 0.2627414093134626,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Halo Phenomena",
+            "odds": 3.1,
+            "probability": 0.2538837036620627,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "7",
+            "horse": "He's My Warrior",
+            "odds": 6.5,
+            "probability": 0.12115246965787103,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Arctic Legend",
+          "odds": 3.0,
+          "probability": 0.2627414093134626,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "1",
+            "horse": "Arctic Legend",
+            "odds": 3.0,
+            "probability": 0.2627414093134626,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "8",
+            "horse": "Halo Phenomena",
+            "odds": 3.1,
+            "probability": 0.2538837036620627,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "He's My Warrior",
+            "odds": 6.5,
+            "probability": 0.12115246965787103,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Need A Miracle",
+            "odds": 7.0,
+            "probability": 0.11024735684101218,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "5",
+            "horse": "Enniroc",
+            "odds": 9.5,
+            "probability": 0.08287584246618071,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "Vierville",
+            "odds": 12.0,
+            "probability": 0.06554901407278954,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "3",
+            "horse": "Prince Of Sepang",
+            "odds": 14.0,
+            "probability": 0.05515530615778919,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "2",
+            "horse": "Night Fighter",
+            "odds": 21.0,
+            "probability": 0.03751296362340886,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Tomoe Gozen",
+            "odds": 71.0,
+            "probability": 0.010881934205423154,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "1",
+          "horse": "Arctic Legend",
+          "odds": 3.0,
+          "probability": 0.2627414093134626,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-24T05:13:02.622112+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-24T05:13:02.108882+00:00",
+        "model_version": "V6",
+        "model_commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-24T05:13:03.404529+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-24/45331657939-1-192/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-24T05:13:02.108882+00:00",
+  "valid_until": "2026-11-24T05:18:02.108882+00:00",
+  "snapshot_only": true
+}

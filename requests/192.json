@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-24",
+  "run_id": "45331657939-1-192",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-24/45331657939-1-192/receipt.json",
+  "forecast_path": "runs/2026-11-24/45331657939-1-192/forecast.json",
+  "forecast_sha256": "203ace60742d4ffa7c213247feb9c2cca00cde9e00c96755181a7eab5b5c1c95",
+  "generated_at": "2026-11-24T05:13:03.403174+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45331657939",
+  "captured_at": "2026-11-24T05:13:02.108882+00:00",
+  "valid_until": "2026-11-24T05:18:02.108882+00:00",
+  "models": {
+    "V6": {
+      "commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "74af6bd92cb9505424c5815f5ab6a77ccc2d0397d10733b5472d9ec4b687ccae",
+  "request": {
+    "command": "RM7 TAMWORTH 6",
+    "version": "V7",
+    "view": "provisional",
+    "date": "2026-11-24",
+    "meeting": "Tamworth",
+    "race": "6",
+    "country": "AU"
+  },
+  "request_id": 192,
+  "request_status": "COMPLETED"
+}
