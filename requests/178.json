@@ -1,0 +1,19 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-24",
+  "request_id": 178,
+  "run_id": "45322502000-1-178",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45322502000",
+  "request_status": "QUEUED",
+  "status": "QUEUED",
+  "updated_at": "2026-11-24T03:53:12.745307+00:00",
+  "request": {
+    "command": "RM6 ARARAT 4",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-24",
+    "meeting": "Ararat",
+    "race": "4",
+    "country": "AU"
+  }
+}
