@@ -358,6 +358,25 @@ class ConnectorClientTests(unittest.TestCase):
         self.assertEqual(result['form_assessment_requests'][0]['reasons'], ['publication_failed'])
         self.enqueue.assert_not_called()
 
+    def test_c_reports_aged_unacknowledged_issue_without_submit(self):
+        issue = dict(state='open', title='Monty command: RM6 Ballina 1', user={'login': 'Spankman'},
+                     body=json.dumps({'date': self.day}), created_at=self.capture.isoformat())
+        with patch.object(self.transport, 'api', return_value=issue) as api:
+            result = self.client.handle('C', request_id=200, now=self.capture + timedelta(minutes=3))
+        self.assertEqual(result['delivery_status'], 'WORKER_ACKNOWLEDGEMENT_TIMEOUT')
+        self.assertEqual(result['request_status'], 'QUEUED')
+        api.assert_called_once_with('issues/200', optional=True)
+        self.enqueue.assert_not_called()
+
+    def test_c_reports_aged_running_index_without_changing_worker_state(self):
+        self.files['requests/200.json'] = dict(request_status='RUNNING', run_id='123-1-200',
+                                             updated_at=self.capture.isoformat(), workflow_url='workflow')
+        with patch.object(self.transport, 'api', return_value={'status': 'in_progress'}):
+            result = self.client.handle('C', request_id=200, now=self.capture + timedelta(minutes=3))
+        self.assertEqual(result['delivery_status'], 'RESULT_PUBLICATION_TIMEOUT')
+        self.assertEqual(result['request_status'], 'RUNNING')
+        self.enqueue.assert_not_called()
+
     def test_corrupt_receipt_prevents_display(self):
         self.save('requests/200.json', 'saved', self.capture)
         self.files['saved/receipt.json']['forecast_sha256'] = 'tampered'

@@ -15,6 +15,7 @@ from operations.single_race import handoffs, research_request
 
 
 RETRIEVAL_ERRORS = (RuntimeError, OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError)
+DELIVERY_TIMEOUT_SECONDS = 120
 
 
 def with_form_handoff(result, req):
@@ -150,7 +151,23 @@ def scope(req):
     return (req['date'], (req.get('meeting') or '').casefold(), req.get('race'), req.get('country'))
 
 
-def wait_for_request(request_id, req, *, timeout=120, interval=3):
+def issue_delivery_status(result, now):
+    """Give C a bounded acknowledgement status even if no index was written."""
+    try:
+        issue = transport.api(f"issues/{result['request_id']}", optional=True)
+        if issue is None or transport.parse_request(issue) is None:
+            return dict(result, request_status='FAILED', semantic_outcome='MONTY_REQUEST_NOT_FOUND')
+        if issue.get('state') == 'closed':
+            return dict(result, request_status='FAILED', semantic_outcome='REQUEST_CLOSED_WITHOUT_RESULT')
+        age = (now - timestamp(issue['created_at'])).total_seconds()
+    except RETRIEVAL_ERRORS:
+        return dict(result, delivery_status='GITHUB_ISSUE_READ_UNAVAILABLE')
+    if age >= DELIVERY_TIMEOUT_SECONDS:
+        result['delivery_status'] = 'WORKER_ACKNOWLEDGEMENT_TIMEOUT'
+    return result
+
+
+def wait_for_request(request_id, req, *, timeout=DELIVERY_TIMEOUT_SECONDS, interval=3):
     """Poll exactly the accepted issue. A local timeout never changes its state."""
     deadline = monotonic() + timeout
     result = retrieve(None, request_id)
@@ -190,10 +207,19 @@ def handle(text, *, date=None, country=None, request_id=None, now=None):
             return with_workflow_status(retrieve(index,req=index.get('request') if index else None,now=now))
     if request_id is not None:
         index=transport.read(f'requests/{request_id}.json')
+        if status_only and index is None:
+            return issue_delivery_status(retrieve(None, request_id), now or utcnow())
         target=(target or (index.get('request') if index else None)) if status_only else req
         if status_only and target is None:
             target=next((item for n,item in transport.requests(include_processed=True) if n==request_id),None)
         result=retrieve(index,request_id,target,now)
+        if status_only and result['request_status'] in transport.PENDING and index.get('updated_at'):
+            try:
+                age = ((now or utcnow()) - timestamp(index['updated_at'])).total_seconds()
+                if age >= DELIVERY_TIMEOUT_SECONDS:
+                    result['delivery_status'] = 'RESULT_PUBLICATION_TIMEOUT'
+            except (ValueError, TypeError):
+                result['delivery_status'] = 'REQUEST_UPDATE_TIME_UNVERIFIED'
         return with_workflow_status(result,target,now) if status_only or result['request_status'] in transport.PENDING else result
 
     # Reuse only the newest matching scope, never an unrelated/older request.
