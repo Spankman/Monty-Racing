@@ -79,6 +79,10 @@ capture age, valid-until time and receipt. Return the completed fresh requested
 view, or clearly say FAILED/EXPIRED/PENDING. C never refreshes or creates an issue.
 If a workflow ended without terminal publication, re-read once, then report
 WORKFLOW_ENDED_WITHOUT_PUBLICATION rather than pretending inference succeeded.
+If no index exists, check the exact owner issue and its creation time. After two
+minutes report WORKER_ACKNOWLEDGEMENT_TIMEOUT. If a pending index has gone two
+minutes without an update, report RESULT_PUBLICATION_TIMEOUT while retaining
+the known worker state. Repeat C can still retrieve an eventual terminal result.
 
 ## Tickets and honesty
 
@@ -109,14 +113,12 @@ were not identifiable in this checkout. Their presence/activity must not be
 claimed. This repair preserves the existing renderer and does not invent
 replacement assets or claim the missing monitoring has been implemented.
 
-## Review boundary
+## Production routing
 
-The aliases/queue/cache/C/publication/provider-retry repair was merged in PR #134
-as 4a26075fed02e89cbdd75738175c1dcff1bd9b86. The subsequent single-race fallback
-repair remains on its own review branch until separately approved. New
-code is tested through branch push in `monty-operations.yml`, publishing ONLY to
-`monty-simple-staging-results`; this is staging evidence, not default-branch
-activation. No manual workflow dispatch is used for live command acceptance.
+PR #143 deployed the single-race fallback on main. PR #163 deployed bounded
+delivery and archival retrieval. PR #173 skips runtime startup for already
+settled issue events. Live acceptance uses GitHub connector-created issues and
+their published request indexes on `monty-operations-results`.
 
 ## Automatic single-race hierarchy (all single-race command forms)
 
