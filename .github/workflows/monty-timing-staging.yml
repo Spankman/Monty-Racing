@@ -24,19 +24,25 @@ jobs:
           V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
           V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
         run: python operations/restore_private.py
-      - name: Measure live queue discovery with GET-only permissions
+      - name: Compare live issue lookup and backlog discovery read-only
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          python - <<'PY'
-          import os
-          from operations.timing import timed
-          from operations.transport import requests
-          with timed('queue_discovery', os.environ['GITHUB_RUN_ID'] + '-staging'):
-              list(requests())
-          PY
-      - name: Measure provider fetch through frozen inference
-        env:
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
         run: |
-          python monty_operations.py --timings --command RM6PS --country AU --output timing_output --v7-root v7_engine --run-id "${GITHUB_RUN_ID}-staging"
+          python - <<'PY'
+          from datetime import datetime
+          import os
+          import subprocess
+          import sys
+          from zoneinfo import ZoneInfo
+          from operations.worker import work_items
+          event_number = 157
+          run_tag = os.environ['GITHUB_RUN_ID'] + '-staging'
+          items = work_items('queue', str(event_number), datetime.now(ZoneInfo('Australia/Brisbane')), run_tag)
+          number, request = next(items)
+          assert number == event_number and request['meeting'].casefold() == 'ararat'
+          subprocess.run([sys.executable, 'monty_operations.py', '--timings', '--command', request['command'],
+                          '--country', request['country'], '--output', 'timing_output',
+                          '--v7-root', 'v7_engine', '--run-id', run_tag], check=True)
+          assert all(number != event_number for number, _ in items)
+          PY

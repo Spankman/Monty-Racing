@@ -5,11 +5,13 @@ strict JSON parameters, never instructions or executable shell text.
 """
 import argparse
 import base64
+from datetime import datetime
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
+from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from monty_operations import command
 REPO='Spankman/Monty-Racing'
@@ -50,28 +52,41 @@ def request_state(index):
     return index.get('request_status') or ('FAILED' if index['status'] == 'FAILED' else 'COMPLETED')
 
 
+def parse_request(issue):
+    title = issue.get('title') or ''
+    if ('pull_request' in issue or (issue.get('user') or {}).get('login') != 'Spankman'
+            or not title.startswith(PREFIX)):
+        return None
+    try:
+        params = json.loads(issue.get('body') or '{}')
+        if not isinstance(params, dict) or set(params) - {'date', 'country'}:
+            return None
+        if not params.get('date'):
+            # Undated requests are tied to the Brisbane date on the original issue.
+            created = datetime.fromisoformat(issue['created_at'].replace('Z', '+00:00'))
+            params['date'] = created.astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()
+        req = command(title[len(PREFIX):], **params)
+        return None if req['view'] == 'status' else req
+    except (ValueError, TypeError, KeyError):
+        return None
+
+
+def request_for_issue(number):
+    issue = api(f'issues/{number}', optional=True)
+    if issue and issue.get('state') == 'open':
+        return parse_request(issue)
+    return None
+
+
 def requests(*, include_processed=False):
     # Explicit pagination; author identity is checked, not body-supplied approval.
     state = 'all' if include_processed else 'open'
     for page in range(1,101):
         rows=api(f'issues?state={state}&sort=created&direction=desc&per_page=100&page={page}')
         for issue in rows:
-            if 'pull_request' in issue or issue.get('user',{}).get('login')!='Spankman':continue
-            if not issue['title'].startswith(PREFIX):continue
-            try:
-                params=json.loads(issue.get('body') or '{}')
-                if not isinstance(params,dict) or set(params)-{'date','country'}:continue
-                req=command(issue['title'][len(PREFIX):],**params)
-                if req['view']=='status':continue
-                # Undated requests are tied to the creation date, never replayed
-                # days later against a different card.
-                from zoneinfo import ZoneInfo
-                from datetime import datetime
-                created=datetime.fromisoformat(issue['created_at'].replace('Z','+00:00')).astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()
-                if not params.get('date'):req['date']=created
-                if include_processed or request_state(read(f"requests/{issue['number']}.json")) in PENDING:
-                    yield issue['number'],req
-            except (ValueError,TypeError):continue
+            req = parse_request(issue)
+            if req is not None and (include_processed or request_state(read(f"requests/{issue['number']}.json")) in PENDING):
+                yield issue['number'], req
         if len(rows)<100:return
     raise RuntimeError('Request queue pagination exceeded bound')
 

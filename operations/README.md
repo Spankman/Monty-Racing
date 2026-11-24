@@ -217,7 +217,10 @@ new single-race behaviour on production without an approved merge.
 ## Workflow stage timings
 
 The Actions worker emits structured `MONTY_TIMING` lines in the job log. Queue
-discovery covers issue listing and candidate index lookups. Current request index
+discovery covers issue listing and candidate index lookups. An issue-triggered
+worker performs one owner-validated issue lookup and publishes the triggering
+request before scanning and draining older entries. Scheduled queue and daily
+catch-up remain available. Current request index
 reads and QUEUED/RUNNING writes have separate spans. Within the runner, frozen
 verification and the actual provider fetch are logged separately. Fetch time
 includes any provider pagination, retries and retry waits. Runner total includes

@@ -119,17 +119,26 @@ class AtomicPublicationTests(unittest.TestCase):
 class QueueRecoveryTests(unittest.TestCase):
     def test_event_worker_drains_other_pending_issues(self):
         req=ops.command('RM6','2026-11-23')
+        order = []
+        def backlog():
+            order.append('scan')
+            return [(123, req), (200, req), (201, req)]
+        def operate(req, number, *args):
+            order.append(number)
+            return {}
         with (patch.dict(os.environ,dict(OPERATIONS_MODE='queue',OPERATIONS_ISSUE='200',GITHUB_RUN_ID='123')),
-              patch.object(worker,'requests',return_value=[(123,req),(200,req),(201,req)]),
+              patch.object(worker,'request_for_issue',return_value=req),
+              patch.object(worker,'requests',side_effect=backlog),
               patch.object(worker,'read',return_value=None),patch.object(worker,'record_request'),
-              patch.object(worker,'operate',return_value={}) as operate,patch('builtins.print')):
+              patch.object(worker,'operate',side_effect=operate),patch('builtins.print')):
             worker.main()
-        self.assertEqual([call.args[1] for call in operate.call_args_list],[200,123,201])
+        self.assertEqual(order,[200,'scan',123,201])
 
     def test_same_batch_model_commands_share_one_completed_execution(self):
         req=ops.command('RM6','2026-11-23');other=ops.command('RM7PS','2026-11-23')
         result=dict(request_status='COMPLETED',request_id=200,run_id='shared',forecast_path='shared/forecast.json')
         with (patch.dict(os.environ,dict(OPERATIONS_MODE='queue',OPERATIONS_ISSUE='200',GITHUB_RUN_ID='123')),
+              patch.object(worker,'request_for_issue',return_value=req),
               patch.object(worker,'requests',return_value=[(200,req),(201,other)]),
               patch.object(worker,'read',return_value=None),patch.object(worker,'record_request') as record,
               patch.object(client,'retrieve',return_value={'source_mode':'LIVE','view':{}}),
@@ -139,6 +148,44 @@ class QueueRecoveryTests(unittest.TestCase):
         reused=record.call_args.args[0]
         self.assertEqual(reused['request_id'],201);self.assertEqual(reused['reused_from_request'],200)
         self.assertEqual(reused['request']['command'],'RM7PS');self.assertEqual(reused['forecast_path'],'shared/forecast.json')
+
+
+    def test_direct_lookup_failure_keeps_queue_discovery(self):
+        from datetime import datetime
+        req = ops.command('RM6', '2026-11-23')
+        with (patch.object(worker, 'request_for_issue', side_effect=RuntimeError('transport failed')),
+              patch.object(worker, 'requests', return_value=[(200, req)])):
+            self.assertEqual(list(worker.work_items('queue', '200', datetime(2026, 11, 23), '1-1')),
+                             [(200, req)])
+
+    def test_terminal_event_does_not_rerun_and_still_drains_backlog(self):
+        req = ops.command('RM6', '2026-11-23')
+        with (patch.dict(os.environ, dict(OPERATIONS_MODE='queue', OPERATIONS_ISSUE='200', GITHUB_RUN_ID='123')),
+              patch.object(worker, 'request_for_issue', return_value=req),
+              patch.object(worker, 'requests', return_value=[(201, req)]),
+              patch.object(worker, 'read', side_effect=[{'request_status':'COMPLETED'}, None]),
+              patch.object(worker, 'record_request'),
+              patch.object(worker, 'operate', return_value={}) as operate, patch('builtins.print')):
+            worker.main()
+        self.assertEqual([call.args[1] for call in operate.call_args_list], [201])
+
+    def test_scheduled_worker_preserves_daily_catch_up_before_backlog(self):
+        from datetime import datetime
+        req = ops.command('RM6', '2026-11-23')
+        with (patch.object(worker, 'read', return_value=None),
+              patch.object(worker, 'requests', return_value=[(200, req)])):
+            self.assertEqual(list(worker.work_items('queue', '', datetime(2026,11,23,8,15), '1-1')),
+                             [(None, req), (200, req)])
+
+    def test_direct_issue_reads_still_require_owner_and_strict_body(self):
+        issue = dict(state='open', title='Monty command: RM6', user={'login':'Spankman'},
+                     body='{}', created_at='2026-11-22T23:00:00Z')
+        with patch.object(transport, 'api', return_value=issue) as api:
+            self.assertEqual(transport.request_for_issue(200)['date'], '2026-11-23')
+            api.assert_called_once_with('issues/200', optional=True)
+        for change in ({'user':{'login':'someone'}}, {'body':'{"other":1}'}, {'state':'closed'}):
+            with patch.object(transport, 'api', return_value=dict(issue, **change)):
+                self.assertIsNone(transport.request_for_issue(200))
 
 
 class ProviderRetryTests(unittest.TestCase):
