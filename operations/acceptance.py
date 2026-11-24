@@ -21,13 +21,21 @@ def probe_form(payload,target,key):
     from krok_client import get,ProviderError
     race=next((r for m in payload['data'] if m.get('venue')==target['meeting']
                for r in m.get('races',[]) if str(r.get('number'))==str(target['race'])),{})
-    race_id=race.get('race_id')
-    if not race_id:return dict(attempted=False,reason='documented race_id absent; source-side id not substituted')
+    race_id=race.get('race_id') or race.get('race_key_v2') or race.get('race_key')
+    # The endpoint-specific documentation also accepts numeric source IDs.
+    # Never invent a slug or pass corp_/racehub_ source IDs as canonical IDs.
+    if not race_id and str(race.get('id','')).isdigit():race_id=str(race['id'])
+    if not race_id:return dict(attempted=False,reason='No provider-supplied documented field-form identifier')
     try:
         data=get('/api/v1/racing/field-form',{'race_id':race_id},key)
         allowed={'runners','history','last_starts','recent_form','past_runs','form','date','runner_id','selection_id',
                  'finish_position','win_bsp','starting_price','market_probability','BEST_AVAIL_BACK_AT_SCHEDULED_OFF',
                  'barrier','jockey','trainer','track_condition','distance','weight'}
+        field=data.get('data')
+        source_meeting=next(m for m in payload['data'] if m.get('venue')==target['meeting'])
+        expected={(str(r.get('number')),str(r.get('name','')).strip().casefold()) for r in race.get('runners',[])}
+        observed={(str(r.get('tab_number')),str(r.get('name','')).strip().casefold()) for r in field.get('runners',[])} if isinstance(field,dict) else set()
+        identity_verified=bool(expected and observed==expected and str(field.get('date',''))[:10]==str(source_meeting['date'])[:10] and str(field.get('venue','')).casefold()==target['meeting'].casefold()) if isinstance(field,dict) else False
         counts=Counter()
         def walk(value):
             if isinstance(value,dict):
@@ -37,7 +45,7 @@ def probe_form(payload,target,key):
             elif isinstance(value,list):
                 for v in value:walk(v)
         walk(data.get('data'))
-        return dict(attempted=True,success=True,data_shape=type(data.get('data')).__name__,
+        return dict(attempted=True,success=True,field_identity_matches=identity_verified,data_shape=type(data.get('data')).__name__,
                     available_schema_counts=dict(counts),historical_feature_compatibility_verified=False,
                     limitation='Availability probe only; no historical features or outcomes injected into either frozen model')
     except ProviderError as exc:return dict(attempted=True,success=False,http_status=exc.status)

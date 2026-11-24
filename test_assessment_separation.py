@@ -142,3 +142,20 @@ class FrozenTraceTests(unittest.TestCase):
             output.write_text('number,monty_prob\n1,0.6\n2,0.2\n3,0.2\n')
             with self.assertRaises(OutputContractError) as e:trace('V6',directory,root,engine)
             self.assertEqual(e.exception.code,'model_component_reconciliation_failed')
+
+class FormProbeTests(unittest.TestCase):
+    def test_only_provider_supplied_documented_identifiers_are_used(self):
+        from operations.acceptance import probe_form
+        from unittest.mock import patch
+        target={'meeting':'Test','race':'1'}
+        race={'number':1,'id':'12345','runners':[{'number':1,'name':'A'}]}
+        payload={'data':[{'venue':'Test','date':'2026-11-25','races':[race]}]}
+        response={'data':{'date':'2026-11-25','venue':'Test','runners':[{'tab_number':1,'name':'A','recent_form':[{'win_bsp':3.2}]}]}}
+        with patch('krok_client.get',return_value=response) as get:
+            result=probe_form(payload,target,'test-only-key')
+            self.assertTrue(result['field_identity_matches'])
+            self.assertFalse(result['historical_feature_compatibility_verified'])
+            self.assertEqual(get.call_args.args[1],{'race_id':'12345'})
+        race['id']='corp_not_a_canonical_id'
+        with patch('krok_client.get') as get:
+            self.assertFalse(probe_form(payload,target,'test-only-key')['attempted']);get.assert_not_called()
