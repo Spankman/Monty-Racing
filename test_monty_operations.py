@@ -328,6 +328,7 @@ class WorkerFailureTests(unittest.TestCase):
             return records[0]
 
         with (patch.dict(os.environ, dict(OPERATIONS_MODE='queue', OPERATIONS_ISSUE='200', GITHUB_RUN_ID='123')),
+              patch.object(worker, 'request_for_issue', return_value=req),
               patch.object(worker, 'requests', return_value=[(200, req)]),
               patch.object(worker, 'read', return_value=None),
               patch.object(worker, 'record_request', side_effect=records.append),
@@ -367,6 +368,30 @@ class WorkerFailureTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, '^publication_failed$'):
                     worker.operate(req, 200, 'new', 'workflow', out)
             lifecycle.assert_called_with(req, 200, 'new', 'workflow', 'FAILED', 'publication_failed')
+
+
+class StageTimingTests(unittest.TestCase):
+    def test_reports_elapsed_time_even_when_the_operation_fails(self):
+        from operations import timing
+        with (patch.object(timing, 'monotonic', side_effect=[3.0, 4.25]),
+              patch.object(timing, 'emit') as emit):
+            with self.assertRaisesRegex(ValueError, 'private'):
+                with timing.timed('provider_fetch', 'run'):
+                    raise ValueError('private')
+        emit.assert_called_once_with('provider_fetch', 1.25, 'error', 'run')
+
+    def test_parent_only_forwards_valid_timing_fields(self):
+        from operations import timing
+        lines = b'''private stderr
+MONTY_TIMING {"stage":"provider_fetch","elapsed_seconds":1.2,"outcome":"ok","run_id":"ignore","secret":"discard"}
+MONTY_TIMING {"stage":"secret","elapsed_seconds":1,"outcome":"ok"}
+MONTY_TIMING {"stage":"provider_fetch","elapsed_seconds":NaN,"outcome":"ok"}
+MONTY_TIMING {"stage":"provider_fetch","elapsed_seconds":true,"outcome":"ok"}
+MONTY_TIMING not-json
+'''
+        with patch.object(timing, 'emit') as emit:
+            timing.forward_runner_timings(lines, 'parent')
+        emit.assert_called_once_with('provider_fetch', 1.2, 'ok', 'parent')
 
 
 if __name__ == '__main__':

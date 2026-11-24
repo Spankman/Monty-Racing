@@ -11,7 +11,8 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from monty_operations import command, utcnow
 from operations.failure import failed
-from operations.transport import publish, read, record_request, request_state, requests, write_index
+from operations.timing import forward_runner_timings, timed
+from operations.transport import publish, read, record_request, request_for_issue, request_state, requests, write_index
 
 
 RUNNER_TIMEOUT = 1000
@@ -37,24 +38,28 @@ def lifecycle(req, issue, run_id, workflow_url, state, reason=None):
 def operate(req, issue, run_id, workflow_url, out):
     if issue is not None:
         try:
-            lifecycle(req, issue, run_id, workflow_url, 'RUNNING')
+            with timed('running_status_write', run_id):
+                lifecycle(req, issue, run_id, workflow_url, 'RUNNING')
         except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
             record_publication_failure(req, issue, run_id, workflow_url)
             raise RuntimeError('publication_failed') from None
     args = [sys.executable, 'monty_operations.py', '--command', req['command'],
-            '--date', req['date'], '--output', str(out), '--v7-root', 'v7_engine', '--run-id', run_id]
+            '--date', req['date'], '--output', str(out), '--v7-root', 'v7_engine', '--run-id', run_id, '--timings']
     if req.get('country'):
         args += ['--country', req['country']]
 
     public = out / 'public'
     reason = None
     try:
-        run = subprocess.run(args, capture_output=True, text=True, timeout=RUNNER_TIMEOUT)
+        with timed('runner_total', run_id):
+            run = subprocess.run(args, capture_output=True, text=True, timeout=RUNNER_TIMEOUT)
+        forward_runner_timings(run.stderr, run_id)
         if not (public / 'receipt.json').exists() or not (public / 'forecast.json').exists():
             reason = 'runner_startup_failed'
         elif run.returncode and json.loads((public / 'receipt.json').read_text())['status'] != 'FAILED':
             reason = 'runner_exited_without_clean_completion'
-    except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpired as exc:
+        forward_runner_timings(exc.stderr, run_id)
         reason = 'runner_timeout'
     except OSError:
         reason = 'runner_launch_failed'
@@ -67,7 +72,8 @@ def operate(req, issue, run_id, workflow_url, out):
         failed(out, run_id, req['date'], reason)
 
     try:
-        return publish(public, run_id, req['date'], issue, workflow_url, request=req)
+        with timed('result_publication', run_id):
+            return publish(public, run_id, req['date'], issue, workflow_url, request=req)
     except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
         completed = record_publication_failure(req, issue, run_id, workflow_url)
         if completed:
@@ -89,67 +95,83 @@ def record_publication_failure(req, issue, run_id, workflow_url):
     return None
 
 
+def work_items(mode, issue, now, run_tag):
+    day = now.date().isoformat()
+    if mode != 'queue':
+        yield None, command(os.environ.get('OPERATIONS_COMMAND') or 'RM6',
+                            os.environ.get('OPERATIONS_DATE') or day)
+        return
+
+    number = int(issue) if issue else None
+    primary = None
+    if number is not None:
+        try:
+            with timed('event_issue_lookup', f'{run_tag}-{number}'):
+                primary = request_for_issue(number)
+        except (RuntimeError, OSError, ValueError, subprocess.SubprocessError):
+            # Fall back to normal discovery if the direct read was unavailable.
+            pass
+        if primary is not None:
+            yield number, primary
+
+    # GitHub retains only one pending job per concurrency group. Even when the
+    # event request publishes first, drain older requests in the same workflow.
+    with timed('queue_discovery', run_tag):
+        backlog = sorted(((n, req) for n, req in requests() if primary is None or n != number),
+                         key=lambda item: (number is not None and item[0] != number, item[0]))
+    if not issue and daily_due(now, read(f'daily/{day}/latest.json')):
+        yield None, command('RM6', day)
+    yield from backlog[:9 if primary is not None else 10]
+
+
 def main():
     started = monotonic()
     now = datetime.now(ZoneInfo('Australia/Brisbane'))
-    day = now.date().isoformat()
     mode = os.environ.get('OPERATIONS_MODE', 'daily')
     issue = os.environ.get('OPERATIONS_ISSUE', '')
     workflow_id = os.environ['GITHUB_RUN_ID']
     attempt = os.environ.get('GITHUB_RUN_ATTEMPT', '1')
+    run_tag = f'{workflow_id}-{attempt}'
     workflow_url = f'https://github.com/Spankman/Monty-Racing/actions/runs/{workflow_id}'
-    if mode == 'queue':
-        items = list(requests())
-        # The event's request goes first; also drain older pending requests.
-        # GitHub retains only one pending job in a concurrency group, so a
-        # worker restricted to its own issue can strand cancelled burst events.
-        items.sort(key=lambda item: (bool(issue) and item[0] != int(issue), item[0]))
-        items = items[:10]
-        if not issue and daily_due(now, read(f'daily/{day}/latest.json')):
-            items.insert(0, (None, command('RM6', day)))
-    else:
-        items = [(None, command(os.environ.get('OPERATIONS_COMMAND') or 'RM6',
-                                os.environ.get('OPERATIONS_DATE') or day))]
-    pending = []
-    for number, req in items:
-        if req['view'] == 'status':
-            continue
-        run_id = f'{workflow_id}-{attempt}-{number if number else "daily"}'
-        if number is not None:
-            index = read(f'requests/{number}.json')
-            state = request_state(index)
-            if state == 'RUNNING':
-                # Global workflow concurrency means the previous worker has ended.
-                lifecycle(req, number, index['run_id'], index['workflow_url'], 'FAILED', 'worker_interrupted')
-                continue
-            if state != 'QUEUED':
-                continue
-            try:
-                lifecycle(req, number, run_id, workflow_url, 'QUEUED')
-            except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
-                record_publication_failure(req, number, run_id, workflow_url)
-                raise RuntimeError('publication_failed') from None
-        pending.append((number, req, run_id))
-
     publication_failed = False
     completed = {}
     from operations.client import scope, retrieve
-    for number, req, run_id in pending:
+    for number, req in work_items(mode, issue, now, run_tag):
         # Leave work queued for the next tick if another full inference may exceed the job budget.
         if monotonic() - started > RUNNER_TIMEOUT:
             break
+        if req['view'] == 'status':
+            continue
+        run_id = f'{run_tag}-{number if number is not None else "daily"}'
         out = Path('operations_output') / run_id
         try:
-            source=completed.get(scope(req))
-            if number is not None and source and source.get('request_status')=='COMPLETED':
-                cached=retrieve(source,req=req)
-                if cached.get('source_mode')=='LIVE' and ('view' in cached or 'form_assessment_requests' in cached):
-                    reused=dict(source,request_id=number,request=req,reused_from_request=source.get('request_id'))
+            if number is not None:
+                with timed('request_index_read', run_id):
+                    index = read(f'requests/{number}.json')
+                state = request_state(index)
+                if state == 'RUNNING':
+                    # Global workflow concurrency means the previous worker has ended.
+                    lifecycle(req, number, index['run_id'], index['workflow_url'], 'FAILED', 'worker_interrupted')
+                    continue
+                if state != 'QUEUED':
+                    continue
+                try:
+                    with timed('queued_status_write', run_id):
+                        lifecycle(req, number, run_id, workflow_url, 'QUEUED')
+                except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
+                    record_publication_failure(req, number, run_id, workflow_url)
+                    raise RuntimeError('publication_failed') from None
+
+            source = completed.get(scope(req))
+            if number is not None and source and source.get('request_status') == 'COMPLETED':
+                cached = retrieve(source, req=req)
+                if cached.get('source_mode') == 'LIVE' and ('view' in cached or 'form_assessment_requests' in cached):
+                    reused = dict(source, request_id=number, request=req, reused_from_request=source.get('request_id'))
                     record_request(reused)
                     print(json.dumps(reused))
                     continue
-            result=operate(req, number, run_id, workflow_url, out)
-            completed[scope(req)]=result
+            result = operate(req, number, run_id, workflow_url, out)
+            completed[scope(req)] = result
             print(json.dumps(result))
         except RuntimeError as exc:
             if str(exc) != 'publication_failed':

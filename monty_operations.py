@@ -11,6 +11,7 @@ import re
 import subprocess
 import sys
 from zoneinfo import ZoneInfo
+from operations.timing import timed
 
 TZ = ZoneInfo('Australia/Brisbane')
 V7_COMMIT = 'efc51abb1595ef1eb8417e2d4e0d591f6d3c9378'
@@ -201,7 +202,7 @@ def selection(rows,version='V6'):
                 betting_authorised=False)
 
 
-def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke):
+def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False):
     """Capture once, run both frozen models on byte-identical per-race snapshots."""
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
     public=output/'public';public.mkdir()
@@ -216,16 +217,17 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         if not fixture and day!=started.astimezone(TZ).date().isoformat():
             raise ValueError('Live request date is not today in Brisbane')
         stage='frozen_artifact_verification'
-        from monty.integrity import verify_artifacts
-        verify_artifacts(ROOT/'monty_v6')
-        pins={'V6':sha(ROOT/'monty_v6/results/frozen_model.json'),'V7':sha(v7_root/'v7/artifacts/fold_3_model.json')}
-        if pins['V7']!=V7_MODEL_SHA:
-            raise ValueError('Pinned V7 model hash mismatch')
-        for version,root in [('V6',ROOT),('V7',v7_root)]:
-            commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
-            if version=='V7' and commit!=V7_COMMIT:
-                raise ValueError('Pinned V7 commit mismatch')
-            result['models'][version]=dict(commit=commit,model_sha256=pins[version],status='NOT_RUN',research_only=version=='V7')
+        with timed('frozen_verification', run_id, enabled=timings):
+            from monty.integrity import verify_artifacts
+            verify_artifacts(ROOT/'monty_v6')
+            pins={'V6':sha(ROOT/'monty_v6/results/frozen_model.json'),'V7':sha(v7_root/'v7/artifacts/fold_3_model.json')}
+            if pins['V7']!=V7_MODEL_SHA:
+                raise ValueError('Pinned V7 model hash mismatch')
+            for version,root in [('V6',ROOT),('V7',v7_root)]:
+                commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
+                if version=='V7' and commit!=V7_COMMIT:
+                    raise ValueError('Pinned V7 commit mismatch')
+                result['models'][version]=dict(commit=commit,model_sha256=pins[version],status='NOT_RUN',research_only=version=='V7')
         stage='provider_capture'
         if payload is None:
             from krok_adapter import fetch
@@ -233,7 +235,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             result['provider_credentials_configured']=bool(key)
             if not key:
                 raise ValueError('KROK_API_KEY absent; live request not attempted')
-            payload=fetch(day,key)
+            with timed('provider_fetch', run_id, enabled=timings):
+                payload=fetch(day,key)
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
@@ -403,10 +406,11 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--command',default='RM6');p.add_argument('--date');p.add_argument('--country',choices=['AU','NZ'])
     p.add_argument('--output',type=Path,required=True);p.add_argument('--v7-root',type=Path,required=True);p.add_argument('--run-id',required=True)
     p.add_argument('--fixture',type=Path)
+    p.add_argument('--timings', action='store_true')
     a=p.parse_args();req=command(a.command,a.date,a.country)
     if req.get('view')=='status':raise SystemExit('C reads published latest.json; it never starts inference')
     payload=json.loads(a.fixture.read_text()) if a.fixture else None
-    result=execute(req['date'],a.output,a.v7_root,run_id=a.run_id,request=req,payload=payload,fixture=bool(a.fixture))
+    result=execute(req['date'],a.output,a.v7_root,run_id=a.run_id,request=req,payload=payload,fixture=bool(a.fixture),timings=a.timings)
     for path in (a.output/'public').glob('v[67]-*.json'):
         view = json.loads(path.read_text())
         path.with_suffix('.txt').write_text(ticket(view, archived=True))
