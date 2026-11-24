@@ -328,6 +328,7 @@ class WorkerFailureTests(unittest.TestCase):
             return records[0]
 
         with (patch.dict(os.environ, dict(OPERATIONS_MODE='queue', OPERATIONS_ISSUE='200', GITHUB_RUN_ID='123')),
+              patch.object(worker, 'request_for_issue', return_value=req),
               patch.object(worker, 'requests', return_value=[(200, req)]),
               patch.object(worker, 'read', return_value=None),
               patch.object(worker, 'record_request', side_effect=records.append),
