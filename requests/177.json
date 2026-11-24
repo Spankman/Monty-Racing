@@ -1,12 +1,34 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-24",
-  "request_id": 177,
   "run_id": "45322086839-1-177",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-24/45322086839-1-177/receipt.json",
+  "forecast_path": "runs/2026-11-24/45322086839-1-177/forecast.json",
+  "forecast_sha256": "fb99685e107d5c42e904b32e31bb9e6cd410b34810f158055bed43b4c53baef9",
+  "generated_at": "2026-11-24T03:49:41.019748+00:00",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45322086839",
-  "request_status": "RUNNING",
-  "status": "RUNNING",
-  "updated_at": "2026-11-24T03:49:36.353208+00:00",
+  "captured_at": "2026-11-24T03:49:39.891810+00:00",
+  "valid_until": "2026-11-24T03:54:39.891810+00:00",
+  "models": {
+    "V6": {
+      "commit": "e73137d201738405a74c92df06d49e31e565b032",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "28ef56112669265f8674e64aee82e0918ead371ad37d302d5347ec806bf5f95b",
   "request": {
     "command": "RM6 ARARAT 6",
     "version": "V6",
@@ -15,5 +37,7 @@
     "meeting": "Ararat",
     "race": "6",
     "country": "AU"
-  }
+  },
+  "request_id": 177,
+  "request_status": "COMPLETED"
 }
