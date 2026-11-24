@@ -1,0 +1,53 @@
+name: Monty provisional price staging
+on:
+  push:
+    branches: [staging/monty-roughie-price-review]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
+          path: v7_engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Restore frozen artifacts
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+        run: python operations/restore_private.py
+      - name: Run actual daily provisional scoring against one live capture
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+        run: |
+          python monty_operations.py --timings --command RM7PS --country AU --output review_output --v7-root v7_engine --run-id "${GITHUB_RUN_ID}-staging"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          f = json.loads(Path('review_output/public/forecast.json').read_text())
+          assert f['source_mode'] == 'LIVE'
+          assert f['qualifying_forecasts'] == 0
+          gap = 'named_bookmaker_fixed_win_not_available_for_entire_field'
+          before = dict(V6=0,V7=0)
+          after = dict(V6=0,V7=0)
+          roughies = dict(V6=0,V7=0)
+          details = []
+          for r in f['races']:
+              row = dict(meeting=r['meeting'], race=r['race'])
+              for version, model in r['models'].items():
+                  assert model['official_classification'] == 'NO BET' and not model['betting_authorised']
+                  if model['status'] == 'SCORED':
+                      after[version] += 1
+                      before[version] += int(gap not in model['no_bet_reasons'])
+                      roughies[version] += len(model['roughies'])
+                  row[version] = dict(status=model['status'],unattributed=gap in model['no_bet_reasons'])
+              details.append(row)
+          print('MONTY_PRICE_REVIEW '+json.dumps(dict(covered=f['coverage'],legacy_named_price_gate_counterfactual=before,actual_scored=after,roughie_counts=roughies,details=details)))
+          PY
