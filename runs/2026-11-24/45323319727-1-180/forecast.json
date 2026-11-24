@@ -1,0 +1,597 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-24",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45323319727-1-180",
+  "generated_at": "2026-11-24T04:00:40.915493+00:00",
+  "receipt": "runs/2026-11-24/45323319727-1-180/receipt.json",
+  "source_mode": "LIVE",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "races": [
+    {
+      "meeting": "Ararat",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T04:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Graceful Mist"
+        },
+        {
+          "number": "13",
+          "horse": "Bella Blaze"
+        },
+        {
+          "number": "11",
+          "horse": "The Secret"
+        }
+      ],
+      "captured_at": "2026-11-24T04:00:39.994490+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "9",
+              "horse": "Incoherent",
+              "odds": 2.7,
+              "probability": 0.288577448084464,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "5",
+              "horse": "The Pallet Man",
+              "odds": 4.4,
+              "probability": 0.17716672045724025,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "9",
+            "horse": "Incoherent",
+            "odds": 2.7,
+            "probability": 0.288577448084464,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "9",
+              "horse": "Incoherent",
+              "odds": 2.7,
+              "probability": 0.288577448084464,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "The Pallet Man",
+              "odds": 4.4,
+              "probability": 0.17716672045724025,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "1",
+              "horse": "Dramatic Dream",
+              "odds": 4.4,
+              "probability": 0.1769555821421103,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "14",
+              "horse": "La Dupeur",
+              "odds": 6.0,
+              "probability": 0.1298297925159582,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "4",
+              "horse": "Zercardy",
+              "odds": 10.0,
+              "probability": 0.07784107290060743,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "7",
+              "horse": "Hellica",
+              "odds": 14.0,
+              "probability": 0.05450247459805488,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "8",
+              "horse": "Hilily Hilily Hilo",
+              "odds": 17.0,
+              "probability": 0.045766871070301654,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "10",
+              "horse": "Peace Seeker",
+              "odds": 23.0,
+              "probability": 0.03388491863486618,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "2",
+              "horse": "Satellite Chester",
+              "odds": 151.0,
+              "probability": 0.00516375948364392,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "3",
+              "horse": "Xiguous Equus",
+              "odds": 151.0,
+              "probability": 0.0051575154272953255,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "12",
+              "horse": "Victory Blues",
+              "odds": 151.0,
+              "probability": 0.005153844685457897,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "9",
+            "horse": "Incoherent",
+            "odds": 2.7,
+            "probability": 0.288577448084464,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T04:00:40.358601+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T04:00:39.994490+00:00",
+          "model_version": "V6",
+          "model_commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "9",
+              "horse": "Incoherent",
+              "odds": 2.7,
+              "probability": 0.2765428933974747,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "1",
+              "horse": "Dramatic Dream",
+              "odds": 4.4,
+              "probability": 0.17510013773315578,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "9",
+            "horse": "Incoherent",
+            "odds": 2.7,
+            "probability": 0.2765428933974747,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "9",
+              "horse": "Incoherent",
+              "odds": 2.7,
+              "probability": 0.2765428933974747,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "1",
+              "horse": "Dramatic Dream",
+              "odds": 4.4,
+              "probability": 0.17510013773315578,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "The Pallet Man",
+              "odds": 4.4,
+              "probability": 0.17455895810045904,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "14",
+              "horse": "La Dupeur",
+              "odds": 6.0,
+              "probability": 0.13071701266725178,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "4",
+              "horse": "Zercardy",
+              "odds": 10.0,
+              "probability": 0.08065485290253964,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "7",
+              "horse": "Hellica",
+              "odds": 14.0,
+              "probability": 0.05779471622729221,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "8",
+              "horse": "Hilily Hilily Hilo",
+              "odds": 17.0,
+              "probability": 0.0489535768776016,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "10",
+              "horse": "Peace Seeker",
+              "odds": 23.0,
+              "probability": 0.03687582824203541,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "12",
+              "horse": "Victory Blues",
+              "odds": 151.0,
+              "probability": 0.006275692384719074,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "2",
+              "horse": "Satellite Chester",
+              "odds": 151.0,
+              "probability": 0.006268155462245866,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "3",
+              "horse": "Xiguous Equus",
+              "odds": 151.0,
+              "probability": 0.006258176005224994,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "9",
+            "horse": "Incoherent",
+            "odds": 2.7,
+            "probability": 0.2765428933974747,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T04:00:40.915390+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T04:00:39.994490+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        }
+      },
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-24",
+        "meeting": "Ararat",
+        "race": "5",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "3",
+            "horse": "Xiguous Equus",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 59.5,
+            "age": 6,
+            "jockey": "Sarah Field",
+            "trainer": "Stephen Lenehan"
+          },
+          {
+            "number": "5",
+            "horse": "The Pallet Man",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "TAB",
+            "barrier": 13,
+            "weight": 58,
+            "age": 3,
+            "jockey": "Cian Macredmond",
+            "trainer": "Taige Weir"
+          },
+          {
+            "number": "4",
+            "horse": "Zercardy",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Tom Madden",
+            "trainer": "Maddie Raymond & Patrick Bell"
+          },
+          {
+            "number": "12",
+            "horse": "Victory Blues",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "Amy Herrmann",
+            "trainer": "Barry Ainsworth"
+          },
+          {
+            "number": "9",
+            "horse": "Incoherent",
+            "scratched": false,
+            "odds": 2.7,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Luke Currie",
+            "trainer": "Ben, Will & Jd Hayes"
+          },
+          {
+            "number": "14",
+            "horse": "La Dupeur",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 56,
+            "age": 3,
+            "jockey": "Craig Newitt",
+            "trainer": "P Kearney"
+          },
+          {
+            "number": "10",
+            "horse": "Peace Seeker",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Zac Moore",
+            "trainer": "C Maher"
+          },
+          {
+            "number": "6",
+            "horse": "Graceful Mist",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 2,
+            "weight": 57.5,
+            "age": 7,
+            "jockey": "Alana Kelly",
+            "trainer": "Nicole Dickson"
+          },
+          {
+            "number": "1",
+            "horse": "Dramatic Dream",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Neil Farley",
+            "trainer": "V L Malady"
+          },
+          {
+            "number": "7",
+            "horse": "Hellica",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Jack Hill",
+            "trainer": "Alexander Rae"
+          },
+          {
+            "number": "2",
+            "horse": "Satellite Chester",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 59.5,
+            "age": 5,
+            "jockey": "Nathan Punch",
+            "trainer": "Jaymee Cockram"
+          },
+          {
+            "number": "13",
+            "horse": "Bella Blaze",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 56,
+            "age": 3,
+            "jockey": "Neil Farley",
+            "trainer": "Michelle Payne"
+          },
+          {
+            "number": "8",
+            "horse": "Hilily Hilily Hilo",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Declan Bates",
+            "trainer": "Annalise Maragos"
+          },
+          {
+            "number": "11",
+            "horse": "The Secret",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "Bailey Kinninmont",
+            "trainer": "Ms N Burke"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1300,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-24T04:00:39.994490+00:00",
+        "scheduled_start": "2026-11-24T04:30:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "cdf9e58ff3662e7e63217a0386913bc354c3fdc98c4cf0393e50df56d690c208"
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 1,
+    "provider_races": 1,
+    "accepted_races": 1,
+    "scored_both": 1,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "18fcf8cfcca7972dba1e15930deb3f50c0c27f79a44e7f788670ca60c546be8b",
+  "captured_at": "2026-11-24T04:00:39.994490+00:00",
+  "valid_until": "2026-11-24T04:05:39.994490+00:00"
+}
