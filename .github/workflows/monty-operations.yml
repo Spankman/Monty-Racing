@@ -35,26 +35,46 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
+      - name: Check whether the issue already has a terminal result
+        id: event
+        if: github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONTY_ISSUE: ${{ github.event.issue.number }}
+        run: |
+          status=$(timeout 10s gh api "repos/$GITHUB_REPOSITORY/contents/requests/$MONTY_ISSUE.json?ref=monty-operations-results" --jq .content | base64 --decode | jq -r .request_status) || status=
+          case "$status" in
+            COMPLETED|FAILED)
+              echo "Request #$MONTY_ISSUE is already $status."
+              echo "settled=true" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
       - uses: actions/checkout@v4
+        if: steps.event.outputs.settled != 'true'
       - uses: actions/checkout@v4
+        if: steps.event.outputs.settled != 'true'
         with:
           ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
           path: v7_engine
       - uses: actions/setup-python@v5
+        if: steps.event.outputs.settled != 'true'
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: requirements-runner.txt
       - name: Install existing frozen runtime (startup failures reported by worker)
+        if: steps.event.outputs.settled != 'true'
         continue-on-error: true
         run: python -m pip install -r requirements-runner.txt
       - name: Restore original private artifacts without changing manifest
+        if: steps.event.outputs.settled != 'true'
         continue-on-error: true
         env:
           V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
           V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
         run: python operations/restore_private.py
       - name: Process authenticated commands or shared daily card
+        if: steps.event.outputs.settled != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           OPERATIONS_RESULTS_BRANCH: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'monty-single-staging-results' || 'monty-simple-staging-results') || 'monty-operations-results' }}
@@ -65,7 +85,7 @@ jobs:
           OPERATIONS_MODE: ${{ (github.event_name == 'issues' || inputs.request_issue || github.event.schedule == '*/5 * * * *') && 'queue' || 'daily' }}
         run: python operations/worker.py
       - name: Derived receipt and forecast artifact (no private snapshots)
-        if: always()
+        if: always() && steps.event.outputs.settled != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: monty-operations-${{ github.run_id }}-${{ github.run_attempt }}
