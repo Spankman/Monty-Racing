@@ -424,6 +424,7 @@ def ticket(view, *, archived=False, now=None):
             lines.append((diag['progression_bet_type'] if diag else result['progression_bet_type'])+' assessment only — no wager authorised')
             for i,r in enumerate(rows):
                 text=f"#{r['number']} {r['horse']} — {quote_text(r)}"
+                if r.get('bookmaker'):text+=' ('+r['bookmaker']+')'
                 lines.append(('**'+text+'**') if i==0 else text)
         if race.get('single_race_assessment') and rows:
             value=result.get('value_selection')

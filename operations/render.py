@@ -32,7 +32,7 @@ def render(view, *, archived=False, now=None):
             for i,row in enumerate(diag['ordered_selections'] if diag else result.get('ordered_selections',[])):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
                 if i==0:text='<b>'+text+'</b>'
-                parts.append('<tr><td>'+text+'</td><td>'+e(quote_text(row))+'</td></tr>')
+                parts.append('<tr><td>'+text+'</td><td>'+e(quote_text(row)+((' ('+row['bookmaker']+')') if row.get('bookmaker') else ''))+'</td></tr>')
             if view['view'] in ('provisional', 'shadow'):
                 for roughie in result.get('roughies',[]):
                     parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>$'+format(roughie['odds'],'.2f')+'</td></tr>')
