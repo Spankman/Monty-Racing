@@ -11,6 +11,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from monty_operations import command, utcnow
 from operations.failure import failed
+from operations.timing import forward_runner_timings, timed
 from operations.transport import publish, read, record_request, request_state, requests, write_index
 
 
@@ -37,24 +38,28 @@ def lifecycle(req, issue, run_id, workflow_url, state, reason=None):
 def operate(req, issue, run_id, workflow_url, out):
     if issue is not None:
         try:
-            lifecycle(req, issue, run_id, workflow_url, 'RUNNING')
+            with timed('running_status_write', run_id):
+                lifecycle(req, issue, run_id, workflow_url, 'RUNNING')
         except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
             record_publication_failure(req, issue, run_id, workflow_url)
             raise RuntimeError('publication_failed') from None
     args = [sys.executable, 'monty_operations.py', '--command', req['command'],
-            '--date', req['date'], '--output', str(out), '--v7-root', 'v7_engine', '--run-id', run_id]
+            '--date', req['date'], '--output', str(out), '--v7-root', 'v7_engine', '--run-id', run_id, '--timings']
     if req.get('country'):
         args += ['--country', req['country']]
 
     public = out / 'public'
     reason = None
     try:
-        run = subprocess.run(args, capture_output=True, text=True, timeout=RUNNER_TIMEOUT)
+        with timed('runner_total', run_id):
+            run = subprocess.run(args, capture_output=True, text=True, timeout=RUNNER_TIMEOUT)
+        forward_runner_timings(run.stderr, run_id)
         if not (public / 'receipt.json').exists() or not (public / 'forecast.json').exists():
             reason = 'runner_startup_failed'
         elif run.returncode and json.loads((public / 'receipt.json').read_text())['status'] != 'FAILED':
             reason = 'runner_exited_without_clean_completion'
-    except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpired as exc:
+        forward_runner_timings(exc.stderr, run_id)
         reason = 'runner_timeout'
     except OSError:
         reason = 'runner_launch_failed'
@@ -67,7 +72,8 @@ def operate(req, issue, run_id, workflow_url, out):
         failed(out, run_id, req['date'], reason)
 
     try:
-        return publish(public, run_id, req['date'], issue, workflow_url, request=req)
+        with timed('result_publication', run_id):
+            return publish(public, run_id, req['date'], issue, workflow_url, request=req)
     except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
         completed = record_publication_failure(req, issue, run_id, workflow_url)
         if completed:
@@ -99,7 +105,8 @@ def main():
     attempt = os.environ.get('GITHUB_RUN_ATTEMPT', '1')
     workflow_url = f'https://github.com/Spankman/Monty-Racing/actions/runs/{workflow_id}'
     if mode == 'queue':
-        items = list(requests())
+        with timed('queue_discovery', f'{workflow_id}-{attempt}'):
+            items = list(requests())
         # The event's request goes first; also drain older pending requests.
         # GitHub retains only one pending job in a concurrency group, so a
         # worker restricted to its own issue can strand cancelled burst events.
@@ -116,7 +123,8 @@ def main():
             continue
         run_id = f'{workflow_id}-{attempt}-{number if number else "daily"}'
         if number is not None:
-            index = read(f'requests/{number}.json')
+            with timed('request_index_read', run_id):
+                index = read(f'requests/{number}.json')
             state = request_state(index)
             if state == 'RUNNING':
                 # Global workflow concurrency means the previous worker has ended.
@@ -125,7 +133,8 @@ def main():
             if state != 'QUEUED':
                 continue
             try:
-                lifecycle(req, number, run_id, workflow_url, 'QUEUED')
+                with timed('queued_status_write', run_id):
+                    lifecycle(req, number, run_id, workflow_url, 'QUEUED')
             except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
                 record_publication_failure(req, number, run_id, workflow_url)
                 raise RuntimeError('publication_failed') from None

@@ -212,3 +212,20 @@ when price/comparison evidence is absent. See CHATGPT.md for automatic handling.
 This branch's live push test uses the existing workflow and existing secrets for
 RM6 Ballina 7, isolated on monty-single-staging-results. It does not activate the
 new single-race behaviour on production without an approved merge.
+
+
+## Workflow stage timings
+
+The Actions worker emits structured `MONTY_TIMING` lines in the job log. Queue
+discovery covers issue listing and candidate index lookups. Current request index
+reads and QUEUED/RUNNING writes have separate spans. Within the runner, frozen
+verification and the actual provider fetch are logged separately. Fetch time
+includes any provider pagination, retries and retry waits. Runner total includes
+both spans plus startup, scoring and rendering. Result publication is timed
+separately. Additive totals must not double-count the two nested runner spans.
+
+Durations use a monotonic clock. Each mark contains only fixed stage/outcome
+labels, a run ID and elapsed seconds. It is workflow diagnostic metadata and
+does not enter forecasts, receipts or tickets. An `ok` timed span only means
+the operation returned without raising. Check the existing semantic forecast
+status to determine whether either model scored.
