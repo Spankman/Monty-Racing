@@ -6,7 +6,6 @@ import subprocess
 
 from monty_operations import projection, ticket, utcnow
 from operations import transport
-from operations.single_race import handoffs
 
 
 BOT = 'github-actions[bot]'
@@ -62,6 +61,13 @@ def result_body(request, forecast, receipt, index):
     lines = [f"**Monty {status} — {forecast['status']}**", '',
              f"Requested view: `{request['command']}` · {forecast['date']} (Brisbane)",
              f"Run: `{forecast['run_id']}` · [Workflow]({index['workflow_url']})", '']
+    model = forecast.get('models', {}).get(request['version'], {})
+    lines.append(f"Requested model: {request['version']} · {model.get('status', 'NOT RUN')} · "
+                 f"{model.get('scored_races', 0)} races scored · Source mode: {forecast.get('source_mode', 'UNKNOWN')}")
+    if forecast.get('provider_snapshot_sha256'):
+        lines.append('Field and odds data: Krok snapshot · SHA-256 `' + forecast['provider_snapshot_sha256'] + '`')
+    if index.get('reused_from_request'):
+        lines.append(f"Shared verified forecast from request #{index['reused_from_request']}.")
     if forecast.get('captured_at'):
         lines += [f"Captured: {forecast['captured_at']} · Valid until: {forecast.get('valid_until')}",
                   'Recheck the five-minute limit and race jump at retrieval. Expired slips are historical.', '']
@@ -71,13 +77,8 @@ def result_body(request, forecast, receipt, index):
         lines.append(f"{race['meeting']} R{race['race']} scheduled jump: {race.get('scheduled_start')}")
     if forecast.get('blockers'):
         lines.append('Outcome details: ' + '; '.join(forecast['blockers']))
-    for packet in handoffs(view):
-        why = ', '.join(packet['reasons'])
-        lines.append(f"Independent form assessment required for this race. Model blocker: {why}. "
-                     "Check current public fields and form and provide supported rankings in the same chat turn.")
-    if request.get('meeting') and forecast['status'] == 'FAILED':
-        lines.append('If the exact race is still upcoming, check current public fields and form and '
-                     'provide separately labelled independent rankings wherever the evidence supports them.')
+    if request.get('meeting') and not any(r['result'].get('ordered_selections') for r in view['races']):
+        lines.append('No current Monty model selections for this race. See the model status and blockers above.')
     if index.get('forecast_path'):
         lines += ['', links(index)]
     else:

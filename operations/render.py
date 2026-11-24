@@ -23,7 +23,7 @@ def render(view, *, archived=False, now=None):
             if race.get('single_race_assessment'):
                 parts.append('<p><b>'+e(result.get('assessment_level','NO CURRENT ASSESSMENT'))+'</b> · REDUCED CONFIDENCE</p>')
             if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
-                parts.append('<p><b>FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION</b>. Continue with current fields/form research automatically; model rankings unavailable.</p>')
+                parts.append('<p>No Monty model rankings were generated.</p>')
             parts.append('<table>')
             for i,row in enumerate(result.get('ordered_selections',[])):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
