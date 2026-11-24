@@ -1,0 +1,311 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45336962422-1-daily",
+  "date": "2026-11-24",
+  "view": "official",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Ararat",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "16",
+          "horse": "Backflips"
+        },
+        {
+          "number": "15",
+          "horse": "Our Paramour"
+        },
+        {
+          "number": "7",
+          "horse": "Celestial Option"
+        },
+        {
+          "number": "14",
+          "horse": "Hellish Lee"
+        },
+        {
+          "number": "18",
+          "horse": "Serin"
+        },
+        {
+          "number": "17",
+          "horse": "Drink Then Kiss"
+        },
+        {
+          "number": "3",
+          "horse": "Caledonian Summer"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-24T05:58:25.983102+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Ararat",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T06:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Spinhof"
+        },
+        {
+          "number": "14",
+          "horse": "Noubentekh"
+        },
+        {
+          "number": "12",
+          "horse": "Heidi Dancer"
+        },
+        {
+          "number": "8",
+          "horse": "Master Jack"
+        },
+        {
+          "number": "6",
+          "horse": "Positive Image"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "fad80f1b5e55349fe0f3e12053f84a77a1804e858a840677987d0b4fb8a49852",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-24T05:58:24.144722+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-24T05:58:23.660739+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-24T05:58:25.983102+00:00"
+      }
+    },
+    {
+      "meeting": "Newcastle",
+      "race": "9",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T19:45:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 14,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-24T05:58:25.983102+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Tamworth",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:15:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-24T05:58:25.983102+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Tamworth",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Master Gee"
+        },
+        {
+          "number": "8",
+          "horse": "City Gold Speed"
+        },
+        {
+          "number": "12",
+          "horse": "Sir Freddie"
+        },
+        {
+          "number": "7",
+          "horse": "El Beatle"
+        },
+        {
+          "number": "10",
+          "horse": "Tomoe Gozen"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-24T05:58:25.983102+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Tamworth",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T06:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Smart Recognition"
+        },
+        {
+          "number": "14",
+          "horse": "Snitzenegger"
+        },
+        {
+          "number": "12",
+          "horse": "Commander Meroo"
+        },
+        {
+          "number": "5",
+          "horse": "Prince De Vega"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "2ec7d14d3830175f8ad1bb286193f502cccbead11457e2c0c84c59a0cb8c7f75",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-24T05:58:25.334277+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-24T05:58:23.660739+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-24T05:58:25.983102+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-24/45336962422-1-daily/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-24T05:58:23.660739+00:00",
+  "valid_until": "2026-11-24T06:03:23.660739+00:00",
+  "snapshot_only": true
+}

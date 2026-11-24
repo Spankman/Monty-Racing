@@ -1,0 +1,520 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-24",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45336962422-1-daily",
+  "generated_at": "2026-11-24T05:58:25.982061+00:00",
+  "receipt": "runs/2026-11-24/45336962422-1-daily/receipt.json",
+  "source_mode": "LIVE",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 2
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 2
+    }
+  },
+  "races": [
+    {
+      "meeting": "Ararat",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "16",
+          "horse": "Backflips"
+        },
+        {
+          "number": "15",
+          "horse": "Our Paramour"
+        },
+        {
+          "number": "7",
+          "horse": "Celestial Option"
+        },
+        {
+          "number": "14",
+          "horse": "Hellish Lee"
+        },
+        {
+          "number": "18",
+          "horse": "Serin"
+        },
+        {
+          "number": "17",
+          "horse": "Drink Then Kiss"
+        },
+        {
+          "number": "3",
+          "horse": "Caledonian Summer"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        },
+        "V7": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        }
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      }
+    },
+    {
+      "meeting": "Ararat",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T06:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Spinhof"
+        },
+        {
+          "number": "14",
+          "horse": "Noubentekh"
+        },
+        {
+          "number": "12",
+          "horse": "Heidi Dancer"
+        },
+        {
+          "number": "8",
+          "horse": "Master Jack"
+        },
+        {
+          "number": "6",
+          "horse": "Positive Image"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "10",
+              "horse": "Maya's Ace",
+              "odds": 3.6,
+              "probability": 0.21545138902054792,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "3",
+              "horse": "I'm Da Boss",
+              "odds": 4.8,
+              "probability": 0.16179188028139024,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "10",
+            "horse": "Maya's Ace",
+            "odds": 3.6,
+            "probability": 0.21545138902054792,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T05:58:24.144722+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T05:58:23.660739+00:00",
+          "model_version": "V6",
+          "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a"
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "10",
+              "horse": "Maya's Ace",
+              "odds": 3.6,
+              "probability": 0.20774070537316844,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "3",
+              "horse": "I'm Da Boss",
+              "odds": 4.8,
+              "probability": 0.15805306622052653,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "10",
+            "horse": "Maya's Ace",
+            "odds": 3.6,
+            "probability": 0.20774070537316844,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T05:58:24.884793+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T05:58:23.660739+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378"
+        }
+      },
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "fad80f1b5e55349fe0f3e12053f84a77a1804e858a840677987d0b4fb8a49852"
+    },
+    {
+      "meeting": "Newcastle",
+      "race": "9",
+      "country": "AU",
+      "scheduled_start": "2026-11-23T19:45:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        },
+        "V7": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        }
+      },
+      "data_completeness": {
+        "active_runners": 14,
+        "form_history_verified": false
+      }
+    },
+    {
+      "meeting": "Tamworth",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:15:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        },
+        "V7": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        }
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      }
+    },
+    {
+      "meeting": "Tamworth",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T05:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Master Gee"
+        },
+        {
+          "number": "8",
+          "horse": "City Gold Speed"
+        },
+        {
+          "number": "12",
+          "horse": "Sir Freddie"
+        },
+        {
+          "number": "7",
+          "horse": "El Beatle"
+        },
+        {
+          "number": "10",
+          "horse": "Tomoe Gozen"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        },
+        "V7": {
+          "status": "BLOCKED",
+          "official_classification": "NO BET",
+          "ordered_selections": [],
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "race_already_due"
+          ],
+          "betting_authorised": false
+        }
+      },
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      }
+    },
+    {
+      "meeting": "Tamworth",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T06:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Smart Recognition"
+        },
+        {
+          "number": "14",
+          "horse": "Snitzenegger"
+        },
+        {
+          "number": "12",
+          "horse": "Commander Meroo"
+        },
+        {
+          "number": "5",
+          "horse": "Prince De Vega"
+        }
+      ],
+      "captured_at": "2026-11-24T05:58:23.660739+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "3",
+              "horse": "Chamber Of Secrets",
+              "odds": 2.45,
+              "probability": 0.32096282361493195,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "7",
+              "horse": "Age Of Aquarius",
+              "odds": 5.5,
+              "probability": 0.1432445275792697,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "3",
+            "horse": "Chamber Of Secrets",
+            "odds": 2.45,
+            "probability": 0.32096282361493195,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T05:58:25.334277+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T05:58:23.660739+00:00",
+          "model_version": "V6",
+          "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a"
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "3",
+              "horse": "Chamber Of Secrets",
+              "odds": 2.45,
+              "probability": 0.3049283569333111,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "1",
+              "horse": "All Too Wild",
+              "odds": 5.5,
+              "probability": 0.14235868230091647,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "3",
+            "horse": "Chamber Of Secrets",
+            "odds": 2.45,
+            "probability": 0.3049283569333111,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T05:58:25.981903+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T05:58:23.660739+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378"
+        }
+      },
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "2ec7d14d3830175f8ad1bb286193f502cccbead11457e2c0c84c59a0cb8c7f75"
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 3,
+    "provider_races": 17,
+    "accepted_races": 6,
+    "scored_both": 2,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "aad9e2af62cb4381136ae5610341ea7fed72aecf876cd286a99ff62e2372f60e",
+  "captured_at": "2026-11-24T05:58:23.660739+00:00",
+  "valid_until": "2026-11-24T06:03:23.660739+00:00"
+}
