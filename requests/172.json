@@ -1,12 +1,19 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-23",
-  "request_id": 172,
   "run_id": "45321018130-1-172",
+  "status": "FAILED",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-23/45321018130-1-172/receipt.json",
+  "forecast_path": "runs/2026-11-23/45321018130-1-172/forecast.json",
+  "forecast_sha256": "1895bed8eac9cc8fc36cd16282244061e5b2440164c3f85641c896b1e7d03ee4",
+  "generated_at": "2026-11-24T03:41:02.956192+00:00",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45321018130",
-  "request_status": "RUNNING",
-  "status": "RUNNING",
-  "updated_at": "2026-11-24T03:41:01.782590+00:00",
+  "captured_at": null,
+  "valid_until": null,
+  "models": {},
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "1f5db79aa8f0e006dd065f5b2198e6f7b07b04aa3244891ec3fc9d4a5bf8e557",
   "request": {
     "command": "RM7PS ARARAT 4",
     "version": "V7",
@@ -15,5 +22,7 @@
     "meeting": "Ararat",
     "race": "4",
     "country": "AU"
-  }
+  },
+  "request_id": 172,
+  "request_status": "FAILED"
 }
