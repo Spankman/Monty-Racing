@@ -95,7 +95,7 @@ def retrieve(index, request_id=None, req=None, now=None):
             age = (now - capture).total_seconds()
             result['capture_age_seconds'] = age
             valid_until = min(timestamp(result['valid_until']), capture + timedelta(seconds=MAX_AGE_SECONDS))
-            result['freshness'] = 'FRESH' if age >= 0 and now <= valid_until else 'EXPIRED'
+            result['freshness'] = 'FRESH' if age >= 0 and now < valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
     if req and req.get('meeting') and result.get('freshness')=='FRESH':

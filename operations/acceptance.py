@@ -35,7 +35,9 @@ def probe_form(payload,target,key):
         source_meeting=next(m for m in payload['data'] if m.get('venue')==target['meeting'])
         expected={(str(r.get('number')),str(r.get('name','')).strip().casefold()) for r in race.get('runners',[])}
         observed={(str(r.get('tab_number')),str(r.get('name','')).strip().casefold()) for r in field.get('runners',[])} if isinstance(field,dict) else set()
-        identity_verified=bool(expected and observed==expected and str(field.get('date',''))[:10]==str(source_meeting['date'])[:10] and str(field.get('venue','')).casefold()==target['meeting'].casefold()) if isinstance(field,dict) else False
+        identity_verified=bool(expected and observed==expected and str(field.get('date',''))[:10]==str(source_meeting['date'])[:10] and str(field.get('venue','')).casefold()==target['meeting'].casefold()
+                               and str(field.get('race_number'))==str(target['race'])
+                               and len(field.get('runners',[]))==len(observed)==len(race.get('runners',[]))) if isinstance(field,dict) else False
         counts=Counter()
         def walk(value):
             if isinstance(value,dict):
@@ -90,7 +92,7 @@ def main():
     directory=base/(tag+'-diagnostic-summary')/'public'
     ops.write(directory/'live-acceptance.json',summary)
     print(json.dumps(summary,allow_nan=False))
-    if any(c['status']!='COMPLETED_ASSESSMENTS' for c in summary['commands'][:8]):
+    if any(c['status']!='COMPLETED_ASSESSMENTS' for c in summary['commands']):
         raise SystemExit('Live acceptance incomplete: inspect semantic outcomes')
 
 

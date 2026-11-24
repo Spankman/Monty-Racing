@@ -77,7 +77,7 @@ def freshness(record, now=None):
     now = now or utcnow()
     try:
         age = (now-timestamp(record['captured_at'])).total_seconds()
-        if age < 0 or age > MAX_AGE_SECONDS:
+        if age < 0 or age >= MAX_AGE_SECONDS:
             return 'STALE — REQUEST A FRESH RUN'
         if timestamp(record['scheduled_start']) <= now:
             return 'CLOSED — JUMP TIME REACHED'
@@ -274,7 +274,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
         result['captured_at']=captured.isoformat()
-        if not 0<=(utcnow()-captured).total_seconds()<=MAX_AGE_SECONDS:
+        if not 0<=(utcnow()-captured).total_seconds()<MAX_AGE_SECONDS:
             raise ValueError('Stale or future-dated provider snapshot')
         stage='snapshot_validation'
         single=bool(request.get('meeting'))
@@ -343,7 +343,9 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                         books={r['number']:r.get('_bookmaker') for r in runners}
                         rows=[dict(r,bookmaker=books[r['number']]) for r in rows]
                         if freshness(record)!='FRESH AT CHECK TIME':
-                            raise OutputContractError('race_closed_or_snapshot_expired_during_inference')
+                            record['models'][version]=dict(status='BLOCKED', ordered_selections=[],
+                                no_bet_reasons=['race_closed_or_snapshot_expired_during_inference'])
+                            continue
                         view=selection(rows,version)
                         view['input_evidence']=feature_evidence(runners,*schemas[version])
                         if single:

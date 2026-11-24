@@ -38,6 +38,7 @@ class CommandTests(unittest.TestCase):
         now=ops.utcnow();row=dict(captured_at=now.isoformat(),scheduled_start=(now+timedelta(hours=1)).isoformat())
         self.assertEqual(ops.freshness(row,now),'FRESH AT CHECK TIME')
         self.assertIn('STALE',ops.freshness(row,now+timedelta(minutes=6)))
+        self.assertIn('STALE',ops.freshness(row,now+timedelta(seconds=ops.MAX_AGE_SECONDS)))
         self.assertIn('STALE',ops.freshness(row,now-timedelta(seconds=1)))
         row['scheduled_start']=now.isoformat();self.assertIn('CLOSED',ops.freshness(row,now))
         self.assertIn('UNVERIFIED',ops.freshness({},now))
