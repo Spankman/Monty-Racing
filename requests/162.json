@@ -4,9 +4,9 @@
   "request_id": 162,
   "run_id": "45319786002-1-162",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45319786002",
-  "request_status": "QUEUED",
-  "status": "QUEUED",
-  "updated_at": "2026-11-24T03:29:06.531220+00:00",
+  "request_status": "RUNNING",
+  "status": "RUNNING",
+  "updated_at": "2026-11-24T03:29:08.253182+00:00",
   "request": {
     "command": "RM6 ARARAT 3",
     "version": "V6",
