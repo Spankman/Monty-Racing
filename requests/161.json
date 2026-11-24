@@ -1,12 +1,34 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-24",
-  "request_id": 161,
   "run_id": "45300608566-1-161",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-24/45300608566-1-161/receipt.json",
+  "forecast_path": "runs/2026-11-24/45300608566-1-161/forecast.json",
+  "forecast_sha256": "a8a2a6724e4ea596ae735ad3fafb074d22ad99cf703f84e6a1a86547a1279da8",
+  "generated_at": "2026-11-24T00:52:45.411561+00:00",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45300608566",
-  "request_status": "RUNNING",
-  "status": "RUNNING",
-  "updated_at": "2026-11-24T00:52:30.994106+00:00",
+  "captured_at": "2026-11-24T00:52:34.498006+00:00",
+  "valid_until": "2026-11-24T00:57:34.498006+00:00",
+  "models": {
+    "V6": {
+      "commit": "ec03b59a49ddc0ad30218d1e0a345cf4c4a0fdf1",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 9
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 9
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "5669a8fa868f27ce9be53ea77ca9ed174c4b313119e5416d1ad2e691e5b565d5",
   "request": {
     "command": "RM6PS",
     "version": "V6",
@@ -15,5 +37,7 @@
     "meeting": null,
     "race": null,
     "country": "AU"
-  }
+  },
+  "request_id": 161,
+  "request_status": "COMPLETED"
 }
