@@ -1,0 +1,440 @@
+{
+  "purpose": "Actual branch acceptance, not production activation or iPhone acceptance",
+  "baseline_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+  "live_test_commit": "57af341a8a68afa402e80a5ad2248ba0e159525f",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45508147641",
+  "artifact_id": 14974930827,
+  "artifact_sha256": "90a782a34d1d9367201a7398801a3ccadfa8d09efc2ce1aaa3e2bda7aecfb329",
+  "captured_at": "2026-11-24T23:14:12.641678+00:00",
+  "commands": [
+    {
+      "command": "RM6",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-1",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 25.813,
+      "capture_age_seconds": 25.815264,
+      "forecast_sha256": "5f9b0604bbe16fb8a3f63b19391a529a66bfe8cbbbc88f6f77d901257759243e",
+      "receipt_sha256": "b4d5fd69746291f030b3c87e52cab59ebbd2928e0d420639584b2f9f127057be",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 28,
+        "V7": 28
+      }
+    },
+    {
+      "command": "RM7",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-2",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 25.556,
+      "capture_age_seconds": 51.371246,
+      "forecast_sha256": "df638033eae128862638473f5b8d997adc2dca2a156089f39b10118e02b3ee82",
+      "receipt_sha256": "7782114be9355da392de7a72369c56107c8263d56831f319de2b308f332ca620",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 28,
+        "V7": 28
+      }
+    },
+    {
+      "command": "RM6PS",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-3",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 25.243,
+      "capture_age_seconds": 76.614374,
+      "forecast_sha256": "ac2cd439dda0fd0c51763d7b708f0f6af48288bcd4c3842e82b47c48fe511d4f",
+      "receipt_sha256": "509b5a858d53c90c2c8bb5840b73daf3e652f5ead4b554e5a89ba13ebaf5944c",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 28,
+        "V7": 28
+      }
+    },
+    {
+      "command": "RM7PS",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-4",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 24.926,
+      "capture_age_seconds": 101.540499,
+      "forecast_sha256": "f1fe85af4912f9d08c2eef58399962e78c8c995262c509eee40caba2f4a4af1d",
+      "receipt_sha256": "5e19396ab802b43894f35ca85ccf621cb37d3837713901a76d8165541560218e",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 28,
+        "V7": 28
+      }
+    },
+    {
+      "command": "RM6 Albany 3",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-5",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 1.016,
+      "capture_age_seconds": 102.556083,
+      "forecast_sha256": "263305817b331268ee097c97b6ef16257296d9a936a38f485f7873907e4bcf5f",
+      "receipt_sha256": "ac5e5ac216e8070b2c11b109b927a54b1659777d6672450366f34891cb705204",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 1,
+        "V7": 1
+      }
+    },
+    {
+      "command": "RM7 Albany 3",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-6",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 1.023,
+      "capture_age_seconds": 103.579352,
+      "forecast_sha256": "844dcc5c544cd5e20dcbcede9a7f0c5b1fed6056c175abbf0dbc45d056442797",
+      "receipt_sha256": "2811e8be456a25b116d697b29af7c2293be77970c733b4351c8e0a6a442d07aa",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 1,
+        "V7": 1
+      }
+    },
+    {
+      "command": "RM6PS Albany 3",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-7",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 1.048,
+      "capture_age_seconds": 104.627614,
+      "forecast_sha256": "3f2f86ca891c4c5efbfeb88f242615e9559050486b59f0d4d73b93c6904eea4c",
+      "receipt_sha256": "bf9f08d86a5f07df6f0d0187a04e5f4dc69765e4d10b560010bbfa9aa5f703d7",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 1,
+        "V7": 1
+      }
+    },
+    {
+      "command": "RM7PS Albany 3",
+      "country": "AU",
+      "run_id": "45508147641-diagnostic-8",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 1.039,
+      "capture_age_seconds": 105.666416,
+      "forecast_sha256": "3045b53476e9f9337292c23ce6b396e287014f4604c5ff835b48545aa1f014dd",
+      "receipt_sha256": "e222684c2bafc223f4772dc146a001512760034d5fc2cc0aa90d7e5b5a2b7a09",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 1,
+        "V7": 1
+      }
+    },
+    {
+      "command": "RM6",
+      "country": "NZ",
+      "run_id": "45508147641-diagnostic-9",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 2.832,
+      "capture_age_seconds": 108.498818,
+      "forecast_sha256": "3d30534fdb784d2c9caa6e92cdbff402ea041ddf545ea2c5d20653bb5a5a0c2f",
+      "receipt_sha256": "fe7d95444f418c05f284a5698d88b170c76bf46a24801330a942014df3b3ffb2",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 3,
+        "V7": 3
+      }
+    },
+    {
+      "command": "RM7",
+      "country": "NZ",
+      "run_id": "45508147641-diagnostic-10",
+      "status": "COMPLETED_ASSESSMENTS",
+      "elapsed_seconds": 2.68,
+      "capture_age_seconds": 111.178493,
+      "forecast_sha256": "1902b199b4a0d398f22bd74b4ba5aab79b8b2d032ce455fa34783bba76912141",
+      "receipt_sha256": "557beb57c7d683d6cd04c1082d70539e9047d0a63d4d4efef1852215a8c7ca71",
+      "classifications": {
+        "V6": [
+          "PROVISIONAL"
+        ],
+        "V7": [
+          "RESEARCH ONLY"
+        ]
+      },
+      "scored_races": {
+        "V6": 3,
+        "V7": 3
+      }
+    }
+  ],
+  "original_requests": [
+    {
+      "request_id": 206,
+      "run_id": "45501721490-1-206",
+      "status": "PARTIAL_OR_BLOCKED",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45501721490",
+      "forecast_path": "runs/2026-11-25/45501721490-1-206/forecast.json",
+      "receipt_path": "runs/2026-11-25/45501721490-1-206/receipt.json",
+      "forecast_sha256": "fbdb97103db7b5c2dd04122c90fc8413a7bbfae833a4b60766c043fcf71d770c",
+      "receipt_sha256": "e49221f08dac1a2b935c42ac50b3d5d5628b04389a09af63b23bd559e310cd52",
+      "captured_at": "2026-11-24T22:32:21.845828+00:00",
+      "valid_until": "2026-11-24T22:37:21.845828+00:00"
+    },
+    {
+      "request_id": 207,
+      "run_id": "45502027600-1-207",
+      "status": "PARTIAL_OR_BLOCKED",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45502027600",
+      "forecast_path": "runs/2026-11-25/45502027600-1-207/forecast.json",
+      "receipt_path": "runs/2026-11-25/45502027600-1-207/receipt.json",
+      "forecast_sha256": "43d8c039a0e75b6cd8b4abcc1a66f0705bca41c91e26049a395887d76513dc07",
+      "receipt_sha256": "cb49c5dccc8b98ae086bf002b365294e5d924f09ea955f146ac22ad70edf22ae",
+      "captured_at": "2026-11-24T22:34:06.559952+00:00",
+      "valid_until": "2026-11-24T22:39:06.559952+00:00"
+    },
+    {
+      "request_id": 208,
+      "run_id": "45502341449-1-208",
+      "status": "COMPLETED_NO_BET",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45502341449",
+      "forecast_path": "runs/2026-11-25/45502341449-1-208/forecast.json",
+      "receipt_path": "runs/2026-11-25/45502341449-1-208/receipt.json",
+      "forecast_sha256": "1c45e76322ac9ea7f33c153ba04bc1a8280516129175dc1e14af9ccbb89b20bb",
+      "receipt_sha256": "5a7b48086699c43622a2761929643a35b15698a4516cd933f13d7851c3881a7c",
+      "captured_at": "2026-11-24T22:35:57.396231+00:00",
+      "valid_until": "2026-11-24T22:40:57.396231+00:00"
+    },
+    {
+      "request_id": 209,
+      "run_id": "45502607011-1-209",
+      "status": "COMPLETED_NO_BET",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45502607011",
+      "forecast_path": "runs/2026-11-25/45502607011-1-209/forecast.json",
+      "receipt_path": "runs/2026-11-25/45502607011-1-209/receipt.json",
+      "forecast_sha256": "3ad3b815fc9d0f1699f8fbfdb0152c45cc7db3c137eb750efa7343a0be0cac84",
+      "receipt_sha256": "9873bd7cab89936e0f736363112fc020c29afd1fc89b3a701c35d9f4720d10b8",
+      "captured_at": "2026-11-24T22:37:46.361583+00:00",
+      "valid_until": "2026-11-24T22:42:46.361583+00:00"
+    }
+  ],
+  "read_only_C": {
+    "request_id": 209,
+    "request_status": "COMPLETED",
+    "semantic_outcome": "COMPLETED_NO_BET",
+    "freshness": "EXPIRED",
+    "capture_age_seconds": 1755.478191,
+    "captured_at": "2026-11-24T22:37:46.361583+00:00",
+    "valid_until": "2026-11-24T22:42:46.361583+00:00",
+    "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45502607011",
+    "http_methods": [
+      "GET",
+      "GET",
+      "GET",
+      "GET"
+    ],
+    "has_current_ticket": false
+  },
+  "historical_replay": {
+    "artifact_hashes": 55,
+    "replayed_runners": 17987,
+    "replayed_races": 1787,
+    "maximum_probability_difference": 1.6653345369377348e-16,
+    "refitted": false
+  },
+  "frozen_models": {
+    "V6": {
+      "commit": "57af341a8a68afa402e80a5ad2248ba0e159525f",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 28
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 28
+    }
+  },
+  "valid_until": "2026-11-24T23:19:12.641678+00:00",
+  "provider_snapshot_sha256": "fb5d926a46b83c7b3e0bdd3ca87a8ed59b9cb8d2d5994c9d1fa5bcb26988d68b",
+  "field_form_probe": {
+    "attempted": true,
+    "success": true,
+    "field_identity_matches": true,
+    "data_shape": "dict",
+    "available_schema_counts": {
+      "date": 41,
+      "distance": 35,
+      "runners": 1,
+      "jockey": 42,
+      "trainer": 8,
+      "barrier": 39,
+      "weight": 12,
+      "recent_form": 8,
+      "finish_position": 29,
+      "track_condition": 14,
+      "win_bsp": 32
+    },
+    "historical_feature_compatibility_verified": false,
+    "limitation": "Availability probe only; no historical features or outcomes injected into either frozen model"
+  },
+  "all_receipt_and_forecast_hashes_verified": 10,
+  "shared_capture_count": 1,
+  "coverage": {
+    "provider_inventory": {
+      "pages_fetched": 1,
+      "meetings": [
+        {
+          "meeting": "Albany",
+          "country": "AU",
+          "races": 7
+        },
+        {
+          "meeting": "Geelong",
+          "country": "AU",
+          "races": 8
+        },
+        {
+          "meeting": "Ipswich",
+          "country": "AU",
+          "races": 7
+        },
+        {
+          "meeting": "Launceston",
+          "country": "AU",
+          "races": 8
+        },
+        {
+          "meeting": "Strathalbyn",
+          "country": "AU",
+          "races": 7
+        },
+        {
+          "meeting": "Te Aroha",
+          "country": "NZ",
+          "races": 11
+        },
+        {
+          "meeting": "Wyong",
+          "country": "AU",
+          "races": 7
+        }
+      ],
+      "outside_au_nz_meetings": 32,
+      "provider_condition_observations": 23,
+      "runner_field_availability": {
+        "trainer": 692,
+        "jockey": 687,
+        "weight": 653,
+        "age": 575,
+        "form": 361
+      },
+      "priced_active_runners": 555,
+      "named_selected_price_runners": 555,
+      "unknown_scratching_statuses": 0,
+      "historical_feature_compatibility_verified": false,
+      "limitation": "Presence counts only; form strings, BSP and aggregates are not original V6 residual features"
+    },
+    "provider_meetings": 7,
+    "provider_races": 55,
+    "accepted_races": 31,
+    "scored_both": 28,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [
+      "Albany R1: prohibited race type",
+      "Albany R2: prohibited race type",
+      "Geelong R1: prohibited race type",
+      "Geelong R2: prohibited race type",
+      "Geelong R3: prohibited race type",
+      "Geelong R4: prohibited race type",
+      "Ipswich R1: prohibited race type",
+      "Ipswich R2: prohibited race type",
+      "Ipswich R3: prohibited race type",
+      "Launceston R3: prohibited race type",
+      "Launceston R4: prohibited race type",
+      "Strathalbyn R1: prohibited race type",
+      "Strathalbyn R2: prohibited race type",
+      "Te Aroha R1: prohibited race type",
+      "Te Aroha R2: prohibited race type",
+      "Te Aroha R3: prohibited race type",
+      "Te Aroha R4: prohibited race type",
+      "Te Aroha R5: prohibited race type",
+      "Te Aroha R6: prohibited race type",
+      "Te Aroha R7: prohibited race type",
+      "Te Aroha R8: prohibited race type",
+      "Wyong R2: prohibited race type",
+      "Wyong R3: prohibited race type",
+      "Wyong R4: prohibited race type"
+    ],
+    "jurisdictions_observed": [
+      "AU",
+      "NZ"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "original_manifest_sha256": "99485842dc4d120f9c6f930889d42a6a317cfe9b6db2c6b5799a3e1063948c20"
+}

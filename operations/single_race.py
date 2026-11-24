@@ -54,7 +54,7 @@ def prepare(payload,day,request):
 def annotate(record,version):
     """Keep model outcomes intact and attach the next step, never fake rankings."""
     model=record['models'][version]
-    model['assessment_level']='PROVISIONAL' if model['status']=='SCORED' else 'MODEL RANKINGS UNAVAILABLE'
+    model['assessment_level']=model.get('prediction_classification','PROVISIONAL') if model['status']=='SCORED' else 'MODEL RANKINGS UNAVAILABLE'
     model['model_inference']=model['status']=='SCORED'
     if model['status']=='SCORED':return
     if str(record['assessment_facts'].get('provider_status','')).lower() in CLOSED:
