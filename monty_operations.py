@@ -193,8 +193,11 @@ def selection(rows,version='V6'):
         raise ValueError('Unnormalized race probabilities')
     ranked=sorted(rows,key=lambda r:-r['probability'])
     ladder=price_ladder(ranked,short_price=4.0)
-    # Preserve existing V6's mechanical roughie definition; diagnostic only.
-    roughies=[r for r in ranked if r['odds']>=6 and r['probability']*r['odds']>1] if version=='V6' else [r for r in ranked if r.get('value_watch') and r['odds']>=4 and r['probability']>=.06 and r['probability']*r['odds']>1]
+    # V7's single value-watch marker is separate from the roughie shortlist.
+    min_odds, min_probability = (6, 0) if version == 'V6' else (4, .06)
+    roughies = [r for r in ranked if r['odds'] >= min_odds
+                and r['probability'] >= min_probability
+                and r['probability'] * r['odds'] > 1]
     return dict(ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
                 recommended_bet_type='NO BET',best_bets=[],
                 best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in roughies],

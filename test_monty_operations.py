@@ -49,6 +49,22 @@ class CommandTests(unittest.TestCase):
             self.assertTrue(all(x['bet_type']=='WIN' for x in r['roughies']))
 
 
+    def test_v7_checks_roughie_thresholds_across_the_whole_field(self):
+        runners = [
+            dict(number='1', horse='Highest Edge', odds=3.5, probability=.35, value_watch={'number':'1'}),
+            dict(number='2', horse='Roughie', odds=6., probability=.19),
+            dict(number='3', horse='Too Unlikely', odds=22., probability=.05),
+            dict(number='4', horse='No Edge', odds=5., probability=.20),
+            dict(number='5', horse='Under Minimum Price', odds=3., probability=.21),
+        ]
+        result = ops.selection(runners, 'V7')
+        self.assertEqual(result['best_chance']['number'], '1')
+        self.assertEqual([r['number'] for r in result['roughies']], ['2'])
+        self.assertEqual(result['roughies'][0]['bet_type'], 'WIN')
+        self.assertEqual(result['official_classification'], 'NO BET')
+        self.assertFalse(result['betting_authorised'])
+
+
 class RunTests(unittest.TestCase):
     def setUp(self):
         self.temp=TemporaryDirectory();self.addCleanup(self.temp.cleanup)
