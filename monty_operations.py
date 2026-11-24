@@ -193,8 +193,11 @@ def selection(rows,version='V6'):
         raise ValueError('Unnormalized race probabilities')
     ranked=sorted(rows,key=lambda r:-r['probability'])
     ladder=price_ladder(ranked,short_price=4.0)
-    # Preserve existing V6's mechanical roughie definition; diagnostic only.
-    roughies=[r for r in ranked if r['odds']>=6 and r['probability']*r['odds']>1] if version=='V6' else [r for r in ranked if r.get('value_watch') and r['odds']>=4 and r['probability']>=.06 and r['probability']*r['odds']>1]
+    # V7's single value-watch marker is separate from the roughie shortlist.
+    min_odds, min_probability = (6, 0) if version == 'V6' else (4, .06)
+    roughies = [r for r in ranked if r['odds'] >= min_odds
+                and r['probability'] >= min_probability
+                and r['probability'] * r['odds'] > 1]
     return dict(ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
                 recommended_bet_type='NO BET',best_bets=[],
                 best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in roughies],
@@ -293,7 +296,9 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             if not single and len(runners)<3:reasons.append('common_V7_minimum_three_runners_not_met')
             record['data_completeness']=dict(active_runners=facts['active_runners'] if single else len(runners),form_history_verified=False)
             blocked_by=['race_already_due','jump_time_unverified','complete_market_field_required_by_frozen_models']
-            if not single:blocked_by+=['named_bookmaker_fixed_win_not_available_for_entire_field','common_V7_minimum_three_runners_not_met']
+            # A missing TAB attribution is an official evidence gap, not a
+            # missing market input. Complete provider prices support research.
+            if not single:blocked_by+=['common_V7_minimum_three_runners_not_met']
             if not any(x in reasons for x in blocked_by):
                 private=output/'private'/str(len(result['races']))
                 common=private/'snapshot.json'
@@ -301,7 +306,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 record['shared_model_input_sha256']=sha(common)
                 for version in ['V6','V7']:
                     try:
-                        if single and version=='V7':
+                        if version=='V7':
                             v7_gap='V7_minimum_three_runners_not_met' if len(runners)<3 else 'V7_requires_consistent_price_provenance' if len({r['_price_source'] for r in runners})!=1 else None
                             if v7_gap:
                                 record['models'][version]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons+[v7_gap],betting_authorised=False)

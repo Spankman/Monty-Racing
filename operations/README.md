@@ -144,8 +144,11 @@ forecast files are immutable.
 
 The runner is not an independent TAB verifier. Coverage includes observed AU/NZ
 meetings and provider skips, with `complete_au_nz_coverage_verified=false`.
-Unknown country, ambiguous identities, due/missing jump time, unnamed/mixed price
-sources and common fields below three runners are blocked. No assertion of NZ
+Unknown country, ambiguous identities, due/missing jump time and incomplete
+priced fields are blocked. Complete provider fixed-win prices without TAB
+attribution permit provisional daily and single-race scoring. Mixed quote
+provenance still blocks V7, and the daily minimum of three runners is retained.
+Missing TAB attribution remains an official NO BET reason. No assertion of NZ
 model validation is made. Unknown inputs use only saved imputation.
 
 Only derived forecast selections, requested scratching metadata, completeness
@@ -196,7 +199,8 @@ provider quotes may support provisional inference without independent TAB
 attribution. Missing prices/identities/scratchings and V7's original minimum-
 field/consistent-provenance restrictions remain genuine model limitations; they
 trigger public form research rather than a falsely labelled Monty prediction.
-Technical failures stay visible. Official NO BET and full-day rules are unchanged.
+Technical failures stay visible. Official NO BET and race-type rules are unchanged.
+The independent form fallback continues to apply to single-race requests only.
 
 Only selected factual evidence is included in the handoff: known runner identity,
 observed quote/source, scratching flags and available basic race facts. No raw
