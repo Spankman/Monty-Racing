@@ -30,5 +30,7 @@ class IndependentVerificationTests(unittest.TestCase):
         stale = dict(authority, observed_at=now-timedelta(minutes=5))
         self.assertFalse(check(stale, operator)['race_verified'])
         self.assertFalse(check(dict(authority, status='abandoned'), operator)['race_verified'])
-        self.assertFalse(check(authority, dict(operator, lineage='Krok'))['fixed_win_verified'])
+        same_feed = check(authority, dict(operator, lineage='Krok'))
+        self.assertTrue(same_feed['race_verified'])
+        self.assertFalse(same_feed['fixed_win_verified'])
         self.assertFalse(check(dict(authority, condition=None), operator)['race_verified'])

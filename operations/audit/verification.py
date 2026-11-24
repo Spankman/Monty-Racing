@@ -28,14 +28,15 @@ def field(rows):
 
 def reconcile(provider, authority, operator, *, decision_at, max_age: timedelta):
     """Return mismatches and separate factual and price attestations."""
-    inputs = (provider, authority, operator)
+    def fresh(row):
+        return row['lineage'] and timedelta(0) <= decision_at-row['observed_at'] < max_age
+
     mismatches = []
-    if provider['lineage'] == authority['lineage'] or provider['lineage'] == operator['lineage']:
+    if provider['lineage'] == authority['lineage']:
         mismatches.append('independent_source_lineage_missing')
-    if any(not row['lineage'] or not timedelta(0) <= decision_at-row['observed_at'] < max_age
-           for row in inputs):
+    if not fresh(provider) or not fresh(authority):
         mismatches.append('source_observation_unavailable_or_stale')
-    if any(row['race_key'] != provider['race_key'] for row in inputs):
+    if authority['race_key'] != provider['race_key']:
         mismatches.append('race_identity_mismatch')
     for key in ('status', 'distance_m', 'condition', 'surface', 'scheduled_start'):
         if provider[key] is None or provider[key] != authority[key]:
@@ -48,16 +49,22 @@ def reconcile(provider, authority, operator, *, decision_at, max_age: timedelta)
         mismatches.append('race_not_open')
     try:
         declared = field(authority['runners'])
-        if field(provider['runners']) != declared or field(operator['runners']) != declared:
+        if field(provider['runners']) != declared:
             mismatches.append('field_or_scratching_mismatch')
     except (TypeError, ValueError):
         declared = {}
         mismatches.append('invalid_declared_field')
     race_ok = not mismatches
+    if provider['lineage'] == operator['lineage'] or not fresh(operator):
+        mismatches.append('independent_operator_observation_unavailable_or_stale')
+    if operator['race_key'] != provider['race_key']:
+        mismatches.append('operator_race_identity_mismatch')
     if operator['market'] != 'fixed_win' or not operator['bookmaker']:
         mismatches.append('fixed_win_operator_unverified')
     active = {number for number, (_, scratched) in declared.items() if not scratched}
     try:
+        if field(operator['runners']) != declared:
+            raise ValueError
         for row in (provider, operator):
             if set(row['quotes']) != active or not active:
                 raise ValueError

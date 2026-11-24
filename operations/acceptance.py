@@ -37,7 +37,7 @@ def probe_form(payload,target,key):
         observed={(str(r.get('tab_number')),str(r.get('name','')).strip().casefold()) for r in field.get('runners',[])} if isinstance(field,dict) else set()
         identity_verified=bool(expected and observed==expected and str(field.get('date',''))[:10]==str(source_meeting['date'])[:10] and str(field.get('venue','')).casefold()==target['meeting'].casefold()
                                and str(field.get('race_number'))==str(target['race'])
-                               and len(field.get('runners',[]))==len(observed)==len(race.get('runners',[]))) if isinstance(field,dict) else False
+                               and len(field.get('runners',[]))==len({n for n,_ in observed})==len(race.get('runners',[]))) if isinstance(field,dict) else False
         counts=Counter()
         def walk(value):
             if isinstance(value,dict):
