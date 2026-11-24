@@ -114,8 +114,8 @@ def work_items(mode, issue, now, run_tag):
         if primary is not None:
             yield number, primary
 
-    # GitHub retains only one pending job per concurrency group. Even when the
-    # event request publishes first, drain older requests in the same workflow.
+    # Drain the backlog after publishing the event request. This shares fresh
+    # captures for matching requests and recovers missed triggers.
     with timed('queue_discovery', run_tag):
         backlog = sorted(((n, req) for n, req in requests() if primary is None or n != number),
                          key=lambda item: (number is not None and item[0] != number, item[0]))

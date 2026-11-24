@@ -329,6 +329,35 @@ class ConnectorClientTests(unittest.TestCase):
         self.assertNotIn('ticket', response)
         self.enqueue.assert_not_called()
 
+    def test_wait_reads_the_same_issue_through_publication(self):
+        self.save('requests/200.json', 'done', self.capture)
+        saved = self.files['requests/200.json']
+        request = ops.command('RM7PS', self.day)
+        states = iter([None, {'request_status': 'RUNNING', 'run_id': '123-1-200'}, saved])
+        with (patch.object(self.transport, 'read', side_effect=lambda path: next(states)
+                           if path == 'requests/200.json' else self.files.get(path)) as read,
+              patch.object(self.client, 'utcnow', return_value=self.capture),
+              patch.object(self.client, 'sleep')):
+            result = self.client.wait_for_request(200, request)
+        self.assertEqual(result['request_status'], 'COMPLETED')
+        self.assertEqual(result['view']['version'], 'V7')
+        self.assertEqual(sum(call.args == ('requests/200.json',) for call in read.call_args_list), 3)
+        self.enqueue.assert_not_called()
+
+    def test_wait_reports_unacknowledged_issue_and_hands_off_exact_race(self):
+        request = ops.command('RM6PS Ballina 1', self.day)
+        result = self.client.wait_for_request(200, request, timeout=0)
+        self.assertEqual(result['delivery_status'], 'WORKER_ACKNOWLEDGEMENT_TIMEOUT')
+        self.assertEqual(result['form_assessment_requests'][0]['target']['meeting'], 'Ballina')
+        self.assertEqual(result['request_status'], 'QUEUED')
+        self.enqueue.assert_not_called()
+
+    def test_published_failure_without_receipt_still_requests_form(self):
+        self.files['requests/200.json'] = dict(status='FAILED', blockers=['publication_failed'])
+        result = self.client.handle('RM7PS Ballina 1', request_id=200, now=self.capture)
+        self.assertEqual(result['form_assessment_requests'][0]['reasons'], ['publication_failed'])
+        self.enqueue.assert_not_called()
+
     def test_corrupt_receipt_prevents_display(self):
         self.save('requests/200.json', 'saved', self.capture)
         self.files['saved/receipt.json']['forecast_sha256'] = 'tampered'

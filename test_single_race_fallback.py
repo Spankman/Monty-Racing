@@ -21,11 +21,41 @@ class FallbackTests(unittest.TestCase):
         for r in self.payload['data'][0]['races'][0]['runners']:
             r.update(fixed_win=r['odds'][0]['win'],odds=[])
     def view(self,f,version='V6',**kwargs):return ops.projection(f,dict(version=version,view='provisional'),**kwargs)
-    def retrieve(self,f):
+    def retrieve(self,f,now=None):
         p=self.root/'single/public';raw=(p/'forecast.json').read_bytes();receipt=json.loads((p/'receipt.json').read_text())
         index=dict(run_id='single',status=f['status'],forecast_path='forecast',receipt_path='receipt',forecast_sha256=ops.sha(p/'forecast.json'))
         with patch.object(transport,'read_bytes',return_value=raw),patch.object(transport,'read',return_value=receipt):
-            return client.retrieve(index,100,ops.command('RM6 Test 1',self.day),self.now)
+            return client.retrieve(index,100,ops.command('RM6 Test 1',self.day),now or self.now)
+
+    def test_every_single_command_scores_restricted_class_while_daily_filters_it(self):
+        from krok_adapter import IncompleteFields
+        for name, race_class in [('RM6', 'Maiden'), ('RM7', '2YO'), ('RM6PS', 'Hurdle'), ('RM7PS', 'Steeplechase')]:
+            with self.subTest(command=name):
+                self.payload['data'][0]['races'][0]['class'] = race_class
+                with self.assertRaises(IncompleteFields):
+                    ops.normalized_snapshot(self.payload, self.day)
+                request = ops.command(name + ' Test 1', self.day)
+                f = ops.execute(self.day, self.root / name, self.v7, run_id=name, payload=self.payload,
+                                captured=self.now, request=request, fixture=True, scorer=self.scorer)
+                result = ops.projection(f, request)['races'][0]['result']
+                self.assertEqual(result['status'], 'SCORED')
+                self.assertTrue(result['ranked_runners'])
+                self.assertEqual(result['official_classification'], 'NO BET')
+
+    def test_expired_single_preserves_only_verified_prejump_name_rankings_in_archive(self):
+        f = self.single()
+        result = self.retrieve(f, now=self.now + timedelta(minutes=6))
+        self.assertNotIn('ticket', result)
+        archived = result['archived_assessments'][0]
+        self.assertEqual(set(archived['rankings'][0]), {'number', 'horse'})
+        self.assertIn('HISTORICAL', archived['label'])
+
+    def test_unrelated_duplicate_field_does_not_block_target(self):
+        race = self.payload['data'][0]['races'][0]
+        self.payload['data'][0]['races'].extend([dict(race, number=2), dict(race, number=2)])
+        f = self.single()
+        self.assertEqual(f['coverage']['provider_races'], 1)
+        self.assertEqual(f['coverage']['scored_both'], 1)
     def test_complete_unattributed_quotes_score_both_provisionally(self):
         self.unattribute();f=self.single()
         for v in ['V6','V7']:
