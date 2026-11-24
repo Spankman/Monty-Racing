@@ -131,12 +131,12 @@ def work_items(mode, issue, now, run_tag):
     if number is not None:
         try:
             with timed('event_issue_lookup', f'{run_tag}-{number}'):
-                primary = request_for_issue(number)
+                primary = transport.retry(lambda: request_for_issue(number))
             if primary is None and issue_delivery.enabled():
                 url = f'https://github.com/{transport.REPO}/actions/runs/{os.environ["GITHUB_RUN_ID"]}'
                 issue_delivery.report(number, 'terminal',
-                    f'**Monty FAILED — request invalid or closed.** Use RM6, RM7, RM6PS or RM7PS '
-                    f'with optional track/race and a JSON date/country. [Workflow]({url})')
+                    f'**Monty FAILED — request invalid or closed.** Put RM6, RM7, RM6PS, RM7PS '
+                    f'or a track and race number in the title. [Workflow]({url})')
         except (RuntimeError, OSError, ValueError, subprocess.SubprocessError):
             # Fall back to normal discovery if the direct read was unavailable.
             pass
@@ -211,9 +211,20 @@ def main():
                         raise RuntimeError('publication_failed') from None
 
             source = completed.get(scope(req))
-            if number is not None and source and source.get('request_status') == 'COMPLETED':
-                cached = retrieve(source, req=req)
-                if cached.get('source_mode') == 'LIVE' and ('view' in cached or 'form_assessment_requests' in cached):
+            if number is not None and issue_output and not source:
+                try:
+                    source = transport.recent_scope_index(req, number, utcnow())
+                except issue_delivery.DELIVERY_ERRORS:
+                    pass  # A duplicate lookup failure must not prevent a fresh execution.
+            if (number is not None and source and source.get('request_status') == 'COMPLETED'
+                    and (not issue_output or transport.reusable(source, req, utcnow()))):
+                try:
+                    cached = transport.retry(lambda: retrieve(source, req=req)) if issue_output else retrieve(source, req=req)
+                except issue_delivery.DELIVERY_ERRORS:
+                    if not issue_output:
+                        raise
+                    cached = {}
+                if cached.get('source_mode') == 'LIVE' and 'view' in cached:
                     reused = dict(source, request_id=number, request=req, reused_from_request=source.get('request_id'))
                     if issue_output:
                         body = issue_delivery.archived_result(req, reused)

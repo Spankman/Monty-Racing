@@ -99,7 +99,7 @@ class FallbackTests(unittest.TestCase):
             return rows
         f=self.single(scorer=two);a=f['races'][0]['models']
         self.assertEqual(a['V6']['status'],'SCORED');self.assertEqual(a['V7']['status'],'BLOCKED')
-        self.assertEqual(a['V7']['assessment_level'],'FORM ASSESSMENT REQUIRED')
+        self.assertEqual(a['V7']['assessment_level'],'MODEL RANKINGS UNAVAILABLE')
         self.assertEqual([v for v,_ in self.calls],['V6'])
     def test_mixed_provenance_keeps_original_v7_contract(self):
         r=self.payload['data'][0]['races'][0]['runners'][0];r.update(odds=[],fixed_win=3)

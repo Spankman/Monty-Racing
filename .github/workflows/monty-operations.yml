@@ -27,32 +27,22 @@ permissions:
 jobs:
   acknowledge:
     if: >-
-      github.event_name == 'issues' &&
-      startsWith(github.event.issue.title, 'Monty command: ') && github.event.issue.user.login == 'Spankman'
+      github.event_name == 'issues' && github.event.issue.user.login == 'Spankman'
     runs-on: ubuntu-latest
     timeout-minutes: 1
+    outputs:
+      route: ${{ steps.ingress.outputs.route }}
     steps:
+      - uses: actions/checkout@v4
       - name: Acknowledge ChatGPT submission
+        id: ingress
         env:
           GH_TOKEN: ${{ github.token }}
-          MONTY_ISSUE: ${{ github.event.issue.number }}
-        run: |
-          endpoint="repos/$GITHUB_REPOSITORY/issues/$MONTY_ISSUE/comments"
-          marker="<!-- monty-request:$MONTY_ISSUE:ack -->"
-          body="$marker
-          **Monty QUEUED** · Request #$MONTY_ISSUE accepted.
-          [Workflow]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID).
-          The result will appear on this issue. Check after two minutes if delivery is pending."
-          for delay in 0 1 2; do
-            sleep "$delay"
-            if timeout 5s gh api "$endpoint?per_page=100" --jq '.[] | select(.user.login == "github-actions[bot]") | .body' | grep -Fx "$marker" >/dev/null; then exit 0; fi
-            if timeout 5s gh api "$endpoint" --method POST -f body="$body" --silent; then exit 0; fi
-          done
-          exit 1
+        run: python3 operations/ingress.py
   operate:
+    needs: acknowledge
     if: >-
-      github.event_name != 'issues' ||
-      (startsWith(github.event.issue.title, 'Monty command: ') && github.event.issue.user.login == 'Spankman')
+      always() && (github.event_name != 'issues' || needs.acknowledge.outputs.route == 'true')
     concurrency:
       group: monty-operations-queue
       queue: max
@@ -116,8 +106,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
   report_failure:
-    needs: operate
-    if: always() && github.event_name == 'issues' && (needs.operate.result == 'failure' || needs.operate.result == 'cancelled')
+    needs: [operate, acknowledge]
+    if: always() && github.event_name == 'issues' && (needs.operate.result == 'failure' || needs.operate.result == 'cancelled' || needs.acknowledge.result == 'failure')
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:

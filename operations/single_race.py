@@ -54,7 +54,7 @@ def prepare(payload,day,request):
 def annotate(record,version):
     """Keep model outcomes intact and attach the next step, never fake rankings."""
     model=record['models'][version]
-    model['assessment_level']='PROVISIONAL' if model['status']=='SCORED' else 'FORM ASSESSMENT REQUIRED'
+    model['assessment_level']='PROVISIONAL' if model['status']=='SCORED' else 'MODEL RANKINGS UNAVAILABLE'
     model['model_inference']=model['status']=='SCORED'
     if model['status']=='SCORED':return
     if str(record['assessment_facts'].get('provider_status','')).lower() in CLOSED:
@@ -72,10 +72,7 @@ def research_request(request,reasons,status='UNAVAILABLE',facts=None):
         model_version_requested=request['version'],model_inference=False,model_status=status,
         target={k:request.get(k) for k in ['date','meeting','race','country']},reasons=reasons,
         facts=facts,required_research=RESEARCH,requires_fresh_public_sources=True,
-        instruction='Automatically research and assess this exact race using reliable accessible sources. '
-                    'Do not ask for a further command. Cite sources and times. Separate most-likely winner '
-                    'from value. Rank supported runners even without odds; never invent quotes, form or probabilities. '
-                    'If evidence remains insufficient or the race is closed, explain why no meaningful selection is possible.')
+        instruction='Report the model status and blocker. No Monty selection can be given without genuine inference.')
 
 
 def handoffs(view):

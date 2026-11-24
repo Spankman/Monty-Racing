@@ -148,7 +148,7 @@ def with_workflow_status(result, req=None, now=None):
 
 def scope(req):
     # Each execution already computes both frozen versions and all views.
-    return (req['date'], (req.get('meeting') or '').casefold(), req.get('race'), req.get('country'))
+    return (req['date'], (req.get('meeting') or '').casefold(), req.get('race'), req.get('country') or 'AU')
 
 
 def issue_delivery_status(result, now):

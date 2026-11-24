@@ -5,7 +5,6 @@ strict JSON parameters, never instructions or executable shell text.
 """
 import argparse
 import base64
-from datetime import datetime
 import json
 import os
 from pathlib import Path
@@ -15,7 +14,7 @@ import sys
 from time import sleep
 from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from monty_operations import command
+from monty_operations import command, timestamp
 REPO='Spankman/Monty-Racing'
 BRANCH=os.environ.get('OPERATIONS_RESULTS_BRANCH','monty-operations-results')
 PREFIX='Monty command: '
@@ -80,21 +79,57 @@ def request_state(index):
     return index.get('request_status') or ('FAILED' if index['status'] == 'FAILED' else 'COMPLETED')
 
 
+def command_title(title):
+    return re.sub(r'^monty command\s*:\s*', '', title.strip(), flags=re.I)
+
+
+def addressed_to_monty(issue):
+    if 'pull_request' in issue or (issue.get('user') or {}).get('login') != 'Spankman':
+        return False
+    title = (issue.get('title') or '').strip()
+    if re.match(r'^(?:monty command\s*:|RM(?:V)?\d|(?:please\s+)?run\s+monty\b)', title, re.I):
+        return True
+    try:
+        return command(title).get('meeting') is not None
+    except ValueError:
+        return False
+
+
+def validated_request(issue):
+    title = command_title(issue.get('title') or '')
+    body = (issue.get('body') or '').strip()
+    params = {}
+    if body.startswith(('{', '[')):
+        try:
+            params = json.loads(body)
+        except ValueError:
+            raise ValueError('Invalid JSON options. Leave the body empty for today in Australia.') from None
+        if not isinstance(params, dict) or set(params) - {'date', 'country'}:
+            raise ValueError('Only date and country are valid JSON options.')
+        if any(not isinstance(v, str) or not v.strip() for v in params.values()):
+            raise ValueError('Date and country must be nonempty strings.')
+    if 'date' not in params:
+        params['date'] = timestamp(issue['created_at']).astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()
+    params['country'] = params.get('country', 'AU').upper()
+    req = command(title, **params)
+    if req['view'] == 'status':
+        raise ValueError('C reads the originating issue. It does not start a run.')
+    if body and not body.startswith(('{', '[')):
+        try:
+            redundant = command(command_title(body), **params)
+        except ValueError:
+            # The title owns the command. Ordinary body notes are inert.
+            return req
+        if redundant['command'] != req['command']:
+            raise ValueError('Title and body specify different commands. Put the request in the title.')
+    return req
+
+
 def parse_request(issue):
-    title = issue.get('title') or ''
-    if ('pull_request' in issue or (issue.get('user') or {}).get('login') != 'Spankman'
-            or not title.startswith(PREFIX)):
+    if not addressed_to_monty(issue):
         return None
     try:
-        params = json.loads(issue.get('body') or '{}')
-        if not isinstance(params, dict) or set(params) - {'date', 'country'}:
-            return None
-        if not params.get('date'):
-            # Undated requests are tied to the Brisbane date on the original issue.
-            created = datetime.fromisoformat(issue['created_at'].replace('Z', '+00:00'))
-            params['date'] = created.astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()
-        req = command(title[len(PREFIX):], **params)
-        return None if req['view'] == 'status' else req
+        return validated_request(issue)
     except (ValueError, TypeError, KeyError):
         return None
 
@@ -104,6 +139,32 @@ def request_for_issue(number):
     if issue and issue.get('state') == 'open':
         return parse_request(issue)
     return None
+
+
+def recent_scope_index(req, issue, now):
+    # Both engines are run on the same snapshot. A different view can share a
+    # recent result, but the full-day and single-race scopes stay distinct.
+    from datetime import timedelta
+    from operations.client import scope
+    since = (now - timedelta(seconds=90)).isoformat().replace('+00:00', 'Z')
+    rows = api(f'issues?state=open&sort=created&direction=desc&per_page=20&since={since}')
+    for row in rows:
+        if row['number'] == issue:
+            continue
+        other = parse_request(row)
+        if other and scope(other) == scope(req):
+            index = read(f"requests/{row['number']}.json")
+            if index and reusable(index, req, now):
+                return index
+    return None
+
+
+def reusable(index, req, now):
+    captured = index.get('captured_at')
+    return bool(index.get('request_status') == 'COMPLETED' and index.get('source_mode') == 'LIVE'
+                and index.get('forecast_path') and captured
+                and 0 <= (now - timestamp(captured)).total_seconds() <= 90
+                and index.get('models', {}).get(req['version'], {}).get('scored_races', 0) > 0)
 
 
 def requests(*, include_processed=False):

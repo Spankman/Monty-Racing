@@ -46,20 +46,27 @@ def write(path, value):
 
 
 def command(text, date=None, country=None):
-    text=re.sub(r'^RMV([67])PS(?=\s|$)',r'RM\1PS',text.strip(),flags=re.I)
-    if re.fullmatch(r"[A-Za-z][A-Za-z .\x27-]{0,59}\s+R?([1-9]|[1-4][0-9]|50)",text,re.I):
+    text = ' '.join(text.split())
+    text = re.sub(r'^(?:please\s+)?run\s+monty\s+(?:for\s+)?', '', text, flags=re.I)
+    text = re.sub(r'\s+please[.!]?$', '', text, flags=re.I)
+    text = re.sub(r'^RMV([67])PS(?=\s|$)', r'RM\1PS', text, flags=re.I)
+    race_suffix = r'\s+(?:race\s+|R\s*)?([1-9]|[1-4][0-9]|50)'
+    track_name = r"([A-Za-z][A-Za-z .\x27-]{0,59}?)"
+    if re.fullmatch(track_name + race_suffix, text, re.I):
         text='RM6 '+text
-    match = re.fullmatch(r'(RM[67](?:PS)?)(?:\s+([A-Za-z][A-Za-z .\x27-]{0,59})\s+R?([1-9]|[1-4][0-9]|50))?', text.strip(), re.I)
+    match = re.fullmatch(r'(RM[67](?:PS)?)(?:\s+' + track_name + race_suffix + r')?', text, re.I)
     if text.strip().upper() == 'C':
         return dict(command='C', view='status')
     if not match:
         raise ValueError('Use RM6, RM7, RM6PS, RM7PS, RM6 track race, RM7 track race, or C')
     model, track, race = match.groups()
     day = date or utcnow().astimezone(TZ).date().isoformat()
-    datetime.strptime(day, '%Y-%m-%d')
+    if datetime.strptime(day, '%Y-%m-%d').date().isoformat() != day:
+        raise ValueError('Date must be YYYY-MM-DD')
     if country not in (None, 'AU', 'NZ'):
         raise ValueError('country must be AU or NZ')
-    return dict(command=text.strip().upper(), version=model[:3].upper().replace('RM','V'),
+    canonical = model.upper() + (f' {track.upper()} {race}' if track else '')
+    return dict(command=canonical, version=model[:3].upper().replace('RM','V'),
                 view='provisional' if model.upper().endswith('PS') or track else 'shadow' if model.upper() == 'RM7' else 'official',
                 date=day, meeting=track, race=race, country=country)
 
@@ -381,8 +388,7 @@ def ticket(view, *, archived=False, now=None):
             lines.append(result.get('assessment_level','NO CURRENT ASSESSMENT'))
             lines.append('REDUCED CONFIDENCE — missing data disclosed; official NO BET')
         if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
-            lines.append('FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION')
-            lines.append('Continue with current fields/form research automatically; no model rankings generated.')
+            lines.append('No Monty model rankings were generated.')
         if rows:
             lines.append(result['progression_bet_type']+' assessment only — NO BET')
             for i,r in enumerate(rows):
