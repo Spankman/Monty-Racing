@@ -10,12 +10,14 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from monty_operations import command, utcnow
+from operations import issue_delivery, transport
 from operations.failure import failed
 from operations.timing import forward_runner_timings, timed
 from operations.transport import publish, read, record_request, request_for_issue, request_state, requests, write_index
 
 
 RUNNER_TIMEOUT = 1000
+SINGLE_RACE_TIMEOUT = 85
 
 
 def daily_due(now, latest):
@@ -36,7 +38,10 @@ def lifecycle(req, issue, run_id, workflow_url, state, reason=None):
 
 
 def operate(req, issue, run_id, workflow_url, out):
-    if issue is not None:
+    issue_output = issue is not None and issue_delivery.enabled()
+    if issue_output:
+        issue_delivery.report(issue, 'running', f'**Monty RUNNING** · [Workflow]({workflow_url})')
+    elif issue is not None:
         try:
             with timed('running_status_write', run_id):
                 lifecycle(req, issue, run_id, workflow_url, 'RUNNING')
@@ -52,7 +57,8 @@ def operate(req, issue, run_id, workflow_url, out):
     reason = None
     try:
         with timed('runner_total', run_id):
-            run = subprocess.run(args, capture_output=True, text=True, timeout=RUNNER_TIMEOUT)
+            run = subprocess.run(args, capture_output=True, text=True,
+                                 timeout=SINGLE_RACE_TIMEOUT if req.get('meeting') else RUNNER_TIMEOUT)
         forward_runner_timings(run.stderr, run_id)
         if not (public / 'receipt.json').exists() or not (public / 'forecast.json').exists():
             reason = 'runner_startup_failed'
@@ -71,6 +77,24 @@ def operate(req, issue, run_id, workflow_url, out):
             public.rename(out / 'incomplete')
         failed(out, run_id, req['date'], reason)
 
+    if issue_output:
+        forecast, receipt, local = issue_delivery.local_result(req, issue, run_id, workflow_url, public)
+        def publish_once():
+            existing = read(f'requests/{issue}.json')
+            if existing and existing.get('run_id') == run_id and existing.get('forecast_sha256') == local['forecast_sha256']:
+                return existing
+            return publish(public, run_id, req['date'], issue, workflow_url, request=req)
+        try:
+            with timed('result_publication', run_id):
+                index = transport.retry(publish_once, conflicts=True)
+        except issue_delivery.DELIVERY_ERRORS as exc:
+            print(json.dumps(dict(request_id=issue, stage='result_publication', error=type(exc).__name__,
+                                  github_status=getattr(exc, 'status', None))), file=sys.stderr)
+            index = local
+        with timed('issue_result_delivery', run_id):
+            if not issue_delivery.report(issue, 'terminal', issue_delivery.result_body(req, forecast, receipt, index)):
+                raise RuntimeError('issue_result_delivery_failed')
+        return index
     try:
         with timed('result_publication', run_id):
             return publish(public, run_id, req['date'], issue, workflow_url, request=req)
@@ -108,6 +132,11 @@ def work_items(mode, issue, now, run_tag):
         try:
             with timed('event_issue_lookup', f'{run_tag}-{number}'):
                 primary = request_for_issue(number)
+            if primary is None and issue_delivery.enabled():
+                url = f'https://github.com/{transport.REPO}/actions/runs/{os.environ["GITHUB_RUN_ID"]}'
+                issue_delivery.report(number, 'terminal',
+                    f'**Monty FAILED — request invalid or closed.** Use RM6, RM7, RM6PS or RM7PS '
+                    f'with optional track/race and a JSON date/country. [Workflow]({url})')
         except (RuntimeError, OSError, ValueError, subprocess.SubprocessError):
             # Fall back to normal discovery if the direct read was unavailable.
             pass
@@ -146,35 +175,73 @@ def main():
         out = Path('operations_output') / run_id
         try:
             if number is not None:
-                with timed('request_index_read', run_id):
-                    index = read(f'requests/{number}.json')
+                issue_output = issue_delivery.enabled()
+                try:
+                    with timed('request_index_read', run_id):
+                        index = read(f'requests/{number}.json')
+                except issue_delivery.DELIVERY_ERRORS:
+                    if not issue_output:
+                        raise
+                    index = None
                 state = request_state(index)
-                if state == 'RUNNING':
+                if issue_output and state in ('QUEUED', 'RUNNING'):
+                    try:
+                        terminal = transport.retry(lambda: issue_delivery.find(number, 'terminal'))
+                    except issue_delivery.DELIVERY_ERRORS:
+                        terminal = None
+                    if terminal:
+                        continue
+                elif issue_output:
+                    if index.get('forecast_path') and not issue_delivery.find(number, 'terminal'):
+                        if not issue_delivery.report(number, 'terminal', issue_delivery.archived_result(req, index)):
+                            raise RuntimeError('issue_result_delivery_failed')
+                    continue
+                if state == 'RUNNING' and not issue_output:
                     # Global workflow concurrency means the previous worker has ended.
                     lifecycle(req, number, index['run_id'], index['workflow_url'], 'FAILED', 'worker_interrupted')
                     continue
-                if state != 'QUEUED':
+                if not issue_output and state != 'QUEUED':
                     continue
-                try:
-                    with timed('queued_status_write', run_id):
-                        lifecycle(req, number, run_id, workflow_url, 'QUEUED')
-                except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
-                    record_publication_failure(req, number, run_id, workflow_url)
-                    raise RuntimeError('publication_failed') from None
+                if not issue_output:
+                    try:
+                        with timed('queued_status_write', run_id):
+                            lifecycle(req, number, run_id, workflow_url, 'QUEUED')
+                    except (RuntimeError, ValueError, OSError, subprocess.SubprocessError):
+                        record_publication_failure(req, number, run_id, workflow_url)
+                        raise RuntimeError('publication_failed') from None
 
             source = completed.get(scope(req))
             if number is not None and source and source.get('request_status') == 'COMPLETED':
                 cached = retrieve(source, req=req)
                 if cached.get('source_mode') == 'LIVE' and ('view' in cached or 'form_assessment_requests' in cached):
                     reused = dict(source, request_id=number, request=req, reused_from_request=source.get('request_id'))
-                    record_request(reused)
+                    if issue_output:
+                        body = issue_delivery.archived_result(req, reused)
+                        try:
+                            transport.retry(lambda: record_request(reused), conflicts=True)
+                        except issue_delivery.DELIVERY_ERRORS as exc:
+                            print(json.dumps(dict(request_id=number, stage='reuse_index',
+                                                  github_status=getattr(exc, 'status', None))), file=sys.stderr)
+                        if not issue_delivery.report(number, 'terminal', body):
+                            raise RuntimeError('issue_result_delivery_failed')
+                    else:
+                        record_request(reused)
                     print(json.dumps(reused))
                     continue
             result = operate(req, number, run_id, workflow_url, out)
             completed[scope(req)] = result
             print(json.dumps(result))
-        except RuntimeError as exc:
-            if str(exc) != 'publication_failed':
+        except issue_delivery.DELIVERY_ERRORS as exc:
+            if number is not None and issue_delivery.enabled():
+                try:
+                    saved = read(f'requests/{number}.json')
+                    body = issue_delivery.archived_result(req, saved) if saved and saved.get('forecast_path') else None
+                except issue_delivery.DELIVERY_ERRORS:
+                    body = None
+                issue_delivery.report(number, 'terminal', body or
+                    f'**Monty FAILED** · Worker or issue delivery interrupted ({type(exc).__name__}). '
+                    f'[Workflow]({workflow_url}). Check any verified result under the same request before retrying.')
+            elif str(exc) != 'publication_failed':
                 raise
             publication_failed = True
             print(json.dumps(dict(request_id=number, run_id=run_id, workflow_url=workflow_url,

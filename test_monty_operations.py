@@ -3,6 +3,7 @@ from datetime import timedelta
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
@@ -216,6 +217,40 @@ class SchedulerTests(unittest.TestCase):
         self.assertTrue(daily_due(datetime(2026,11,23,8,20),None))
         self.assertFalse(daily_due(datetime(2026,11,23,8,20),{'status':'FAILED'}))
 
+
+
+class IssueDeliveryTests(unittest.TestCase):
+    def test_issue_result_survives_results_branch_denial(self):
+        from operations import issue_delivery, worker, transport
+        from operations.failure import failed
+        with TemporaryDirectory() as root:
+            out = Path(root) / 'attempt'
+            req = ops.command('RM6 Ballina 1', '2026-11-24')
+            def run(*args, **kwargs):
+                failed(out, '123-1-200', req['date'], 'test_missing_provider')
+                return subprocess.CompletedProcess(args, 1, stderr='')
+            with (patch.object(issue_delivery, 'enabled', return_value=True),
+                  patch.object(issue_delivery, 'report', return_value={'id': 20}) as report,
+                  patch.object(worker, 'read', return_value=None),
+                  patch.object(worker, 'publish', side_effect=transport.GitHubError(403)),
+                  patch.object(worker, 'lifecycle') as lifecycle,
+                  patch.object(worker.subprocess, 'run', side_effect=run)):
+                result = worker.operate(req, 200, '123-1-200', 'workflow', out)
+            lifecycle.assert_not_called()
+            self.assertEqual(result['request_status'], 'FAILED')
+            self.assertEqual([call.args[1] for call in report.call_args_list], ['running', 'terminal'])
+            self.assertIn('test_missing_provider', report.call_args.args[2])
+            self.assertIn('Results-branch publication unavailable', report.call_args.args[2])
+
+    def test_retry_does_not_duplicate_issue_result_after_lost_response(self):
+        from operations import issue_delivery, transport
+        tag = issue_delivery.marker(201, 'terminal')
+        confirmed = {'user': {'login': issue_delivery.BOT}, 'body': tag + '\nA result'}
+        forged = {'user': {'login': 'example'}, 'body': tag}
+        with (patch.object(transport, 'api', side_effect=[[forged], transport.GitHubError(500), [confirmed]]) as api,
+              patch.object(transport, 'sleep')):
+            self.assertEqual(issue_delivery.send(201, 'terminal', 'A result'), confirmed)
+        self.assertEqual(sum(len(call.args) > 1 and call.args[1] == 'POST' for call in api.call_args_list), 1)
 
 
 class ConnectorClientTests(unittest.TestCase):
