@@ -88,6 +88,12 @@ TAB quote as independent TAB field verification. No new evidence provider or
 blackbook record is invented. Existing results/settlement code remains unchanged;
 only review results supported by actual receipts and verified outcomes.
 
+Full-day provisional assessments also use complete provider fixed-win fields
+without TAB attribution. Disclose their incomplete attribution and research-only
+status. V7 still requires consistent quote provenance. Never invent missing
+prices or treat partial fields as complete. The official view remains NO BET
+where the established verification requirements are unmet.
+
 The approved horse-head logo/legend and an active automated blackbook monitor
 were not identifiable in this checkout. Their presence/activity must not be
 claimed. This repair preserves the existing renderer and does not invent
@@ -104,8 +110,8 @@ activation. No manual workflow dispatch is used for live command acceptance.
 
 ## Automatic single-race hierarchy (all single-race command forms)
 
-This section applies only to individual-race commands. Full-day rules and
-thresholds are unchanged. Do not stop at BLOCKED or an official NO BET when a
+This hierarchy, including independent form fallback, applies only to individual-race
+commands. Do not stop at BLOCKED or an official NO BET when a
 useful assessment can still be made. A legacy single-race BLOCKED/FAILED view
 without assessment_level predates this hierarchy: a selection command should
 request a fresh run once, rather than cache that old gate. C never requeues it.

@@ -105,7 +105,7 @@ class RunTests(unittest.TestCase):
         f=self.run_it(request=ops.command('RM6',self.day,'AU'))
         self.assertEqual(f['races'],[]);self.assertFalse(self.calls)
 
-    def test_same_capture_features_preserved_and_single_provisional_gate_is_separate(self):
+    def test_same_capture_features_and_provisional_price_gate_for_both_scopes(self):
         full=self.run_it()
         single=ops.execute(self.day,self.root/'single',self.v7,run_id='single',payload=self.payload,
                            captured=self.now,request=ops.command('RM6 Test 1',self.day),fixture=True,scorer=self.scorer)
@@ -114,11 +114,18 @@ class RunTests(unittest.TestCase):
             self.assertEqual(single['races'][0]['models'][version]['status'],'SCORED')
         for runner in self.payload['data'][0]['races'][0]['runners']:
             runner.update(fixed_win=runner['odds'][0]['win'],odds=[])
-        for name,req in [('blocked-full',ops.command('RM6',self.day)),('blocked-single',ops.command('RM6 Test 1',self.day))]:
+        for name,req in [('provisional-full',ops.command('RM6PS',self.day)),('provisional-single',ops.command('RM6 Test 1',self.day)),('shadow-full',ops.command('RM7',self.day))]:
             f=ops.execute(self.day,self.root/name,self.v7,run_id=name,payload=self.payload,captured=self.now,
                           request=req,fixture=True,scorer=self.scorer)
-            self.assertTrue(all(r['status']==('BLOCKED' if name=='blocked-full' else 'SCORED') for r in f['races'][0]['models'].values()))
+            self.assertTrue(all(r['status']=='SCORED' for r in f['races'][0]['models'].values()))
             self.assertTrue(all(r['official_classification']=='NO BET' for r in f['races'][0]['models'].values()))
+            for version in ('V6','V7'):
+                result=f['races'][0]['models'][version]
+                self.assertFalse(result['betting_authorised'])
+                self.assertIn('attribution incomplete',result['bookmaker'])
+                self.assertIn('named_bookmaker_fixed_win_not_available_for_entire_field',result['no_bet_reasons'])
+                self.assertFalse(ops.projection(f,dict(version=version,view='official'))['races'][0]['result']['ordered_selections'])
+                self.assertTrue(ops.projection(f,dict(version=version,view='provisional'))['races'][0]['result']['ordered_selections'])
 
     def test_no_silent_model_fallback(self):
         def broken(v,*args):
@@ -147,11 +154,22 @@ class RunTests(unittest.TestCase):
         self.payload['data'][0]['country']=None
         f=self.run_it();self.assertFalse(f['races']);self.assertFalse(self.calls)
 
-    def test_no_named_price_blocks_both(self):
+    def test_mixed_price_sources_block_v7_only(self):
         self.payload['data'][0]['races'][0]['runners'][0]['odds']=[]
         self.payload['data'][0]['races'][0]['runners'][0]['fixed_win']=3
-        f=self.run_it();self.assertFalse(self.calls)
-        self.assertEqual(f['races'][0]['models']['V6']['status'],'BLOCKED')
+        f=self.run_it()
+        self.assertEqual([version for version,_ in self.calls],['V6'])
+        self.assertEqual(f['races'][0]['models']['V6']['status'],'SCORED')
+        v7=f['races'][0]['models']['V7']
+        self.assertEqual(v7['status'],'BLOCKED')
+        self.assertIn('V7_requires_consistent_price_provenance',v7['no_bet_reasons'])
+
+    def test_daily_missing_complete_market_still_blocks_scoring(self):
+        self.payload['data'][0]['races'][0]['runners'][0]['odds']=[]
+        f=self.run_it()
+        self.assertFalse(self.calls)
+        self.assertEqual(f['status'],'FAILED')
+        self.assertFalse(f['races'])
 
     def test_render_escapes_names_and_has_copyable_ticket(self):
         f=self.run_it();v=ops.projection(f,dict(version='V7',view='provisional'))

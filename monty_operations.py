@@ -296,7 +296,9 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             if not single and len(runners)<3:reasons.append('common_V7_minimum_three_runners_not_met')
             record['data_completeness']=dict(active_runners=facts['active_runners'] if single else len(runners),form_history_verified=False)
             blocked_by=['race_already_due','jump_time_unverified','complete_market_field_required_by_frozen_models']
-            if not single:blocked_by+=['named_bookmaker_fixed_win_not_available_for_entire_field','common_V7_minimum_three_runners_not_met']
+            # A missing TAB attribution is an official evidence gap, not a
+            # missing market input. Complete provider prices support research.
+            if not single:blocked_by+=['common_V7_minimum_three_runners_not_met']
             if not any(x in reasons for x in blocked_by):
                 private=output/'private'/str(len(result['races']))
                 common=private/'snapshot.json'
@@ -304,7 +306,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 record['shared_model_input_sha256']=sha(common)
                 for version in ['V6','V7']:
                     try:
-                        if single and version=='V7':
+                        if version=='V7':
                             v7_gap='V7_minimum_three_runners_not_met' if len(runners)<3 else 'V7_requires_consistent_price_provenance' if len({r['_price_source'] for r in runners})!=1 else None
                             if v7_gap:
                                 record['models'][version]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons+[v7_gap],betting_authorised=False)
