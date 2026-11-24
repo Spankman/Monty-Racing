@@ -1,0 +1,320 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45297420933-1-157",
+  "date": "2026-11-24",
+  "view": "official",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Ararat",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T06:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Spinhof"
+        },
+        {
+          "number": "14",
+          "horse": "Noubentekh"
+        },
+        {
+          "number": "12",
+          "horse": "Heidi Dancer"
+        },
+        {
+          "number": "8",
+          "horse": "Master Jack"
+        },
+        {
+          "number": "6",
+          "horse": "Positive Image"
+        }
+      ],
+      "captured_at": "2026-11-24T00:29:00.679627+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-24",
+        "meeting": "Ararat",
+        "race": "8",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "13",
+            "horse": "Spinhof",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 58.5,
+            "jockey": "Ryan Hurdle",
+            "trainer": "Shay Keating"
+          },
+          {
+            "number": "17",
+            "horse": "Padstow Polly",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 54,
+            "age": 9,
+            "jockey": "Sarah Field",
+            "trainer": "Stephen Lenehan"
+          },
+          {
+            "number": "9",
+            "horse": "Real Heir",
+            "scratched": false,
+            "odds": 4.8,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 60.5,
+            "age": 4,
+            "jockey": "Neil Farley",
+            "trainer": "Michael Shepherdson"
+          },
+          {
+            "number": "11",
+            "horse": "Bridgeitall",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Jack Martin",
+            "trainer": "Linc Sullivan"
+          },
+          {
+            "number": "2",
+            "horse": "Just Remember It",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 62.5,
+            "age": 5,
+            "jockey": "Linda Meech",
+            "trainer": "Kane Harris"
+          },
+          {
+            "number": "15",
+            "horse": "Sweet City Dancer",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 54,
+            "age": 5,
+            "jockey": "Dean Yendall",
+            "trainer": "Shaun Muir"
+          },
+          {
+            "number": "10",
+            "horse": "Maya's Ace",
+            "scratched": false,
+            "odds": 3.8,
+            "price_source": "fixed_win",
+            "barrier": 12,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Luke Currie",
+            "trainer": "Ben, Will & Jd Hayes"
+          },
+          {
+            "number": "14",
+            "horse": "Noubentekh",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 18,
+            "weight": 57.5,
+            "jockey": "Kate Walters",
+            "trainer": "Wayne Walters"
+          },
+          {
+            "number": "12",
+            "horse": "Heidi Dancer",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 59,
+            "jockey": "Craig Newitt",
+            "trainer": "Dan F Meagher"
+          },
+          {
+            "number": "8",
+            "horse": "Master Jack",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 60.5,
+            "jockey": "Ryan Houston",
+            "trainer": "Sonny Coombes"
+          },
+          {
+            "number": "7",
+            "horse": "Girls Night",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 60.5,
+            "age": 5,
+            "jockey": "Alana Kelly",
+            "trainer": "Daniel Kelly"
+          },
+          {
+            "number": "3",
+            "horse": "I'm Da Boss",
+            "scratched": false,
+            "odds": 4.8,
+            "price_source": "fixed_win",
+            "barrier": 17,
+            "weight": 62,
+            "age": 6,
+            "jockey": "Brad Rawiller",
+            "trainer": "Vincent Malady"
+          },
+          {
+            "number": "5",
+            "horse": "Invisible Caravan",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 61,
+            "age": 4,
+            "jockey": "Jack Hill",
+            "trainer": "Nathan Hobson"
+          },
+          {
+            "number": "16",
+            "horse": "Raging Monkey",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 55,
+            "age": 11,
+            "jockey": "Nathan Punch",
+            "trainer": "Leslie Robertson"
+          },
+          {
+            "number": "1",
+            "horse": "Helluva Barty",
+            "scratched": false,
+            "odds": 16.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 64,
+            "age": 7,
+            "jockey": "Jade Smith",
+            "trainer": "Luke Oliver"
+          },
+          {
+            "number": "4",
+            "horse": "Harry De Lad",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 61.5,
+            "age": 4,
+            "jockey": "Dean Parker",
+            "trainer": "Tom Dabernig"
+          },
+          {
+            "number": "6",
+            "horse": "Positive Image",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 15,
+            "weight": 61,
+            "jockey": "Declan Bates",
+            "trainer": "Tom Dabernig"
+          },
+          {
+            "number": "18",
+            "horse": "Ask For More",
+            "scratched": false,
+            "odds": 201.0,
+            "price_source": "fixed_win",
+            "barrier": 16,
+            "weight": 54,
+            "age": 9,
+            "jockey": "Christine Puls",
+            "trainer": "Stephen Lenehan"
+          }
+        ],
+        "active_runners": 13,
+        "priced_active_runners": 13,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1100,
+        "track_condition": "GOOD4",
+        "captured_at": "2026-11-24T00:29:00.679627+00:00",
+        "scheduled_start": "2026-11-24T06:00:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "3f88d0d65797f5d13ed8999e3a5f41c577bb4f9bf5d5b705744972eca8c30b78",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-24T00:29:00.996889+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-24T00:29:00.679627+00:00",
+        "model_version": "V6",
+        "model_commit": "75924a40da88746214b12436a525ad30dcf5f24b",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-24T00:29:01.489424+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-24/45297420933-1-157/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-24T00:29:00.679627+00:00",
+  "valid_until": "2026-11-24T00:34:00.679627+00:00",
+  "snapshot_only": true
+}
