@@ -1,0 +1,475 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-24",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45323755783-1-188",
+  "generated_at": "2026-11-24T04:04:32.754784+00:00",
+  "receipt": "runs/2026-11-24/45323755783-1-188/receipt.json",
+  "source_mode": "LIVE",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "races": [
+    {
+      "meeting": "Tamworth",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T04:05:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Alabama Blitz"
+        }
+      ],
+      "captured_at": "2026-11-24T04:04:31.371102+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "7",
+              "horse": "Flamboyant Lad",
+              "odds": 2.3,
+              "probability": 0.3407708147373556,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "4",
+              "horse": "Taipan Legend",
+              "odds": 4.0,
+              "probability": 0.19976495149306883,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "7",
+            "horse": "Flamboyant Lad",
+            "odds": 2.3,
+            "probability": 0.3407708147373556,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "7",
+              "horse": "Flamboyant Lad",
+              "odds": 2.3,
+              "probability": 0.3407708147373556,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "4",
+              "horse": "Taipan Legend",
+              "odds": 4.0,
+              "probability": 0.19976495149306883,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "3",
+              "horse": "Green Run",
+              "odds": 4.4,
+              "probability": 0.18179320988991082,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "6",
+              "horse": "Zamborghini",
+              "odds": 5.5,
+              "probability": 0.14235623394442024,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "1",
+              "horse": "Indifference",
+              "odds": 15.0,
+              "probability": 0.0534062140668027,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "2",
+              "horse": "King Kikau",
+              "odds": 21.0,
+              "probability": 0.03724507352515982,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "Tainui",
+              "odds": 23.0,
+              "probability": 0.03479398454810332,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "9",
+              "horse": "Frenchburg",
+              "odds": 81.0,
+              "probability": 0.009869517795178723,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "7",
+            "horse": "Flamboyant Lad",
+            "odds": 2.3,
+            "probability": 0.3407708147373556,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T04:04:31.888522+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T04:04:31.371102+00:00",
+          "model_version": "V6",
+          "model_commit": "47f7fb4570b5eccd4b93c96d629e052d20fc0e8f",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "7",
+              "horse": "Flamboyant Lad",
+              "odds": 2.3,
+              "probability": 0.3277026266694795,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "4",
+              "horse": "Taipan Legend",
+              "odds": 4.0,
+              "probability": 0.19856829540337814,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "7",
+            "horse": "Flamboyant Lad",
+            "odds": 2.3,
+            "probability": 0.3277026266694795,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "7",
+              "horse": "Flamboyant Lad",
+              "odds": 2.3,
+              "probability": 0.3277026266694795,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "4",
+              "horse": "Taipan Legend",
+              "odds": 4.0,
+              "probability": 0.19856829540337814,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "3",
+              "horse": "Green Run",
+              "odds": 4.4,
+              "probability": 0.1815587019826951,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "6",
+              "horse": "Zamborghini",
+              "odds": 5.5,
+              "probability": 0.1441785443999174,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "1",
+              "horse": "Indifference",
+              "odds": 15.0,
+              "probability": 0.05721851967281009,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "2",
+              "horse": "King Kikau",
+              "odds": 21.0,
+              "probability": 0.04083008040532931,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "Tainui",
+              "odds": 23.0,
+              "probability": 0.03825362987489781,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "9",
+              "horse": "Frenchburg",
+              "odds": 81.0,
+              "probability": 0.011689601591492519,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "7",
+            "horse": "Flamboyant Lad",
+            "odds": 2.3,
+            "probability": 0.3277026266694795,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T04:04:32.754594+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T04:04:31.371102+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        }
+      },
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-24",
+        "meeting": "Tamworth",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "6",
+            "horse": "Zamborghini",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 56.5,
+            "age": 7,
+            "jockey": "Zac Wadick",
+            "trainer": "David Hatch"
+          },
+          {
+            "number": "3",
+            "horse": "Green Run",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 59.5,
+            "age": 7,
+            "jockey": "Aaron Bullock",
+            "trainer": "Dar Lunn"
+          },
+          {
+            "number": "4",
+            "horse": "Taipan Legend",
+            "scratched": false,
+            "odds": 4.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 58.5,
+            "age": 6,
+            "jockey": "Mikayla Weir",
+            "trainer": "Cameron Crockett"
+          },
+          {
+            "number": "9",
+            "horse": "Frenchburg",
+            "scratched": false,
+            "odds": 81.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Grant Buckley",
+            "trainer": "Terry Wicks"
+          },
+          {
+            "number": "8",
+            "horse": "Alabama Blitz",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 55,
+            "age": 5,
+            "jockey": "N.r",
+            "trainer": "Cameron Crockett"
+          },
+          {
+            "number": "2",
+            "horse": "King Kikau",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 61,
+            "age": 8,
+            "jockey": "Gabrielle Johnston",
+            "trainer": "Wayne Wilkes"
+          },
+          {
+            "number": "5",
+            "horse": "Tainui",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 58,
+            "age": 5,
+            "jockey": "Kody Nestor",
+            "trainer": "Geoff O'Brien"
+          },
+          {
+            "number": "1",
+            "horse": "Indifference",
+            "scratched": false,
+            "odds": 15.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 62.5,
+            "age": 8,
+            "jockey": "Braith Nock",
+            "trainer": "Brett & Georgie Cavanough"
+          },
+          {
+            "number": "7",
+            "horse": "Flamboyant Lad",
+            "scratched": false,
+            "odds": 2.3,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Heavelon Van Der Hoven",
+            "trainer": "Liam Ruddy"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1600,
+        "track_condition": "Good3",
+        "captured_at": "2026-11-24T04:04:31.371102+00:00",
+        "scheduled_start": "2026-11-24T04:05:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "c50757f523517d6e04c379dbdcf71e619b66ab0bf8ee61ce589bace13928f0e0"
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 1,
+    "provider_races": 1,
+    "accepted_races": 1,
+    "scored_both": 1,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "40924370c1034f8108aa1ba84ff319b754d742d4b1d4c51232ffdcb3a65b31bc",
+  "captured_at": "2026-11-24T04:04:31.371102+00:00",
+  "valid_until": "2026-11-24T04:09:31.371102+00:00"
+}
