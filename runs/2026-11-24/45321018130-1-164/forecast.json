@@ -1,0 +1,583 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-24",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45321018130-1-164",
+  "generated_at": "2026-11-24T03:40:00.795782+00:00",
+  "receipt": "runs/2026-11-24/45321018130-1-164/receipt.json",
+  "source_mode": "LIVE",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "d2a8981cc40051835374574bd761c20327825c1b",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "races": [
+    {
+      "meeting": "Ararat",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-24T04:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Billy Be Good"
+        },
+        {
+          "number": "4",
+          "horse": "Full Of Knowledge"
+        }
+      ],
+      "captured_at": "2026-11-24T03:39:59.477753+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "2",
+              "horse": "Dream For Free",
+              "odds": 2.8,
+              "probability": 0.2789548209407628,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "12",
+              "horse": "Red Rabbit",
+              "odds": 3.1,
+              "probability": 0.25220864272409943,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "6",
+              "horse": "Pare Brise",
+              "odds": 3.6,
+              "probability": 0.21736019724995473,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "9",
+              "horse": "Wavendon",
+              "odds": 8.5,
+              "probability": 0.09016604121916225,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "FIRST FOUR BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "2",
+            "horse": "Dream For Free",
+            "odds": 2.8,
+            "probability": 0.2789548209407628,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "2",
+              "horse": "Dream For Free",
+              "odds": 2.8,
+              "probability": 0.2789548209407628,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "12",
+              "horse": "Red Rabbit",
+              "odds": 3.1,
+              "probability": 0.25220864272409943,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "6",
+              "horse": "Pare Brise",
+              "odds": 3.6,
+              "probability": 0.21736019724995473,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "9",
+              "horse": "Wavendon",
+              "odds": 8.5,
+              "probability": 0.09016604121916225,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "7",
+              "horse": "Russian Into It",
+              "odds": 11.0,
+              "probability": 0.06970271159910381,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "3",
+              "horse": "Enniscrone",
+              "odds": 12.0,
+              "probability": 0.06506242195532563,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "8",
+              "horse": "Sammie Ellen Boy",
+              "odds": 71.0,
+              "probability": 0.011014755116484783,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "Malbec",
+              "odds": 151.0,
+              "probability": 0.005179944925622777,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "10",
+              "horse": "Isabellas",
+              "odds": 151.0,
+              "probability": 0.0051756426229852,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "11",
+              "horse": "Josie Kate",
+              "odds": 151.0,
+              "probability": 0.005174821646498534,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "2",
+            "horse": "Dream For Free",
+            "odds": 2.8,
+            "probability": 0.2789548209407628,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T03:39:59.994093+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T03:39:59.477753+00:00",
+          "model_version": "V6",
+          "model_commit": "d2a8981cc40051835374574bd761c20327825c1b",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "2",
+              "horse": "Dream For Free",
+              "odds": 2.8,
+              "probability": 0.27098276517628217,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "12",
+              "horse": "Red Rabbit",
+              "odds": 3.1,
+              "probability": 0.24676841282708345,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "6",
+              "horse": "Pare Brise",
+              "odds": 3.6,
+              "probability": 0.214196269909165,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "9",
+              "horse": "Wavendon",
+              "odds": 8.5,
+              "probability": 0.0937295574661268,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "FIRST FOUR BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "2",
+            "horse": "Dream For Free",
+            "odds": 2.8,
+            "probability": 0.27098276517628217,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "2",
+              "horse": "Dream For Free",
+              "odds": 2.8,
+              "probability": 0.27098276517628217,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "12",
+              "horse": "Red Rabbit",
+              "odds": 3.1,
+              "probability": 0.24676841282708345,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "6",
+              "horse": "Pare Brise",
+              "odds": 3.6,
+              "probability": 0.214196269909165,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "9",
+              "horse": "Wavendon",
+              "odds": 8.5,
+              "probability": 0.0937295574661268,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "7",
+              "horse": "Russian Into It",
+              "odds": 11.0,
+              "probability": 0.07349914026687647,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "3",
+              "horse": "Enniscrone",
+              "odds": 12.0,
+              "probability": 0.06887064292134203,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "8",
+              "horse": "Sammie Ellen Boy",
+              "odds": 71.0,
+              "probability": 0.012895167642444368,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "10",
+              "horse": "Isabellas",
+              "odds": 151.0,
+              "probability": 0.00636064893130463,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "5",
+              "horse": "Malbec",
+              "odds": 151.0,
+              "probability": 0.0063557679924174425,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            },
+            {
+              "number": "11",
+              "horse": "Josie Kate",
+              "odds": 151.0,
+              "probability": 0.006341626866957682,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "TAB"
+            }
+          ],
+          "most_likely": {
+            "number": "2",
+            "horse": "Dream For Free",
+            "odds": 2.8,
+            "probability": 0.27098276517628217,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-24T03:40:00.795625+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "TAB (Krok attributed)",
+          "quoted_at": "2026-11-24T03:39:59.477753+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        }
+      },
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-24",
+        "meeting": "Ararat",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Billy Be Good",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Zac Spain",
+            "trainer": "Jamie Edwards"
+          },
+          {
+            "number": "6",
+            "horse": "Pare Brise",
+            "scratched": false,
+            "odds": 3.6,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Jack Hill",
+            "trainer": "Symon Wilde"
+          },
+          {
+            "number": "7",
+            "horse": "Russian Into It",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Craig Newitt",
+            "trainer": "Kane Harris"
+          },
+          {
+            "number": "10",
+            "horse": "Isabellas",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Sarah Robbins",
+            "trainer": "Sarah Robbins"
+          },
+          {
+            "number": "3",
+            "horse": "Enniscrone",
+            "scratched": false,
+            "odds": 12.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Tom Madden",
+            "trainer": "Daryl Cannon"
+          },
+          {
+            "number": "11",
+            "horse": "Josie Kate",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Cian Macredmond",
+            "trainer": "Stephen Lenehan"
+          },
+          {
+            "number": "2",
+            "horse": "Dream For Free",
+            "scratched": false,
+            "odds": 2.8,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Luke Currie",
+            "trainer": "Ben, Will & Jd Hayes"
+          },
+          {
+            "number": "8",
+            "horse": "Sammie Ellen Boy",
+            "scratched": false,
+            "odds": 71.0,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Logan McNeil",
+            "trainer": "Nathan Hobson"
+          },
+          {
+            "number": "5",
+            "horse": "Malbec",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Zac Moore",
+            "trainer": "Stephen Lenehan"
+          },
+          {
+            "number": "9",
+            "horse": "Wavendon",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 59.5,
+            "age": 6,
+            "jockey": "Alana Kelly",
+            "trainer": "Daniel Kelly"
+          },
+          {
+            "number": "12",
+            "horse": "Red Rabbit",
+            "scratched": false,
+            "odds": 3.1,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Sarah Field",
+            "trainer": "Vincent Malady"
+          },
+          {
+            "number": "4",
+            "horse": "Full Of Knowledge",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Liana Wood",
+            "trainer": "Dani Walker"
+          }
+        ],
+        "active_runners": 10,
+        "priced_active_runners": 10,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1100,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-24T03:39:59.477753+00:00",
+        "scheduled_start": "2026-11-24T04:00:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "3c3eb5d2ba12d63cc64618ce8b9dc5ad1d1ac2b1567f35f660b56ab9a15e9ac1"
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 1,
+    "provider_races": 1,
+    "accepted_races": 1,
+    "scored_both": 1,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "29fa219aed8579fc457f068829412040c3be4518536d01500eb146569415e3b3",
+  "captured_at": "2026-11-24T03:39:59.477753+00:00",
+  "valid_until": "2026-11-24T03:44:59.477753+00:00"
+}
