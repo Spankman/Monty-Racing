@@ -73,5 +73,41 @@
       0.000483477001197178
     ]
   },
+  "v7_sparse": {
+    "log_loss": 1.7891686387958097,
+    "brier": 0.77558437555084,
+    "strike": 0.3479886539453326,
+    "proxy_roi": -0.021857336255801992,
+    "proxy_drawdown": 248.37900000000016,
+    "delta_log_loss": 0.0019147693643596275,
+    "paired_day_ci": [
+      0.0009195967903360865,
+      0.0029574029651912095
+    ]
+  },
+  "v7_restored_365d": {
+    "log_loss": 1.7893501727210106,
+    "brier": 0.7756517808126611,
+    "strike": 0.34657039711191334,
+    "proxy_roi": -0.027317625064466246,
+    "proxy_drawdown": 285.9265000000004,
+    "delta_log_loss": 0.002096303289560673,
+    "paired_day_ci": [
+      0.0010726859529489115,
+      0.003182694265293046
+    ]
+  },
+  "v7_restored_vs_sparse": {
+    "log_loss": 1.7893501727210106,
+    "brier": 0.7756517808126611,
+    "strike": 0.34657039711191334,
+    "proxy_roi": -0.027317625064466246,
+    "proxy_drawdown": 285.9265000000004,
+    "delta_log_loss": 0.0001815339252010455,
+    "paired_day_ci": [
+      -7.339925867635159e-05,
+      0.00042618248100662363
+    ]
+  },
   "limitation": "Retrospective AU exchange quote diagnostic. Three trailing-year inputs only. Metadata unavailable. Prior same-day events excluded; no live mapping, book prices, or untouched sample claimed."
 }

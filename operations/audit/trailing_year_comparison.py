@@ -1,7 +1,10 @@
-"""Diagnostic only: frozen V6 on later retained exchange markets, with limited exact history."""
+"""Diagnostic only: frozen V6 and pinned V7 on later retained exchange markets, with limited exact history."""
 from collections import defaultdict,deque
 from pathlib import Path
 import argparse
+import hashlib
+import importlib.util
+import subprocess
 import json
 import sys
 
@@ -16,10 +19,23 @@ from monty.scoring import score_features
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('canonical_months', type=Path)
 parser.add_argument('output', type=Path)
+parser.add_argument('--v7-engine', type=Path, required=True)
 args = parser.parse_args()
 p = ROOT / 'monty_v6'
+v7_root = args.v7_engine.resolve()
+if subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=v7_root, text=True).strip() != 'efc51abb1595ef1eb8417e2d4e0d591f6d3c9378':
+    raise ValueError('Pinned V7 checkout required')
+v7_raw = (v7_root / 'v7/artifacts/fold_3_model.json').read_bytes()
+if hashlib.sha256(v7_raw).hexdigest() != 'c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324':
+    raise ValueError('Pinned V7 model hash mismatch')
+v7_model = json.loads(v7_raw)
+spec = importlib.util.spec_from_file_location('v7_audit_core', v7_root / 'v7/core.py')
+v7_core = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(v7_core)
 m=json.loads((p/'results/frozen_model.json').read_text())
 names=m['input_feature_names']
+if names != v7_model['names']:
+    raise ValueError('V6/V7 feature order differs')
 files=sorted(args.canonical_months.glob('*.canonical.csv.gz'))
 frames=[pd.read_csv(f,dtype={'WIN_MARKET_ID':str,'SELECTION_ID':str}) for f in files]
 d=pd.concat(frames,ignore_index=True)
@@ -64,6 +80,8 @@ assert row==len(eval_rows)
 wins=eval_rows.y.to_numpy()==1
 full=score_features(rich,names,market,race_ids,root=p)
 sparse=score_features(masked,names,market,race_ids,root=p)
+v7_sparse = v7_core.predict(v7_model, masked, market, race_ids)
+v7_full = v7_core.predict(v7_model, rich, market, race_ids)
 days=pd.factorize(eval_rows.loc[wins,'date'],sort=True)[0]
 rng=np.random.default_rng(20261125)
 ix=rng.integers(days.max()+1,size=(4000,days.max()+1))
@@ -84,6 +102,8 @@ result=dict(
     testing_dates=[start,stop], races=int(race_ids.nunique()), runners=len(eval_rows),
     months=sorted(available), market=metrics(market,market), sparse=metrics(sparse,market),
     restored_365d=metrics(full,market), restored_vs_sparse=metrics(full,sparse),
+    v7_sparse=metrics(v7_sparse,market), v7_restored_365d=metrics(v7_full,market),
+    v7_restored_vs_sparse=metrics(v7_full,v7_sparse),
     limitation='Retrospective AU exchange quote diagnostic. Three trailing-year inputs only. Metadata unavailable. Prior same-day events excluded; no live mapping, book prices, or untouched sample claimed.'
 )
 args.output.write_text(json.dumps(result,indent=2)+'\n')
