@@ -1,0 +1,204 @@
+MONTY V6 — PROVISIONAL SELECTION SLIP
+2026-11-25 · Australia/Brisbane
+ARCHIVED SNAPSHOT — check request freshness before use
+NO BET — no qualified wagers
+
+Albany R3
+TRIFECTA BOXED assessment only — NO BET
+**#6 Lady Money Talk — $2.40**
+#4 Hang Glider — $3.00
+#5 Peanut Butter — $5.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Albany R4
+QUINELLA BOXED assessment only — NO BET
+**#7 Storm Away — $2.30**
+#5 Playing Rio — $4.40
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Albany R5
+QUINELLA BOXED assessment only — NO BET
+**#6 Kidding Me — $2.50**
+#3 Here For Cheques — $4.80
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Albany R6
+QUINELLA BOXED assessment only — NO BET
+**#7 Ravin' Ava — $1.95**
+#2 Bondi Express — $6.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Albany R7
+BB assessment only — NO BET
+**#1 Caladan — $4.20**
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Geelong R5
+BB assessment only — NO BET
+**#5 Chocolate Royal — $4.20**
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Geelong R6
+BB assessment only — NO BET
+**#7 Azzacool — $4.10**
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Geelong R7
+TRIFECTA BOXED assessment only — NO BET
+**#12 Layla — $1.75**
+#1 Jackpot Park — $3.60
+#10 Brazenga — $7.25
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Geelong R8
+NO BET: inference_failed_ValueError
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Ipswich R4
+TRIFECTA BOXED assessment only — NO BET
+**#1 Castello Grande — $2.50**
+#3 Cellphone — $3.90
+#7 Lord Protector — $7.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Ipswich R5
+QUINELLA BOXED assessment only — NO BET
+**#14 Saveur — $2.90**
+#13 Ancestral — $4.80
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Ipswich R6
+TRIFECTA BOXED assessment only — NO BET
+**#9 Rolling Home — $3.40**
+#14 Maquisa — $3.90
+#5 Barrelling — $7.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Ipswich R7
+BB assessment only — NO BET
+**#11 Impervious — $4.00**
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Launceston R1
+QUINELLA BOXED assessment only — NO BET
+**#5 Olindah — $2.70**
+#1 Warrior Smile — $4.40
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Launceston R2
+TRIFECTA BOXED assessment only — NO BET
+**#1 Tassie Power — $2.50**
+#5 Oxidize — $2.90
+#3 Get 'em Warrior — $6.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Launceston R5
+QUINELLA BOXED assessment only — NO BET
+**#3 Ozonica — $1.38**
+#4 Taroona — $4.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Launceston R6
+TRIFECTA BOXED assessment only — NO BET
+**#5 Coal River — $2.35**
+#4 Earendel — $3.10
+#7 Go Jeanie — $5.50
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Launceston R7
+QUINELLA BOXED assessment only — NO BET
+**#5 Brave Jet — $2.20**
+#1 Gee Gees Me Boy — $4.60
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Launceston R8
+TRIFECTA BOXED assessment only — NO BET
+**#1 Summit — $1.90**
+#3 Who's In Dev — $2.90
+#4 Judge Jenni — $6.00
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Strathalbyn R3
+TRIFECTA BOXED assessment only — NO BET
+**#2 Starscream — $3.30**
+#6 Chartin — $3.40
+#1 Sandastan — $5.50
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Strathalbyn R4
+TRIFECTA BOXED assessment only — NO BET
+**#1 Ziggy Bama — $3.00**
+#4 Stylish Flipper — $3.50
+#5 Heaven Rocks — $4.80
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Strathalbyn R5
+QUINELLA BOXED assessment only — NO BET
+**#2 Flying Ace — $3.00**
+#5 Fiorente Rules — $5.50
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Strathalbyn R6
+QUINELLA BOXED assessment only — NO BET
+**#11 Nolabell — $2.40**
+#2 Big Mav — $5.50
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Strathalbyn R7
+BB assessment only — NO BET
+**#4 Fashizlemanizle — $5.00**
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified, named_bookmaker_fixed_win_not_available_for_entire_field
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Wyong R1
+BB assessment only — NO BET
+**#8 Powerful Prayer — $4.60**
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Wyong R5
+QUINELLA BOXED assessment only — NO BET
+**#1 Siragusa — $2.00**
+#5 Real Baker — $5.50
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Wyong R6
+QUINELLA BOXED assessment only — NO BET
+**#2 Gravel Road — $1.80**
+#3 Bang On Time — $4.60
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+Wyong R7
+FIRST FOUR BOXED assessment only — NO BET
+**#2 Hy — $2.90**
+#4 Zourrific — $3.00
+#5 Stellaa Lass — $3.10
+#3 Performance — $7.50
+NO BET: independent_fields_scratchings_and_going_unverified, historical_form_incomplete, prospective_value_unverified
+Quote 2026-11-24T22:32:21.845828+00:00 · Historical quote
+
+IN MONTY WE TRUST
