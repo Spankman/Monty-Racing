@@ -40,7 +40,7 @@ class FallbackTests(unittest.TestCase):
                 result = ops.projection(f, request)['races'][0]['result']
                 self.assertEqual(result['status'], 'SCORED')
                 self.assertTrue(result['ranked_runners'])
-                self.assertEqual(result['official_classification'], 'NO BET')
+                self.assertEqual(result['official_classification'], 'DATA BLOCKED')
 
     def test_expired_single_preserves_only_verified_prejump_name_rankings_in_archive(self):
         f = self.single()
@@ -60,7 +60,7 @@ class FallbackTests(unittest.TestCase):
         self.unattribute();f=self.single()
         for v in ['V6','V7']:
             r=f['races'][0]['models'][v]
-            self.assertEqual((r['status'],r['assessment_level'],r['model_inference']),('SCORED','PROVISIONAL',True))
+            self.assertEqual((r['status'],r['assessment_level'],r['model_inference']),('SCORED','RESEARCH ONLY' if v=='V7' else 'PROVISIONAL',True))
             self.assertEqual(r['recommended_bet_type'],'NO BET');self.assertFalse(r['betting_authorised'])
             self.assertEqual(len(r['ranked_runners']),3);self.assertEqual(r['most_likely']['number'],'1')
             self.assertNotIn('TAB',r['bookmaker'])

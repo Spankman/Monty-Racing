@@ -62,7 +62,7 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(result['best_chance']['number'], '1')
         self.assertEqual([r['number'] for r in result['roughies']], ['2'])
         self.assertEqual(result['roughies'][0]['bet_type'], 'WIN')
-        self.assertEqual(result['official_classification'], 'NO BET')
+        self.assertEqual(result['official_classification'], 'DATA BLOCKED')
         self.assertFalse(result['betting_authorised'])
 
 
@@ -89,7 +89,7 @@ class RunTests(unittest.TestCase):
         return ops.execute(self.day,self.root/'output',self.v7,run_id='test',**params)
 
     def test_shared_snapshot_official_provisional_and_integrity(self):
-        f=self.run_it();self.assertEqual(f['status'],'COMPLETED_NO_BET')
+        f=self.run_it();self.assertEqual(f['status'],'COMPLETED_ASSESSMENTS')
         self.assertEqual([c[0] for c in self.calls],['V6','V7']);self.assertEqual(self.calls[0][1],self.calls[1][1])
         p=self.root/'output/public';receipt=json.loads((p/'receipt.json').read_text())
         self.assertEqual(receipt['forecast_sha256'],ops.sha(p/'forecast.json'))
@@ -119,7 +119,7 @@ class RunTests(unittest.TestCase):
             f=ops.execute(self.day,self.root/name,self.v7,run_id=name,payload=self.payload,captured=self.now,
                           request=req,fixture=True,scorer=self.scorer)
             self.assertTrue(all(r['status']=='SCORED' for r in f['races'][0]['models'].values()))
-            self.assertTrue(all(r['official_classification']=='NO BET' for r in f['races'][0]['models'].values()))
+            self.assertTrue(all(r['official_classification']=='DATA BLOCKED' for r in f['races'][0]['models'].values()))
             for version in ('V6','V7'):
                 result=f['races'][0]['models'][version]
                 self.assertFalse(result['betting_authorised'])
@@ -169,7 +169,7 @@ class RunTests(unittest.TestCase):
         self.payload['data'][0]['races'][0]['runners'][0]['odds']=[]
         f=self.run_it()
         self.assertFalse(self.calls)
-        self.assertEqual(f['status'],'FAILED')
+        self.assertEqual(f['status'],'DATA_BLOCKED')
         self.assertFalse(f['races'])
 
     def test_render_escapes_names_and_has_copyable_ticket(self):
