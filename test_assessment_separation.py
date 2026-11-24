@@ -102,3 +102,42 @@ class PriceContractTests(unittest.TestCase):
                              (dict(rows[0],odds=3.0000000000000004),'model_output_price_mismatch')]:
             with self.assertRaises(OutputContractError) as e:validate_output([changed],rows)
             self.assertEqual(e.exception.code,code)
+
+class BookmakerEvidenceTests(unittest.TestCase):
+    def test_attribution_does_not_change_price_selection(self):
+        from krok_adapter import price,named_bookmaker
+        for runner,expected in [
+            ({'fixed_win':3.1,'best_win':3.2,'best_win_bookmaker':'Sportsbet'},None),
+            ({'best_win':3.2,'best_win_bookmaker':'Sportsbet'},'Sportsbet'),
+            ({'fixed_win':3.1,'odds':[{'bookmaker':'Sportsbet','win':3.1}]},'Sportsbet'),
+            ({'fixed_win':3.1,'odds':[{'bookmaker':'Betfair','win':3.1}]},None),
+            ({'fixed_win':3.1,'odds':[{'bookmaker':'Sportsbet','win':3.2}]},None),
+            ({'fixed_win':3.1,'odds':[{'bookmaker':'Sportsbet','bookmaker_type':'exchange','win':3.1}]},None),
+        ]:
+            with self.subTest(runner=runner):
+                selected,origin=price(runner)
+                self.assertEqual(selected,runner.get('fixed_win',runner.get('best_win')))
+                self.assertEqual(named_bookmaker(runner,selected,origin),expected)
+
+class FrozenTraceTests(unittest.TestCase):
+    def test_trace_rejects_changed_reported_probability_without_fitting(self):
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from operations.model_audit import trace
+        with TemporaryDirectory() as td:
+            root=Path(td);engine=root/'v6';(engine/'results').mkdir(parents=True)
+            model=dict(input_feature_names=['log_market_probability','barrier'],
+              numeric_feature_names=['log_market_probability','barrier','log_market_probability_missing','barrier_missing'],
+              imputation_medians=[0,0],mean=[0,0,0,0],scale=[1,1,1,1],selected='linear',
+              models={'linear':{'kind':'linear','weights':[0,0,0]}})
+            (engine/'results/frozen_model.json').write_text(json.dumps(model))
+            directory=root/'out';directory.mkdir()
+            (directory/'validated_runners.csv').write_text('number,odds,barrier\n1,2,1\n2,4,2\n3,4,3\n')
+            output=directory/'monty_selections.csv'
+            output.write_text('number,monty_prob\n1,0.5\n2,0.25\n3,0.25\n')
+            actual=trace('V6',directory,root,engine)
+            self.assertEqual(actual['1']['feature_log_correction'],0)
+            self.assertAlmostEqual(actual['1']['reconstructed_probability'],.5)
+            output.write_text('number,monty_prob\n1,0.6\n2,0.2\n3,0.2\n')
+            with self.assertRaises(OutputContractError) as e:trace('V6',directory,root,engine)
+            self.assertEqual(e.exception.code,'model_component_reconciliation_failed')

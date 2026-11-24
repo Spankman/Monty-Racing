@@ -12,7 +12,7 @@ import subprocess
 import sys
 from zoneinfo import ZoneInfo
 from operations.timing import timed
-from operations.assessment import OutputContractError, classify, diagnostic, feature_evidence, validate_output
+from operations.assessment import OutputContractError, classify, diagnostic, feature_evidence, validate_output, provider_inventory
 
 TZ = ZoneInfo('Australia/Brisbane')
 V7_COMMIT = 'efc51abb1595ef1eb8417e2d4e0d591f6d3c9378'
@@ -155,6 +155,8 @@ def metadata(payload, day):
             key=(str(meeting.get('venue','')).casefold(),str(race.get('number')))
             row=dict(country=meeting['country'],meeting=meeting.get('venue'),race=str(race.get('number')),
                      scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
+                     provider_track_condition=race.get('track_condition') or meeting.get('track_hint'),
+                     provider_surface=race.get('surface') or meeting.get('surface'),
                      scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in race.get('runners',[]) if r.get('is_scratched') is True])
             if key in result:
                 raise ValueError('Ambiguous country or duplicate race identity')
@@ -290,7 +292,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             model_ready=False
             snapshot=dict(runners=[],races=[dict(meeting=facts['meeting'],race=facts['race'])])
             audit={'skipped':['Requested field lacks complete valid active identities/prices or is closed']}
-        result['coverage']=dict(provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
+        result['coverage']=dict(provider_inventory=provider_inventory(source,day),provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
             accepted_races=len(snapshot['races']),scored_both=0,independently_verified=0,
             complete_au_nz_coverage_verified=False,provider_skips=audit['skipped'],
             jurisdictions_observed=sorted({r['country'] for r in meta.values()}),
@@ -306,13 +308,14 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             runners=[r for r in snapshot['runners'] if (r['meeting'].casefold(),str(r['race']))==k]
             record=dict(**{n:m[n] for n in ['meeting','race','country','scheduled_start','scratchings']},
                         captured_at=captured.isoformat(),independent_verification=False,
+                        provider_track_condition=m.get('provider_track_condition'),provider_surface=m.get('provider_surface'),
                         scratching_status='PROVIDER ASSERTION ONLY',models={})
             if single:
                 record['single_race_assessment']=True
                 record['assessment_facts']=dict(facts,captured_at=captured.isoformat(),scheduled_start=m['scheduled_start'])
             reasons=['independent_fields_scratchings_and_going_unverified','historical_form_incomplete','prospective_value_unverified']
             if single and not model_ready:reasons.append('complete_market_field_required_by_frozen_models')
-            if any(r.get('_price_source')!='TAB' for r in runners):
+            if any(not r.get('_bookmaker') for r in runners):
                 reasons.append('named_bookmaker_fixed_win_not_available_for_entire_field')
             try:
                 if timestamp(m['scheduled_start'])<=utcnow():reasons.append('race_already_due')
@@ -337,6 +340,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                         if sha(common)!=record['shared_model_input_sha256']:
                             raise OutputContractError('shared_model_input_mutated')
                         validate_output(rows,runners)
+                        books={r['number']:r.get('_bookmaker') for r in runners}
+                        rows=[dict(r,bookmaker=books[r['number']]) for r in rows]
                         if freshness(record)!='FRESH AT CHECK TIME':
                             raise OutputContractError('race_closed_or_snapshot_expired_during_inference')
                         view=selection(rows,version)
@@ -347,7 +352,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
                             view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
                         view.update(status='SCORED',decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
-                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
+                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Named fixed-win quotes (Krok attributed)' if all(r.get('_bookmaker') for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
                                     model_version=version,model_commit=result['models'][version]['commit'])
                         if version=='V7':view['no_bet_reasons'].append('V7_RESEARCH_ONLY_NOT_APPROVED')
                         record['models'][version]=view
@@ -398,6 +403,7 @@ def ticket(view, *, archived=False, now=None):
     version=view['version'];mode=view['view']
     title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
     lines=[title,view['date']+' · Australia/Brisbane','No qualified wagers — see prediction and betting decisions separately','']
+    if mode=='provisional':lines.insert(2,'PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet')
     if archived:
         lines.insert(2, 'ARCHIVED SNAPSHOT — check request freshness before use')
     from operations.single_race import quote_text
@@ -411,11 +417,11 @@ def ticket(view, *, archived=False, now=None):
             rows=diag['ordered_selections']
         if race.get('single_race_assessment'):
             lines.append(result.get('assessment_level','NO CURRENT ASSESSMENT'))
-            lines.append('REDUCED CONFIDENCE — missing data disclosed; official NO BET')
+            lines.append('REDUCED CONFIDENCE — missing data disclosed; betting approval unavailable')
         if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
             lines.append('No Monty model rankings were generated.')
         if rows:
-            lines.append(result['progression_bet_type']+' assessment only — NO BET')
+            lines.append(result['progression_bet_type']+' assessment only — no wager authorised')
             for i,r in enumerate(rows):
                 text=f"#{r['number']} {r['horse']} — {quote_text(r)}"
                 lines.append(('**'+text+'**') if i==0 else text)

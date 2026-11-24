@@ -101,8 +101,12 @@ Preserve the existing $4 fixed-win progression, two-horse quinella, three-horse
 boxed trifecta, four-horse boxed first four, value/ruffy WIN rules and NO BET
 thresholds. Do not use exotic dividend estimates. Generate no image unless asked.
 
-Official NO BET due to missing verification/value is not a provider/runner
-failure. Report verified partial coverage with exact omissions, blocked races,
+Missing betting verification is DATA BLOCKED, not a genuine value-based NO BET.
+Successfully scored V6 predictions are PROVISIONAL and V7 predictions are RESEARCH ONLY.
+Technical inference failures are EXECUTION FAILED. A genuine NO BET requires sufficient
+verified evidence and an evaluated value decision; it must never be inferred from a
+missing-data gate. The existing runner has no validated production approval evaluator.
+Do not claim it can issue QUALIFIED selections until that prerequisite is satisfied. Report verified partial coverage with exact omissions, blocked races,
 missing named TAB prices and unverified conditions. Never label a Krok-attributed
 TAB quote as independent TAB field verification. No new evidence provider or
 blackbook record is invented. Existing results/settlement code remains unchanged;
@@ -111,8 +115,11 @@ only review results supported by actual receipts and verified outcomes.
 Full-day provisional assessments also use complete provider fixed-win fields
 without TAB attribution. Disclose their incomplete attribution and research-only
 status. V7 still requires consistent quote provenance. Never invent missing
-prices or treat partial fields as complete. The official view remains NO BET
-where the established verification requirements are unmet.
+prices or treat partial fields as complete. The official view retains no approved wager
+where established requirements are unmet, and includes separately labelled diagnostic
+model assessments. PS commands display provisional assessments directly; V7 remains
+research-only in every view. Current five-minute/pre-jump restrictions apply to both
+primary and diagnostic rankings, including at repeated rendering.
 
 The approved horse-head logo/legend and an active automated blackbook monitor
 were not identifiable in this checkout. Their presence/activity must not be

@@ -67,3 +67,30 @@ def diagnostic(model):
                 ordered_selections=model.get('ordered_selections', []),
                 progression_bet_type=model.get('progression_bet_type'),
                 roughies=model.get('roughies', []), limitations=model.get('no_bet_reasons', []))
+
+
+def provider_inventory(payload, day):
+    """Aggregate observed availability, never confuse availability with validation."""
+    from collections import Counter
+    from krok_adapter import price, named_bookmaker
+    meetings=[];fields=Counter();conditions=0;named=0;priced=0;unknown_scratchings=0
+    for meeting in payload.get('data',[]):
+        if str(meeting.get('date',''))[:10]!=day or meeting.get('type') not in ('T','R'):continue
+        races=meeting.get('races') or []
+        meetings.append(dict(meeting=meeting.get('venue'),country=meeting.get('country'),races=len(races)))
+        for race in races:
+            conditions+=bool(race.get('track_condition') or meeting.get('track_hint'))
+            for runner in race.get('runners') or []:
+                for key in ['jockey','trainer','form','recent_form','history','career','form_stats','weight','claim_kg','age']:
+                    if runner.get(key) not in (None,'',[]):fields[key]+=1
+                if type(runner.get('is_scratched')) is not bool:unknown_scratchings+=1
+                if runner.get('is_scratched') is not False:continue
+                quote,origin=price(runner)
+                if quote is not None:
+                    priced+=1;named+=named_bookmaker(runner,quote,origin) is not None
+    return dict(pages_fetched=(payload.get('meta') or {}).get('pages_fetched'),meetings=meetings,
+                provider_condition_observations=conditions,runner_field_availability=dict(fields),
+                priced_active_runners=priced,named_selected_price_runners=named,
+                unknown_scratching_statuses=unknown_scratchings,
+                historical_feature_compatibility_verified=False,
+                limitation='Presence counts only; form strings, BSP and aggregates are not original V6 residual features')
