@@ -247,13 +247,13 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         if not 0<=(utcnow()-captured).total_seconds()<=MAX_AGE_SECONDS:
             raise ValueError('Stale or future-dated provider snapshot')
         stage='snapshot_validation'
-        meta=metadata(payload,day)
         single=bool(request.get('meeting'))
         facts=None;model_ready=True
         if single:
             from operations.single_race import prepare
             source,facts=prepare(payload,day,request)
         else:source=payload
+        meta=metadata(source,day)
         from krok_adapter import IncompleteFields
         try:
             snapshot,audit=normalized_snapshot(source,day,single)
@@ -267,10 +267,6 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             complete_au_nz_coverage_verified=False,provider_skips=audit['skipped'],
             jurisdictions_observed=sorted({r['country'] for r in meta.values()}),
             limitation='Provider-only AU/NZ card; independent TAB meeting completeness unavailable')
-        if request.get('meeting'):
-            matches=[m for m in meta.values() if m['meeting'].casefold()==request['meeting'].casefold() and m['race']==str(request['race']) and (not request.get('country') or m['country']==request['country'])]
-            if len(matches)!=1:
-                raise ValueError('Requested track/race absent or ambiguous; specify country')
         for race in snapshot['races']:
             k=(race['meeting'].casefold(),str(race['race']))
             m=meta.get(k)
