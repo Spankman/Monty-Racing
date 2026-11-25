@@ -1,0 +1,41 @@
+{
+  "trial_id": "PE-AU-20261126-6D",
+  "timezone": "Australia/Brisbane",
+  "dates": [
+    "2026-11-26",
+    "2026-11-27",
+    "2026-11-28",
+    "2026-11-29",
+    "2026-11-30",
+    "2026-12-01"
+  ],
+  "target_races_per_day": 3,
+  "minimum_complete_races": 12,
+  "capture_minutes": [
+    60,
+    15,
+    5,
+    2
+  ],
+  "capture_start_lateness_seconds": 30,
+  "minimum_notice_minutes": 90,
+  "jump_window_brisbane": [
+    "13:00",
+    "17:00"
+  ],
+  "bookmaker": "tab",
+  "daily_capture_credit_cap": 32,
+  "daily_plan_credit_cap": 24,
+  "daily_results_credit_cap": 6,
+  "puntersedge_operational_reserve": 500,
+  "krok_daily_request_cap": 14,
+  "krok_operational_reserve": 1000,
+  "prediction_rules": "Original frozen V6/V7 and existing value/progression rules; no model promotion or automatic provider switch",
+  "selection_rule": "Known AU venues only; known eligible non-maiden/non-2yo/non-jumps races; 13:00-17:00 Brisbane; select by required geography then scheduled jump and race identity, never prices, model ranks or outcomes; prefer distinct venues",
+  "replacement_rule": "No outcome-based replacements. Unavailable, rescheduled or abandoned entrants remain visible. Unknown future identities are slots, not claimed preregistered races.",
+  "geography": "Day1 requires Queensland and a different state; Saturday prefers Queensland metropolitan and another metropolitan; remaining slots prefer country/non-metropolitan. Final report must verify actual metro/country, weekday/weekend, Queensland/other-state coverage.",
+  "privacy": "Raw provider data and complete forecasts remain encrypted to the owner recovery certificate; only aggregates and hashes may be public",
+  "acceptance": "Minimum12 distinct preregistered races with all4 timely points, required geographic/day mix, unchanged frozen hashes, bounded consumption and independent authority/operator/settlement evidence. Otherwise INCOMPLETE, never manufactured acceptance.",
+  "subscription_expiry": "UNVERIFIED: credit reset dates are not subscription-expiry proof",
+  "minimum_window_spacing_seconds": 90
+}
