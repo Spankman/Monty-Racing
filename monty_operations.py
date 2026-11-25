@@ -89,15 +89,22 @@ def freshness(record, now=None):
 
 
 def current_result(race, saved, mode, now):
-    result = dict(saved)
+    from copy import deepcopy
+    result = deepcopy(saved)
+    if result.get('market_integrity'):
+        from operations.market_integrity import refresh,attach
+        attach(result,refresh(result['market_integrity'],now))
     result['freshness_at_retrieval']=freshness(race, now)
     result['freshness_checked_at']=now.isoformat()
     if result['freshness_at_retrieval'].startswith(('STALE','CLOSED')):
         result['delivery_classification']='EXPIRED'
         result['betting_decision']='EXPIRED'
-    result.pop('diagnostic_assessment', None)
+    existing_diagnostic=result.pop('diagnostic_assessment', None)
     if mode=='official' and result['freshness_at_retrieval'] == 'FRESH AT CHECK TIME':
-        result['diagnostic_assessment'] = saved.get('diagnostic_assessment') or diagnostic(saved)
+        if existing_diagnostic and result.get('market_integrity'):
+            from operations.market_integrity import attach
+            attach(existing_diagnostic,result['market_integrity'])
+        result['diagnostic_assessment'] = existing_diagnostic or diagnostic(result)
     if mode=='official' or result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
         for key in ('best_bets', 'ordered_selections', 'roughies'):
             result[key] = []
@@ -128,6 +135,9 @@ def projection(forecast, request, now=None):
             continue
         if request.get('country') and race['country'] != request['country']:
             continue
+        if 'market_integrity' not in race and 'data_completeness' in race:
+            from operations.market_integrity import archived_race
+            race=archived_race(race,race.get('captured_at',forecast.get('captured_at')),now)
         item=dict(race)
         result = current_result(race, race['models'][request['version']], request['view'], now)
         item['result']=result
@@ -163,11 +173,19 @@ def metadata(payload, day):
         if str(meeting.get('date',''))[:10]!=day or meeting.get('country') not in ('AU','NZ') or meeting.get('type') not in ('T','R'):
             continue
         for race in meeting.get('races',[]):
+            from operations.market_integrity import quote_evidence
+            raw_declared=race.get('runners')
+            declared = [r for r in raw_declared if isinstance(r,dict)] if isinstance(raw_declared,list) else []
+            invalid_declared=not isinstance(raw_declared,list) or len(declared)!=len(raw_declared)
             key=(str(meeting.get('venue','')).casefold(),str(race.get('number')))
             row=dict(country=meeting['country'],meeting=meeting.get('venue'),race=str(race.get('number')),
                      scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
                      provider_track_condition=race.get('track_condition') or meeting.get('track_hint'),
                      provider_surface=race.get('surface') or meeting.get('surface'),
+                     market_context=dict(declared_count=race.get('runner_count'),observed_declared_count=len(declared),
+                         active_identities=[[str(r.get('number')),r.get('name')] for r in declared if r.get('is_scratched') is False],
+                         unknown_scratching_status=invalid_declared or any(type(r.get('is_scratched')) is not bool for r in declared),
+                         quote_evidence=[quote_evidence(r) for r in declared if r.get('is_scratched') is False]),
                      scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in (race.get('runners') if isinstance(race.get('runners'), list) else []) if isinstance(r,dict) and r.get('is_scratched') is True])
             if key in result:
                 raise ValueError('Ambiguous country or duplicate race identity')
@@ -396,6 +414,18 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 for v in ['V6','V7']:
                     record['models'][v]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons.copy(),betting_authorised=False)
             for version in ['V6','V7']:classify(record['models'][version],version)
+            from operations.market_integrity import analyze,attach
+            context=m.get('market_context') or {}
+            evidence={r['number']:r for r in context.get('quote_evidence',[])}
+            quote_rows=[dict(r,quote_timestamps=evidence.get(r['number'],{}).get('quote_timestamps',[]),
+                             bookmaker=r.get('_bookmaker')) for r in runners]
+            market_audit=analyze(quote_rows,expected_active=record['data_completeness']['active_runners'],
+                captured_at=captured.isoformat(),now=utcnow(),context=context)
+            record['market_integrity']=market_audit
+            for model in record['models'].values():
+                attach(model,market_audit)
+                model['quoted_at']=None  # Capture time does not establish upstream offer age.
+                model['quote_capture_at']=captured.isoformat()
             if single:
                 outcome = ('DATA BLOCKED' if 'race_already_due' in reasons else
                            facts.get('field_outcome', 'FIELD UNAVAILABLE') if not model_ready else None)
@@ -465,6 +495,11 @@ def ticket(view, *, archived=False, now=None):
     for race in view['races']:
         lines.append(race['meeting']+' R'+str(race['race']))
         result=race['result'];rows=result.get('ordered_selections',[])
+        market=result.get('market_integrity') or race.get('market_integrity')
+        if market:
+            book='UNKNOWN (incomplete field)' if market['book_percentage'] is None else f"{market['book_percentage']:.3f}%"
+            lines.append('MARKET '+market['status']+' · book '+book+' · NO BET')
+            lines.append('Market warnings: '+', '.join(market['warnings']))
         lines.append('Prediction: '+result.get('prediction_classification',result.get('status','UNKNOWN'))+' · Betting: '+result.get('betting_decision',result.get('official_classification','UNKNOWN')))
         diag=result.get('diagnostic_assessment')
         if diag:
@@ -488,6 +523,7 @@ def ticket(view, *, archived=False, now=None):
         for roughie in (diag or result).get('roughies', []):
             book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
             lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)}{book} · NO BET")
+            if roughie.get('value_attribution'):lines.append('  '+roughie['value_attribution']+' · diagnostic only')
         lines.append('Limitations: '+', '.join(result.get('no_bet_reasons',[])))
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)

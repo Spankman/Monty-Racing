@@ -1,0 +1,537 @@
+{
+  "source_forecast_sha256": "3dd8547fdaab7dafa70e45907e6f8c52a8e7d7114753e7f3a36dc89580abc8fe",
+  "source_receipt_sha256": "925f4bc02ac1049980907dc432a29d5cca9eb16300339b8c0369d81c788d4e30",
+  "test_kind": "Historical replay of archived predictions; no new inference or live quote acquisition",
+  "races": [
+    {
+      "meeting": "Geelong",
+      "race": "8",
+      "market_integrity": {
+        "schema": "monty.market_integrity.v1",
+        "status": "QUARANTINED",
+        "actionable_value_allowed": false,
+        "independently_verified": false,
+        "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+        "expected_active_runners": 10,
+        "observed_price_runners": 10,
+        "complete_price_vector": true,
+        "observed_book_lower_bound_pct": 95.92415945710076,
+        "book_percentage": 95.92415945710076,
+        "overround_percentage_points": -4.075840542899245,
+        "underround_percentage_points": 4.075840542899245,
+        "market_only_numerical_edge": 0.04249023985164069,
+        "market_only_baseline": [
+          {
+            "number": "7",
+            "horse": "Dame Of Dubai",
+            "odds": 3.7,
+            "probability": 0.2817541188788218
+          },
+          {
+            "number": "11",
+            "horse": "Jenni Poppins",
+            "odds": 4.8,
+            "probability": 0.2171854666357585
+          },
+          {
+            "number": "5",
+            "horse": "Manhattan Empire",
+            "odds": 9.0,
+            "probability": 0.11583224887240452
+          },
+          {
+            "number": "2",
+            "horse": "Albanian I Am",
+            "odds": 9.5,
+            "probability": 0.10973581472122533
+          },
+          {
+            "number": "4",
+            "horse": "Weather Delay",
+            "odds": 34.0,
+            "probability": 0.030661477642695317
+          },
+          {
+            "number": "1",
+            "horse": "Il Cielo",
+            "odds": 41.0,
+            "probability": 0.025426591215893676
+          },
+          {
+            "number": "13",
+            "horse": "Mickidamuzz",
+            "odds": 71.0,
+            "probability": 0.014682961124670997
+          },
+          {
+            "number": "6",
+            "horse": "Itsagiven",
+            "odds": 126.0,
+            "probability": 0.008273732062314609
+          },
+          {
+            "number": "12",
+            "horse": "Sara's Rocket",
+            "odds": 151.0,
+            "probability": 0.006903908873189674
+          },
+          {
+            "number": "10",
+            "horse": "Two To Tango",
+            "odds": 5.5,
+            "probability": 0.1895436799730256
+          }
+        ],
+        "bookmakers": [],
+        "quote_timestamp_count": 0,
+        "capture_age_seconds": 30.0,
+        "captured_at": "2026-11-25T05:05:11.048541+00:00",
+        "oldest_quote_at": null,
+        "latest_quote_at": null,
+        "warnings": [
+          "external_field_completeness_unverified",
+          "independent_field_unverified",
+          "underround_requires_independent_verification",
+          "bookmaker_unverified",
+          "quote_timestamp_unavailable"
+        ]
+      },
+      "models": {
+        "V6": {
+          "available_saved_watches": 7,
+          "watches_at_least_10": 5,
+          "watch_attribution": [
+            {
+              "number": "5",
+              "horse": "Manhattan Empire",
+              "odds": 9.0,
+              "probability": 0.11359863066809502,
+              "market_probability": 0.11583224887240452,
+              "numerical_win_edge": 0.022387676012855184,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": -0.0022336182043095065,
+              "model_edge_contribution": -0.02010256383878556,
+              "value_attribution": "NORMALIZATION-DRIVEN APPARENT VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "2",
+              "horse": "Albanian I Am",
+              "odds": 9.5,
+              "probability": 0.10991249248475704,
+              "market_probability": 0.10973581472122533,
+              "numerical_win_edge": 0.0441686786051918,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 0.00017667776353171016,
+              "model_edge_contribution": 0.0016784387535512466,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "4",
+              "horse": "Weather Delay",
+              "odds": 34.0,
+              "probability": 0.030753905019112467,
+              "market_probability": 0.030661477642695317,
+              "numerical_win_edge": 0.04563277064982385,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 9.242737641715001e-05,
+              "model_edge_contribution": 0.0031425307981831005,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "1",
+              "horse": "Il Cielo",
+              "odds": 41.0,
+              "probability": 0.02550708903068821,
+              "market_probability": 0.025426591215893676,
+              "numerical_win_edge": 0.0457906502582166,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 8.049781479453275e-05,
+              "model_edge_contribution": 0.0033004104065758426,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "13",
+              "horse": "Mickidamuzz",
+              "odds": 71.0,
+              "probability": 0.014696301429844334,
+              "market_probability": 0.014682961124670997,
+              "numerical_win_edge": 0.043437401518947816,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 1.3340305173336828e-05,
+              "model_edge_contribution": 0.0009471616673069148,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "6",
+              "horse": "Itsagiven",
+              "odds": 126.0,
+              "probability": 0.00831156362355066,
+              "market_probability": 0.008273732062314609,
+              "numerical_win_edge": 0.047257016567383126,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 3.783156123605101e-05,
+              "model_edge_contribution": 0.0047667767157424275,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "12",
+              "horse": "Sara's Rocket",
+              "odds": 151.0,
+              "probability": 0.0069112248321163625,
+              "market_probability": 0.006903908873189674,
+              "numerical_win_edge": 0.04359494964957067,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 7.315958926688848e-06,
+              "model_edge_contribution": 0.001104709797930016,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            }
+          ]
+        },
+        "V7": {
+          "available_saved_watches": 4,
+          "watches_at_least_10": 0,
+          "watch_attribution": [
+            {
+              "number": "11",
+              "horse": "Jenni Poppins",
+              "odds": 4.8,
+              "probability": 0.21345802153773488,
+              "market_probability": 0.2171854666357585,
+              "numerical_win_edge": 0.024598503381127346,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": -0.003727445098023613,
+              "model_edge_contribution": -0.017891736470513342,
+              "value_attribution": "NORMALIZATION-DRIVEN APPARENT VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "10",
+              "horse": "Two To Tango",
+              "odds": 5.5,
+              "probability": 0.18783567234822438,
+              "market_probability": 0.1895436799730256,
+              "numerical_win_edge": 0.033096197915233994,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": -0.0017080076248012221,
+              "model_edge_contribution": -0.009394041936406722,
+              "value_attribution": "NORMALIZATION-DRIVEN APPARENT VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "5",
+              "horse": "Manhattan Empire",
+              "odds": 9.0,
+              "probability": 0.11598962080290154,
+              "market_probability": 0.11583224887240452,
+              "numerical_win_edge": 0.043906587226113736,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 0.00015737193049701614,
+              "model_edge_contribution": 0.0014163473744731453,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "2",
+              "horse": "Albanian I Am",
+              "odds": 9.5,
+              "probability": 0.1124005620876837,
+              "market_probability": 0.10973581472122533,
+              "numerical_win_edge": 0.06780533983299519,
+              "market_only_numerical_edge": 0.04249023985164069,
+              "model_probability_uplift": 0.0026647473664583726,
+              "model_edge_contribution": 0.02531509998135454,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "meeting": "Launceston",
+      "race": "6",
+      "market_integrity": {
+        "schema": "monty.market_integrity.v1",
+        "status": "QUARANTINED",
+        "actionable_value_allowed": false,
+        "independently_verified": false,
+        "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+        "expected_active_runners": 9,
+        "observed_price_runners": 9,
+        "complete_price_vector": true,
+        "observed_book_lower_bound_pct": 72.74642159661809,
+        "book_percentage": 72.74642159661809,
+        "overround_percentage_points": -27.253578403381905,
+        "underround_percentage_points": 27.253578403381905,
+        "market_only_numerical_edge": 0.3746380619861156,
+        "market_only_baseline": [
+          {
+            "number": "5",
+            "horse": "Coal River",
+            "odds": 3.9,
+            "probability": 0.35247129794515786
+          },
+          {
+            "number": "4",
+            "horse": "Earendel",
+            "odds": 4.8,
+            "probability": 0.28638292958044076
+          },
+          {
+            "number": "7",
+            "horse": "Go Jeanie",
+            "odds": 10.0,
+            "probability": 0.13746380619861157
+          },
+          {
+            "number": "6",
+            "horse": "Sh'bourne Midnight",
+            "odds": 21.0,
+            "probability": 0.06545895533267217
+          },
+          {
+            "number": "8",
+            "horse": "Zewinna",
+            "odds": 34.0,
+            "probability": 0.04043053123488575
+          },
+          {
+            "number": "1",
+            "horse": "Distrustful Award",
+            "odds": 35.0,
+            "probability": 0.0392753731996033
+          },
+          {
+            "number": "3",
+            "horse": "Zulu Angel",
+            "odds": 41.0,
+            "probability": 0.03352775760941745
+          },
+          {
+            "number": "10",
+            "horse": "Georgaroni",
+            "odds": 46.0,
+            "probability": 0.029883436130132945
+          },
+          {
+            "number": "2",
+            "horse": "Fast Thinker",
+            "odds": 91.0,
+            "probability": 0.015105912769078194
+          }
+        ],
+        "bookmakers": [],
+        "quote_timestamp_count": 0,
+        "capture_age_seconds": 30.0,
+        "captured_at": "2026-11-25T05:05:11.048541+00:00",
+        "oldest_quote_at": null,
+        "latest_quote_at": null,
+        "warnings": [
+          "external_field_completeness_unverified",
+          "independent_field_unverified",
+          "underround_requires_independent_verification",
+          "bookmaker_unverified",
+          "quote_timestamp_unavailable"
+        ]
+      },
+      "models": {
+        "V6": {
+          "available_saved_watches": 7,
+          "watches_at_least_10": 7,
+          "watch_attribution": [
+            {
+              "number": "7",
+              "horse": "Go Jeanie",
+              "odds": 10.0,
+              "probability": 0.138656589367294,
+              "market_probability": 0.13746380619861157,
+              "numerical_win_edge": 0.3865658936729399,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.001192783168682432,
+              "model_edge_contribution": 0.01192783168682432,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "6",
+              "horse": "Sh'bourne Midnight",
+              "odds": 21.0,
+              "probability": 0.064600579362002,
+              "market_probability": 0.06545895533267217,
+              "numerical_win_edge": 0.3566121666020421,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": -0.0008583759706701638,
+              "model_edge_contribution": -0.01802589538407344,
+              "value_attribution": "NORMALIZATION-DRIVEN APPARENT VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "8",
+              "horse": "Zewinna",
+              "odds": 34.0,
+              "probability": 0.040782159192230966,
+              "market_probability": 0.04043053123488575,
+              "numerical_win_edge": 0.3865934125358528,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.0003516279573452172,
+              "model_edge_contribution": 0.011955350549737384,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "1",
+              "horse": "Distrustful Award",
+              "odds": 35.0,
+              "probability": 0.039652245621916035,
+              "market_probability": 0.0392753731996033,
+              "numerical_win_edge": 0.38782859676706116,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.0003768724223127337,
+              "model_edge_contribution": 0.01319053478094568,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "3",
+              "horse": "Zulu Angel",
+              "odds": 41.0,
+              "probability": 0.03378858129909154,
+              "market_probability": 0.03352775760941745,
+              "numerical_win_edge": 0.3853318332627531,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.000260823689674089,
+              "model_edge_contribution": 0.010693771276637648,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "10",
+              "horse": "Georgaroni",
+              "odds": 46.0,
+              "probability": 0.030169588117178486,
+              "market_probability": 0.029883436130132945,
+              "numerical_win_edge": 0.3878010533902103,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.0002861519870455409,
+              "model_edge_contribution": 0.013162991404094881,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "2",
+              "horse": "Fast Thinker",
+              "odds": 91.0,
+              "probability": 0.01526444924512591,
+              "market_probability": 0.015105912769078194,
+              "numerical_win_edge": 0.3890648813064579,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.00015853647604771592,
+              "model_edge_contribution": 0.014426819320342149,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            }
+          ]
+        },
+        "V7": {
+          "available_saved_watches": 3,
+          "watches_at_least_10": 2,
+          "watch_attribution": [
+            {
+              "number": "4",
+              "horse": "Earendel",
+              "odds": 4.8,
+              "probability": 0.28049481038956814,
+              "market_probability": 0.28638292958044076,
+              "numerical_win_edge": 0.34637508986992693,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": -0.0058881191908726205,
+              "model_edge_contribution": -0.028262972116188577,
+              "value_attribution": "NORMALIZATION-DRIVEN APPARENT VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "7",
+              "horse": "Go Jeanie",
+              "odds": 10.0,
+              "probability": 0.1406192778763706,
+              "market_probability": 0.13746380619861157,
+              "numerical_win_edge": 0.4061927787637061,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.0031554716777590364,
+              "model_edge_contribution": 0.031554716777590364,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            },
+            {
+              "number": "6",
+              "horse": "Sh'bourne Midnight",
+              "odds": 21.0,
+              "probability": 0.06853575879322808,
+              "market_probability": 0.06545895533267217,
+              "numerical_win_edge": 0.43925093465778975,
+              "market_only_numerical_edge": 0.3746380619861156,
+              "model_probability_uplift": 0.003076803460555916,
+              "model_edge_contribution": 0.06461287267167423,
+              "value_attribution": "POSITIVE MODEL CONTRIBUTION \u2014 NOT VALIDATED VALUE",
+              "actionable_value": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "source_extraction_matches_original": true,
+  "commands": [
+    {
+      "command": "RM6",
+      "version": "V6",
+      "kind": "archived projection, not live inference",
+      "roughie_watch_count": 14,
+      "market_quarantine_count": 2,
+      "text_sha256": "c0d747f031c94204a29f7cd9a449be5b2d10d5c2c7f6de861c9411673db9099b",
+      "html_sha256": "4c590cc99e25739e6e6cf00ed5ce0d17d80cf8b76b74e47e89ac6bc7af7c37ce",
+      "compact_bytes": 24780,
+      "expired_watches_hidden": true
+    },
+    {
+      "command": "RM7",
+      "version": "V7",
+      "kind": "archived projection, not live inference",
+      "roughie_watch_count": 7,
+      "market_quarantine_count": 2,
+      "text_sha256": "5980c1a9754032db60e782e094c9a0d93adec3a68c01bb286dd8b3d52b0813cf",
+      "html_sha256": "0db0879572c7358344f93b0c91a55cf2aa5c11eb59b8a3c3837f7d6a969b7f2c",
+      "compact_bytes": 19865,
+      "expired_watches_hidden": true
+    },
+    {
+      "command": "RM6PS",
+      "version": "V6",
+      "kind": "archived projection, not live inference",
+      "roughie_watch_count": 14,
+      "market_quarantine_count": 2,
+      "text_sha256": "09bbecc5966b546152ad8ef263208a8958661152064b7fb0a7852ec284657ad0",
+      "html_sha256": "f566524661375a09064e79005184d3c687be3d0b8d094c9d1f3ee1b29179ce27",
+      "compact_bytes": 25133,
+      "expired_watches_hidden": true
+    },
+    {
+      "command": "RM7PS",
+      "version": "V7",
+      "kind": "archived projection, not live inference",
+      "roughie_watch_count": 7,
+      "market_quarantine_count": 2,
+      "text_sha256": "878980ad1bdb26fb9e7ab22282dc6b3ca50250e7950b49abeb9409b067cebf4a",
+      "html_sha256": "0e133dde4585e912be6919417378288239b51d9772270dcb64e6fb91f715c4c1",
+      "compact_bytes": 19870,
+      "expired_watches_hidden": true
+    }
+  ]
+}
