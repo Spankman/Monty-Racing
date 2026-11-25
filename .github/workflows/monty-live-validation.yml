@@ -1,0 +1,110 @@
+name: Monty isolated AU pre-race evidence
+on:
+  push:
+    branches: [research/au-live-validation]
+    paths: [.github/workflows/monty-live-validation.yml]
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
+          path: v7_engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Restore private frozen artifacts
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+        run: python operations/restore_private.py
+      - name: Capture official race facts and freeze genuine assessments if available
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,urllib.request
+          from pathlib import Path
+          from tempfile import TemporaryDirectory
+          import monty_operations as ops
+          from krok_adapter import fetch
+          from monty_expert_article_discovery import NoRedirects,robots_permit
+          from operations.public_sources import capture,rq_facts
+          from operations.prospective import freeze
+
+          day='2026-11-25'
+          output=Path('isolated-au-evidence')
+          output.mkdir()
+          report={'commit':os.environ['GITHUB_SHA'],'admitted':False,'betting_authorised':False,'date':day}
+          if ops.utcnow().astimezone(ops.TZ).date().isoformat()!=day:
+              raise SystemExit('Isolated race date has passed')
+          with TemporaryDirectory() as private:
+              links={
+                  'authority':'https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7',
+                  'tabtouch':'https://www.tabtouch.com.au/racing/2026-11-25/br/7',
+                  'vicbet':'https://www.vicbet.com/Racing/Thoroughbreds/Ipswich/R7/3710167',
+                  'letsbet':'https://www.letsbet.net.au/Racing/Thoroughbreds/Ipswich/R7/4003535',
+              }
+              report['sources']={}
+              for source,url in links.items():
+                  try:
+                      if not robots_permit(url,urllib.request.build_opener(NoRedirects())):
+                          report['sources'][source]={'status':'ROBOTS DISALLOWED'}
+                          continue
+                  except (OSError,ValueError) as error:
+                      report['sources'][source]={'status':'ROBOTS UNAVAILABLE','http':getattr(error,'code',None)}
+                      continue
+                  if source=='authority':
+                      meta,body=capture(url,Path(private)/'source')
+                      report['sources'][source]=meta
+                      if body:
+                          try:
+                              facts=rq_facts(body,day,'Ipswich',7)
+                              report['authority']={k:facts.get(k) for k in ['scheduled_start','condition','surface','distance_m']}
+                          except (TypeError,ValueError,KeyError) as error:
+                              report['authority_parse_error']=type(error).__name__
+                  else:
+                      report['sources'][source]={'status':'ROBOTS CHECK PASSED; OPERATOR PARSER NOT VALIDATED'}
+              try:
+                  payload=fetch(day,os.environ['KROK_API_KEY'])
+                  captured=ops.utcnow()
+                  for race_request in ('Ipswich 7','Geelong 8','Albany 7'):
+                      run_id=os.environ['GITHUB_RUN_ID']+'-'+race_request.replace(' ','-')
+                      req=ops.command('RM6 '+race_request,day,'AU')
+                      out=Path(private)/run_id
+                      result=ops.execute(day,out,'v7_engine',run_id=run_id,payload=payload,captured=captured,request=req)
+                      case=output/run_id
+                      case.mkdir()
+                      for filename in ('forecast.json','receipt.json'):
+                          (case/filename).write_bytes((out/'public'/filename).read_bytes())
+                      race=next(iter(result['races']),None)
+                      if race and all(m['status']=='SCORED' for m in race['models'].values()):
+                          try:
+                              record=freeze(result,race,{'blockers':['independent_named_executable_quote_unverified','compatible_history_unverified','official_field_not_reconciled']},case/'diagnostic.json')
+                              assert not record['cohort_admitted']
+                          except (ValueError,KeyError,TypeError) as error:
+                              report.setdefault('freeze_errors',{})[race_request]=type(error).__name__
+                      report.setdefault('assessments',{})[race_request]={'status':result['status'],'races':len(result['races']),
+                          'V6':result['models'].get('V6',{}).get('status'),'V7':result['models'].get('V7',{}).get('status'),
+                          'forecast_sha256':hashlib.sha256((case/'forecast.json').read_bytes()).hexdigest()}
+              except Exception as error:
+                  report['capture_error_type']=type(error).__name__
+              report['completed_at']=ops.utcnow().isoformat()
+              (output/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
+              print(json.dumps(report,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monty-isolated-au-evidence
+          path: isolated-au-evidence/
+          if-no-files-found: error
+          retention-days: 14
