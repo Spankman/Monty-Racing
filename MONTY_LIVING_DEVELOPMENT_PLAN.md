@@ -27,3 +27,8 @@ Research modules are non-blocking: include reliable pre-race variables in experi
 - [ ] Complete source reading and existing-feature/code/licence audit using [research library](MONTY_RESEARCH_LIBRARY.md).
 - [ ] Reproduce simple market, conditional logit, Benter combination and Australian PLS benchmarks on common historical data before advanced models.
 - [ ] Test incremental feature groups, adjusted speed, hidden form, uncertainty, race-relative rankings and coherent finishing-order probabilities; record negative findings and prospective results.
+
+## Optimise before expanding — owner-approved priority
+- [ ] Audit existing features for data quality, redundancy and incremental predictive value; test removal as well as addition.
+- [ ] Prioritise existing-feature interpretation, weighting, calibration, market benchmark and race/value selection before new feature acquisition.
+- [ ] Gate each proposed feature on repeatable unseen-race improvement, uncertainty, net ROI/risk, data and maintenance costs, and operational reliability. Record rejected features and reasons; do not adopt complexity for marginal or statistically inconclusive gains. Use shared ablation tests and existing benchmark pipeline to conserve credits.
