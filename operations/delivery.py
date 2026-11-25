@@ -4,6 +4,8 @@ from copy import deepcopy
 from pathlib import Path
 
 ROW_KEYS={'number','horse','odds','probability','bookmaker','fair_win_odds','numerical_win_edge','bet_type','classification','price_source'}
+ROW_KEYS.update({'market_probability','market_only_numerical_edge','model_probability_uplift',
+                 'model_edge_contribution','value_attribution','actionable_value','market_warnings'})
 
 
 def compact(view):

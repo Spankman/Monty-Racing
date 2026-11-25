@@ -47,7 +47,8 @@ def freeze(forecast, race, verification, path, now=None):
         frozen_at=now.isoformat(),scheduled_start=race['scheduled_start'],
         provider_snapshot_sha256=forecast['provider_snapshot_sha256'],shared_model_input_sha256=race['shared_model_input_sha256'],
         verification=verification,cohort='VERIFIED PROSPECTIVE' if admitted else 'UNVERIFIED DIAGNOSTIC — NOT ADMITTED',
-        cohort_admitted=admitted,models=models,market_baseline=baseline,betting_authorised=False)
+        cohort_admitted=admitted,models=models,market_baseline=baseline,
+        market_integrity=race.get('market_integrity'),betting_authorised=False)
     if Path(path).exists() or Path(str(path)+'.receipt.json').exists():raise FileExistsError('Immutable prospective record already exists')
     write(path,record)
     receipt=dict(record_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),record_path=Path(path).name,

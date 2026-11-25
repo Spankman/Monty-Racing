@@ -23,6 +23,10 @@ def render(view, *, archived=False, now=None):
             result=race['result'];diag=result.get('diagnostic_assessment');parts.append('<section><p>R'+e(str(race['race']))+' · '+e(diag['progression_bet_type'] if diag else result.get('progression_bet_type','NO BET'))+' assessment · <b>'+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</b></p>')
             parts.append('<p>Prediction: '+e(result.get('prediction_classification',result.get('status','UNKNOWN')))+' · Betting: '+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</p>')
             diag=result.get('diagnostic_assessment')
+            market=result.get('market_integrity') or race.get('market_integrity')
+            if market:
+                book='UNKNOWN (incomplete field)' if market['book_percentage'] is None else f"{market['book_percentage']:.3f}%"
+                parts.append('<p><b>MARKET '+e(market['status'])+' · book '+e(book)+' · NO BET</b><br>'+e(', '.join(market['warnings']))+'</p>')
             if diag:parts.append('<p><b>DIAGNOSTIC '+e(diag['classification'])+' — NOT QUALIFIED</b></p>')
             if race.get('single_race_assessment'):
                 parts.append('<p><b>'+e(result.get('assessment_level','NO CURRENT ASSESSMENT'))+'</b> · REDUCED CONFIDENCE</p>')
@@ -36,6 +40,7 @@ def render(view, *, archived=False, now=None):
             for roughie in (diag or result).get('roughies', []):
                 book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
                 parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>'+e(quote_text(roughie)+book)+'</td></tr>')
+                if roughie.get('value_attribution'):parts.append('<tr><td colspan="2">'+e(roughie['value_attribution'])+' · diagnostic only</td></tr>')
             value=result.get('value_selection')
             if race.get('single_race_assessment') and result.get('ordered_selections'):
                 parts.append('<tr><td>VALUE WATCH · WIN ONLY · '+e('#'+str(value['number'])+' '+value['horse'])+'</td><td>'+e(quote_text(value))+'</td></tr>' if value else '<tr><td colspan="2">VALUE: no supported positive-edge candidate</td></tr>')
