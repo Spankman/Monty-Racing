@@ -21,7 +21,7 @@ DELIVERY_TIMEOUT_SECONDS = 120
 def with_form_handoff(result, req):
     if req and req.get('meeting'):
         blockers = result.get('blockers') or [result['semantic_outcome']]
-        reason = result['semantic_outcome'] or result.get('delivery_status')
+        reason = 'FAILED' if result['request_status'] == 'FAILED' else result['semantic_outcome'] or result.get('delivery_status')
         result['form_assessment_requests'] = [research_request(req, blockers, reason)]
     return result
 
@@ -87,6 +87,10 @@ def retrieve(index, request_id=None, req=None, now=None):
                   captured_at=forecast.get('captured_at'), valid_until=forecast.get('valid_until'),
                   blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),
                   models=forecast.get('models', {}))
+    if forecast.get('operational_outcome'):
+        result.update(semantic_outcome=forecast['operational_outcome'],
+                      operational_reason=forecast.get('operational_reason'),
+                      operational_evidence=forecast.get('operational_evidence'))
     now = now or utcnow()
     captured = result['captured_at']
     if captured:
@@ -110,9 +114,9 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'EXPIRED' if all(
                 race['result']['freshness_at_retrieval'].startswith(('CLOSED', 'STALE'))
                 for race in view['races']) else 'UNVERIFIED'
-        elif not view['races']:
+        elif not view['races'] and not forecast.get('operational_outcome'):
             result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT', freshness='UNVERIFIED')
-        else:
+        elif view['races']:
             result.update(view=view, ticket=ticket(view, now=now), html=render(view, now=now))
     if state == 'COMPLETED' and req and result.get('freshness') == 'EXPIRED':
         try:

@@ -83,7 +83,9 @@ def provider_inventory(payload, day):
         meetings.append(dict(meeting=meeting.get('venue'),country=meeting.get('country'),races=len(races)))
         for race in races:
             conditions+=bool(race.get('track_condition') or meeting.get('track_hint'))
-            for runner in race.get('runners') or []:
+            for runner in race['runners'] if isinstance(race.get('runners'), list) else []:
+                if not isinstance(runner, dict):
+                    continue
                 for key in ['jockey','trainer','form','recent_form','history','career','form_stats','weight','claim_kg','age']:
                     if runner.get(key) not in (None,'',[]):fields[key]+=1
                 if type(runner.get('is_scratched')) is not bool:unknown_scratchings+=1

@@ -69,6 +69,7 @@ class FallbackTests(unittest.TestCase):
         field=self.payload['data'][0]['races'][0]['runners'];field[1]['odds']=[]
         field[0].update(jockey='Actual supplied rider',trainer='Actual supplied trainer',api_key='DO_NOT_EXPORT',history=[{'private':'DO_NOT_EXPORT'}])
         f=self.single();self.assertFalse(self.calls)
+        self.assertEqual(f['operational_outcome'], 'ODDS UNAVAILABLE')
         for v in ['V6','V7']:
             r=f['races'][0]['models'][v];self.assertFalse(r['model_inference']);self.assertEqual(r['ordered_selections'],[])
             packet=r['form_assessment_request'];self.assertIn('NOT A MONTY PREDICTION',packet['classification'])
@@ -85,6 +86,7 @@ class FallbackTests(unittest.TestCase):
     def test_unknown_scratching_is_not_a_confirmed_active_field(self):
         self.payload['data'][0]['races'][0]['runners'][0].pop('is_scratched')
         f=self.single();self.assertFalse(self.calls)
+        self.assertEqual(f['operational_outcome'], 'SCRATCHINGS UNVERIFIED')
         self.assertEqual(f['races'][0]['assessment_facts']['unknown_scratching_count'],1)
         self.assertFalse(f['races'][0]['models']['V6']['model_inference'])
     def test_duplicate_identity_never_scored(self):
@@ -129,6 +131,47 @@ class FallbackTests(unittest.TestCase):
         self.payload['data'][0]['races'][0]['status']='resulted'
         f=self.single();self.assertFalse(self.calls)
         self.assertEqual(handoffs(self.view(f)),[])
+    def test_operational_statuses_survive_verified_retrieval(self):
+        meeting = self.payload['data'][0]
+        race = meeting['races'][0]
+        for i, (subject, status, expected) in enumerate([
+            (meeting, 'abandoned', 'MEETING ABANDONED'),
+            (race, 'abandoned', 'RACE ABANDONED'),
+            (race, 'postponed', 'RACE POSTPONED'),
+            (race, 'resulted', 'RACE ALREADY JUMPED'),
+            (race, 'closed', 'DATA BLOCKED'),
+        ]):
+            with self.subTest(status=status):
+                with patch.dict(subject, status=status):
+                    out = self.root / str(i)
+                    request = ops.command('RM6 Test 1', self.day)
+                    f = ops.execute(self.day, out, self.v7, run_id=str(i), payload=self.payload,
+                                    captured=self.now, request=request, fixture=True, scorer=self.scorer)
+                public = out / 'public'
+                raw = (public / 'forecast.json').read_bytes()
+                receipt = json.loads((public / 'receipt.json').read_text())
+                index = dict(run_id=str(i), status=f['status'], forecast_path='forecast',
+                             receipt_path='receipt', forecast_sha256=ops.sha(public / 'forecast.json'))
+                with patch.object(transport, 'read_bytes', return_value=raw), patch.object(transport, 'read', return_value=receipt):
+                    response = client.retrieve(index, 100, request, self.now)
+                self.assertEqual(response['semantic_outcome'], expected)
+                self.assertEqual(response['operational_evidence'], 'KROK PROVIDER ASSERTION ONLY')
+                self.assertNotIn('ticket', response)
+                self.assertNotIn('form_assessment_requests', response)
+        self.assertFalse(self.calls)
+
+    def test_nz_meeting_outside_au_scope_is_not_an_engine_failure(self):
+        self.payload['data'][0]['country'] = 'NZ'
+        result = self.single(request=ops.command('RM6 Test 1', self.day, 'AU'))
+        self.assertEqual(result['operational_outcome'], 'RACE NOT FOUND')
+        self.assertEqual(result['operational_reason'], 'meeting_outside_requested_country')
+        self.assertFalse(self.calls)
+
+    def test_malformed_field_is_blocked_before_inference(self):
+        self.payload['data'][0]['races'][0]['runners'].append(None)
+        self.assertEqual(self.single()['operational_outcome'], 'FIELD UNAVAILABLE')
+        self.assertFalse(self.calls)
+
     def test_official_and_expired_views_never_leak_new_rank_fields(self):
         f=self.single()
         for mode,now in [('official',self.now),('provisional',self.now+timedelta(minutes=6))]:

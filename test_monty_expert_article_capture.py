@@ -1,5 +1,7 @@
 import datetime
 import unittest
+from unittest.mock import patch
+from urllib.error import HTTPError
 from monty_expert_article_capture import capture_article, process_leads, NoRedirects
 from urllib.request import Request
 
@@ -17,7 +19,7 @@ class ArticleCaptureTests(unittest.TestCase):
         self.assertEqual(result["candidates"][0]["status"], "CANDIDATE_ONLY_NOT_VERIFIED")
         self.assertEqual(result["candidates"][0]["captured_at"], NOW.isoformat())
     def test_cross_host_and_http_rejected_before_fetch(self):
-        for url in ("http://example.org/tips/a", "https://other.org/tips/a"):
+        for url in ("http://example.org/tips/a", "https://other.org/tips/a", "https://example.org:bad/tips/a"):
             result = capture_article("https://example.org/tips/", url,
                 fetcher=lambda u: self.fail("Should not fetch"),
                 robots_allowed=lambda u: self.fail("Should not check robots"))
@@ -34,6 +36,16 @@ class ArticleCaptureTests(unittest.TestCase):
         self.assertIsNone(NoRedirects().redirect_request(
             Request("https://example.org/tips/a"), None, 302, "Found", {},
             "https://other.org/private"))
+    def test_robots_redirect_cannot_trigger_article_fetch(self):
+        with patch('urllib.request.build_opener') as create:
+            opener = create.return_value
+            opener.open.side_effect = HTTPError('https://example.org/robots.txt', 302, 'redirect', {}, None)
+            result = capture_article('https://example.org/tips/', 'https://example.org/tips/a',
+                                     fetcher=lambda url: self.fail('Article fetch after robots redirect'))
+            self.assertEqual(result['status'], 'rejected')
+            self.assertEqual(opener.open.call_count, 1)
+            self.assertIsInstance(create.call_args.args[0], NoRedirects)
+
     def test_source_credentials_rejected(self):
         result = capture_article("https://user:pass@example.org/tips/",
             "https://example.org/tips/a",

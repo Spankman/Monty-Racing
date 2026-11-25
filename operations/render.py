@@ -33,9 +33,9 @@ def render(view, *, archived=False, now=None):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
                 if i==0:text='<b>'+text+'</b>'
                 parts.append('<tr><td>'+text+'</td><td>'+e(quote_text(row)+((' ('+row['bookmaker']+')') if row.get('bookmaker') else ''))+'</td></tr>')
-            if view['view'] in ('provisional', 'shadow'):
-                for roughie in result.get('roughies',[]):
-                    parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>$'+format(roughie['odds'],'.2f')+'</td></tr>')
+            for roughie in (diag or result).get('roughies', []):
+                book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
+                parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>'+e(quote_text(roughie)+book)+'</td></tr>')
             value=result.get('value_selection')
             if race.get('single_race_assessment') and result.get('ordered_selections'):
                 parts.append('<tr><td>VALUE WATCH · WIN ONLY · '+e('#'+str(value['number'])+' '+value['horse'])+'</td><td>'+e(quote_text(value))+'</td></tr>' if value else '<tr><td colspan="2">VALUE: no supported positive-edge candidate</td></tr>')

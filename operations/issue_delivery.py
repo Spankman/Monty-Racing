@@ -75,6 +75,10 @@ def result_body(request, forecast, receipt, index):
         lines.append(ticket(view))
     for race in view['races']:
         lines.append(f"{race['meeting']} R{race['race']} scheduled jump: {race.get('scheduled_start')}")
+    if forecast.get('operational_outcome'):
+        outcome = forecast['operational_outcome']
+        evidence = forecast.get('operational_evidence')
+        lines.append(f"Operational outcome: {outcome}" + (f" · {evidence}" if evidence else ''))
     if forecast.get('blockers'):
         lines.append('Outcome details: ' + '; '.join(forecast['blockers']))
     if request.get('meeting') and not any(r['result'].get('ordered_selections') for r in view['races']):

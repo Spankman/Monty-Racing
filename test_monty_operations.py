@@ -107,6 +107,21 @@ class RunTests(unittest.TestCase):
         f=self.run_it(request=ops.command('RM6',self.day,'AU'))
         self.assertEqual(f['races'],[]);self.assertFalse(self.calls)
 
+    def test_malformed_nz_races_do_not_block_au_daily(self):
+        self.payload['data'].append(dict(self.payload['data'][0], country='NZ', races=None))
+        result = self.run_it(request=ops.command('RM6', self.day, 'AU'))
+        self.assertEqual(result['status'], 'COMPLETED_ASSESSMENTS')
+        self.assertEqual(result['coverage']['jurisdictions_observed'], ['AU'])
+
+    def test_fresh_official_view_renders_diagnostic_roughies_only(self):
+        from operations.render import render
+        forecast = self.run_it()
+        view = ops.projection(forecast, dict(version='V6', view='official'), self.now)
+        for show in (ops.ticket, render):
+            self.assertIn('RUFFY / VALUE WATCH', show(view, now=self.now))
+            self.assertNotIn('RUFFY / VALUE WATCH', show(view, now=self.now+timedelta(minutes=6)))
+        self.assertFalse(view['races'][0]['result']['betting_authorised'])
+
     def test_same_capture_features_and_provisional_price_gate_for_both_scopes(self):
         full=self.run_it()
         single=ops.execute(self.day,self.root/'single',self.v7,run_id='single',payload=self.payload,
@@ -146,11 +161,12 @@ class RunTests(unittest.TestCase):
 
     def test_stale_capture_never_scored(self):
         f=self.run_it(captured=self.now-timedelta(minutes=6))
-        self.assertEqual(f['status'],'FAILED');self.assertFalse(self.calls)
+        self.assertEqual(f['status'],'EXPIRED');self.assertFalse(self.calls)
 
     def test_single_race_missing_and_country_ambiguity(self):
         f=self.run_it(request=ops.command('RM6 Missing 2',self.day))
-        self.assertEqual(f['status'],'FAILED');self.assertFalse(self.calls)
+        self.assertEqual(f['status'],'DATA_BLOCKED');self.assertFalse(self.calls)
+        self.assertEqual(f['operational_outcome'], 'RACE NOT FOUND')
 
     def test_unknown_country_not_guessed(self):
         self.payload['data'][0]['country']=None

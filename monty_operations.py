@@ -13,6 +13,7 @@ import sys
 from time import monotonic
 from zoneinfo import ZoneInfo
 from operations.timing import timed
+from operations.single_race import RaceUnavailable
 from operations.assessment import OutputContractError, classify, diagnostic, feature_evidence, validate_output, provider_inventory, summarize
 
 TZ = ZoneInfo('Australia/Brisbane')
@@ -135,6 +136,8 @@ def projection(forecast, request, now=None):
     return dict(schema=SCHEMA,run_id=forecast['run_id'],date=forecast['date'],view=request['view'],
                 version=request['version'],status=forecast['status'],races=selected,
                 receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]),
+                operational_outcome=forecast.get('operational_outcome'), operational_reason=forecast.get('operational_reason'),
+                operational_evidence=forecast.get('operational_evidence'),
                 captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'))
 
 
@@ -165,7 +168,7 @@ def metadata(payload, day):
                      scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
                      provider_track_condition=race.get('track_condition') or meeting.get('track_hint'),
                      provider_surface=race.get('surface') or meeting.get('surface'),
-                     scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in race.get('runners',[]) if r.get('is_scratched') is True])
+                     scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in (race.get('runners') if isinstance(race.get('runners'), list) else []) if isinstance(r,dict) and r.get('is_scratched') is True])
             if key in result:
                 raise ValueError('Ambiguous country or duplicate race identity')
             result[key]=row
@@ -287,18 +290,27 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
         result['captured_at']=captured.isoformat()
-        if not 0<=(utcnow()-captured).total_seconds()<MAX_AGE_SECONDS:
-            raise ValueError('Stale or future-dated provider snapshot')
+        capture_age = (utcnow() - captured).total_seconds()
+        if capture_age < 0:
+            raise RaceUnavailable('DATA BLOCKED', 'provider_capture_in_future')
+        if capture_age >= MAX_AGE_SECONDS:
+            raise RaceUnavailable('EXPIRED', 'provider_capture_expired')
         stage='snapshot_validation'
         single=bool(request.get('meeting'))
         facts=None;model_ready=True
         if single:
             from operations.single_race import prepare
             source,facts=prepare(payload,day,request)
-        else:source=payload
+        else:
+            source = payload
+            if request.get('country') and isinstance(payload, dict) and isinstance(payload.get('data'), list):
+                source = dict(payload, data=[meeting for meeting in payload['data']
+                                            if isinstance(meeting, dict) and meeting.get('country') == request['country']])
         meta=metadata(source,day)
         from krok_adapter import IncompleteFields
         try:
+            if single and facts.get('field_outcome'):
+                raise IncompleteFields('Incomplete requested field')
             snapshot,audit=normalized_snapshot(source,day,single)
         except IncompleteFields:
             if not single:raise
@@ -385,16 +397,32 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                     record['models'][v]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons.copy(),betting_authorised=False)
             for version in ['V6','V7']:classify(record['models'][version],version)
             if single:
+                outcome = ('DATA BLOCKED' if 'race_already_due' in reasons else
+                           facts.get('field_outcome', 'FIELD UNAVAILABLE') if not model_ready else None)
+                if outcome:
+                    result['operational_outcome'] = record['operational_outcome'] = outcome
+                    result['operational_reason'] = ('scheduled_jump_time_reached_status_unconfirmed'
+                                                    if 'race_already_due' in reasons else 'incomplete_requested_field')
+                    for model in record['models'].values():
+                        model.update(prediction_classification=outcome, betting_decision=outcome)
                 from operations.single_race import annotate
                 for version in ['V6','V7']:annotate(record,version)
             result['races'].append(record)
         result['status']=summarize(result,request['version'])
         result['blockers']=['Betting approval DATA BLOCKED: no independent field/conditions attestation, compatible as-of history or validated prospective approval evaluator','V7 remains research only']
+    except RaceUnavailable as exc:
+        result.update(status='EXPIRED' if exc.outcome == 'EXPIRED' else 'DATA_BLOCKED', operational_outcome=exc.outcome,
+                      operational_reason=exc.code, blockers=[exc.outcome + ' — ' + exc.code])
+        if exc.code in ('provider_meeting_status', 'provider_race_status'):
+            result['operational_evidence'] = 'KROK PROVIDER ASSERTION ONLY'
     except Exception as exc:
         # Do not expose arbitrary exception strings or URLs containing credentials.
         result['blockers']=[stage+': '+type(exc).__name__]
         result['status']='DATA_BLOCKED' if isinstance(exc,IncompleteFields) else 'FAILED'
     finally:
+        if 'operational_outcome' not in result and result['status'] in ('DATA_BLOCKED', 'FAILED', 'EXPIRED'):
+            result['operational_outcome'] = {'DATA_BLOCKED': 'DATA BLOCKED', 'FAILED': 'EXECUTION FAILED',
+                                             'EXPIRED': 'EXPIRED'}[result['status']]
         for version,path in [('V6',ROOT/'monty_v6/results/frozen_model.json'),('V7',v7_root/'v7/artifacts/fold_3_model.json')]:
             if version in pins and sha(path)!=pins[version]:raise RuntimeError('Frozen model changed')
     result['generated_at']=utcnow().isoformat()
@@ -417,6 +445,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
                  models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 operational_outcome=result.get('operational_outcome'), operational_reason=result.get('operational_reason'),
                  processing_timings=durations,delivery_manifest_sha256=delivery_hash,
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
@@ -456,9 +485,9 @@ def ticket(view, *, archived=False, now=None):
             value=result.get('value_selection')
             lines.append('MOST LIKELY: #'+str(rows[0]['number'])+' '+rows[0]['horse']+' — not automatically a value bet')
             lines.append(('PROVISIONAL VALUE WATCH · WIN ONLY · #'+str(value['number'])+' '+value['horse']+' — '+quote_text(value)+' · NO BET') if value else 'VALUE: no supported positive-edge candidate')
-        if mode in ('provisional', 'shadow'):
-            for roughie in result.get('roughies',[]):
-                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)} · NO BET")
+        for roughie in (diag or result).get('roughies', []):
+            book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
+            lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)}{book} · NO BET")
         lines.append('Limitations: '+', '.join(result.get('no_bet_reasons',[])))
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)
