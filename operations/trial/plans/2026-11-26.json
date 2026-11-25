@@ -1,0 +1,121 @@
+{
+  "trial_id": "PE-AU-20261126-6D",
+  "date": "2026-11-26",
+  "registered_at": "2026-11-25T18:38:39.845455+00:00",
+  "protocol_sha256": "16aeb128fe8ce5f9656702937942887994569a244ca4de4f1a67fbee0f0527c3",
+  "races": [
+    {
+      "date": "2026-11-26",
+      "race_id": "5047da2a-a572-4c37-b0cc-6373327b8df2",
+      "venue": "Hawkesbury",
+      "race_number": 3,
+      "start_time": "2026-11-26T04:00:00Z",
+      "state": "NSW",
+      "meeting_class": "provincial",
+      "rq_code": null,
+      "weekday": "Thursday",
+      "country": "AU",
+      "category": "horse"
+    },
+    {
+      "date": "2026-11-26",
+      "race_id": "88486ae8-7602-4651-8025-8d4fd7521b2a",
+      "venue": "Rockhampton",
+      "race_number": 2,
+      "start_time": "2026-11-26T04:20:00Z",
+      "state": "QLD",
+      "meeting_class": "provincial",
+      "rq_code": "rock",
+      "weekday": "Thursday",
+      "country": "AU",
+      "category": "horse"
+    },
+    {
+      "date": "2026-11-26",
+      "race_id": "bfd65896-c8d5-4db5-9e90-ade1eb45070a",
+      "venue": "Geraldton",
+      "race_number": 3,
+      "start_time": "2026-11-26T06:34:00Z",
+      "state": "WA",
+      "meeting_class": "country",
+      "rq_code": null,
+      "weekday": "Thursday",
+      "country": "AU",
+      "category": "horse"
+    }
+  ],
+  "eligible_candidates": 12,
+  "exclusions": [
+    {
+      "race_id": "2805a142-669d-4e32-98df-812a414af78d",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "bea7104a-65f2-4c8f-8e58-a40f41828a87",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "364dab6f-3f37-4d04-a931-69742e3c198d",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "1e6b2e09-4b72-4706-bb30-523cd412ac15",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "383ae0dd-a992-4586-b37c-27e01edcac2e",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "015f8e67-ff1b-445b-9924-abb360ca7174",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "f54e745a-2e13-4bf2-8713-4394634e2448",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "ca1e0e76-5441-45d3-8178-75e8580a3f72",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "857cc278-1ce1-47ed-9f20-5e127d2e8484",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "1f8b6640-fb32-4fde-9ed4-3ad7f665fc4f",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "200c6c3c-d36d-4134-9718-8cf2471ff285",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "31ac61b1-7ce9-440d-b9e7-4257fc1bffd0",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "40f2b7dc-ec4f-49ae-b66a-322955da02a0",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "459a73b8-edcc-4917-b729-55978feb255c",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "baeedcff-6462-4192-b1ec-97c98de7a5a4",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "5509b672-a5b0-4d7b-9aa1-63576544b812",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "dc729622-72c5-42a8-8e66-44953982781f",
+      "reason": "outside_runner_window"
+    }
+  ],
+  "status": "PREREGISTERED",
+  "future_slots_are_not_claimed_registered_races": true,
+  "plan_sha256": "0a130677908ca5d97fc939cd0ecaf2c999e84b95ad773fed61f24e588f0f691c"
+}
