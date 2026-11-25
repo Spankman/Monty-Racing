@@ -45,11 +45,11 @@ def classify(model, version):
         # No production approval evaluator is wired into the existing runner.
         # Do not infer an approval from positive edge or from a boolean supplied
         # by a provider. Retain every missing-evidence gate explicitly.
-        model['betting_decision'] = 'DATA BLOCKED'
+        model['betting_decision'] = 'EXPIRED' if model.get('expired_at_completion') else 'DATA BLOCKED'
         model['official_classification'] = 'DATA BLOCKED'
         model['assessment_level'] = 'RESEARCH ONLY' if version == 'V7' else 'PROVISIONAL'
     else:
-        outcome = 'EXECUTION FAILED' if status == 'FAILED' else 'DATA BLOCKED'
+        outcome = 'EXECUTION FAILED' if status == 'FAILED' else 'EXPIRED' if model.get('expired_at_completion') else 'DATA BLOCKED'
         model['prediction_classification'] = outcome
         model['betting_decision'] = outcome
         model['official_classification'] = outcome
@@ -98,3 +98,21 @@ def provider_inventory(payload, day):
                 unknown_scratching_statuses=unknown_scratchings,
                 historical_feature_compatibility_verified=False,
                 limitation='Presence counts only; form strings, BSP and aggregates are not original V6 residual features')
+
+
+def summarize(forecast, requested_version):
+    """Command success belongs to its requested engine, with other outcomes visible."""
+    for version in ('V6','V7'):
+        rows=[r['models'][version] for r in forecast['races']]
+        scored=sum(m['status']=='SCORED' for m in rows)
+        failed=sum(m['status']=='FAILED' for m in rows)
+        blocked=sum(m['status']=='BLOCKED' for m in rows)
+        expired=sum(m.get('expired_at_completion',False) for m in rows)
+        status='PARTIAL' if scored and (failed or blocked) else 'SCORED' if scored else 'FAILED' if failed else 'BLOCKED'
+        forecast['models'][version].update(scored_races=scored,failed_races=failed,blocked_races=blocked,
+            expired_races=expired,status=status,delivery_status='EXPIRED' if rows and expired==len(rows) else status)
+    m=forecast['models'][requested_version]
+    if m['delivery_status']=='EXPIRED':return 'EXPIRED'
+    if m['scored_races']:
+        return 'PARTIAL_ASSESSMENTS' if m['failed_races'] or m['blocked_races'] else 'COMPLETED_ASSESSMENTS'
+    return 'FAILED' if m['failed_races'] else 'DATA_BLOCKED'

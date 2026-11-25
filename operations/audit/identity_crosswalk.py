@@ -53,6 +53,14 @@ def resolve(authority, external, cutoff):
                 continue
             blocked.append((key, source, reason))
 
+    repeated=defaultdict(set)
+    for registered,row in links:repeated[registered.race,registered.source_id].add(registered.saddlecloth)
+    links2=[]
+    for registered,row in links:
+        if len(repeated[registered.race,registered.source_id])>1:
+            blocked.append(((row.race,row.saddlecloth),row.source,'same_registration_twice_in_race'))
+        else:links2.append((registered,row))
+    links=links2
     ids = defaultdict(set)
     for registered, row in links:
         ids[row.source, row.source_id].add(registered.source_id)

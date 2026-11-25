@@ -10,9 +10,10 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+from time import monotonic
 from zoneinfo import ZoneInfo
 from operations.timing import timed
-from operations.assessment import OutputContractError, classify, diagnostic, feature_evidence, validate_output, provider_inventory
+from operations.assessment import OutputContractError, classify, diagnostic, feature_evidence, validate_output, provider_inventory, summarize
 
 TZ = ZoneInfo('Australia/Brisbane')
 V7_COMMIT = 'efc51abb1595ef1eb8417e2d4e0d591f6d3c9378'
@@ -90,6 +91,9 @@ def current_result(race, saved, mode, now):
     result = dict(saved)
     result['freshness_at_retrieval']=freshness(race, now)
     result['freshness_checked_at']=now.isoformat()
+    if result['freshness_at_retrieval'].startswith(('STALE','CLOSED')):
+        result['delivery_classification']='EXPIRED'
+        result['betting_decision']='EXPIRED'
     result.pop('diagnostic_assessment', None)
     if mode=='official' and result['freshness_at_retrieval'] == 'FRESH AT CHECK TIME':
         result['diagnostic_assessment'] = saved.get('diagnostic_assessment') or diagnostic(saved)
@@ -232,6 +236,7 @@ def selection(rows,version='V6'):
 
 def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False):
     """Capture once, run both frozen models on byte-identical per-race snapshots."""
+    execution_started=monotonic();durations={}
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
     public=output/'public';public.mkdir()
     v7_root=Path(v7_root).resolve()
@@ -245,7 +250,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     try:
         if not fixture and day!=started.astimezone(TZ).date().isoformat():
             raise ValueError('Live request date is not today in Brisbane')
-        stage='frozen_artifact_verification'
+        stage='frozen_artifact_verification';phase_started=monotonic()
         with timed('frozen_verification', run_id, enabled=timings):
             from monty.integrity import verify_artifacts, validate_model_contract
             verify_artifacts(ROOT/'monty_v6')
@@ -257,11 +262,13 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 if version=='V7' and commit!=V7_COMMIT:
                     raise ValueError('Pinned V7 commit mismatch')
                 result['models'][version]=dict(commit=commit,model_sha256=pins[version],status='NOT_RUN',research_only=version=='V7')
+        durations['frozen_verification_seconds']=monotonic()-phase_started
         v6_model=json.loads((ROOT/'monty_v6/results/frozen_model.json').read_text())
         v7_model=json.loads((v7_root/'v7/artifacts/fold_3_model.json').read_text())
         schemas={'V6':(v6_model['input_feature_names'],validate_model_contract(v6_model,v6_model['input_feature_names'])),
                  'V7':(v7_model.get('names',[]),[n for n,a in zip(v7_model.get('names',[]),v7_model.get('active',[])) if a])}
         stage='provider_capture'
+        phase_started=monotonic()
         if payload is None:
             from krok_adapter import fetch
             key=os.environ.get('KROK_API_KEY','').strip()
@@ -270,6 +277,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 raise ValueError('KROK_API_KEY absent; live request not attempted')
             with timed('provider_fetch', run_id, enabled=timings):
                 payload=fetch(day,key)
+        durations['provider_acquisition_seconds']=monotonic()-phase_started
+        durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
@@ -336,16 +345,18 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             if v7_gap:
                                 record['models'][version]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons+[v7_gap],betting_authorised=False)
                                 continue
+                        if freshness(record)!='FRESH AT CHECK TIME':
+                            record['models'][version]=dict(status='BLOCKED',expired_at_completion=True,ordered_selections=[],no_bet_reasons=['capture_expired_or_race_closed_before_inference'])
+                            continue
+                        model_started=monotonic()
                         rows=scorer(version,common,m,private/version,v7_root)
+                        model_seconds=monotonic()-model_started
                         if sha(common)!=record['shared_model_input_sha256']:
                             raise OutputContractError('shared_model_input_mutated')
                         validate_output(rows,runners)
                         books={r['number']:r.get('_bookmaker') for r in runners}
                         rows=[dict(r,bookmaker=books[r['number']]) for r in rows]
-                        if freshness(record)!='FRESH AT CHECK TIME':
-                            record['models'][version]=dict(status='BLOCKED', ordered_selections=[],
-                                no_bet_reasons=['race_closed_or_snapshot_expired_during_inference'])
-                            continue
+                        expired_at_completion=freshness(record)!='FRESH AT CHECK TIME'
                         view=selection(rows,version)
                         view['input_evidence']=feature_evidence(runners,*schemas[version])
                         if single:
@@ -353,9 +364,12 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             ranked=[dict(r,price_source=origins[r['number']]) for r in view['ranked_runners']]
                             candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
                             view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
-                        view.update(status='SCORED',decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
+                        view.update(status='SCORED',model_elapsed_seconds=model_seconds,decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
                                     bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Named fixed-win quotes (Krok attributed)' if all(r.get('_bookmaker') for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
                                     model_version=version,model_commit=result['models'][version]['commit'])
+                        if expired_at_completion:
+                            view['expired_at_completion']=True
+                            view['no_bet_reasons'].append('race_closed_or_snapshot_expired_during_inference')
                         if version=='V7':view['no_bet_reasons'].append('V7_RESEARCH_ONLY_NOT_APPROVED')
                         record['models'][version]=view
                     except Exception as exc:
@@ -370,11 +384,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 from operations.single_race import annotate
                 for version in ['V6','V7']:annotate(record,version)
             result['races'].append(record)
-        for version in ['V6','V7']:
-            scored=sum(r['models'][version]['status']=='SCORED' for r in result['races'])
-            failed=sum(r['models'][version]['status']=='FAILED' for r in result['races'])
-            result['models'][version].update(scored_races=scored,status='PARTIAL' if failed and scored else 'FAILED' if failed else 'SCORED' if scored else 'BLOCKED')
-        result['status']='COMPLETED_ASSESSMENTS' if result['races'] and all(v['status']=='SCORED' for v in result['models'].values()) else 'PARTIAL_OR_BLOCKED'
+        result['status']=summarize(result,request['version'])
         result['blockers']=['Betting approval DATA BLOCKED: no independent field/conditions attestation, compatible as-of history or validated prospective approval evaluator','V7 remains research only']
     except Exception as exc:
         # Do not expose arbitrary exception strings or URLs containing credentials.
@@ -385,10 +395,14 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             if version in pins and sha(path)!=pins[version]:raise RuntimeError('Frozen model changed')
     result['generated_at']=utcnow().isoformat()
     result['valid_until']=(captured+timedelta(seconds=MAX_AGE_SECONDS)).isoformat() if captured else None
+    report_started=monotonic()
+    durations['before_report_seconds']=report_started-execution_started
     write(public/'forecast.json',result)
+    durations['forecast_write_seconds']=monotonic()-report_started
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
                  models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 processing_timings=durations,
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     for version in ['V6','V7']:

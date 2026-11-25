@@ -2,7 +2,7 @@ name: Monty ChatGPT operations (shared snapshot)
 run-name: Monty operations ${{ inputs.command || github.event.issue.title || github.event.schedule }}
 on:
   push:
-    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback, fix/prediction-approval-diagnostics]
+    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback, fix/prediction-approval-diagnostics, integration/verified-operations]
     paths: ['.github/workflows/monty-operations.yml', '.monty/operations-staging.json']
   workflow_dispatch:
     inputs:
@@ -97,7 +97,9 @@ jobs:
           OPERATIONS_ISSUE: ${{ inputs.request_issue || github.event.issue.number }}
           OPERATIONS_MODE: ${{ (github.event_name == 'issues' || inputs.request_issue || github.event.schedule == '*/5 * * * *') && 'queue' || 'daily' }}
         run: |
-          if [ "$GITHUB_REF_NAME" = "fix/prediction-approval-diagnostics" ]; then
+          if [ "$GITHUB_REF_NAME" = "integration/verified-operations" ]; then
+            python operations/verification_acceptance.py
+          elif [ "$GITHUB_REF_NAME" = "fix/prediction-approval-diagnostics" ]; then
             python operations/acceptance.py
           else
             python operations/worker.py

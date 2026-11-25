@@ -136,7 +136,7 @@ class RunTests(unittest.TestCase):
         f=self.run_it(scorer=broken)
         self.assertEqual(f['races'][0]['models']['V7']['status'],'FAILED')
         self.assertEqual(f['races'][0]['models']['V6']['status'],'SCORED')
-        self.assertNotIn('secret',json.dumps(f));self.assertEqual(f['status'],'PARTIAL_OR_BLOCKED')
+        self.assertNotIn('secret',json.dumps(f));self.assertEqual(f['status'],'COMPLETED_ASSESSMENTS')
 
     def test_identity_and_price_changes_rejected(self):
         def bad(v,*args):

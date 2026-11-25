@@ -39,7 +39,7 @@ def archived_rankings(forecast, req, now):
         if result['status'] != 'SCORED' or not result.get('ranked_runners'):
             continue
         captured, decided, jump = map(timestamp, (race['captured_at'], result['decision_at'], race['scheduled_start']))
-        if not (captured <= decided < jump and decided <= now and (decided - captured).total_seconds() <= MAX_AGE_SECONDS):
+        if not (captured <= decided < jump and decided <= now and (decided - captured).total_seconds() < MAX_AGE_SECONDS):
             continue
         records.append(dict(label='HISTORICAL PRE-RACE ASSESSMENT — NO BET', meeting=race['meeting'],
                             race=race['race'], version=req['version'], decision_at=result['decision_at'],
