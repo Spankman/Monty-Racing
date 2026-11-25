@@ -123,4 +123,12 @@ class Ruffies(unittest.TestCase):
         before=deepcopy(model);section=audit(self.race,model,'V6',self.now)
         self.assertEqual(section['research_candidates'],0);self.assertTrue(section['none_reason'])
         self.assertEqual(model,before);self.assertEqual(model['betting_decision'],'NO BET')
+    def test_future_capture_and_offer_cannot_be_research_candidates(self):
+        race=dict(self.race,captured_at=(self.now+timedelta(seconds=1)).isoformat())
+        row=audit(race,self.model,'V6',self.now)['rows'][0]
+        self.assertFalse(row['research_candidate']);self.assertIn('future_capture_timestamp',row['reasons'])
+        model=deepcopy(self.model)
+        for r in model['ranked_runners']:r['quote_timestamps']=[(self.now+timedelta(seconds=1)).isoformat()]
+        row=audit(self.race,model,'V6',self.now)['rows'][0]
+        self.assertFalse(row['research_candidate']);self.assertIn('future_offer_timestamp',row['reasons'])
 if __name__=='__main__':unittest.main()

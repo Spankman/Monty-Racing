@@ -140,6 +140,11 @@ V7 fold3 model were verified. No fit or research-pickle load occurred. Two cohor
    after the model/calibration cutoffs. May/July2026 remain excluded by original
    source-integrity pins. No future labels enter predictors.
 
+The original builder passes same-day/future-outcome invariance tests. Hash
+authenticity does not establish independently timestamped publication vintage
+for every original contextual field; that stronger availability claim is not
+made.
+
 These are **scheduled-off exchange-price simulations**, not historical named
 bookmaker fixed-win validation or independently settled prospective results.
 Only fold3 was available; this is chronological fixed-model evaluation, **not a

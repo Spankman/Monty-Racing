@@ -58,6 +58,7 @@ def audit(race,model,version,now):
             if not times or len(set(times))!=1:raise ValueError('No unique offer observation')
             quoted=times[0]
             expires=min(quoted+timedelta(seconds=MAX_AGE_SECONDS),timestamp(race['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(race['scheduled_start']))
+            if timestamp(race['captured_at'])>now:reasons.append('future_capture_timestamp')
             if quoted>now:reasons.append('future_offer_timestamp')
             if now>=expires:reasons.append('expired_offer_or_race_closed')
         except (ValueError,TypeError,KeyError,AttributeError):reasons.append('offer_observation_timestamp_unavailable' if quoted is None else 'capture_or_jump_timing_unavailable')
@@ -73,6 +74,9 @@ def audit(race,model,version,now):
             normalised_market_probability=market,predictive_advantage=delta,
             numerical_expected_value=edge,market_normalisation_edge=normalisation,
             model_edge_contribution=delta*odds if delta is not None else None,
+            value_attribution='BASELINE UNAVAILABLE' if delta is None else
+              'NORMALIZATION-DRIVEN APPARENT VALUE' if edge>0 and delta<=1e-12 else
+              'POSITIVE MODEL CONTRIBUTION — NOT VALIDATED VALUE' if delta>1e-12 else 'NO POSITIVE MODEL CONTRIBUTION',
             model_rank=rank if usable else None,market_rank=1+sum(r['odds']<odds for r in rows) if usable else None,
             status=('RESEARCH ONLY' if version=='V7' else 'PROVISIONAL RESEARCH') if candidate else 'DATA BLOCKED' if data_blocked else 'EXCLUDED',
             research_candidate=candidate,legacy_watch=str(row['number']) in legacy,
@@ -110,7 +114,8 @@ def text(model):
         prefix='RUFFY / VALUE WATCH · ' if row['legacy_watch'] else 'RESEARCH DIAGNOSTIC · '
         lines.extend([prefix+f"{row['meeting']} R{row['race']} · #{row['number']} {row['horse']} · ${row['odds']:.2f} ({row['bookmaker'] or 'BOOK UNVERIFIED'}) · {row['model_version']}",
             f"{row['status']} · model {percent(row['model_probability'])}; market {percent(row['normalised_market_probability'])}; advantage {percent(row['predictive_advantage'])}; point EV {percent(row['numerical_expected_value'])}",
-            'Quality: '+row['confidence']+'; history '+('VERIFIED' if row['data_quality']['historical_form_verified'] else 'INCOMPLETE'),
+            'Attribution: '+row['value_attribution']+'; market-only EV '+percent(row['market_normalisation_edge'])+'; model contribution '+percent(row['model_edge_contribution']),
+            'Quality: active features '+str(row['data_quality']['fully_observed_active_features'])+'/'+str(row['data_quality']['active_features'])+'; '+row['confidence']+'; history '+('VERIFIED' if row['data_quality']['historical_form_verified'] else 'INCOMPLETE'),
             'Reason: '+'; '.join(row['reasons']),
             'Price observed '+str(row['price_observed_at'] or 'UNKNOWN')+' · expires '+str(row['price_valid_until'] or 'UNVERIFIED')+' · Official approval: NOT APPROVED'])
     return lines

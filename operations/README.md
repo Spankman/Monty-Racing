@@ -245,3 +245,10 @@ labels, a run ID and elapsed seconds. It is workflow diagnostic metadata and
 does not enter forecasts, receipts or tickets. An `ok` timed span only means
 the operation returned without raising. Check the existing semantic forecast
 status to determine whether either model scored.
+
+## Issue 240 roughie audit and staged visibility
+
+[26 November audit](audit/RUFFIE_AUDIT_2026-11-26.md) distinguishes genuine
+scoring, incomplete legacy archives, static market offsets and research watches.
+The RUFFIES TO WATCH section is staged only, with unchanged eligibility and
+300-second freshness. No production deployment or extra provider acquisition.
