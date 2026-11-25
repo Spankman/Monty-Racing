@@ -99,12 +99,19 @@ def current_result(race, saved, mode, now):
     if result['freshness_at_retrieval'].startswith(('STALE','CLOSED')):
         result['delivery_classification']='EXPIRED'
         result['betting_decision']='EXPIRED'
+    from operations.ruffies import attach as attach_ruffies
+    if result.get('ruffies_to_watch') and not result.get('ranked_runners'):
+        from operations.ruffies import refresh as refresh_ruffies
+        result['ruffies_to_watch']=refresh_ruffies(result['ruffies_to_watch'],result,now)
+    else:attach_ruffies(race,result,result.get('model_version','UNKNOWN'),now)
     existing_diagnostic=result.pop('diagnostic_assessment', None)
     if mode=='official' and result['freshness_at_retrieval'] == 'FRESH AT CHECK TIME':
         if existing_diagnostic and result.get('market_integrity'):
             from operations.market_integrity import attach
             attach(existing_diagnostic,result['market_integrity'])
         result['diagnostic_assessment'] = existing_diagnostic or diagnostic(result)
+    if result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
+        result['ruffies_to_watch'].update(rows=[],research_candidates=0,none_reason='EXPIRED OR CLOSED — no current research watches; request a fresh assessment')
     if mode=='official' or result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
         for key in ('best_bets', 'ordered_selections', 'roughies'):
             result[key] = []
@@ -424,8 +431,13 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             market_audit=analyze(quote_rows,expected_active=record['data_completeness']['active_runners'],
                 captured_at=captured.isoformat(),now=utcnow(),context=context)
             record['market_integrity']=market_audit
-            for model in record['models'].values():
+            for version,model in record['models'].items():
                 attach(model,market_audit)
+                for row in model.get('ranked_runners',[]):
+                    row['quote_timestamps']=evidence.get(row['number'],{}).get('quote_timestamps',[])
+                    row['quote_time_basis']=evidence.get(row['number'],{}).get('quote_time_basis')
+                from operations.ruffies import attach as attach_ruffies
+                attach_ruffies(record,model,version,utcnow())
                 model['quoted_at']=None  # Capture time does not establish upstream offer age.
                 model['quote_capture_at']=captured.isoformat()
             if single:
@@ -523,10 +535,15 @@ def ticket(view, *, archived=False, now=None):
             value=result.get('value_selection')
             lines.append('MOST LIKELY: #'+str(rows[0]['number'])+' '+rows[0]['horse']+' — not automatically a value bet')
             lines.append(('PROVISIONAL VALUE WATCH · WIN ONLY · #'+str(value['number'])+' '+value['horse']+' — '+quote_text(value)+' · NO BET') if value else 'VALUE: no supported positive-edge candidate')
+        section=result.get('ruffies_to_watch') or {}
+        displayed=set(section.get('covered_runner_numbers',[]))
         for roughie in (diag or result).get('roughies', []):
+            if str(roughie['number']) in displayed:continue
             book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
             lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)}{book} · NO BET")
             if roughie.get('value_attribution'):lines.append('  '+roughie['value_attribution']+' · diagnostic only')
+        from operations.ruffies import text as ruffie_text
+        lines.extend(ruffie_text(result))
         lines.append('Limitations: '+', '.join(result.get('no_bet_reasons',[])))
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)

@@ -37,13 +37,19 @@ def render(view, *, archived=False, now=None):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
                 if i==0:text='<b>'+text+'</b>'
                 parts.append('<tr><td>'+text+'</td><td>'+e(quote_text(row)+((' ('+row['bookmaker']+')') if row.get('bookmaker') else ''))+'</td></tr>')
+            section=result.get('ruffies_to_watch') or {}
+            displayed=set(section.get('covered_runner_numbers',[]))
             for roughie in (diag or result).get('roughies', []):
+                if str(roughie['number']) in displayed:continue
                 book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
                 parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>'+e(quote_text(roughie)+book)+'</td></tr>')
                 if roughie.get('value_attribution'):parts.append('<tr><td colspan="2">'+e(roughie['value_attribution'])+' · diagnostic only</td></tr>')
             value=result.get('value_selection')
             if race.get('single_race_assessment') and result.get('ordered_selections'):
                 parts.append('<tr><td>VALUE WATCH · WIN ONLY · '+e('#'+str(value['number'])+' '+value['horse'])+'</td><td>'+e(quote_text(value))+'</td></tr>' if value else '<tr><td colspan="2">VALUE: no supported positive-edge candidate</td></tr>')
+            from operations.ruffies import text as ruffie_text
+            details=ruffie_text(result)
+            if details:parts.append('</table><h3>'+e(details[0])+'</h3>'+''.join('<p>'+e(line)+'</p>' for line in details[1:])+'<table>')
             parts.append('</table><p>'+e('; '.join(result.get('no_bet_reasons',[])))+'</p><p>Captured '+e(str(race['captured_at']))+' · '+e('Historical quote' if archived else result.get('freshness_at_retrieval','UNKNOWN'))+'</p></section>')
     parts+=['<footer>IN MONTY WE TRUST</footer><h2>Copy plain text</h2><textarea readonly aria-label="Copyable Monty ticket">'+e(ticket(view, archived=archived, now=now))+'</textarea></main></html>']
     return ''.join(parts)

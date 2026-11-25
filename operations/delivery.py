@@ -15,6 +15,10 @@ def compact(view):
         evidence=model.pop('input_evidence',{})
         if evidence:model['input_summary']={k:evidence.get(k) for k in ('total_features','active_features','fully_observed_active_features','expert_weight_used','model_weight_used')}
         model.pop('ranked_runners',None)
+        if model.get('ruffies_to_watch'):
+            section=model['ruffies_to_watch']
+            section['rows']=[r for r in section['rows'] if r['display_watch']]
+            section['full_exclusions_location']='Hash-bound full forecast; compact view retains display watches only'
         for key in ['best_chance','most_likely','value_selection']:
             if isinstance(model.get(key),dict):model[key]={k:v for k,v in model[key].items() if k in ROW_KEYS}
         def trim(container):
