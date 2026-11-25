@@ -3,53 +3,53 @@
   "race_records": 26,
   "complete_quote_vectors": 2,
   "exchange_snapshot_baseline": {
-    "races": 24797,
+    "races": 22499,
     "dates": [
       "2025-05-01",
       "2026-10-31"
     ],
-    "underround_races": 866,
-    "geelong_like_races": 588,
-    "launceston_like_races": 92,
+    "underround_races": 790,
+    "geelong_like_races": 537,
+    "launceston_like_races": 87,
     "market_only_v6_all": {
-      "races": 864,
-      "watches": 5170,
-      "winners": 243,
-      "quote_units": 1312.5999999999997,
-      "quote_roi": 0.25388781431334617,
+      "races": 788,
+      "watches": 4724,
+      "winners": 219,
+      "quote_units": 1289.9999999999995,
+      "quote_roi": 0.2730736663844199,
       "largest_winning_quote": 650.0,
-      "bsp_watches": 5170,
-      "bsp_roi": 0.004614796905222402
+      "bsp_watches": 4724,
+      "bsp_roi": 0.01182969940728191
     },
     "market_only_v6_cluster_5_plus": {
-      "races": 626,
-      "watches": 4435,
-      "winners": 199,
-      "quote_units": 930.0999999999997,
-      "quote_roi": 0.20971815107102587,
+      "races": 573,
+      "watches": 4059,
+      "winners": 176,
+      "quote_units": 855.5999999999996,
+      "quote_roi": 0.21079083518107897,
       "largest_winning_quote": 650.0,
-      "bsp_watches": 4435,
-      "bsp_roi": -0.03270642615558065
+      "bsp_watches": 4059,
+      "bsp_roi": -0.04098373983739842
     },
     "market_only_v7_probability_floor_all": {
-      "races": 723,
-      "watches": 1588,
-      "winners": 152,
-      "quote_units": 466.3749999999999,
-      "quote_roi": 0.29368702770780847,
+      "races": 659,
+      "watches": 1455,
+      "winners": 140,
+      "quote_units": 445.82499999999993,
+      "quote_roi": 0.30640893470790376,
       "largest_winning_quote": 50.0,
-      "bsp_watches": 1588,
-      "bsp_roi": 0.0413268261964735
+      "bsp_watches": 1455,
+      "bsp_roi": 0.04575635738831611
     },
     "market_only_v7_probability_floor_cluster_5_plus": {
-      "races": 46,
-      "watches": 253,
-      "winners": 28,
-      "quote_units": 146.44999999999996,
-      "quote_roi": 0.5788537549407113,
+      "races": 43,
+      "watches": 237,
+      "winners": 26,
+      "quote_units": 141.92499999999995,
+      "quote_roi": 0.5988396624472572,
       "largest_winning_quote": 28.0,
-      "bsp_watches": 253,
-      "bsp_roi": 0.14737351778656127
+      "bsp_watches": 237,
+      "bsp_roi": 0.15618776371308013
     }
   },
   "frozen_v6_replay": {

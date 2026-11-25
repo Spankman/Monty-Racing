@@ -31,17 +31,19 @@ V6 rated Sh'bourne Midnight below the normalized market and still returned a +35
 
 ## Historical recovery and settlement sensitivity
 
-Earlier official Betfair monthly exports supplied 24,797 retained AU markets from May 2025 to October 2026. There were 866 scheduled-off snapshot underrounds (3.49%). 588 were at or below 95.92% and 92 at or below 72.75%. A market-only V6-style control produced at least five $10+ watches in 626 races. The recovered sample supplies official outcomes, scheduled-off exchange best-back snapshots and Betfair SP. These are distinct from TAB fixed odds and neither simulated fill represents actual wagering. Five or more watches is an audit slice only.
+The 16 retained official Betfair monthly exports supply 22,499 AU markets from May 2025 to October 2026, excluding May and July 2026 under the current source-pin quarantine. There were 790 scheduled-off snapshot underrounds (3.51%). 537 were at or below 95.92% and 87 at or below 72.75%. A market-only V6-style control produced at least five $10+ watches in 573 races. The recovered sample supplies official outcomes, scheduled-off exchange best-back snapshots and Betfair SP. These are distinct from TAB fixed odds and neither simulated fill represents actual wagering. Five or more watches is an audit slice only.
 
 | Replay arm | Watches | Winners | Snapshot ROI | Betfair SP ROI |
 | --- | ---: | ---: | ---: | ---: |
-| Market-only V6-style, 626 clustered races | 4,435 | 199 | +20.97% | −3.27% |
+| Market-only V6-style, 573 clustered races | 4,059 | 176 | +21.08% | −4.10% |
 | Frozen V6, all 1,787-race replay watches | 4,047 | 160 | +1.76% | −10.05% |
 | Frozen V6, 212 clustered races | 1,292 | 54 | +41.13% | +5.64% |
 | Frozen V6, clustered non-underround races | 990 | 35 | −17.92% | −18.57% |
 | Frozen V6, clustered positive uplift and positive edge | 1,070 | 38 | −18.27% | −18.43% |
 
 Equal one-unit stakes and 5% commission on each winning return. Commission convention is a proxy, particularly for multiple positions in a market. The frozen V6 replay overlaps part of the monthly scope and uses an already-exposed period. One winning snapshot quote at $650 contributes 616.55 net units, more than that clustered arm's entire 531.38-unit net profit. Pricing and return concentration undermine a durable edge claim. The Betfair SP sensitivity is not a verified fill simulation. Independently timestamped fixed-price tickets and settlements are still needed. A historical V7 model replay for this watch rule was not performed. The evidence JSON includes the V7-style **market-only** control and must not be read as V7 model performance.
+
+The companion [historical performance study](HISTORICAL_PERFORMANCE_2026-11-25.md) found losses in later V7 longshot proxy arms even after excluding underrounds. Its V7 probability-floor sensitivities supply further evidence against lowering thresholds. The studies have different endpoints and subsets.
 
 ## Safeguards and delivery
 
