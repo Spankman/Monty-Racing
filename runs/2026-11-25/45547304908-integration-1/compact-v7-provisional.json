@@ -1,0 +1,550 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45547304908-integration-1",
+  "date": "2026-11-25",
+  "view": "provisional",
+  "version": "V7",
+  "status": "COMPLETED_ASSESSMENTS",
+  "races": [
+    {
+      "meeting": "Ipswich",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-25T06:33:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "Wondereach"
+        },
+        {
+          "number": "3",
+          "horse": "The Fixer"
+        },
+        {
+          "number": "7",
+          "horse": "American Conquest"
+        },
+        {
+          "number": "9",
+          "horse": "Rhuvaal"
+        },
+        {
+          "number": "17",
+          "horse": "Superhero"
+        }
+      ],
+      "captured_at": "2026-11-25T04:31:47.221258+00:00",
+      "independent_verification": false,
+      "provider_track_condition": null,
+      "provider_surface": null,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-25",
+        "meeting": "Ipswich",
+        "race": "7",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Prince Of Parwan",
+            "scratched": false,
+            "odds": 81.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 62.5,
+            "age": 6,
+            "jockey": "Olivia Kendal",
+            "trainer": "Michael Murphy"
+          },
+          {
+            "number": "2",
+            "horse": "Wondereach",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 15,
+            "jockey": "Corey Sutherland",
+            "trainer": "Jack Bruce"
+          },
+          {
+            "number": "3",
+            "horse": "The Fixer",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 12,
+            "jockey": "Taylor Marshall",
+            "trainer": "Jack Bruce"
+          },
+          {
+            "number": "4",
+            "horse": "Tomba",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 60.5,
+            "age": 5,
+            "jockey": "Emily Pozman",
+            "trainer": "Matthew Dunn"
+          },
+          {
+            "number": "5",
+            "horse": "Impendor",
+            "scratched": false,
+            "odds": 27.0,
+            "price_source": "fixed_win",
+            "barrier": 17,
+            "weight": 59.5,
+            "age": 6,
+            "jockey": "Jake Bayliss",
+            "trainer": "Matthew Dunn"
+          },
+          {
+            "number": "6",
+            "horse": "Midnight Spirit",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Ryan Maloney",
+            "trainer": "Tony Gollan"
+          },
+          {
+            "number": "7",
+            "horse": "American Conquest",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "jockey": "Jade Hampson",
+            "trainer": "Nicholas Beck"
+          },
+          {
+            "number": "8",
+            "horse": "Music Fever",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Andrew Mallyon",
+            "trainer": "Paula Barron"
+          },
+          {
+            "number": "9",
+            "horse": "Rhuvaal",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 16,
+            "jockey": "N.r",
+            "trainer": "John Dann"
+          },
+          {
+            "number": "10",
+            "horse": "Kalumburu",
+            "scratched": false,
+            "odds": 18.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 58.5,
+            "age": 7,
+            "jockey": "Emily Lang",
+            "trainer": "Tony Gollan"
+          },
+          {
+            "number": "11",
+            "horse": "Impervious",
+            "scratched": false,
+            "odds": 4.8,
+            "price_source": "fixed_win",
+            "barrier": 13,
+            "weight": 58,
+            "age": 4,
+            "jockey": "Angela Jones",
+            "trainer": "Tony Gollan"
+          },
+          {
+            "number": "12",
+            "horse": "Lion Class",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 58,
+            "age": 7,
+            "jockey": "Frederick Larson",
+            "trainer": "Lawrie Mayfield-Smith"
+          },
+          {
+            "number": "13",
+            "horse": "Special Artist",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Matthew Palmer",
+            "trainer": "Danny Parsons"
+          },
+          {
+            "number": "14",
+            "horse": "This Time Girl",
+            "scratched": false,
+            "odds": 12.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "Michael Rodd",
+            "trainer": "David Vandyke"
+          },
+          {
+            "number": "15",
+            "horse": "Tasman Bay",
+            "scratched": false,
+            "odds": 4.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 57,
+            "age": 5,
+            "jockey": "Anthony Allen",
+            "trainer": "Barry & Emma-Jane Lockwood & Vincent"
+          },
+          {
+            "number": "16",
+            "horse": "Cafe Au Lait",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Ben E Thompson",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "17",
+            "horse": "Superhero",
+            "scratched": true,
+            "odds": 11.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "Martin Harley",
+            "trainer": "Annabel & Rob Archibald"
+          }
+        ],
+        "active_runners": 12,
+        "priced_active_runners": 12,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "captured_at": "2026-11-25T04:31:47.221258+00:00",
+        "scheduled_start": "2026-11-25T06:33:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 12,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "9677078af2639728e5db1ba38f79c0015d33b67810b37a7484e6684ae61a8f10",
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "DATA BLOCKED",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_requires_consistent_price_provenance"
+        ],
+        "betting_authorised": false,
+        "prediction_classification": "DATA BLOCKED",
+        "betting_decision": "DATA BLOCKED",
+        "model_inference": false,
+        "assessment_level": "MODEL RANKINGS UNAVAILABLE",
+        "form_assessment_request": {
+          "classification": "FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION",
+          "model_version_requested": "V7",
+          "model_inference": false,
+          "model_status": "BLOCKED",
+          "target": {
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "7",
+            "country": "AU"
+          },
+          "reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "V7_requires_consistent_price_provenance"
+          ],
+          "facts": {
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "7",
+            "country": "AU",
+            "source": "Krok provider assertions; not independently TAB verified",
+            "provider_status": "open",
+            "known_runners": [
+              {
+                "number": "1",
+                "horse": "Prince Of Parwan",
+                "scratched": false,
+                "odds": 81.0,
+                "price_source": "fixed_win",
+                "barrier": 10,
+                "weight": 62.5,
+                "age": 6,
+                "jockey": "Olivia Kendal",
+                "trainer": "Michael Murphy"
+              },
+              {
+                "number": "2",
+                "horse": "Wondereach",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 15,
+                "jockey": "Corey Sutherland",
+                "trainer": "Jack Bruce"
+              },
+              {
+                "number": "3",
+                "horse": "The Fixer",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 12,
+                "jockey": "Taylor Marshall",
+                "trainer": "Jack Bruce"
+              },
+              {
+                "number": "4",
+                "horse": "Tomba",
+                "scratched": false,
+                "odds": 19.0,
+                "price_source": "fixed_win",
+                "barrier": 8,
+                "weight": 60.5,
+                "age": 5,
+                "jockey": "Emily Pozman",
+                "trainer": "Matthew Dunn"
+              },
+              {
+                "number": "5",
+                "horse": "Impendor",
+                "scratched": false,
+                "odds": 27.0,
+                "price_source": "fixed_win",
+                "barrier": 17,
+                "weight": 59.5,
+                "age": 6,
+                "jockey": "Jake Bayliss",
+                "trainer": "Matthew Dunn"
+              },
+              {
+                "number": "6",
+                "horse": "Midnight Spirit",
+                "scratched": false,
+                "odds": 7.0,
+                "price_source": "fixed_win",
+                "barrier": 2,
+                "weight": 59.5,
+                "age": 4,
+                "jockey": "Ryan Maloney",
+                "trainer": "Tony Gollan"
+              },
+              {
+                "number": "7",
+                "horse": "American Conquest",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 14,
+                "jockey": "Jade Hampson",
+                "trainer": "Nicholas Beck"
+              },
+              {
+                "number": "8",
+                "horse": "Music Fever",
+                "scratched": false,
+                "odds": 13.0,
+                "price_source": "fixed_win",
+                "barrier": 4,
+                "weight": 59,
+                "age": 6,
+                "jockey": "Andrew Mallyon",
+                "trainer": "Paula Barron"
+              },
+              {
+                "number": "9",
+                "horse": "Rhuvaal",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 16,
+                "jockey": "N.r",
+                "trainer": "John Dann"
+              },
+              {
+                "number": "10",
+                "horse": "Kalumburu",
+                "scratched": false,
+                "odds": 18.0,
+                "price_source": "fixed_win",
+                "barrier": 11,
+                "weight": 58.5,
+                "age": 7,
+                "jockey": "Emily Lang",
+                "trainer": "Tony Gollan"
+              },
+              {
+                "number": "11",
+                "horse": "Impervious",
+                "scratched": false,
+                "odds": 4.8,
+                "price_source": "fixed_win",
+                "barrier": 13,
+                "weight": 58,
+                "age": 4,
+                "jockey": "Angela Jones",
+                "trainer": "Tony Gollan"
+              },
+              {
+                "number": "12",
+                "horse": "Lion Class",
+                "scratched": false,
+                "odds": 21.0,
+                "price_source": "fixed_win",
+                "barrier": 7,
+                "weight": 58,
+                "age": 7,
+                "jockey": "Frederick Larson",
+                "trainer": "Lawrie Mayfield-Smith"
+              },
+              {
+                "number": "13",
+                "horse": "Special Artist",
+                "scratched": false,
+                "odds": 41.0,
+                "price_source": "fixed_win",
+                "barrier": 1,
+                "weight": 57.5,
+                "age": 4,
+                "jockey": "Matthew Palmer",
+                "trainer": "Danny Parsons"
+              },
+              {
+                "number": "14",
+                "horse": "This Time Girl",
+                "scratched": false,
+                "odds": 12.0,
+                "price_source": "fixed_win",
+                "barrier": 3,
+                "weight": 57.5,
+                "age": 5,
+                "jockey": "Michael Rodd",
+                "trainer": "David Vandyke"
+              },
+              {
+                "number": "15",
+                "horse": "Tasman Bay",
+                "scratched": false,
+                "odds": 4.0,
+                "price_source": "fixed_win",
+                "barrier": 6,
+                "weight": 57,
+                "age": 5,
+                "jockey": "Anthony Allen",
+                "trainer": "Barry & Emma-Jane Lockwood & Vincent"
+              },
+              {
+                "number": "16",
+                "horse": "Cafe Au Lait",
+                "scratched": false,
+                "odds": 5.0,
+                "price_source": "fixed_win",
+                "barrier": 5,
+                "weight": 56,
+                "age": 4,
+                "jockey": "Ben E Thompson",
+                "trainer": "Chris Waller"
+              },
+              {
+                "number": "17",
+                "horse": "Superhero",
+                "scratched": true,
+                "odds": 11.0,
+                "price_source": "fixed_win",
+                "barrier": 9,
+                "weight": 57.5,
+                "age": 5,
+                "jockey": "Martin Harley",
+                "trainer": "Annabel & Rob Archibald"
+              }
+            ],
+            "active_runners": 12,
+            "priced_active_runners": 12,
+            "field_identity_ambiguous": false,
+            "unknown_scratching_count": 0,
+            "historical_form_available": false,
+            "required_research": [
+              "current fields and scratchings",
+              "recent and relevant form",
+              "jockeys and trainers",
+              "barriers and weights",
+              "track conditions and distance suitability",
+              "available market prices and capture times"
+            ],
+            "distance_m": 1200,
+            "captured_at": "2026-11-25T04:31:47.221258+00:00",
+            "scheduled_start": "2026-11-25T06:33:00.000Z"
+          },
+          "required_research": [
+            "current fields and scratchings",
+            "recent and relevant form",
+            "jockeys and trainers",
+            "barriers and weights",
+            "track conditions and distance suitability",
+            "available market prices and capture times"
+          ],
+          "requires_fresh_public_sources": true,
+          "instruction": "Report the model status and blocker. No Monty selection can be given without genuine inference."
+        },
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-25T04:31:48.128516+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-25/45547304908-integration-1/receipt.json",
+  "blockers": [
+    "Betting approval DATA BLOCKED: no independent field/conditions attestation, compatible as-of history or validated prospective approval evaluator",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-25T04:31:47.221258+00:00",
+  "valid_until": "2026-11-25T04:36:47.221258+00:00",
+  "snapshot_only": true,
+  "compact_delivery": true
+}

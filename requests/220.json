@@ -1,0 +1,54 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-25",
+  "run_id": "45547304908-integration-1",
+  "status": "COMPLETED_ASSESSMENTS",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-25/45547304908-integration-1/receipt.json",
+  "forecast_path": "runs/2026-11-25/45547304908-integration-1/forecast.json",
+  "forecast_sha256": "1a5cbadbb68e890738842e4382555e89ca0c88128db4a1223d16f7b6094f4d68",
+  "generated_at": "2026-11-25T04:31:48.124149+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45547304908",
+  "captured_at": "2026-11-25T04:31:47.221258+00:00",
+  "valid_until": "2026-11-25T04:36:47.221258+00:00",
+  "models": {
+    "V6": {
+      "commit": "4daee6f66c745674fe6061cc7dda05b05f6e5117",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "BLOCKED",
+      "research_only": true,
+      "scored_races": 0,
+      "failed_races": 0,
+      "blocked_races": 1,
+      "expired_races": 0,
+      "delivery_status": "BLOCKED"
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "258fb27c516bf2152f56f0036f40d05494d14bc02a7e8eb7b8aa7e342d7cf974",
+  "delivery_manifest_path": "runs/2026-11-25/45547304908-integration-1/delivery-manifest.json",
+  "delivery_manifest_sha256": "1963fac3ceb3d10e89c9d0a7a22bdb44b2bc75e46879bb12b6b3af7db49e8f80",
+  "request": {
+    "command": "RM6 IPSWICH 7",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-25",
+    "meeting": "Ipswich",
+    "race": "7",
+    "country": "AU",
+    "provisional_requested": false
+  },
+  "request_id": 220,
+  "request_status": "COMPLETED"
+}
