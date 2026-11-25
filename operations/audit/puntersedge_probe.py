@@ -25,10 +25,12 @@ def observe(race,collector):
         for q in runner.get('bookmakers' if collector=='PuntersEdge' else 'odds',[]):
             quote_keys.update(q)
             book=str(q.get('key' if collector=='PuntersEdge' else 'bookmaker','')).casefold()
-            book={'sportsbet':'sportsbet','tab':'tab','tabtouch':'tabtouch','ladbrokes_au':'ladbrokes','ladbrokes':'ladbrokes'}.get(book,book)
+            book={'pointsbetau':'pointsbet','sportsbet':'sportsbet','tab':'tab','tabtouch':'tabtouch','ladbrokes_au':'ladbrokes','ladbrokes':'ladbrokes'}.get(book,book)
             price=q.get('win_price' if collector=='PuntersEdge' else 'win')
             if type(price) not in (int,float) or not 1<price<float('inf'):continue
             clocks={k:q[k] for k in ('last_update','last_seen_at','observed_at','captured_at','updated_at','age_seconds','stale') if k in q}
+            if collector=='PuntersEdge' and q.get('age_basis')=='poll':clocks['observation_at']=q.get('last_update')
+            elif collector=='Krok':clocks['observation_at']=q.get('captured_at') or q.get('observed_at')
             key=(number,name,book)
             if key in result:raise ValueError('Ambiguous same-runner/book quotes')
             result[key]=dict(price=price,clocks=clocks,source_url=q.get('source_url') or q.get('bet_link'))
@@ -58,10 +60,12 @@ def result_inventory(value):
 
 def compare(a,b,at):
     common=set(a)&set(b)
+    def observed(value):
+        try:return timestamp(value['clocks'].get('observation_at') or value['clocks'].get('captured_at'))
+        except (TypeError,ValueError,AttributeError):return None
     return dict(exact_runner_name_number_book_matches=len(common),same_price=sum(a[k]['price']==b[k]['price'] for k in common),
         first_only=len(set(a)-set(b)),second_only=len(set(b)-set(a)),
-        exact_observation_time_matches=sum(a[k]['clocks'].get('captured_at') is not None and
-            a[k]['clocks'].get('captured_at')==b[k]['clocks'].get('captured_at') for k in common),
+        exact_observation_time_matches=sum(observed(a[k]) is not None and observed(a[k])==observed(b[k]) for k in common),
         first=summarize({k:a[k] for k in common},at),second=summarize({k:b[k] for k in common},at),
         independence_established=False,limitation='Same-request window is not identical upstream observation time; matching prices never prove collector independence')
 
@@ -111,7 +115,7 @@ def main():
                     time.sleep(35)  # Cross documented 65s Free cache; no >60s wait.
                 start=now()
                 with ThreadPoolExecutor(max_workers=2) as pool:
-                    p=pool.submit(client.get,'/v1/racing/next-to-go',dict(params,venue=venue),command='PAIRED_SINGLE_RACE')
+                    p=pool.submit(client.get,'/v1/racing/next-to-go',dict(params,venue=venue,num_races=20),command='PAIRED_SINGLE_RACE')
                     k=pool.submit(request,'https://krokodds.com.au','/api/v1/racing/meetings',os.getenv('KROK_API_KEY',''),dict(date=day,country='AU',race_type='T',venue=venue,limit=50))
                     newer=p.result();ks,krok=k.result()
                 matches=[r for r in newer if r.get('race_id')==race_id]

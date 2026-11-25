@@ -59,6 +59,9 @@ class ProviderTests(unittest.TestCase):
     def test_budget_prevents_extra_requests(self):
         c=Client('fixture',budget=0,opener=lambda *a,**k:self.fail('Network must not run'))
         with self.assertRaisesRegex(ProviderError,'budget'):c.get('/v1/racing/events')
+        c=Client('fixture',budget=2,opener=lambda *a,**k:Response([]))
+        c.get('/v1/racing/next-to-go',{'num_races':20});self.assertEqual(c.reserved,2)
+        with self.assertRaisesRegex(ProviderError,'budget'):c.get('/v1/racing/next-to-go',{'num_races':20})
 
     def test_single_book_fields_keep_existing_features_and_scratchings(self):
         p=canonical_race(self.race,day='2026-11-25')
@@ -80,13 +83,15 @@ class ProviderTests(unittest.TestCase):
             self.assertEqual(q['quote_timestamps'],[])
 
     def test_no_mixed_books_or_partial_field_substitution(self):
-        for mutation in ('missing','duplicate','foreign','date','scratching'):
+        for mutation in ('missing','duplicate','foreign','date','scratching','closed','inplay'):
             r=deepcopy(self.race)
             if mutation=='missing':r['runners'][0]['bookmakers'][0]['key']='sportsbet'
             if mutation=='duplicate':r['runners'].append(deepcopy(r['runners'][0]))
             if mutation=='foreign':r['country']=None
             if mutation=='date':r['start_time']='2026-11-24T09:00:00Z'
             if mutation=='scratching':r['scratchings'][0]['number']=1
+            if mutation=='closed':r['status']='abandoned'
+            if mutation=='inplay':r['inplay_at']=self.now.isoformat()
             with self.subTest(mutation=mutation),self.assertRaises(ProviderError):canonical_race(r,day='2026-11-25')
 
     def test_stale_poll_stays_quarantined_without_changing_model_input(self):
@@ -107,6 +112,15 @@ class ProviderTests(unittest.TestCase):
         result=result_inventory([dict(status='partial',runners=None),dict(status='final',runners=[{'number':1}])])
         self.assertEqual(result['full_runner_rows'],1);self.assertEqual(result['unavailable_runner_lists'],1)
         self.assertFalse(result['independent_official_settlement'])
+
+    def test_cross_provider_book_aliases_and_observation_clocks_are_explicit(self):
+        from operations.audit.puntersedge_probe import observe,compare
+        pe=dict(runners=[dict(number=1,name='Fixture',bookmakers=[dict(key='pointsbetau',win_price=3.,age_basis='poll',last_update='2026-11-25T08:00:00Z')])])
+        krok=dict(runners=[dict(number=1,name='Fixture',is_scratched=False,odds=[dict(bookmaker='PointsBet',win=3.,captured_at='2026-11-25T08:00:00+00:00')])])
+        a,_,_=observe(pe,'PuntersEdge');b,_,_=observe(krok,'Krok');result=compare(a,b,self.now)
+        self.assertEqual(result['exact_runner_name_number_book_matches'],1)
+        self.assertEqual(result['exact_observation_time_matches'],1)
+        self.assertFalse(result['independence_established'])
 
 
 if __name__=='__main__':unittest.main()

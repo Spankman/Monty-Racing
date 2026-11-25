@@ -33,10 +33,15 @@ class Client:
     def get(self,path,params=None,*,command='STAGING'):
         if command.strip().upper()=='C':raise ProviderError('C cannot acquire data')
         if path not in COSTS:raise ProviderError('Unsupported read-only provider route')
+        estimated_cost=COSTS[path]
+        if path=='/v1/racing/next-to-go':
+            requested=int((params or {}).get('limit',(params or {}).get('num_races',10)))
+            if not 1<=requested<=200:raise ProviderError('Unsupported requested race count')
+            estimated_cost=2 if requested<=20 else 3 if requested<=60 else 4
         url=BASE+path+('?' + urlencode(params) if params else '')
         for attempt in range(2):
-            if self.reserved+COSTS[path]>self.budget:raise ProviderError('Staging request budget reached')
-            self.reserved+=COSTS[path]
+            if self.reserved+estimated_cost>self.budget:raise ProviderError('Staging request budget reached')
+            self.reserved+=estimated_cost
             started=time.monotonic();request_at=datetime.now(timezone.utc).isoformat()
             req=Request(url,headers={'X-API-Key':self._key,'Accept':'application/json','User-Agent':'Monty-personal-staging/1.0'})
             try:
@@ -85,6 +90,9 @@ def canonical_race(race,*,day,book='tab',acceptance=None):
     from zoneinfo import ZoneInfo
     if book not in BOOKS:raise ProviderError('Unsupported named fixed bookmaker')
     if race.get('country')!='AU' or race.get('category')!='horse':raise ProviderError('Confirmed AU thoroughbred race required')
+    if (race.get('market_closed_at') or race.get('inplay_at') or race.get('inplay') is True
+            or str(race.get('status','')).casefold() in ('closed','final','resulted','abandoned','cancelled','canceled')):
+        raise ProviderError('Race explicitly closed or in play')
     jump=timestamp(race['start_time'])
     if jump.astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()!=day:raise ProviderError('Race date mismatch')
     declarations={};seen=set();runners=[]
