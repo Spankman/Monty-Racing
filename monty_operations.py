@@ -301,7 +301,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             if not key:
                 raise ValueError('KROK_API_KEY absent; live request not attempted')
             with timed('provider_fetch', run_id, enabled=timings):
-                payload=fetch(day,key)
+                result['provider_usage']=[]
+                payload=fetch(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'))
         durations['provider_acquisition_seconds']=monotonic()-phase_started
         durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
         captured=captured or utcnow()
@@ -418,6 +419,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             context=m.get('market_context') or {}
             evidence={r['number']:r for r in context.get('quote_evidence',[])}
             quote_rows=[dict(r,quote_timestamps=evidence.get(r['number'],{}).get('quote_timestamps',[]),
+                             quote_time_basis=evidence.get(r['number'],{}).get('quote_time_basis'),
                              bookmaker=r.get('_bookmaker')) for r in runners]
             market_audit=analyze(quote_rows,expected_active=record['data_completeness']['active_runners'],
                 captured_at=captured.isoformat(),now=utcnow(),context=context)
@@ -477,6 +479,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                  models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
                  operational_outcome=result.get('operational_outcome'), operational_reason=result.get('operational_reason'),
                  processing_timings=durations,delivery_manifest_sha256=delivery_hash,
+                 provider_usage=result.get('provider_usage'),
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     return result

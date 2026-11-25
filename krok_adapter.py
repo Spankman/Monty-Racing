@@ -131,17 +131,24 @@ def normalize(payload,date,*,allow_restricted_classes=False):
     if not rows:raise IncompleteFields('No complete, priced, active thoroughbred fields found')
     return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows)), 'price_source_counts':{source:sum(r['_price_source']==source for r in rows) for source in sorted(set(r['_price_source'] for r in rows))}}
 
-def _fetch_body(req,deadline):
+def _fetch_body(req,deadline,meter=None,command=None):
     """Retry transient acquisition failures only; no alternate source/model."""
     for attempt in range(3):
+        attempt_started=time.monotonic()
         remaining=deadline-time.monotonic()
         if remaining<=0:raise ValueError('Krok acquisition deadline exceeded')
         try:
             with urllib.request.urlopen(req,timeout=min(20,remaining)) as response:
                 body=response.read(20_000_001)
+                if meter is not None:
+                    from operations.data_acquisition import record_usage
+                    record_usage(meter,req.full_url,getattr(response,'status',200),getattr(response,'headers',{}),command,attempt_started)
             if time.monotonic()>deadline:raise ValueError('Krok acquisition deadline exceeded')
             return body
         except urllib.error.HTTPError as exc:
+            if meter is not None:
+                from operations.data_acquisition import record_usage
+                record_usage(meter,req.full_url,exc.code,exc.headers,command,attempt_started)
             if exc.code not in (429,500,502,503,504) or attempt==2:raise
             from email.utils import parsedate_to_datetime
             retry=exc.headers.get('Retry-After','0')
@@ -153,24 +160,33 @@ def _fetch_body(req,deadline):
             if delay>=deadline-time.monotonic():raise ValueError('Krok retry exceeds acquisition deadline') from None
             time.sleep(delay)
         except (urllib.error.URLError,TimeoutError):
+            if meter is not None:
+                from operations.data_acquisition import record_usage
+                record_usage(meter,req.full_url,None,{},command,attempt_started)
             if attempt==2:raise
             time.sleep(min(.5*2**attempt,max(0,deadline-time.monotonic())))
 
 
-def fetch(date,key):
+def fetch(date,key,*,meter=None,command=None,country=None,venue=None,dated_card=False):
     """Follow explicit pagination markers; never accept an incomplete meeting feed."""
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
     params={'date':date,'race_type':'T','limit':50}
+    if country:
+        if country not in ('AU','NZ'):raise ValueError('Unsupported racing country')
+        params['country']=country
+    if venue:params['venue']=venue
+    endpoint=BASE+'/'+date if dated_card else BASE
+    if dated_card:params.pop('date')
     seen=set()
     meetings=[]
     declared_total=None
     deadline=time.monotonic()+60
     for page_index in range(100):
-        url=BASE+'?'+urllib.parse.urlencode(params)
+        url=endpoint+'?'+urllib.parse.urlencode(params)
         if url in seen:raise ValueError('Repeated meeting pagination pointer')
         seen.add(url)
         req=urllib.request.Request(url,headers={'X-API-Key':key,'Accept':'application/json','User-Agent':'Monty-V6/0.5'})
-        body=_fetch_body(req,deadline)
+        body=_fetch_body(req,deadline,meter,command) if meter is not None else _fetch_body(req,deadline)
         if len(body)>20_000_000:raise ValueError('Response too large')
         payload=json.loads(body)
         if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
