@@ -45,7 +45,9 @@ def quote_evidence(runner):
         # unlike semantics as if they were duplicate timestamps.
         captured=[selected_offer[k] for k in ('captured_at','capturedAt') if selected_offer.get(k) is not None]
         times=captured or [selected_offer[k] for k in ('quoted_at','updated_at') if selected_offer.get(k) is not None]
-        if captured:basis='KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE'
+        if captured:
+            collector='PUNTERSEDGE' if selected_offer.get('_collector')=='PuntersEdge' else 'KROK'
+            basis=collector+'_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE'
     elif origin and runner.get(origin+'_captured_at') is not None:
         times=[runner[origin+'_captured_at']];basis='KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE'
     return dict(number=str(runner.get('number')), horse=runner.get('name'), odds=selected,

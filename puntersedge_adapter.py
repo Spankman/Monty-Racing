@@ -68,3 +68,59 @@ def safe_usage(value):
     """No email, key metadata, billing links or upgrade URLs in reports."""
     keys=('plan','credits_used','credits_limit','credits_remaining','period_start','next_reset_at','reset_at')
     return {k:value[k] for k in keys if k in value and isinstance(value[k],(str,int,float))}
+
+
+BOOKS={'tab':'TAB','sportsbet':'Sportsbet','ladbrokes_au':'Ladbrokes','neds':'Neds',
+       'pointsbetau':'PointsBet','tabtouch':'TABtouch','unibet':'Unibet','betdeluxe':'BetDeluxe','playup':'PlayUp'}
+
+
+def canonical_race(race,*,day,book='tab',acceptance=None):
+    """One explicit full fixed-WIN book -> existing feature builder, no fitting.
+
+    Non-poll time bases remain timestamp-unverified. No best-of-book synthesis,
+    name-derived national identity, historical stats, expert or exotic inputs.
+    A returned payload supports provisional scoring; it is never betting approval.
+    """
+    from operations.market_integrity import timestamp
+    from zoneinfo import ZoneInfo
+    if book not in BOOKS:raise ProviderError('Unsupported named fixed bookmaker')
+    if race.get('country')!='AU' or race.get('category')!='horse':raise ProviderError('Confirmed AU thoroughbred race required')
+    jump=timestamp(race['start_time'])
+    if jump.astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()!=day:raise ProviderError('Race date mismatch')
+    declarations={};seen=set();runners=[]
+    for r in race.get('runners',[]):
+        number=str(r.get('number'))
+        if not number.isdigit() or int(number)<1 or not isinstance(r.get('name'),str) or not r['name'].strip() or number in seen:
+            raise ProviderError('Invalid or duplicate runner identity')
+        seen.add(number);declarations[number]=r['name']
+        quotes=[q for q in r.get('bookmakers',[]) if q.get('key')==book]
+        if len(quotes)!=1:raise ProviderError('Complete single-book field required')
+        q=quotes[0];p=q.get('win_price')
+        if type(p) not in (int,float) or not 1<p<float('inf'):raise ProviderError('Invalid fixed-win price')
+        offer=dict(bookmaker=BOOKS[book],win=p,_collector='PuntersEdge')
+        # next-to-go age_basis=poll is the collector's own read; last_update
+        # there is not /markets.observed_at (a last price-change clock).
+        if q.get('age_basis')=='poll' and q.get('last_update'):
+            timestamp(q['last_update'])  # No naive timestamps or invented UTC.
+            offer['captured_at']=q['last_update']
+        row=dict(number=r['number'],name=r['name'],is_scratched=False,odds=[offer],
+            fixed_win=p,fixed_win_bookmaker=BOOKS[book])
+        for source,target in [('barrier','barrier'),('weight','weight'),('jockey','jockey'),('trainer','trainer')]:
+            if r.get(source) is not None:row[target]=r[source]
+        runners.append(row)
+    if len(runners)<2:raise ProviderError('At least two active runners required')
+    for r in race.get('scratchings',[]) or []:
+        number=str(r.get('number'))
+        if not number.isdigit() or int(number)<1 or number in seen or not r.get('name'):raise ProviderError('Conflicting scratching identity')
+        seen.add(number);declarations[number]=r['name']
+        runners.append(dict(number=r['number'],name=r['name'],is_scratched=True))
+    if acceptance is not None:
+        # Explicit number+name+scratching agreement, never name-only crosswalk.
+        expected={str(r['number']):(r['name'],r['scratched']) for r in acceptance}
+        actual={str(r['number']):(r['name'],r['is_scratched']) for r in runners}
+        if len(expected)!=len(acceptance) or expected!=actual:raise ProviderError('Acceptance field mismatch')
+    meeting=dict(venue=race['venue'],country='AU',type='T',date=day,races=[dict(number=race['race_number'],
+        jump_time=race['start_time'],status='open',name=race.get('race_name'),race_class=race.get('race_class'),
+        distance_m=race.get('distance_m'),track_condition=race.get('track_condition'),runner_count=len(runners),runners=runners)])
+    return dict(success=True,data=[meeting],meta=dict(has_more=False,provider='PuntersEdge',
+        source_race_id=race.get('race_id'),independent_verification=False,historical_features_joined=False))
