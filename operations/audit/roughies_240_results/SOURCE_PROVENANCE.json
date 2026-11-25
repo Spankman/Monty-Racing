@@ -1,0 +1,18 @@
+{
+  "forecast_sha256": "23a5e11588539e56621b52965808b00ce1433dc37b895242ad900ddde3883875",
+  "receipt_sha256": "af2c36b18c461169bf6f01aca75d7435467b27f1fb6cdb3e982619484d2b2409",
+  "artifact_sha256": "7cdf2ffe6d5fb6b5ec7e479e17ae7eec64560a0966a8b4ab9ca1635a257798a3",
+  "workflow": "https://github.com/Spankman/Monty-Racing/actions/runs/45716359662",
+  "source_metadata": "Sources retrieved and hashed without new provider requests; artifact contains only public tickets/forecasts, no original private scoring inputs",
+  "historical_source_pins": {
+    "2025_06": "28506a24860054d2a6165efbec08099224fb680396f32820f732da1f815f5577",
+    "2026_06": "2dd54c8192a3343682d4a58dc8009cb977ced248e3a964d576806b6f0b159657",
+    "2026_08": "95924de75b45c12ae0287cd4f995de8473b70b3b3996c38cbebcbf4f3617ef7a",
+    "2026_09": "0f617ead2a413a0b706b8070af299c7dfc2d9bd8ae46bc5955280a2f96f035f1",
+    "2026_10": "e68c268a6872bc01ec88325c9eaa3a697ba4f2d48f439211e990a653c554402f"
+  },
+  "full_input_manifest_sha256": "99485842dc4d120f9c6f930889d42a6a317cfe9b6db2c6b5799a3e1063948c20",
+  "private_full_runner_audit_sha256": "eecfaefbf40c3aa8b1e2fb978670e7aaa22c1a7ee577e7f3d300d105eb2e0ec1",
+  "private_pairwise_contrasts_sha256": "675425112e4257ad2c030032fa4c849469a1d64fe0406482e0bb9d8bc1ee0640",
+  "provider_calls": 0
+}

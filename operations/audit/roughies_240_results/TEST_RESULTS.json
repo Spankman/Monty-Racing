@@ -1,0 +1,24 @@
+{
+  "operational": {
+    "tests": 198,
+    "seconds": 1.598,
+    "exit_code": 0
+  },
+  "runner": {
+    "tests": 158,
+    "seconds": 1.084,
+    "exit_code": 0
+  },
+  "frozen": {
+    "tests": 13,
+    "exit_code": 0,
+    "artifact_hashes": 55,
+    "refitted": false,
+    "replayed_runners": 17987,
+    "replayed_races": 1787,
+    "maximum_probability_difference": 1.6653345369377348e-16
+  },
+  "new_ruffie_tests": 16,
+  "live_credit_consumption": 0,
+  "offline_fixtures_are_not_live_acceptance": true
+}

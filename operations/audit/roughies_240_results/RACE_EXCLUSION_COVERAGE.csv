@@ -1,0 +1,39 @@
+meeting,race,version,status,active_runners,preserved_runners,unpreserved_runners,longshots_preserved,complete_ranked_field,saved_watches,observed_book_lower_bound_pct,full_book_pct,exclusion_scope
+Geraldton,3,V6,SCORED,7,2,5,0,False,0,73.80952380952381,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Geraldton,3,V7,SCORED,7,2,5,0,False,0,73.80952380952381,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Geraldton,4,V6,SCORED,14,2,12,0,False,0,52.52525252525253,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Geraldton,4,V7,SCORED,14,2,12,0,False,0,52.52525252525253,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Geraldton,5,V6,SCORED,16,2,14,0,False,0,48.611111111111114,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Geraldton,5,V7,SCORED,16,2,14,0,False,0,48.611111111111114,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Geraldton,6,V6,SCORED,11,2,9,0,False,0,78.82352941176471,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Geraldton,6,V7,SCORED,11,2,9,0,False,0,78.82352941176471,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Geraldton,7,V6,SCORED,11,2,9,0,False,0,48.57142857142857,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Geraldton,7,V7,SCORED,11,2,9,0,False,0,48.57142857142857,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Geraldton,8,V6,SCORED,10,2,8,0,False,0,73.46491228070175,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Geraldton,8,V7,SCORED,10,2,8,0,False,0,73.46491228070175,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Hawkesbury,1,V6,SCORED,5,3,2,0,False,0,101.63983303518187,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Hawkesbury,1,V7,SCORED,5,3,2,0,False,0,101.63983303518187,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Hawkesbury,3,V6,SCORED,8,2,6,0,False,0,68.18181818181817,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Hawkesbury,3,V7,SCORED,8,2,6,0,False,0,68.18181818181817,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Hawkesbury,4,V6,SCORED,8,2,6,0,False,0,52.38095238095237,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Hawkesbury,4,V7,SCORED,8,2,6,0,False,0,52.38095238095237,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Hawkesbury,7,V6,SCORED,9,3,6,0,False,0,85.04594820384294,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Hawkesbury,7,V7,SCORED,9,3,6,0,False,0,85.04594820384294,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Mornington,5,V6,SCORED,9,3,6,0,False,0,85.09615384615384,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Mornington,5,V7,SCORED,9,3,6,0,False,0,85.09615384615384,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Mornington,6,V6,SCORED,9,4,5,0,False,0,107.42690058479532,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Mornington,6,V7,SCORED,9,4,5,0,False,0,107.42690058479532,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Mornington,7,V6,SCORED,8,2,6,0,False,0,62.27106227106227,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Mornington,7,V7,SCORED,8,2,6,0,False,0,62.27106227106227,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Mornington,8,V6,SCORED,8,3,5,0,False,0,89.45868945868945,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Mornington,8,V7,SCORED,8,3,5,0,False,0,89.45868945868945,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Rockhampton,2,V6,SCORED,6,3,3,0,False,0,102.76162790697674,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Rockhampton,2,V7,BLOCKED,6,0,6,0,False,0,0,,independent_fields_scratchings_and_going_unverified;historical_form_incomplete;prospective_value_unverified;named_bookmaker_fixed_win_not_available_for_entire_field;V7_requires_consistent_price_provenance
+Rockhampton,3,V6,SCORED,6,2,4,0,False,0,75.0,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Rockhampton,3,V7,SCORED,6,2,4,0,False,0,75.0,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Rockhampton,4,V6,SCORED,5,2,3,0,False,0,89.51612903225806,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Rockhampton,4,V7,SCORED,5,2,3,0,False,0,89.51612903225806,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Rockhampton,5,V6,SCORED,8,3,5,0,False,0,83.408959656794,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Rockhampton,5,V7,SCORED,8,3,5,0,False,0,83.408959656794,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
+Rockhampton,6,V6,SCORED,10,3,7,0,False,0,97.18196457326891,,Raw V6 watches empty implies no scored $10+ runner passed p*odds>1; missing identities/probabilities cannot be recovered
+Rockhampton,6,V7,SCORED,10,3,7,0,False,0,97.18196457326891,,"Raw V7 watches empty implies every scored $10+ runner failed p>=0.06 or p*odds>1, possibly both; individual cause unavailable"
