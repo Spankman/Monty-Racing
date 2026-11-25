@@ -143,7 +143,7 @@ calibration fitting or historical leakage was introduced.
 
 ## Tests and prospective process
 
-Local final code: 133 operational contract tests, 152 existing runner checks and
+Local final code: 136 operational contract tests, 152 existing runner checks and
 13 frozen V6 tests passed. Historical replay: 17,987 runners / 1,787 races,
 maximum probability difference 1.6653345369377348e-16; all 55 original hashes
 verified; `refitted=false`. Final CI must be checked on the final proposed head,

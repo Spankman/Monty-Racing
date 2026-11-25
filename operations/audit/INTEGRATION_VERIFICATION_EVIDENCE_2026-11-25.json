@@ -6,7 +6,7 @@
   "pull_request": 213,
   "production_baseline": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
   "tests": {
-    "operational_contracts": 133,
+    "operational_contracts": 136,
     "runner_checks": 152,
     "frozen_v6": 13,
     "historical_replay": {
@@ -844,5 +844,15 @@
   "model_hashes": {
     "V6": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
     "V7": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324"
+  },
+  "archived_source_regression": {
+    "219": {
+      "declared_runners": 10,
+      "explicit_withdrawals": 2
+    },
+    "220": {
+      "declared_runners": 17,
+      "explicit_withdrawals": 4
+    }
   }
 }

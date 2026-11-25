@@ -157,3 +157,10 @@ class IncompleteAuthorityTests(unittest.TestCase):
         pdf='Ipswich Wednesday 25 November, 2026\n7 THE LAWN SHED BENCHMARK 70\n1200 metres\n01 First(Trainer One) Jockey\n02 Missing Trainer\n03 Third(Trainer Three) Jockey\n'
         with patch('subprocess.run',return_value=SimpleNamespace(stdout=pdf.encode())):
             with self.assertRaisesRegex(ValueError,'field incomplete'):rq_declaration(html,b'%PDF','2026-11-25','Ipswich',7)
+
+class ExplicitWithdrawalTests(PrimaryBookTests):
+    def test_published_scratching_without_deduction_is_valid(self):
+        d=self.state();d['entities']['sportsbook']['events']['99']['deductions']=[]
+        body=('<p>2. Withdrawal (7) Scratched</p><script>window.__PRELOADED_STATE__ = '+json.dumps(d)+';</script>').encode()
+        result=sportsbet(body,'https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-99','2026-11-25','Ipswich',4)
+        self.assertTrue(result['runners'][1]['scratched'])

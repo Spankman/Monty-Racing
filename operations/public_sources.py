@@ -71,7 +71,8 @@ def sportsbet(body,url,day,meeting,race):
         # An inactive quote can mean suspension. Require an explicit withdrawal,
         # rather than turning missing prices into invented scratchings.
         withdrawals=[d for d in event.get('deductions',[]) if str(d.get('runnerNumber'))==str(row['runnerNumber']) and d.get('isValid')=='Y']
-        scratched=row.get('result')=='V' and any(d.get('name','').casefold()==row['name'].casefold() for d in withdrawals)
+        visible_withdrawal=bool(re.search(r'(?<!\d)'+re.escape(str(row['runnerNumber']))+r'\.\s+'+re.escape(row['name'])+r'\s+\(\d+\)\s+Scratched\b',soup.get_text(' ',strip=True)))
+        scratched=row.get('result')=='V' and (visible_withdrawal or any(d.get('name','').casefold()==row['name'].casefold() for d in withdrawals))
         if not row['active'] and not scratched:raise ValueError('Sportsbet inactive runner without explicit withdrawal evidence')
         if row['active'] and scratched:raise ValueError('Sportsbet conflicting active/withdrawal evidence')
         price=None
