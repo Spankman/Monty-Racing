@@ -108,7 +108,7 @@ Machine-readable arithmetic and command replay evidence:
 
 ## Validation and limits
 
-Local suites: 151 operational contracts (including eight new market tests),
+Local suites: 152 operational contracts (including nine new market tests),
 155 existing runner checks, and 13 frozen V6 checks passed. The suites overlap;
 these counts must not be summed as distinct tests. New tests cover exact incident
 books, comparison to Work's saved uplifts, additive decomposition, incomplete

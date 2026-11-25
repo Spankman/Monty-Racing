@@ -78,6 +78,12 @@ class MarketTests(unittest.TestCase):
         self.assertEqual([r['number'] for r in original],[r['number'] for r in model['roughies']])
         self.assertFalse(model['betting_authorised']);self.assertEqual(model['recommended_bet_type'],'NO BET')
 
+    def test_market_warnings_do_not_reclassify_technical_failure_or_expiry(self):
+        for outcome in ('EXECUTION FAILED','EXPIRED'):
+            model=dict(status='FAILED',betting_decision=outcome)
+            attach(model,self.audit())
+            self.assertEqual(model['betting_decision'],outcome)
+
 
 class IncidentTests(unittest.TestCase):
     def setUp(self):

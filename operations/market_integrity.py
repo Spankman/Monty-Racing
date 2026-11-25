@@ -152,7 +152,8 @@ def attach(model, audit):
         row.update(classification='DIAGNOSTIC ROUGHIE WATCH — NO BET',market_warnings=audit['warnings'])
     model['recommended_bet_type']='NO BET'
     model['betting_authorised']=False
-    if audit['warnings'] and model.get('betting_decision')!='EXPIRED':model['betting_decision']='DATA BLOCKED'
+    if audit['warnings'] and model.get('betting_decision') not in ('EXPIRED','EXECUTION FAILED'):
+        model['betting_decision']='DATA BLOCKED'
     model.setdefault('value_evidence',{}).update(market_quarantined=bool(audit['warnings']),
         edge_decomposition='numerical edge = market-only normalization edge + model edge contribution',
         independent_model_value_verified=False)
