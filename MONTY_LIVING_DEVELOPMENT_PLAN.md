@@ -51,3 +51,14 @@ ChatGPT, Work and Codex may independently remove or disable redundant, ineffecti
 - [ ] Require genuinely later prospective improvement and owner approval before model/weight/threshold activation.
 
 PR241 carries an older copied plan plus its additive issue240 section; reconcile it with this newer shared PR234 register before any eventual merge, retaining the substantive audit findings. Both remain unmerged. Keep both test_ruffies and test_pe_trial when eventually integrating their parallel CI additions. The six-day PE trial is untouched. Explicit owner instructions, including the $4 fixed-win progression, supersede older unresolved-cutoff wording. No betting policy change is made here.
+
+## Independent predictive development — 26 November 2026
+
+- [x] P0: Restore and verify the original AU archive, inventory matched context and recheck the pinned place sources, Queensland sectional captures and public PuntersEdge closing lines. Coverage and availability gaps are recorded.
+- [ ] P0: Build registration-level, timestamped form and settlement joins, starting with permitted Australian authority data. Source independently complete named-bookmaker snapshots before testing fixed-win value. Keep missing source vintage and unresolved identities explicit.
+- [x] P1: Test market, conditional logit, Benter-style combination, maintenance of market-calibration control, completeness-adaptive combination, PLS-inspired control and boosted challenger in four historical folds. Independent history helps standalone form but incremental market benefit is unproven. Exact Australian PLS replication remains open.
+- [x] P2: Test a partial prior-start and connection block and four roughie bands. Record insufficient incremental edge and rare-winner sensitivity. No thresholds changed.
+- [ ] P2: Isolate trainer-intent contributions on later authority-linked data. Gear/gelding, pedigree, speed/pace and hidden form require verified dated inputs and a separate ablation. Validate named-bookmaker and prospective outcomes on separate cohorts.
+- [ ] Obtain genuinely later paired confirmation before considering any promotion or weight change. Existing official approval and all integrity rules apply.
+
+[Draft #242 and evidence](https://github.com/Spankman/Monty-Racing/pull/242), research head `ad47142f9b824d74d05d30cdc467a416ad987229`. Codex data and engineering requirements are in the linked research handover. The six-day PuntersEdge trial remains a separate workstream.
