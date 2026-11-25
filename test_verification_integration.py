@@ -84,3 +84,29 @@ class PairTests(unittest.TestCase):
         self.assertIn('RESEARCH ONLY',result['tickets'][1]['text'])
         f['races'][1]['captured_at']=(self.now-timedelta(seconds=1)).isoformat()
         with self.assertRaises(ValueError):paired(f,self.now)
+
+class DeliveryTests(unittest.TestCase):
+    setUp=fixtures.RunTests.setUp
+    run_it=fixtures.RunTests.run_it
+    scorer=fixtures.RunTests.scorer
+    def test_preview_manifest_is_bound_to_full_forecast_and_contains_real_rankings(self):
+        from operations.delivery import compact
+        import hashlib
+        f=self.run_it();p=self.root/'output/public'
+        receipt=json.loads((p/'receipt.json').read_text());raw=(p/'delivery-manifest.json').read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),receipt['delivery_manifest_sha256'])
+        m=json.loads(raw);self.assertEqual(m['forecast_sha256'],ops.sha(p/'forecast.json'))
+        for preview in m['previews']:
+            b=(p/preview['path']).read_bytes();self.assertEqual(hashlib.sha256(b).hexdigest(),preview['sha256'])
+            self.assertLess(len(b),900_000)
+        view=json.loads((p/'compact-v6-official.json').read_text())
+        self.assertTrue(view['races'][0]['result']['diagnostic_assessment']['ordered_selections'])
+        expired=ops.refresh_view(view,self.now+timedelta(minutes=5))
+        self.assertNotIn('diagnostic_assessment',expired['races'][0]['result'])
+    def test_contents_empty_large_file_uses_readonly_git_blob(self):
+        import base64
+        from operations import transport
+        blob=b'complete forecast bytes'
+        with patch.object(transport,'api',side_effect=[{'sha':'a'*40,'encoding':'none','content':''},{'encoding':'base64','content':base64.b64encode(blob).decode()}]) as api:
+            self.assertEqual(transport.read_bytes('large.json'),blob)
+            self.assertEqual(api.call_args_list[1].args,('git/blobs/'+'a'*40,))

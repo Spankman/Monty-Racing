@@ -23,3 +23,15 @@ class CrosswalkTests(unittest.TestCase):
         links, blockers = resolve([authority, authority2], [betfair, betfair2], cutoff)
         self.assertFalse(links)
         self.assertEqual(sum(b[-1] == 'conflicting_registration' for b in blockers), 2)
+
+    def test_same_race_rejects_contradictory_attributes_and_repeated_registration(self):
+        cutoff=datetime(2026,11,25,5,tzinfo=timezone.utc)
+        race=('AU-QLD','2026-11-25','Ipswich',4,2150)
+        a=Evidence('authority','registered-1',race,1,'Fixture',cutoff,'authority hash',birth_year=2022,sex='gelding')
+        b=replace(a,source='Betfair',source_id='selection-1',reference='exchange hash')
+        for change in [dict(birth_year=2021),dict(sex='mare')]:
+            links,blocked=resolve([a],[replace(b,**change)],cutoff)
+            self.assertFalse(links);self.assertTrue(any(x[-1]=='conflicting_identity_attributes' for x in blocked))
+        a2=replace(a,saddlecloth=2);b2=replace(b,saddlecloth=2,source_id='selection-2')
+        links,blocked=resolve([a,a2],[b,b2],cutoff)
+        self.assertFalse(links);self.assertTrue(any(x[-1]=='same_registration_twice_in_race' for x in blocked))

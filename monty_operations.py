@@ -399,17 +399,23 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     durations['before_report_seconds']=report_started-execution_started
     write(public/'forecast.json',result)
     durations['forecast_write_seconds']=monotonic()-report_started
-    receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
-                 forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
-                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
-                 processing_timings=durations,
-                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
-    write(public/'receipt.json',receipt)
+    delivery_views=[]
     for version in ['V6','V7']:
         modes = ['official', 'provisional', 'shadow'] if version == 'V7' else ['official', 'provisional']
         for mode in modes:
             view = projection(result, dict(version=version, view=mode))
-            write(public/(version.lower()+'-'+mode+'.json'), dict(view, snapshot_only=True))
+            filename=version.lower()+'-'+mode+'.json'
+            value=dict(view,snapshot_only=True)
+            write(public/filename,value)
+            delivery_views.append((filename,value))
+    from operations.delivery import manifest
+    delivery_hash=manifest(public,result,delivery_views)
+    receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
+                 forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
+                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 processing_timings=durations,delivery_manifest_sha256=delivery_hash,
+                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
+    write(public/'receipt.json',receipt)
     return result
 
 

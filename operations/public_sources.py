@@ -99,3 +99,37 @@ def rq_facts(body,day,meeting,race):
         hour=int(jump[1])%12+(12 if jump[3].lower()=='pm' else 0)
         fields['scheduled_start']=datetime(date.year,date.month,date.day,hour,int(jump[2]),tzinfo=ZoneInfo('Australia/Brisbane')).astimezone(timezone.utc).isoformat()
     return fields
+
+
+def rq_declaration(body,pdf,day,meeting,race):
+    """Join the published authority field PDF and its explicit scratching section.
+
+    No emergency is declared resolved from a missing marker in a partial field.
+    An emergency listed in the complete race section remains unresolved here.
+    """
+    import subprocess,calendar
+    facts=rq_facts(body,day,meeting,race)
+    document=subprocess.run(['pdftotext','-raw','-','-'],input=pdf,capture_output=True,timeout=10,check=True).stdout.decode()
+    normalized=' '.join(document.replace(',','').split())
+    date=datetime.fromisoformat(day)
+    if meeting.casefold() not in normalized.casefold() or f'{date.day} {calendar.month_name[date.month]} {date.year}' not in normalized:
+        raise ValueError('Authority PDF date/meeting mismatch')
+    start=re.search(r'(?m)^\s*'+str(race)+r'\s+(?=[A-Z][A-Z ]{3})',document)
+    if not start:raise ValueError('Authority PDF race heading absent')
+    tail=document[start.end():];end=re.search(r'(?m)^\s*'+str(int(race)+1)+r'\s+(?=[A-Z][A-Z ]{3})',tail)
+    block=tail[:end.start()] if end else tail
+    if not re.search(r'\b'+str(facts['distance_m'])+r'\s+metres\b',block):raise ValueError('Authority PDF distance mismatch')
+    rows=[]
+    for chunk in re.split(r'(?m)(?=^\s*\d{2}\s+)',block):
+        flat=' '.join(chunk.split())
+        match=re.match(r'^(\d{2})\s+(\(EM\))?\s*(.+?)\((?!(?:NZ|AUS|GB|IRE|FR|USA)\))[^()]+\)',flat)
+        if match:rows.append(dict(number=str(int(match[1])),horse=match[3].strip(),scratched=False,emergency=bool(match[2])))
+    text=BeautifulSoup(body,'html.parser').get_text('\n',strip=True)
+    if 'Scratchings' not in text or 'Stewards Summary' not in text:raise ValueError('Authority scratching section not available')
+    section=text.rsplit('Scratchings',1)[1].split('Stewards Summary',1)[0]
+    scratched=[dict(number=str(int(n)),horse=horse.strip(),scratched=True,emergency=False) for n,horse in re.findall(r'(?m)^\s*(\d+)\.\s*([^\n]+)',section)]
+    if not scratched and not re.search(r'no scratchings|nil',section,re.I):raise ValueError('Authority scratching status not explicit')
+    rows+=scratched
+    if len(rows)<2 or len({r['number'] for r in rows})!=len(rows):raise ValueError('Authority declared field incomplete or contradictory')
+    facts.update(runners=rows,field_verified=True,emergency_status_verified=not any(r['emergency'] for r in rows))
+    return facts

@@ -3,7 +3,7 @@ import copy,json,os,sys,time
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import monty_operations as ops
-from operations.public_sources import capture,sportsbet,rq_facts
+from operations.public_sources import capture,sportsbet,rq_facts,rq_declaration
 from operations.prospective import freeze
 
 
@@ -30,7 +30,7 @@ def main():
     os.environ['OPERATIONS_RESULTS_BRANCH']='monty-verification-staging-results'
     os.environ['OPERATIONS_ISSUE_COMMENTS']='1'
     from operations import transport,issue_delivery,client
-    issue=212;tag=os.environ['GITHUB_RUN_ID'];workflow=f'https://github.com/{transport.REPO}/actions/runs/{tag}'
+    issue=214;tag=os.environ['GITHUB_RUN_ID'];workflow=f'https://github.com/{transport.REPO}/actions/runs/{tag}'
     opened=transport.api(f'issues/{issue}')
     if opened['user']['login']!='Spankman' or opened['title']!='Monty verification staging — integrated command and source pilot':raise ValueError('Wrong staging issue')
     started=ops.utcnow();day=started.astimezone(ops.TZ).date().isoformat()
@@ -44,21 +44,41 @@ def main():
     urls=[('tab','https://www.tab.com.au/racing/'+day),
           ('authority_ipswich','https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/'+day.replace('-','')+'/race/4'),
           ('authority_wyong','https://racing.racingnsw.com.au/FreeFields/Acceptances.aspx?Key='+day[:4]+'Nov'+day[-2:]+',NSW,Wyong')]
-    authority=None
+    authority=None;authority_body=None;authority_meta=None
     for key,url in urls:
         meta,body=capture(url,private);summary['sources'].append(dict(meta,role=key))
         if key=='authority_ipswich' and body:
-            try:authority=rq_facts(body,day,'Ipswich',4);summary['authority_metadata']=authority
+            try:
+                authority=rq_facts(body,day,'Ipswich',4);summary['authority_metadata']=authority
+                authority_body=body;authority_meta=meta
+                from bs4 import BeautifulSoup
+                from urllib.parse import urljoin
+                links=[a.get('href') for a in BeautifulSoup(body,'html.parser').find_all('a',href=True) if 'Race Fields PDF' in a.get_text(' ',strip=True)]
+                if len(links)==1:
+                    pdf_meta,pdf=capture(urljoin(url,links[0]),private);summary['sources'].append(dict(pdf_meta,role='authority_field_pdf'))
+                    if pdf and pdf.startswith(b'%PDF'):
+                        authority=rq_declaration(body,pdf,day,'Ipswich',4);summary['authority_metadata']=authority
             except Exception as exc:summary['authority_parse_error']=type(exc).__name__
     # Second Australian pilot: record the actual NSW source outcome, not a cached
     # search snippet. No attempt to defeat a challenge or repeat a denied request.
     summary['independent_verification_seconds']=round(time.monotonic()-stage,6)
     operator_url='https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566'
-    op_meta,body=capture(operator_url,private);summary['sources'].append(dict(op_meta,role='operator_ipswich'))
+    packet_path=Path('.monty/verification-operator-packet.json')
     operator=None
-    if body:
-        try:operator=sportsbet(body,operator_url,day,'Ipswich',4)
-        except Exception as exc:summary['operator_parse_error']=type(exc).__name__
+    if packet_path.exists():
+        packet=json.loads(packet_path.read_text());op_meta=packet['capture'];operator=packet['operator']
+        summary['operator_acquisition_mode']='one-off permitted workspace public-page capture; Actions direct access was denied; not unattended production acceptance'
+        import hashlib
+        if packet.get('operator_sha256')!=hashlib.sha256(json.dumps(operator,sort_keys=True,separators=(',',':')).encode()).hexdigest() or op_meta.get('source_url')!=operator_url or op_meta.get('http_status')!=200:raise ValueError('Operator packet provenance mismatch')
+        age=(ops.utcnow()-ops.timestamp(op_meta['observed_at'])).total_seconds()
+        if not (0<=age<ops.MAX_AGE_SECONDS) or op_meta.get('status')!='CAPTURED' or operator['date']!=day:
+            operator=None;summary['operator_parse_error']='OperatorPacketExpiredOrUnverified'
+    else:
+        op_meta,body=capture(operator_url,private)
+        if body:
+            try:operator=sportsbet(body,operator_url,day,'Ipswich',4)
+            except Exception as exc:summary['operator_parse_error']=type(exc).__name__
+    summary['sources'].append(dict(op_meta,role='operator_ipswich'))
     from krok_adapter import fetch
     stage=time.monotonic();payload=fetch(day,os.environ.get('KROK_API_KEY',''));provider_at=ops.utcnow()
     summary['timings']['provider_acquisition_seconds']=round(time.monotonic()-stage,6)
@@ -80,6 +100,13 @@ def main():
             summary['price_input_policy']='Explicit direct Sportsbet WIN overlay on matched Ipswich R4 only; Krok field features unchanged'
     verification=dict(race_verified=False,fixed_win_verified=bool(summary.get('operator_field_matches_provider')),emergency_status_verified=False,
         sources=summary['sources'],blockers=['independent_authority_complete_field_and_final_emergencies_not_verified'])
+    if authority and authority.get('field_verified') and operator and summary.get('operator_field_matches_provider'):
+        direct={(r['number'],comparable_name(r['horse']),r['scratched']) for r in operator['runners']}
+        official={(r['number'],comparable_name(r['horse']),r['scratched']) for r in authority['runners']}
+        facts_match=all(authority.get(k)==operator.get(k) for k in ('distance_m','condition','scheduled_start'))
+        verification['race_verified']=direct==official and facts_match and authority.get('surface')=='turf'
+        verification['emergency_status_verified']=authority.get('emergency_status_verified',False)
+        if verification['race_verified'] and verification['emergency_status_verified']:verification['blockers']=[]
     summary['pilot_verification']=verification
     commands=['RM6','RM7','RM6PS','RM7PS','RM6 Ipswich 4','RM7 Ipswich 4','RM6PS Ipswich 4','RM7PS Ipswich 4','Ipswich 4']
     first=None
@@ -116,6 +143,7 @@ def main():
     try:
         stage=time.monotonic();status=client.handle('C',request_id=issue)
         summary['read_only_C']=dict(http_methods=methods,request_status=status['request_status'],semantic_outcome=status['semantic_outcome'],freshness=status.get('freshness'),capture_age_seconds=status.get('capture_age_seconds'),receipt_path=status.get('receipt_path'),elapsed_seconds=time.monotonic()-stage)
+        if status.get('semantic_outcome')!='COMPLETED_ASSESSMENTS' or status.get('freshness')!='FRESH' or 'ticket' not in status:raise ValueError('Read-only C did not retrieve a fresh verified forecast')
     finally:transport.api=original
     body=issue_delivery.result_body(req,forecast,json.loads((public/'receipt.json').read_text()),index)
     stage=time.monotonic();issue_delivery.report(issue,'terminal','**ISOLATED STAGING — NOT PRODUCTION ACTIVATION**\n\n'+body)
@@ -132,5 +160,5 @@ if __name__=='__main__':
         print(json.dumps({'status':'EXECUTION FAILED','error_type':type(exc).__name__}))
         if os.environ.get('GITHUB_REF_NAME')=='integration/verified-operations':
             from operations import issue_delivery
-            issue_delivery.report(212,'terminal','**STAGING EXECUTION FAILED** · '+type(exc).__name__+' · No production change or qualified bet is claimed.')
+            issue_delivery.report(214,'terminal','**STAGING EXECUTION FAILED** · '+type(exc).__name__+' · No production change or qualified bet is claimed.')
         raise SystemExit(1)

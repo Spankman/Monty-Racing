@@ -1,0 +1,151 @@
+{
+  "pilot_only": true,
+  "not_an_unattended_production_source": true,
+  "capture": {
+    "source": "Sportsbet",
+    "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566",
+    "status": "CAPTURED",
+    "http_status": 200,
+    "started_at": "2026-11-25T00:37:30.089062+00:00",
+    "observed_at": "2026-11-25T00:37:32.063368+00:00",
+    "response_date": "Wed, 25 Nov 2026 00:37:31 GMT",
+    "cache_age": null,
+    "sha256": "8b1d11c2d3e3fbab13b507ef92aba455b56e5fb665ce0aee57e5146e90b39fc8",
+    "source_client": "permitted standard TLS-verified anonymous workspace HTTP"
+  },
+  "operator": {
+    "date": "2026-11-25",
+    "meeting": "Ipswich",
+    "race": "4",
+    "country": "AU",
+    "status": "open",
+    "distance_m": 2150,
+    "scheduled_start": "2026-11-25T04:48:00+00:00",
+    "condition": "Soft 5",
+    "market": "fixed_win",
+    "bookmaker": "Sportsbet",
+    "runners": [
+      {
+        "number": "1",
+        "horse": "Castello Grande",
+        "scratched": false,
+        "fixed_win": "2.5",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119540",
+        "barrier": 4,
+        "jockey": "Ben E Thompson",
+        "trainer": "R L Heathcote"
+      },
+      {
+        "number": "2",
+        "horse": "Malecon",
+        "scratched": false,
+        "fixed_win": "10",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119545",
+        "barrier": 7,
+        "jockey": "Emily Lang",
+        "trainer": "Michael Nolan"
+      },
+      {
+        "number": "3",
+        "horse": "Cellphone",
+        "scratched": false,
+        "fixed_win": "3.9",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119547",
+        "barrier": 9,
+        "jockey": "Ryan Maloney",
+        "trainer": "C J Waller"
+      },
+      {
+        "number": "4",
+        "horse": "Don Stefano",
+        "scratched": false,
+        "fixed_win": "11",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "NZ",
+        "source_runner_id": "1290119551",
+        "barrier": 5,
+        "jockey": "Jackson Morris",
+        "trainer": "Jackson Morris"
+      },
+      {
+        "number": "5",
+        "horse": "Bills Angel",
+        "scratched": false,
+        "fixed_win": "9.5",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119554",
+        "barrier": 8,
+        "jockey": "Kyle Wilson-Taylor",
+        "trainer": "Declan Maher"
+      },
+      {
+        "number": "6",
+        "horse": "California Grass",
+        "scratched": true,
+        "fixed_win": null,
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119557",
+        "barrier": 8,
+        "jockey": "Robbie Dolan",
+        "trainer": "Christos Zintilis"
+      },
+      {
+        "number": "7",
+        "horse": "Lord Protector",
+        "scratched": false,
+        "fixed_win": "7.5",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "NZ",
+        "source_runner_id": "1290119559",
+        "barrier": 2,
+        "jockey": "Anthony Allen",
+        "trainer": "Vishan Venkaya"
+      },
+      {
+        "number": "8",
+        "horse": "Quality Miss",
+        "scratched": false,
+        "fixed_win": "19",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119563",
+        "barrier": 3,
+        "jockey": "Micheal Hellyer",
+        "trainer": "Diane Murphy"
+      },
+      {
+        "number": "9",
+        "horse": "Taradale",
+        "scratched": false,
+        "fixed_win": "10",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119566",
+        "barrier": 1,
+        "jockey": "Mckenzie Apel",
+        "trainer": "Ms N Hemmings"
+      },
+      {
+        "number": "10",
+        "horse": "Decarbonise",
+        "scratched": false,
+        "fixed_win": "71",
+        "bookmaker": "Sportsbet",
+        "country_of_origin": "AUS",
+        "source_runner_id": "1290119569",
+        "barrier": 6,
+        "jockey": "Frederick Larson",
+        "trainer": "J A Gilmore"
+      }
+    ]
+  },
+  "operator_sha256": "90fe7ffa2416e25d4dbb21755850685ca913bb35a5b099f055d459dd4a8c9c3f"
+}

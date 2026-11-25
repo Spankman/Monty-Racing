@@ -15,6 +15,10 @@ class Evidence:
     horse: str
     observed_at: datetime
     reference: str  # stored raw evidence locator and digest in the caller's archive
+    birth_year: int | None = None
+    sex: str | None = None
+    country: str | None = None
+    trainer: str | None = None
 
 
 def resolve(authority, external, cutoff):
@@ -48,6 +52,8 @@ def resolve(authority, external, cutoff):
                 reason = 'missing_or_ambiguous_external'
             elif name(registered[0].horse) != name(candidates[0].horse):
                 reason = 'name_disagreement'
+            elif any(getattr(registered[0],attr) is not None and getattr(candidates[0],attr) is not None and str(getattr(registered[0],attr)).strip().casefold()!=str(getattr(candidates[0],attr)).strip().casefold() for attr in ('birth_year','sex','country','trainer')):
+                reason='conflicting_identity_attributes'
             else:
                 links.append((registered[0], candidates[0]))
                 continue
