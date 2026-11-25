@@ -1,6 +1,11 @@
 # Monty Racing — Living Development Plan
 Owner direction, 25 November 2026. Read before planning Work or Codex sessions. Supplements existing betting and integrity policies; does not override them.
 
+## Mandatory development and research protocol — 26 November 2026
+- Apply the startup and completion requirements in [AGENTS.md](AGENTS.md) to current and future development. Keep governing documents, prior findings and workstream commits pinned in the shared handover.
+- Review applicable research before implementation and reproduce relevant academic baselines wherever practical. Compare modern alternatives against matched academic, frozen-engine and independent market baselines using chronological leakage-free evaluation. Record negative and blocked runs along with successful ones.
+- Keep the [research library](MONTY_RESEARCH_LIBRARY.md), this plan and the shared handover current. The [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) records this protocol update and identifies the missing master handover.
+
 ## Permanent resource rules
 - Use ordinary ChatGPT for planning and routine reviews; reserve Work credits for substantial integration and independent audits, Codex for targeted code work. Use conventional scripts and GitHub Actions for repeatable processing.
 - Batch related tasks, avoid re-auditing unchanged components, cache and share data, checkpoint long jobs, bound retries and stop on genuine blockers. Report measurable progress, costs where observable, and concise handovers. Never guess remaining credits.
