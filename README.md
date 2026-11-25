@@ -1,3 +1,5 @@
+> **ALL DEVELOPMENT AGENTS — START HERE:** Follow [AGENTS.md](AGENTS.md) at the beginning and end of every session. Review open issues and draft PRs before starting; the current owner rules and development register are staged in PR #234 until integrated.
+
 > **WORK / CODEX — OWNER RULES (25 Nov 2026):** Read [Monty's Living Development Plan](MONTY_LIVING_DEVELOPMENT_PLAN.md) before further development. Resource efficiency, existing Krok historical acquisition and non-blocking V7 research priorities are mandatory planning requirements; existing betting and integrity policies remain in force.
 
 > **WORK — EXPERT TIPSTER INTEGRATION PRIORITY (19 Nov 2026):** Read [issue #14](https://github.com/Spankman/Monty-Racing/issues/14) and [EXPERT_CONSENSUS_ADAPTIVE_WEIGHTING.md](EXPERT_CONSENSUS_ADAPTIVE_WEIGHTING.md). Collect **real** sourced AU/NZ expert tips, compare prospectively against Monty, and validate adaptive 0–20% expert weighting. No fabricated picks, no hindsight, no live betting approval. This is an active implementation task, not a completed integration.
