@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-25",
+  "run_id": "45576525585-1-232",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-25/45576525585-1-232/receipt.json",
+  "forecast_path": "runs/2026-11-25/45576525585-1-232/forecast.json",
+  "forecast_sha256": "7f19ef49fa70235aed4846280128fcedd63df1a426cf6923005b2784881c70d1",
+  "generated_at": "2026-11-25T08:29:03.791883+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45576525585",
+  "captured_at": "2026-11-25T08:29:02.691876+00:00",
+  "valid_until": "2026-11-25T08:34:02.691876+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "c11afa29f50a4d43a9a907b842fd17dd09acf1061dbf5e95c30bdfc9e193518c",
+  "request": {
+    "command": "RM6 LAUNCESTON 4",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-25",
+    "meeting": "Launceston",
+    "race": "4",
+    "country": "AU"
+  },
+  "request_id": 232,
+  "request_status": "COMPLETED"
+}

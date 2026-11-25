@@ -1,0 +1,449 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45576525585-1-232",
+  "date": "2026-11-25",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Launceston",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-25T08:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Luvubill"
+        },
+        {
+          "number": "8",
+          "horse": "Nine Choirs"
+        },
+        {
+          "number": "2",
+          "horse": "Alpine Whiskey"
+        },
+        {
+          "number": "16",
+          "horse": "Onetimesometime"
+        }
+      ],
+      "captured_at": "2026-11-25T08:29:02.691876+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-25",
+        "meeting": "Launceston",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Alla Rustica",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Kirra-Lee Lane",
+            "trainer": "Leanne Gaffney"
+          },
+          {
+            "number": "3",
+            "horse": "Luvubill",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Glenn Stevenson"
+          },
+          {
+            "number": "4",
+            "horse": "Dream Riot",
+            "scratched": false,
+            "odds": 12.0,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 57,
+            "age": 3,
+            "jockey": "Kelvin Sanderson",
+            "trainer": "John Blacker"
+          },
+          {
+            "number": "5",
+            "horse": "Sovereign Dash",
+            "scratched": false,
+            "odds": 2.3,
+            "price_source": "TAB",
+            "barrier": 13,
+            "weight": 57,
+            "age": 3,
+            "jockey": "Luke P Dempsey",
+            "trainer": "Adam Trinder"
+          },
+          {
+            "number": "7",
+            "horse": "Graphite Power",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "Troy Baker",
+            "trainer": "Stuart Gandy"
+          },
+          {
+            "number": "8",
+            "horse": "Nine Choirs",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 16,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Stuart Gandy"
+          },
+          {
+            "number": "9",
+            "horse": "Roland View",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Hayley McCarthy",
+            "trainer": "Dylan Clark"
+          },
+          {
+            "number": "10",
+            "horse": "Royal Scene",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Robyn Lynch",
+            "trainer": "Stephen Lockhart"
+          },
+          {
+            "number": "11",
+            "horse": "The Red She Devil",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "TAB",
+            "barrier": 15,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Craig Newitt",
+            "trainer": "Barry Baker"
+          },
+          {
+            "number": "13",
+            "horse": "Scarlet Bullet",
+            "scratched": false,
+            "odds": 3.4,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Codi Jordan",
+            "trainer": "Yassy Nishitani"
+          },
+          {
+            "number": "14",
+            "horse": "Zhavrafrost",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Erica Byrne Burke",
+            "trainer": "Adam Trinder"
+          },
+          {
+            "number": "15",
+            "horse": "Global Miracle",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "David Pires",
+            "trainer": "Brendan McShane"
+          },
+          {
+            "number": "6",
+            "horse": "Arianna's Gold",
+            "scratched": false,
+            "odds": 15.0,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Chloe Wells",
+            "trainer": "Sigrid Carr"
+          },
+          {
+            "number": "12",
+            "horse": "Myrtle",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Lauryn Bingley",
+            "trainer": "Glenn Stevenson"
+          },
+          {
+            "number": "2",
+            "horse": "Alpine Whiskey",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 58.5,
+            "age": 5,
+            "jockey": "Anthony Darmanin",
+            "trainer": "Bradley Franklin"
+          },
+          {
+            "number": "16",
+            "horse": "Onetimesometime",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 1,
+            "weight": 57,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Graeme McCulloch"
+          }
+        ],
+        "active_runners": 12,
+        "priced_active_runners": 12,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-25T08:29:02.691876+00:00",
+        "scheduled_start": "2026-11-25T08:50:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 12,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "bdecb4d2b64b53cc2e8a03eaccd7623f729a1cc48e1d98fc93eb597a2e2e7456",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "5",
+            "horse": "Sovereign Dash",
+            "odds": 2.3,
+            "probability": 0.33817077159490644,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "13",
+            "horse": "Scarlet Bullet",
+            "odds": 3.4,
+            "probability": 0.224414224776215,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "12",
+            "horse": "Myrtle",
+            "odds": 6.5,
+            "probability": 0.11976446766787176,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "5",
+          "horse": "Sovereign Dash",
+          "odds": 2.3,
+          "probability": 0.33817077159490644,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "5",
+            "horse": "Sovereign Dash",
+            "odds": 2.3,
+            "probability": 0.33817077159490644,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "13",
+            "horse": "Scarlet Bullet",
+            "odds": 3.4,
+            "probability": 0.224414224776215,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "12",
+            "horse": "Myrtle",
+            "odds": 6.5,
+            "probability": 0.11976446766787176,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Roland View",
+            "odds": 10.0,
+            "probability": 0.07773598651327498,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "Dream Riot",
+            "odds": 12.0,
+            "probability": 0.06480308421351728,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Arianna's Gold",
+            "odds": 15.0,
+            "probability": 0.05183437158169206,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "14",
+            "horse": "Zhavrafrost",
+            "odds": 23.0,
+            "probability": 0.03385854698761508,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "Royal Scene",
+            "odds": 26.0,
+            "probability": 0.029919779030767032,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "The Red She Devil",
+            "odds": 34.0,
+            "probability": 0.022892572737456866,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "1",
+            "horse": "Alla Rustica",
+            "odds": 34.0,
+            "probability": 0.022887988172975958,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "15",
+            "horse": "Global Miracle",
+            "odds": 101.0,
+            "probability": 0.007551845865113172,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "Graphite Power",
+            "odds": 126.0,
+            "probability": 0.00616636085859449,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "5",
+          "horse": "Sovereign Dash",
+          "odds": 2.3,
+          "probability": 0.33817077159490644,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-25T08:29:03.098530+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-25T08:29:02.691876+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-25T08:29:03.792873+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-25/45576525585-1-232/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-25T08:29:02.691876+00:00",
+  "valid_until": "2026-11-25T08:34:02.691876+00:00",
+  "snapshot_only": true
+}
