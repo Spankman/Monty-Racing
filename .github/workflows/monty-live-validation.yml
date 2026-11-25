@@ -38,7 +38,9 @@ jobs:
           import monty_operations as ops
           from krok_adapter import fetch
           from monty_expert_article_discovery import NoRedirects,robots_permit
-          from operations.public_sources import capture,rq_facts
+          from operations.public_sources import HOSTS,capture,rq_facts
+          from urllib.parse import urlsplit
+          from bs4 import BeautifulSoup
           from operations.prospective import freeze
 
           day='2026-11-25'
@@ -73,7 +75,17 @@ jobs:
                           except (TypeError,ValueError,KeyError) as error:
                               report['authority_parse_error']=type(error).__name__
                   else:
-                      report['sources'][source]={'status':'ROBOTS CHECK PASSED; OPERATOR PARSER NOT VALIDATED'}
+                      HOSTS[urlsplit(url).hostname] = source
+                      meta,body=capture(url,Path(private)/'source')
+                      report['sources'][source]=meta
+                      if body:
+                          page=BeautifulSoup(body,'html.parser')
+                          text=page.get_text(' ',strip=True)
+                          lower=text.casefold()
+                          report['sources'][source]['mentions_requested_race']='the lawn shed' in lower and 'ipswich' in lower
+                          report['sources'][source]['fixed_win_label_visible']='fixed win' in lower or 'fixed odds' in lower
+                          report['sources'][source]['semantic_time_nodes']=len(page.select('time[datetime]'))
+                          report['sources'][source]['attested_operator_offer']=False
               try:
                   payload=fetch(day,os.environ['KROK_API_KEY'])
                   captured=ops.utcnow()
