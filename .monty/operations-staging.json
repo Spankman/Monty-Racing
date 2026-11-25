@@ -1,1 +1,1 @@
-{"purpose":"Staging issue214: hash-bound compact delivery, read-only C and fresh verified pilot; no production activation","command":"RM6"}
+{"purpose": "Final fresh verified-source pilot; no production activation", "command": "RM6", "issue_id": 215}

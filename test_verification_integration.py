@@ -41,7 +41,7 @@ class IntegrationTests(unittest.TestCase):
         with self.assertRaises(ValueError):prospective.settle(p,{},self.root/'settlement.json',self.now)
     def test_fixture_verified_cohort_metrics_and_official_result_guard(self):
         f=self.run_it();p=self.root/'verified.json';r=f['races'][0]
-        prospective.freeze(f,r,dict(race_verified=True,fixed_win_verified=True,emergency_status_verified=True,sources=[dict(source_url=url,observed_at=self.now.isoformat(),sha256='a'*64,status='CAPTURED',http_status=200) for url in ['https://www.racingqueensland.com.au/fixture-only','https://www.sportsbet.com.au/fixture-only']]),p,self.now)
+        prospective.freeze(f,r,dict(race_verified=True,fixed_win_verified=True,emergency_status_verified=True,sources=[dict(source_url=url,date=f['date'],meeting=r['meeting'],race=r['race'],observed_at=self.now.isoformat(),sha256='a'*64,status='CAPTURED',http_status=200) for url in ['https://www.racingqueensland.com.au/fixture-only','https://www.sportsbet.com.au/fixture-only']]),p,self.now)
         result=dict(official=True,status='FINAL',date=f['date'],meeting=r['meeting'],race=r['race'],country=r['country'],
             active_runners={x['number']:x['horse'] for x in r['models']['V6']['ranked_runners']},winners=['1'],late_field_change=False,
             source_url='https://www.racingqueensland.com.au/fixture-only',source_sha256='a'*64,
@@ -110,3 +110,21 @@ class DeliveryTests(unittest.TestCase):
         with patch.object(transport,'api',side_effect=[{'sha':'a'*40,'encoding':'none','content':''},{'encoding':'base64','content':base64.b64encode(blob).decode()}]) as api:
             self.assertEqual(transport.read_bytes('large.json'),blob)
             self.assertEqual(api.call_args_list[1].args,('git/blobs/'+'a'*40,))
+
+class QuoteProvenanceTests(unittest.TestCase):
+    setUp=fixtures.RunTests.setUp
+    run_it=fixtures.RunTests.run_it
+    scorer=fixtures.RunTests.scorer
+    def test_same_evidenced_bookmaker_different_provider_fields_is_not_mixed_book(self):
+        runner=self.payload['data'][0]['races'][0]['runners'][0]
+        runner.update(odds=[],fixed_win=3,fixed_win_bookmaker='TAB')
+        normalized,_=ops.normalized_snapshot(self.payload,self.day)
+        self.assertEqual(normalized['runners'][0]['_price_source'],'TAB')
+        self.assertEqual(normalized['runners'][0]['_provider_price_field'],'fixed_win')
+        f=self.run_it()
+        self.assertEqual(f['models']['V7']['scored_races'],1)
+    def test_different_evidenced_bookmakers_retain_the_v7_provenance_guard(self):
+        runner=self.payload['data'][0]['races'][0]['runners'][0]
+        runner.update(odds=[],fixed_win=3,fixed_win_bookmaker='Sportsbet')
+        f=self.run_it()
+        self.assertEqual(f['models']['V7']['blocked_races'],1)

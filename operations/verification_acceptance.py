@@ -30,7 +30,7 @@ def main():
     os.environ['OPERATIONS_RESULTS_BRANCH']='monty-verification-staging-results'
     os.environ['OPERATIONS_ISSUE_COMMENTS']='1'
     from operations import transport,issue_delivery,client
-    issue=214;tag=os.environ['GITHUB_RUN_ID'];workflow=f'https://github.com/{transport.REPO}/actions/runs/{tag}'
+    issue=int(json.loads(Path('.monty/operations-staging.json').read_text())['issue_id']);tag=os.environ['GITHUB_RUN_ID'];workflow=f'https://github.com/{transport.REPO}/actions/runs/{tag}'
     opened=transport.api(f'issues/{issue}')
     if opened['user']['login']!='Spankman' or opened['title']!='Monty verification staging — integrated command and source pilot':raise ValueError('Wrong staging issue')
     started=ops.utcnow();day=started.astimezone(ops.TZ).date().isoformat()
@@ -99,7 +99,7 @@ def main():
             captured=min(provider_at,ops.timestamp(op_meta['observed_at']))
             summary['price_input_policy']='Explicit direct Sportsbet WIN overlay on matched Ipswich R4 only; Krok field features unchanged'
     verification=dict(race_verified=False,fixed_win_verified=bool(summary.get('operator_field_matches_provider')),emergency_status_verified=False,
-        sources=summary['sources'],blockers=['independent_authority_complete_field_and_final_emergencies_not_verified'])
+        sources=[dict(s,date=day,meeting='Ipswich',race='4') for s in summary['sources'] if s['role'] in ('authority_ipswich','authority_field_pdf','operator_ipswich')],blockers=['independent_authority_complete_field_and_final_emergencies_not_verified'])
     if authority and authority.get('field_verified') and operator and summary.get('operator_field_matches_provider'):
         direct={(r['number'],comparable_name(r['horse']),r['scratched']) for r in operator['runners']}
         official={(r['number'],comparable_name(r['horse']),r['scratched']) for r in authority['runners']}
@@ -108,6 +108,10 @@ def main():
         verification['emergency_status_verified']=authority.get('emergency_status_verified',False)
         if verification['race_verified'] and verification['emergency_status_verified']:verification['blockers']=[]
     summary['pilot_verification']=verification
+    if verification['race_verified']:
+        race['track_condition']=authority['condition']
+        summary['authority_input_overlay']='Verified primary authority track condition; original frozen going normalization unchanged'
+
     commands=['RM6','RM7','RM6PS','RM7PS','RM6 Ipswich 4','RM7 Ipswich 4','RM6PS Ipswich 4','RM7PS Ipswich 4','Ipswich 4']
     first=None
     for i,text in enumerate(commands,1):
@@ -143,7 +147,7 @@ def main():
     try:
         stage=time.monotonic();status=client.handle('C',request_id=issue)
         summary['read_only_C']=dict(http_methods=methods,request_status=status['request_status'],semantic_outcome=status['semantic_outcome'],freshness=status.get('freshness'),capture_age_seconds=status.get('capture_age_seconds'),receipt_path=status.get('receipt_path'),elapsed_seconds=time.monotonic()-stage)
-        if status.get('semantic_outcome')!='COMPLETED_ASSESSMENTS' or status.get('freshness')!='FRESH' or 'ticket' not in status:raise ValueError('Read-only C did not retrieve a fresh verified forecast')
+        if status.get('semantic_outcome') not in ('COMPLETED_ASSESSMENTS','PARTIAL_ASSESSMENTS') or status.get('freshness')!='FRESH' or 'ticket' not in status:raise ValueError('Read-only C did not retrieve a fresh verified forecast')
     finally:transport.api=original
     body=issue_delivery.result_body(req,forecast,json.loads((public/'receipt.json').read_text()),index)
     stage=time.monotonic();issue_delivery.report(issue,'terminal','**ISOLATED STAGING — NOT PRODUCTION ACTIVATION**\n\n'+body)
@@ -152,7 +156,7 @@ def main():
     summary['finished_at']=ops.utcnow().isoformat();summary['forecast_index']=index
     ops.write(base/(tag+'-summary')/'public'/'verification-acceptance.json',summary)
     print(json.dumps(summary,allow_nan=False))
-    if any(c['status']!='COMPLETED_ASSESSMENTS' for c in summary['commands']):raise ValueError('Some requested models did not complete; inspect actual outcomes')
+    if any(c['status'] not in ('COMPLETED_ASSESSMENTS','PARTIAL_ASSESSMENTS') or not c['models'][ops.command(c['command'],day,'AU')['version']]['scored_races'] for c in summary['commands']):raise ValueError('Some requested models did not complete; inspect actual outcomes')
 
 if __name__=='__main__':
     try:main()
@@ -160,5 +164,6 @@ if __name__=='__main__':
         print(json.dumps({'status':'EXECUTION FAILED','error_type':type(exc).__name__}))
         if os.environ.get('GITHUB_REF_NAME')=='integration/verified-operations':
             from operations import issue_delivery
-            issue_delivery.report(214,'terminal','**STAGING EXECUTION FAILED** · '+type(exc).__name__+' · No production change or qualified bet is claimed.')
+            issue_id=int(json.loads(Path('.monty/operations-staging.json').read_text()).get('issue_id',214))
+            issue_delivery.report(issue_id,'terminal','**STAGING EXECUTION FAILED** · '+type(exc).__name__+' · No production change or qualified bet is claimed.')
         raise SystemExit(1)

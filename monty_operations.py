@@ -145,6 +145,10 @@ def normalized_snapshot(payload, day, allow_restricted=False):
     # not claims that a provider verified field completeness or eligibility.
     for row in snapshot['runners']:
         row['betting_authorised']=False
+        # Quote field names are not bookmaker identities. Preserve the raw
+        # provenance and use the evidenced fixed operator as the common label.
+        row['_provider_price_field']=row['_price_source']
+        if row.get('_bookmaker'):row['_price_source']=row['_bookmaker']
     for row in snapshot['races']:
         row['betting_authorised']=False
     return snapshot,audit

@@ -78,6 +78,13 @@ jobs:
         if: steps.event.outputs.settled != 'true'
         continue-on-error: true
         run: python -m pip install -r requirements-runner.txt
+      - name: Install public authority PDF reader for the isolated pilot
+        if: github.ref_name == 'integration/verified-operations'
+        run: |
+          if ! command -v pdftotext >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq poppler-utils
+          fi
       - name: Restore original private artifacts without changing manifest
         if: steps.event.outputs.settled != 'true'
         continue-on-error: true

@@ -36,7 +36,8 @@ def freeze(forecast, race, verification, path, now=None):
         try:
             host=urlsplit(source['source_url']).hostname
             fresh=0 <= (now-timestamp(source['observed_at'])).total_seconds() < MAX_AGE_SECONDS
-            valid=source.get('status')=='CAPTURED' and source.get('http_status')==200 and fresh and len(source.get('sha256',''))==64
+            same_race=source.get('date')==forecast['date'] and str(source.get('meeting','')).casefold()==race['meeting'].casefold() and str(source.get('race'))==str(race['race'])
+            valid=same_race and source.get('status')=='CAPTURED' and source.get('http_status')==200 and fresh and len(source.get('sha256',''))==64
             if valid and host in authority:roles.add('authority')
             if valid and host in operators:roles.add('operator')
         except (ValueError,TypeError,KeyError):pass
