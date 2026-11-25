@@ -18,3 +18,6 @@ GitHub is the shared source of truth, not an automatic messaging service. Agents
 
 ## Research before development
 Read MONTY_RESEARCH_LIBRARY.md before proposing modelling changes. Complete outstanding source reviews as needed, audit existing implementations, and reuse verified methods and legally reusable code before inventing replacements. Maintain source access status, experiment evidence and negative findings. Use ordinary ChatGPT for preliminary literature work and batch implementation/validation to conserve credits.
+
+## Optimise before expanding — owner rule
+Prioritise data quality, interpretation of existing features, redundancy removal, weighting, calibration, value and race selection before adding features. Require incremental independent information, repeatable out-of-sample benefit, justified acquisition/maintenance/compute costs and no reliability regression. Assess net ROI, calibration, uncertainty and risk, not strike rate alone. Prefer the simpler model when evidence does not justify complexity; reject or defer marginal features. Preserve frozen V6 and existing approval safeguards.
