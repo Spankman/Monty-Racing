@@ -1,0 +1,41 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-25",
+  "run_id": "45531205900-1-216",
+  "status": "FAILED",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-25/45531205900-1-216/receipt.json",
+  "forecast_path": "runs/2026-11-25/45531205900-1-216/forecast.json",
+  "forecast_sha256": "2ebbe2134e6bef17231823455cb216460f37d89a6bcdc82029caccf3ba8c90d9",
+  "generated_at": "2026-11-25T02:12:37.685271+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45531205900",
+  "captured_at": "2026-11-25T02:12:37.604946+00:00",
+  "valid_until": "2026-11-25T02:17:37.604946+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "NOT_RUN",
+      "research_only": false
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "NOT_RUN",
+      "research_only": true
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "443ee2cae78172f523a1f79ce7e54e6e8c86209000f0647c8a9ddac490c5e0e9",
+  "request": {
+    "command": "RM6 TE AROHA 5",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-25",
+    "meeting": "Te Aroha",
+    "race": "5",
+    "country": "AU"
+  },
+  "request_id": 216,
+  "request_status": "FAILED"
+}
