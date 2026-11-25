@@ -1,0 +1,65 @@
+name: Monty read-only source research probe
+on:
+  push:
+    branches: [research/nov25-source-probe]
+    paths: [.github/workflows/monty-research-source-probe.yml]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - name: Inspect permissions and public availability without publishing race forecasts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tempfile import TemporaryDirectory
+          import urllib.request
+          from operations.public_sources import HOSTS, capture, rq_facts, sportsbet
+          from monty_expert_article_discovery import NoRedirects, robots_permit
+          from operations.prospective import utcnow
+
+          day, meeting, race = '2026-11-25', 'Ipswich', 7
+          sources = {
+              'tab': 'https://www.tab.com.au/racing/2026-11-25',
+              'sportsbet': 'https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-7-11204564',
+              'authority': 'https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7',
+          }
+          report = {}
+          with TemporaryDirectory() as directory:
+              for key, url in sources.items():
+                  try:
+                      allowed = robots_permit(url, urllib.request.build_opener(NoRedirects()))
+                  except (OSError, ValueError):
+                      report[key] = {'status': 'ROBOTS UNAVAILABLE', 'url': url}
+                      continue
+                  if not allowed:
+                      report[key] = {'status': 'ROBOTS DISALLOWED', 'url': url}
+                      continue
+                  meta, body = capture(url, directory)
+                  if body:
+                      try:
+                          if key == 'authority':
+                              facts = rq_facts(body, day, meeting, race)
+                              meta['scheduled_start'] = facts.get('scheduled_start')
+                              meta['condition'] = facts.get('condition')
+                          if key == 'sportsbet':
+                              market = sportsbet(body, url, day, meeting, race)
+                              meta['declared_runners'] = len(market['runners'])
+                              meta['scheduled_start'] = market.get('scheduled_start')
+                      except (KeyError, ValueError, TypeError) as exc:
+                          meta['parse_error'] = type(exc).__name__
+                  report[key] = meta
+          print(json.dumps({'date': day, 'finished_at': utcnow().isoformat(),
+                            'sources': report, 'prospective_admission': False,
+                            'reason': 'Public source probe only. No authoritative historical identity and feature reconciliation.'}, indent=2))
+          PY
