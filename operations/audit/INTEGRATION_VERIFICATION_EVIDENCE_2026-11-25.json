@@ -1,0 +1,848 @@
+{
+  "schema": "monty.integration.review.v1",
+  "production_ready": false,
+  "production_changed": false,
+  "branch": "integration/verified-operations",
+  "pull_request": 213,
+  "production_baseline": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+  "tests": {
+    "operational_contracts": 133,
+    "runner_checks": 152,
+    "frozen_v6": 13,
+    "historical_replay": {
+      "artifact_hashes": 55,
+      "runners": 17987,
+      "races": 1787,
+      "maximum_probability_difference": 1.6653345369377348e-16,
+      "refitted": false
+    }
+  },
+  "live_episodes": [
+    {
+      "issue_id": 214,
+      "commit": "f31aa73943bfd3efc1d9cc783b528cb1a676601a",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45519528731",
+      "trigger": "isolated branch push; not ordinary issue-event acceptance",
+      "started_at": "2026-11-25T00:38:00.104991+00:00",
+      "acknowledged_at": "2026-11-25T00:38:01.182685+00:00",
+      "terminal_delivered_at": "2026-11-25T00:40:30.321538+00:00",
+      "finished_at": "2026-11-25T00:40:30.321552+00:00",
+      "timings": {
+        "provider_acquisition_seconds": 6.844767,
+        "result_publication_seconds": 4.813156,
+        "terminal_delivery_seconds": 3.977269
+      },
+      "read_only_C": {
+        "http_methods": [
+          "GET",
+          "GET",
+          "GET",
+          "GET",
+          "GET"
+        ],
+        "request_status": "COMPLETED",
+        "semantic_outcome": "COMPLETED_ASSESSMENTS",
+        "freshness": "FRESH",
+        "capture_age_seconds": 173.980355,
+        "receipt_path": "runs/2026-11-25/45519528731-integration-1/receipt.json",
+        "elapsed_seconds": 1.661017094000016
+      },
+      "pilot_verification": {
+        "race_verified": false,
+        "fixed_win_verified": true,
+        "emergency_status_verified": false,
+        "sources": [
+          {
+            "source": "TAB",
+            "source_url": "https://www.tab.com.au/racing/2026-11-25",
+            "started_at": "2026-11-25T00:38:01.182754+00:00",
+            "status": "HTTP_ERROR",
+            "http_status": 500,
+            "elapsed_seconds": 0.650863,
+            "role": "tab"
+          },
+          {
+            "source": "Racing Queensland",
+            "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/4",
+            "started_at": "2026-11-25T00:38:01.833670+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 00:38:02 GMT",
+            "cache_age": null,
+            "sha256": "7588f4f1e71f064e12715b38105ab6fffc12df0d02c32d8d30a7d7280dba903e",
+            "observed_at": "2026-11-25T00:38:03.183645+00:00",
+            "elapsed_seconds": 1.349988,
+            "role": "authority_ipswich"
+          },
+          {
+            "source": "Racing Queensland",
+            "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639311899553467451",
+            "started_at": "2026-11-25T00:38:03.268415+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 00:38:03 GMT",
+            "cache_age": null,
+            "sha256": "c4bcfdb3e406c9813a6f6c4697d722b45159b37454b0fe9b00e70fecf83059e3",
+            "observed_at": "2026-11-25T00:38:04.315552+00:00",
+            "elapsed_seconds": 1.047151,
+            "role": "authority_field_pdf"
+          },
+          {
+            "source": "Racing NSW",
+            "source_url": "https://racing.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov25,NSW,Wyong",
+            "started_at": "2026-11-25T00:38:04.358488+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 00:38:06 GMT",
+            "cache_age": null,
+            "sha256": "e85822a41bc1a0dea21c63f50be538a145c810982bdc16ed68fba9fd4c81c626",
+            "observed_at": "2026-11-25T00:38:06.859265+00:00",
+            "elapsed_seconds": 2.500792,
+            "role": "authority_wyong"
+          },
+          {
+            "source": "Sportsbet",
+            "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "started_at": "2026-11-25T00:37:30.089062+00:00",
+            "observed_at": "2026-11-25T00:37:32.063368+00:00",
+            "response_date": "Wed, 25 Nov 2026 00:37:31 GMT",
+            "cache_age": null,
+            "sha256": "8b1d11c2d3e3fbab13b507ef92aba455b56e5fb665ce0aee57e5146e90b39fc8",
+            "source_client": "permitted standard TLS-verified anonymous workspace HTTP",
+            "role": "operator_ipswich"
+          }
+        ],
+        "blockers": [
+          "independent_authority_complete_field_and_final_emergencies_not_verified"
+        ]
+      },
+      "prospective_cohort_admitted": false,
+      "prospective_freeze_blocker": null,
+      "commands": [
+        {
+          "command": "RM6",
+          "run_id": "45519528731-integration-1",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 29.844398,
+          "forecast_sha256": "17181d71304708a6de9753959b0304bb9c50d72c80435ea1fbf50ea827601f39",
+          "receipt_sha256": "a71cc66cdd35def98972c9156d64053461890359ef9a5a74ca853855a6742a0c"
+        },
+        {
+          "command": "RM7",
+          "run_id": "45519528731-integration-2",
+          "status": "PARTIAL_ASSESSMENTS",
+          "elapsed_seconds": 29.726774,
+          "forecast_sha256": "c66e3ef548d1260c081c13e3eab7a068473a7528c853e8de0b690574d7d24881",
+          "receipt_sha256": "fd8f72613ed6fc78b782ceded54de3f6e178e61a37a09e8f8ca2ae4ea6d9f5cf"
+        },
+        {
+          "command": "RM6PS",
+          "run_id": "45519528731-integration-3",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 29.725872,
+          "forecast_sha256": "6b69f572ef3637b0ebbb247da180638676cd7ea350462553da45e45ee70445c2",
+          "receipt_sha256": "766b7b4644abe17771e4add98b0411d273c23e1de1b829d7d6a50dab789c7463"
+        },
+        {
+          "command": "RM7PS",
+          "run_id": "45519528731-integration-4",
+          "status": "PARTIAL_ASSESSMENTS",
+          "elapsed_seconds": 30.059213,
+          "forecast_sha256": "c1d116bf5cd25497203255881a59943fcc99c956f0e5248f9b2c70dfc7efc791",
+          "receipt_sha256": "32dd8118d04b3350332fa97ed76998117d7a69aa5a379523f9481786e1d41098"
+        },
+        {
+          "command": "RM6 Ipswich 4",
+          "run_id": "45519528731-integration-5",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.263736,
+          "forecast_sha256": "3a79095d45fbe28b03647a7890cb6d6414857daa98c9f15c35b1c899f4840e02",
+          "receipt_sha256": "08f06ba4686c7840dd2f2771e303d9f3365b69260a6846eae30cef72e12bed5c"
+        },
+        {
+          "command": "RM7 Ipswich 4",
+          "run_id": "45519528731-integration-6",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.263014,
+          "forecast_sha256": "4b1f5bc4f13f6ac84eb0378ed541a70f3e586cbea245c9a92b9983e4bcbcef0f",
+          "receipt_sha256": "162a8e0d14f9c547209c25da27b8fcf90ace7d6d21c080859772f0947f38e9de"
+        },
+        {
+          "command": "RM6PS Ipswich 4",
+          "run_id": "45519528731-integration-7",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.253905,
+          "forecast_sha256": "492ee62701538edb8c0573155d648677e25cfaefd606ef7ef35a90e574d6b148",
+          "receipt_sha256": "a447bf63053ae1350f8e6e7d0be71627e860538aee2e1e6d1796712daa127ed8"
+        },
+        {
+          "command": "RM7PS Ipswich 4",
+          "run_id": "45519528731-integration-8",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.259987,
+          "forecast_sha256": "701375ad1a0f94dd944c74160bc4f53a789205e5758390756f9b411151e3a0b7",
+          "receipt_sha256": "3f6ccf90ace77c154d51e1e8f4ce117b25757825022bee099222a7d15824410e"
+        },
+        {
+          "command": "Ipswich 4",
+          "run_id": "45519528731-integration-9",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.24266,
+          "forecast_sha256": "1bbaec01cd67d741ddda6a41bb5d62e98a54381c1cee02dad8fc461c858181c2",
+          "receipt_sha256": "1e4e5376682613509fe715c6803d4c0ac383918e19996b6625aa033d0b355c94"
+        }
+      ],
+      "index": {
+        "schema": "monty.operations.index.v1",
+        "date": "2026-11-25",
+        "run_id": "45519528731-integration-1",
+        "status": "COMPLETED_ASSESSMENTS",
+        "source_mode": "LIVE",
+        "receipt_path": "runs/2026-11-25/45519528731-integration-1/receipt.json",
+        "forecast_path": "runs/2026-11-25/45519528731-integration-1/forecast.json",
+        "forecast_sha256": "17181d71304708a6de9753959b0304bb9c50d72c80435ea1fbf50ea827601f39",
+        "generated_at": "2026-11-25T00:38:43.883479+00:00",
+        "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45519528731",
+        "captured_at": "2026-11-25T00:37:32.063368+00:00",
+        "valid_until": "2026-11-25T00:42:32.063368+00:00",
+        "models": {
+          "V6": {
+            "commit": "f31aa73943bfd3efc1d9cc783b528cb1a676601a",
+            "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+            "status": "SCORED",
+            "research_only": false,
+            "scored_races": 28,
+            "failed_races": 0,
+            "blocked_races": 0,
+            "expired_races": 0,
+            "delivery_status": "SCORED"
+          },
+          "V7": {
+            "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+            "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+            "status": "PARTIAL",
+            "research_only": true,
+            "scored_races": 26,
+            "failed_races": 0,
+            "blocked_races": 2,
+            "expired_races": 0,
+            "delivery_status": "PARTIAL"
+          }
+        },
+        "forecast_integrity_verified": true,
+        "receipt_sha256": "a71cc66cdd35def98972c9156d64053461890359ef9a5a74ca853855a6742a0c",
+        "delivery_manifest_path": "runs/2026-11-25/45519528731-integration-1/delivery-manifest.json",
+        "delivery_manifest_sha256": "e3a75ae51ee40cdeba5310b5fe76ce9015fc8c28759233c37e6c51940f2c84a0",
+        "request": {
+          "command": "RM6",
+          "version": "V6",
+          "view": "official",
+          "date": "2026-11-25",
+          "meeting": null,
+          "race": null,
+          "country": "AU",
+          "provisional_requested": false
+        },
+        "request_id": 214,
+        "request_status": "COMPLETED"
+      },
+      "sources": [
+        {
+          "source": "TAB",
+          "source_url": "https://www.tab.com.au/racing/2026-11-25",
+          "started_at": "2026-11-25T00:38:01.182754+00:00",
+          "status": "HTTP_ERROR",
+          "http_status": 500,
+          "elapsed_seconds": 0.650863,
+          "role": "tab"
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/4",
+          "started_at": "2026-11-25T00:38:01.833670+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 00:38:02 GMT",
+          "cache_age": null,
+          "sha256": "7588f4f1e71f064e12715b38105ab6fffc12df0d02c32d8d30a7d7280dba903e",
+          "observed_at": "2026-11-25T00:38:03.183645+00:00",
+          "elapsed_seconds": 1.349988,
+          "role": "authority_ipswich"
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639311899553467451",
+          "started_at": "2026-11-25T00:38:03.268415+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 00:38:03 GMT",
+          "cache_age": null,
+          "sha256": "c4bcfdb3e406c9813a6f6c4697d722b45159b37454b0fe9b00e70fecf83059e3",
+          "observed_at": "2026-11-25T00:38:04.315552+00:00",
+          "elapsed_seconds": 1.047151,
+          "role": "authority_field_pdf"
+        },
+        {
+          "source": "Racing NSW",
+          "source_url": "https://racing.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov25,NSW,Wyong",
+          "started_at": "2026-11-25T00:38:04.358488+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 00:38:06 GMT",
+          "cache_age": null,
+          "sha256": "e85822a41bc1a0dea21c63f50be538a145c810982bdc16ed68fba9fd4c81c626",
+          "observed_at": "2026-11-25T00:38:06.859265+00:00",
+          "elapsed_seconds": 2.500792,
+          "role": "authority_wyong"
+        },
+        {
+          "source": "Sportsbet",
+          "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "started_at": "2026-11-25T00:37:30.089062+00:00",
+          "observed_at": "2026-11-25T00:37:32.063368+00:00",
+          "response_date": "Wed, 25 Nov 2026 00:37:31 GMT",
+          "cache_age": null,
+          "sha256": "8b1d11c2d3e3fbab13b507ef92aba455b56e5fb665ce0aee57e5146e90b39fc8",
+          "source_client": "permitted standard TLS-verified anonymous workspace HTTP",
+          "role": "operator_ipswich"
+        }
+      ]
+    },
+    {
+      "issue_id": 219,
+      "commit": "7065db3c2e15cc65bffe4da85a7c3aa2d5c04a69",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45546255339",
+      "trigger": "isolated branch push; not ordinary issue-event acceptance",
+      "started_at": "2026-11-25T04:22:40.688115+00:00",
+      "acknowledged_at": "2026-11-25T04:22:41.565226+00:00",
+      "terminal_delivered_at": "2026-11-25T04:24:55.450947+00:00",
+      "finished_at": "2026-11-25T04:24:55.450961+00:00",
+      "timings": {
+        "provider_acquisition_seconds": 5.815372,
+        "result_publication_seconds": 3.979674,
+        "terminal_delivery_seconds": 1.295597
+      },
+      "read_only_C": {
+        "http_methods": [
+          "GET",
+          "GET",
+          "GET",
+          "GET"
+        ],
+        "request_status": "COMPLETED",
+        "semantic_outcome": "COMPLETED_ASSESSMENTS",
+        "freshness": "FRESH",
+        "capture_age_seconds": 211.817572,
+        "receipt_path": "runs/2026-11-25/45546255339-integration-1/receipt.json",
+        "elapsed_seconds": 1.0072808570000689
+      },
+      "pilot_verification": {
+        "race_verified": false,
+        "fixed_win_verified": true,
+        "emergency_status_verified": true,
+        "sources": [
+          {
+            "source": "Racing Queensland",
+            "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/4",
+            "started_at": "2026-11-25T04:22:42.115004+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 04:22:42 GMT",
+            "cache_age": null,
+            "sha256": "dbe998ccf8ae0f9473d80794371cbd30c7abf22c985b998955e916b0ec1b7841",
+            "observed_at": "2026-11-25T04:22:42.745403+00:00",
+            "elapsed_seconds": 0.630412,
+            "role": "authority_ipswich",
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "4"
+          },
+          {
+            "source": "Racing Queensland",
+            "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639312123145864823",
+            "started_at": "2026-11-25T04:22:42.840926+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 04:22:43 GMT",
+            "cache_age": null,
+            "sha256": "2b9f238f13bdc749d97ba8e15593cd56a62b485b43ebd2ec5631a05b77f6cd9c",
+            "observed_at": "2026-11-25T04:22:44.062406+00:00",
+            "elapsed_seconds": 1.221492,
+            "role": "authority_field_pdf",
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "4"
+          },
+          {
+            "source": "Sportsbet",
+            "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "started_at": "2026-11-25T04:21:21.266106+00:00",
+            "observed_at": "2026-11-25T04:21:22.063137+00:00",
+            "response_date": "Wed, 25 Nov 2026 04:21:21 GMT",
+            "cache_age": null,
+            "sha256": "97147ee3c6717582e28ea271d834605f8f5c9ec5b945e46fd7b3572e9af9372f",
+            "source_client": "permitted standard TLS-verified anonymous workspace HTTP",
+            "role": "operator_ipswich",
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "4"
+          }
+        ],
+        "blockers": [
+          "independent_authority_complete_field_and_final_emergencies_not_verified"
+        ]
+      },
+      "prospective_cohort_admitted": false,
+      "prospective_freeze_blocker": null,
+      "commands": [
+        {
+          "command": "RM6",
+          "run_id": "45546255339-integration-1",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 27.61039,
+          "forecast_sha256": "01d9b22fe439391aa10b118ddd86cb43a4305028f9c538db2a8e1328bc6d9f78",
+          "receipt_sha256": "10a550bc6afb0e2c86a4f0f551cf0cb1e72751b9bbe53c36db67a8c7a0d61837"
+        },
+        {
+          "command": "RM7",
+          "run_id": "45546255339-integration-2",
+          "status": "PARTIAL_ASSESSMENTS",
+          "elapsed_seconds": 27.402943,
+          "forecast_sha256": "1f7fa750bfbb65607e30d31d391c8266a2d40fdd8b2c5c30bc19f14ce9f1f103",
+          "receipt_sha256": "c75ebd0b8d2adebbda8b6bb7cd3ef0fe48990b5fa3af56dc5c4f98ce8946d05f"
+        },
+        {
+          "command": "RM6PS",
+          "run_id": "45546255339-integration-3",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 27.71994,
+          "forecast_sha256": "5a2b801a0505b2bbc0c5db26b30acedc2d360ee2ffc55d622da7bee3297fe863",
+          "receipt_sha256": "24d674d86e51bb2e956df79e3f0256de83ff91cc9613fb6ddd6cd74ccf7210dc"
+        },
+        {
+          "command": "RM7PS",
+          "run_id": "45546255339-integration-4",
+          "status": "PARTIAL_ASSESSMENTS",
+          "elapsed_seconds": 27.561618,
+          "forecast_sha256": "e24625144260cc93f3911e4424e7b00893470cb3480138ea91067ba98daa5348",
+          "receipt_sha256": "aeece88b64cab54eaa6d9d43203298a3c009b10f677d8f90970ca8e14214135b"
+        },
+        {
+          "command": "RM6 Ipswich 4",
+          "run_id": "45546255339-integration-5",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.339229,
+          "forecast_sha256": "af64a21ac567b3ae9b83c3bd747bec62c7228f5600a7371a1a7406248a100431",
+          "receipt_sha256": "24495c3799687b436887252e41d20a91a94f61030f24576aba84cbde4dbe0f01"
+        },
+        {
+          "command": "RM7 Ipswich 4",
+          "run_id": "45546255339-integration-6",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.353485,
+          "forecast_sha256": "c6e97c1934003aa9d0ea9de7c2b4ce881f50cd71290195f99e9a04ca1de277df",
+          "receipt_sha256": "a78041a0c03f6b40e6bc564fe94eabbfe8820083a5c4b2bc566f9358854f5cb5"
+        },
+        {
+          "command": "RM6PS Ipswich 4",
+          "run_id": "45546255339-integration-7",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.332421,
+          "forecast_sha256": "63d8c270f0e3409ae9820b4cb8f0f017f758bd58139fea5ee317d51fb52c53e9",
+          "receipt_sha256": "558662bf89f0c297c1cdfbe92363b1c0814c08589ab5969920611ce2213c6303"
+        },
+        {
+          "command": "RM7PS Ipswich 4",
+          "run_id": "45546255339-integration-8",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.332748,
+          "forecast_sha256": "cd64ef9c26f21c1686090a052c66002b1ce98601038b8efffa78cad833848e40",
+          "receipt_sha256": "5b3f49a3c5c299fbac32082e978adae6bdf280812b0caed55f13ee2380884979"
+        },
+        {
+          "command": "Ipswich 4",
+          "run_id": "45546255339-integration-9",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 1.345891,
+          "forecast_sha256": "75208060dfc819f89d8be79de5c305e1ebdddc49859558995d110139488dba8f",
+          "receipt_sha256": "15774ba48c606103bb671a8d66eaf9641a55701b1074a4456e42cb6b768673fc"
+        }
+      ],
+      "index": {
+        "schema": "monty.operations.index.v1",
+        "date": "2026-11-25",
+        "run_id": "45546255339-integration-1",
+        "status": "COMPLETED_ASSESSMENTS",
+        "source_mode": "LIVE",
+        "receipt_path": "runs/2026-11-25/45546255339-integration-1/receipt.json",
+        "forecast_path": "runs/2026-11-25/45546255339-integration-1/forecast.json",
+        "forecast_sha256": "01d9b22fe439391aa10b118ddd86cb43a4305028f9c538db2a8e1328bc6d9f78",
+        "generated_at": "2026-11-25T04:23:19.596011+00:00",
+        "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45546255339",
+        "captured_at": "2026-11-25T04:21:22.063137+00:00",
+        "valid_until": "2026-11-25T04:26:22.063137+00:00",
+        "models": {
+          "V6": {
+            "commit": "7065db3c2e15cc65bffe4da85a7c3aa2d5c04a69",
+            "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+            "status": "SCORED",
+            "research_only": false,
+            "scored_races": 27,
+            "failed_races": 0,
+            "blocked_races": 0,
+            "expired_races": 0,
+            "delivery_status": "SCORED"
+          },
+          "V7": {
+            "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+            "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+            "status": "PARTIAL",
+            "research_only": true,
+            "scored_races": 20,
+            "failed_races": 0,
+            "blocked_races": 7,
+            "expired_races": 0,
+            "delivery_status": "PARTIAL"
+          }
+        },
+        "forecast_integrity_verified": true,
+        "receipt_sha256": "10a550bc6afb0e2c86a4f0f551cf0cb1e72751b9bbe53c36db67a8c7a0d61837",
+        "delivery_manifest_path": "runs/2026-11-25/45546255339-integration-1/delivery-manifest.json",
+        "delivery_manifest_sha256": "e522f4316abe2694d35bd347dd6ee51a510b0d69f486b1032ab0f9a02c996c8c",
+        "request": {
+          "command": "RM6",
+          "version": "V6",
+          "view": "official",
+          "date": "2026-11-25",
+          "meeting": null,
+          "race": null,
+          "country": "AU",
+          "provisional_requested": false
+        },
+        "request_id": 219,
+        "request_status": "COMPLETED"
+      },
+      "sources": [
+        {
+          "source": "TAB",
+          "source_url": "https://www.tab.com.au/racing/2026-11-25",
+          "started_at": "2026-11-25T04:22:41.565323+00:00",
+          "status": "HTTP_ERROR",
+          "http_status": 500,
+          "elapsed_seconds": 0.549623,
+          "role": "tab"
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/4",
+          "started_at": "2026-11-25T04:22:42.115004+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 04:22:42 GMT",
+          "cache_age": null,
+          "sha256": "dbe998ccf8ae0f9473d80794371cbd30c7abf22c985b998955e916b0ec1b7841",
+          "observed_at": "2026-11-25T04:22:42.745403+00:00",
+          "elapsed_seconds": 0.630412,
+          "role": "authority_ipswich"
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639312123145864823",
+          "started_at": "2026-11-25T04:22:42.840926+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 04:22:43 GMT",
+          "cache_age": null,
+          "sha256": "2b9f238f13bdc749d97ba8e15593cd56a62b485b43ebd2ec5631a05b77f6cd9c",
+          "observed_at": "2026-11-25T04:22:44.062406+00:00",
+          "elapsed_seconds": 1.221492,
+          "role": "authority_field_pdf"
+        },
+        {
+          "source": "Racing NSW",
+          "source_url": "https://racing.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov25,NSW,Wyong",
+          "started_at": "2026-11-25T04:22:44.190942+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 04:22:45 GMT",
+          "cache_age": null,
+          "sha256": "837c078cd50775bc75c5fe6da4d5b626bf1b6abe2df53e97f03d3e348678f1a9",
+          "observed_at": "2026-11-25T04:22:45.715426+00:00",
+          "elapsed_seconds": 1.524498,
+          "role": "authority_wyong"
+        },
+        {
+          "source": "Sportsbet",
+          "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "started_at": "2026-11-25T04:21:21.266106+00:00",
+          "observed_at": "2026-11-25T04:21:22.063137+00:00",
+          "response_date": "Wed, 25 Nov 2026 04:21:21 GMT",
+          "cache_age": null,
+          "sha256": "97147ee3c6717582e28ea271d834605f8f5c9ec5b945e46fd7b3572e9af9372f",
+          "source_client": "permitted standard TLS-verified anonymous workspace HTTP",
+          "role": "operator_ipswich"
+        }
+      ]
+    },
+    {
+      "issue_id": 220,
+      "commit": "4daee6f66c745674fe6061cc7dda05b05f6e5117",
+      "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45547304908",
+      "trigger": "isolated branch push; not ordinary issue-event acceptance",
+      "started_at": "2026-11-25T04:31:37.344222+00:00",
+      "acknowledged_at": "2026-11-25T04:31:38.532877+00:00",
+      "terminal_delivered_at": "2026-11-25T04:31:58.149820+00:00",
+      "finished_at": "2026-11-25T04:31:58.149835+00:00",
+      "timings": {
+        "provider_acquisition_seconds": 4.462746,
+        "result_publication_seconds": 4.776117,
+        "terminal_delivery_seconds": 1.146342
+      },
+      "read_only_C": {
+        "http_methods": [
+          "GET",
+          "GET",
+          "GET",
+          "GET"
+        ],
+        "request_status": "COMPLETED",
+        "semantic_outcome": "COMPLETED_ASSESSMENTS",
+        "freshness": "FRESH",
+        "capture_age_seconds": 9.360985,
+        "receipt_path": "runs/2026-11-25/45547304908-integration-1/receipt.json",
+        "elapsed_seconds": 1.5628383939999821
+      },
+      "pilot_verification": {
+        "race_verified": false,
+        "fixed_win_verified": false,
+        "emergency_status_verified": false,
+        "sources": [
+          {
+            "source": "Racing Queensland",
+            "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7",
+            "started_at": "2026-11-25T04:31:39.061621+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 04:31:39 GMT",
+            "cache_age": null,
+            "sha256": "6bae7aeef120f00e55e9473bebb225ae1cf6c62acd7cc6a1d084ca426296f06c",
+            "observed_at": "2026-11-25T04:31:40.232716+00:00",
+            "elapsed_seconds": 1.17111,
+            "role": "authority_ipswich",
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "7"
+          },
+          {
+            "source": "Racing Queensland",
+            "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639312123145864823",
+            "started_at": "2026-11-25T04:31:40.310158+00:00",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "response_date": "Wed, 25 Nov 2026 04:31:40 GMT",
+            "cache_age": null,
+            "sha256": "2b9f238f13bdc749d97ba8e15593cd56a62b485b43ebd2ec5631a05b77f6cd9c",
+            "observed_at": "2026-11-25T04:31:40.542498+00:00",
+            "elapsed_seconds": 0.232354,
+            "role": "authority_field_pdf",
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "7"
+          },
+          {
+            "source": "Sportsbet",
+            "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-7-11204564",
+            "status": "CAPTURED",
+            "http_status": 200,
+            "started_at": "2026-11-25T04:30:54.393480+00:00",
+            "observed_at": "2026-11-25T04:30:55.629394+00:00",
+            "response_date": "Wed, 25 Nov 2026 04:30:55 GMT",
+            "cache_age": null,
+            "sha256": "ef826ee886e1955e2288cdf23e35dda022cce3379ce85cfc6a22ff36de08d0b4",
+            "source_client": "permitted standard TLS-verified anonymous workspace HTTP",
+            "role": "operator_ipswich",
+            "date": "2026-11-25",
+            "meeting": "Ipswich",
+            "race": "7"
+          }
+        ],
+        "blockers": [
+          "independent_authority_complete_field_and_final_emergencies_not_verified"
+        ]
+      },
+      "prospective_cohort_admitted": null,
+      "prospective_freeze_blocker": null,
+      "commands": [
+        {
+          "command": "RM6 Ipswich 7",
+          "run_id": "45547304908-integration-1",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 0.640737,
+          "forecast_sha256": "1a5cbadbb68e890738842e4382555e89ca0c88128db4a1223d16f7b6094f4d68",
+          "receipt_sha256": "258fb27c516bf2152f56f0036f40d05494d14bc02a7e8eb7b8aa7e342d7cf974"
+        },
+        {
+          "command": "RM7 Ipswich 7",
+          "run_id": "45547304908-integration-2",
+          "status": "DATA_BLOCKED",
+          "elapsed_seconds": 0.658757,
+          "forecast_sha256": "5bf46bd492e9cef2d8b4fd8d13167a1d35b28ba4c741d207c2ba036a01682f62",
+          "receipt_sha256": "b7577be47ed75402001dc8d17d90f98f630746d77c91578d7fe0027a1cab263b"
+        },
+        {
+          "command": "RM6PS Ipswich 7",
+          "run_id": "45547304908-integration-3",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 0.622761,
+          "forecast_sha256": "c6cfc43ce405abdc9df408d19c6797945643200547ef52fb03329dd9f1c59a3d",
+          "receipt_sha256": "0ddab1999b5c89902303d2f6364b60a2eb1a8408ac1b2500cea37b21ec620e19"
+        },
+        {
+          "command": "RM7PS Ipswich 7",
+          "run_id": "45547304908-integration-4",
+          "status": "DATA_BLOCKED",
+          "elapsed_seconds": 0.620622,
+          "forecast_sha256": "fe170490a5ccefd8a7f277a89eebec78efc4d3d8b04926b7c7b2cf4f47e085d8",
+          "receipt_sha256": "acfaed53c66e26c1b16e36f49faccfdc1bcb45c5bee7beba11ec7b8c11b80f79"
+        },
+        {
+          "command": "Ipswich 7",
+          "run_id": "45547304908-integration-5",
+          "status": "COMPLETED_ASSESSMENTS",
+          "elapsed_seconds": 0.622921,
+          "forecast_sha256": "acfe8224814749efba01bc756fbbd63513608f7307ec9fe7d27ab997dc9a63ec",
+          "receipt_sha256": "130be1a687dfb73793c775ec85a8a5e06a116c16fb94df07015176d8ddf8e199"
+        }
+      ],
+      "index": {
+        "schema": "monty.operations.index.v1",
+        "date": "2026-11-25",
+        "run_id": "45547304908-integration-1",
+        "status": "COMPLETED_ASSESSMENTS",
+        "source_mode": "LIVE",
+        "receipt_path": "runs/2026-11-25/45547304908-integration-1/receipt.json",
+        "forecast_path": "runs/2026-11-25/45547304908-integration-1/forecast.json",
+        "forecast_sha256": "1a5cbadbb68e890738842e4382555e89ca0c88128db4a1223d16f7b6094f4d68",
+        "generated_at": "2026-11-25T04:31:48.124149+00:00",
+        "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45547304908",
+        "captured_at": "2026-11-25T04:31:47.221258+00:00",
+        "valid_until": "2026-11-25T04:36:47.221258+00:00",
+        "models": {
+          "V6": {
+            "commit": "4daee6f66c745674fe6061cc7dda05b05f6e5117",
+            "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+            "status": "SCORED",
+            "research_only": false,
+            "scored_races": 1,
+            "failed_races": 0,
+            "blocked_races": 0,
+            "expired_races": 0,
+            "delivery_status": "SCORED"
+          },
+          "V7": {
+            "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+            "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+            "status": "BLOCKED",
+            "research_only": true,
+            "scored_races": 0,
+            "failed_races": 0,
+            "blocked_races": 1,
+            "expired_races": 0,
+            "delivery_status": "BLOCKED"
+          }
+        },
+        "forecast_integrity_verified": true,
+        "receipt_sha256": "258fb27c516bf2152f56f0036f40d05494d14bc02a7e8eb7b8aa7e342d7cf974",
+        "delivery_manifest_path": "runs/2026-11-25/45547304908-integration-1/delivery-manifest.json",
+        "delivery_manifest_sha256": "1963fac3ceb3d10e89c9d0a7a22bdb44b2bc75e46879bb12b6b3af7db49e8f80",
+        "request": {
+          "command": "RM6 IPSWICH 7",
+          "version": "V6",
+          "view": "provisional",
+          "date": "2026-11-25",
+          "meeting": "Ipswich",
+          "race": "7",
+          "country": "AU",
+          "provisional_requested": false
+        },
+        "request_id": 220,
+        "request_status": "COMPLETED"
+      },
+      "sources": [
+        {
+          "source": "TAB",
+          "source_url": "https://www.tab.com.au/racing/2026-11-25",
+          "started_at": "2026-11-25T04:31:38.532953+00:00",
+          "status": "HTTP_ERROR",
+          "http_status": 500,
+          "elapsed_seconds": 0.52861,
+          "role": "tab"
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7",
+          "started_at": "2026-11-25T04:31:39.061621+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 04:31:39 GMT",
+          "cache_age": null,
+          "sha256": "6bae7aeef120f00e55e9473bebb225ae1cf6c62acd7cc6a1d084ca426296f06c",
+          "observed_at": "2026-11-25T04:31:40.232716+00:00",
+          "elapsed_seconds": 1.17111,
+          "role": "authority_ipswich"
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639312123145864823",
+          "started_at": "2026-11-25T04:31:40.310158+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 04:31:40 GMT",
+          "cache_age": null,
+          "sha256": "2b9f238f13bdc749d97ba8e15593cd56a62b485b43ebd2ec5631a05b77f6cd9c",
+          "observed_at": "2026-11-25T04:31:40.542498+00:00",
+          "elapsed_seconds": 0.232354,
+          "role": "authority_field_pdf"
+        },
+        {
+          "source": "Racing NSW",
+          "source_url": "https://racing.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov25,NSW,Wyong",
+          "started_at": "2026-11-25T04:31:40.644818+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 04:31:42 GMT",
+          "cache_age": null,
+          "sha256": "8553abec366b68749a0feac7ecaa941b0c8a8989dd0a7b02f769ffc3bff366ff",
+          "observed_at": "2026-11-25T04:31:42.453555+00:00",
+          "elapsed_seconds": 1.80875,
+          "role": "authority_wyong"
+        },
+        {
+          "source": "Sportsbet",
+          "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-7-11204564",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "started_at": "2026-11-25T04:30:54.393480+00:00",
+          "observed_at": "2026-11-25T04:30:55.629394+00:00",
+          "response_date": "Wed, 25 Nov 2026 04:30:55 GMT",
+          "cache_age": null,
+          "sha256": "ef826ee886e1955e2288cdf23e35dda022cce3379ce85cfc6a22ff36de08d0b4",
+          "source_client": "permitted standard TLS-verified anonymous workspace HTTP",
+          "role": "operator_ipswich"
+        }
+      ]
+    }
+  ],
+  "model_hashes": {
+    "V6": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+    "V7": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324"
+  }
+}

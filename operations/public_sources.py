@@ -68,11 +68,17 @@ def sportsbet(body,url,day,meeting,race):
     for ident in primary['outcomeIds']:
         row=book['outcomes'][str(ident)]
         if row['marketId']!=primary['id'] or type(row.get('active')) is not bool:raise ValueError('Sportsbet field/market mismatch')
+        # An inactive quote can mean suspension. Require an explicit withdrawal,
+        # rather than turning missing prices into invented scratchings.
+        withdrawals=[d for d in event.get('deductions',[]) if str(d.get('runnerNumber'))==str(row['runnerNumber']) and d.get('isValid')=='Y']
+        scratched=row.get('result')=='V' and any(d.get('name','').casefold()==row['name'].casefold() for d in withdrawals)
+        if not row['active'] and not scratched:raise ValueError('Sportsbet inactive runner without explicit withdrawal evidence')
+        if row['active'] and scratched:raise ValueError('Sportsbet conflicting active/withdrawal evidence')
         price=None
         if row['active']:
             quote=row['winPrice'];price=Decimal(quote['num'])/Decimal(quote['den'])+1
             if not price.is_finite() or price<=1:raise ValueError('Sportsbet invalid win price')
-        rows.append(dict(number=str(row['runnerNumber']),horse=row['name'],scratched=not row['active'],
+        rows.append(dict(number=str(row['runnerNumber']),horse=row['name'],scratched=scratched,
             fixed_win=str(price) if price else None,bookmaker='Sportsbet',country_of_origin=row.get('runnerCountry'),
             source_runner_id=str(row['id']),barrier=row.get('drawNumber'),jockey=row.get('jockey'),trainer=row.get('trainer')))
     if len(rows)!=len({r['number'] for r in rows}):raise ValueError('Sportsbet duplicate saddlecloth')
@@ -124,6 +130,7 @@ def rq_declaration(body,pdf,day,meeting,race):
         flat=' '.join(chunk.split())
         match=re.match(r'^(\d{2})\s+(\(EM\))?\s*(.+?)\((?!(?:NZ|AUS|GB|IRE|FR|USA)\))[^()]+\)',flat)
         if match:rows.append(dict(number=str(int(match[1])),horse=match[3].strip(),scratched=False,emergency=bool(match[2])))
+        elif re.match(r'^\d{2}\s+',flat):raise ValueError('Authority numbered runner could not be parsed; field incomplete')
     text=BeautifulSoup(body,'html.parser').get_text('\n',strip=True)
     if 'Scratchings' not in text or 'Stewards Summary' not in text:raise ValueError('Authority scratching section not available')
     section=text.rsplit('Scratchings',1)[1].split('Stewards Summary',1)[0]

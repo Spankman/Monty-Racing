@@ -55,7 +55,7 @@ class PrimaryBookTests(unittest.TestCase):
     def state(self):
         from datetime import datetime,timezone
         ms=datetime(2026,11,25,4,48,tzinfo=timezone.utc).timestamp()*1000
-        return {'entities':{'sportsbook':{'competitions':{'1':{'name':'Ipswich'}},'events':{'99':{'id':99,'competitionId':1,'raceNumber':4,'startTime':{'milliseconds':ms},'status':'ACTIVE','primaryMarketId':3,'distance':'2150','trackStatus':'Soft (5)'}},'markets':{'3':{'id':3,'name':'Win or Place','active':True,'displayed':True,'outcomeIds':[4,5]}},'outcomes':{'4':{'id':4,'marketId':3,'name':'Fixture','active':True,'runnerNumber':1,'winPrice':{'num':6,'den':4}},'5':{'id':5,'marketId':3,'name':'Withdrawal','active':False,'runnerNumber':2}}}}}
+        return {'entities':{'sportsbook':{'competitions':{'1':{'name':'Ipswich'}},'events':{'99':{'id':99,'competitionId':1,'raceNumber':4,'startTime':{'milliseconds':ms},'status':'ACTIVE','primaryMarketId':3,'distance':'2150','trackStatus':'Soft (5)','deductions':[{'runnerNumber':2,'name':'Withdrawal','isValid':'Y'}]}},'markets':{'3':{'id':3,'name':'Win or Place','active':True,'displayed':True,'outcomeIds':[4,5]}},'outcomes':{'4':{'id':4,'marketId':3,'name':'Fixture','active':True,'runnerNumber':1,'winPrice':{'num':6,'den':4}},'5':{'id':5,'marketId':3,'name':'Withdrawal','active':False,'runnerNumber':2,'result':'V'}}}}}
     def parse(self,d):
         return sportsbet(('<script>window.__PRELOADED_STATE__ = '+json.dumps(d)+';</script>').encode(),'https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-99','2026-11-25','Ipswich',4)
     def test_primary_fixed_win_market_not_exotic_or_tips(self):
@@ -140,3 +140,20 @@ class AuthorityUpdateTests(unittest.TestCase):
         states={r['number']:r['scratched'] for r in result['runners']}
         self.assertEqual(states,{'1':False,'2':True,'3':True,'4':False})
         self.assertTrue(result['emergency_status_verified'])
+
+class SuspendedQuoteTests(PrimaryBookTests):
+    def test_inactive_price_is_not_a_scratching(self):
+        d=self.state();d['entities']['sportsbook']['events']['99']['deductions']=[]
+        with self.assertRaisesRegex(ValueError,'explicit withdrawal'):self.parse(d)
+    def test_conflicting_active_withdrawal_rejected(self):
+        d=self.state();d['entities']['sportsbook']['outcomes']['5']['active']=True
+        with self.assertRaisesRegex(ValueError,'conflicting'):self.parse(d)
+
+class IncompleteAuthorityTests(unittest.TestCase):
+    def test_unparsed_numbered_runner_cannot_verify_field(self):
+        from operations.public_sources import rq_declaration
+        from types import SimpleNamespace
+        html=b'<h2>Ipswich 25 Nov 2026 4.33pm 1200m</h2><p>Soft 5 Turf</p><h3>Scratchings</h3><p>Nil</p><h3>Stewards Summary</h3>'
+        pdf='Ipswich Wednesday 25 November, 2026\n7 THE LAWN SHED BENCHMARK 70\n1200 metres\n01 First(Trainer One) Jockey\n02 Missing Trainer\n03 Third(Trainer Three) Jockey\n'
+        with patch('subprocess.run',return_value=SimpleNamespace(stdout=pdf.encode())):
+            with self.assertRaisesRegex(ValueError,'field incomplete'):rq_declaration(html,b'%PDF','2026-11-25','Ipswich',7)
