@@ -1,50 +1,50 @@
-Endpoint,Cost,Notes
-GET /v1/sports,1 credit,List all active sports
-GET /v1/sports/{key}/odds,1 credit per market type (max 3),One credit per market type requested; duplicates and unknown markets are rejected before billing
-GET /v1/best-odds/{key},3 credits,Best price + arb detection across all bookmakers
-GET /v1/racing/next-to-go,2 / 3 / 4 credits,"The next races across horse/greyhound/harness, 10 by default. Priced by num_races: 1–20 races 2 credits, 21–60 races 3, 61–200 races 4. Keys issued before 22 September 2026 pay 2 credits at any size; a 304 (If-None-Match) costs nothing."
-GET /v1/racing/best-odds,3 credits,"Best win/place price per runner, book vs book"
-GET /v1/racing/markets,2 credits,"One race, every market: win, place and Same Race Multi Top 2/3/4 per bookmaker with each book’s market percentage and the best price per runner, plus the settled exotic dividends once the race has been run Plus, Business, Platform and Scale only — 403 on Free, Hobby and Standard. Standard keys issued before 20 September 2026 keep it."
-GET /v1/racing/form,3 credits,"Every runner in one race with its recent runs from our own settled results, in one call: the field’s form as at the jump, never dependent on a third-party page"
-GET /v1/racing/results,2 credits,"Settled finishing order, deductions"
-GET /v1/racing/movers,3 credits,"Steamers and drifters, per book"
-GET /v1/racing/price-history,5 credits,"Every price move for a race, per runner per book Every key reads upcoming races and the last 24h. Races that started earlier: Standard, Plus, Business, Platform and Scale. 403 on Free and Hobby for those, with a sample of the response. Hobby keys issued before 20 October 2026 keep them."
-GET /v1/racing/closing-lines,5 credits (JSON) / 20 credits (CSV),"Closing-line and result archive; CSV is a bulk export. Standard: rolling 90-day window. Plus, Business, Platform and Scale: full archive. 403 on Free and Hobby. Standard keys issued before 20 September 2026 keep the full archive."
-GET /v1/racing/closing-lines/coverage,1 credit,"What the archive actually holds, measured at request time. Open to every key, Free included. The figures describe the whole archive, not your clamped window."
-GET /v1/racing/market-summary,5 credits (JSON) / 20 credits (CSV),"The market’s path per runner, written at the jump: the consensus at fixed marks and at the close, the moves, their breadth, the first book to move and the signal class; CSV is a bulk export. Standard: rolling 90-day window. Plus, Business, Platform and Scale: full archive. 403 on Free and Hobby. Standard keys issued before 20 September 2026 keep the full archive."
-GET /v1/bulk/{dataset}/{period},20 credits per daily file / 100 per monthly bundle,"One pre-built file per dataset per Sydney day or calendar month: closing lines, price paths, results, acceptances, track conditions. Parquet or gzip CSV. The catalogue at /v1/bulk/datasets costs no credits, also Business and above Daily files: Business, Platform and Scale. Monthly bundles: Platform and Scale. 403 on Free, Hobby, Standard and Plus."
-GET /v1/sports/{key}/odds/history,5 credits,"Standard, Plus, Business, Platform and Scale only — 403 on Free and Hobby."
-GET /v1/sports/{key}/odds/movements,5 credits,"Standard, Plus, Business, Platform and Scale only — 403 on Free and Hobby."
-GET /v1/sports/{key}/closing-lines,5 credits,"Each bookmaker's closing price and line on every match in a date range, with the consensus across books"
-GET /v1/data-quality/summary,1 credit,Connector freshness and audit status
-POST/GET/PATCH/DELETE /v1/widgets,0 credits,"Create and manage white-label odds widgets — your colours, your bookmaker links, no PuntersEdge credit. Managing them is free; each metered fill of an embedded widget costs 2 credits (racing) or 1 (a sports market), at most one per minute per parameter set however many people are looking at the page Platform and Scale only — the redistribution licence — 403 on Free, Hobby, Standard, Plus and Business."
-GET /v1/usage,0 credits,Free to check your usage
-GET /v1/health,0 credits,Service health check
-GET /v1/arb/best-prices,2 credits,Best prices comparison
-GET /v1/arb/lines,3 credits,Spreads/totals line arb
-GET /v1/arb/sports,3 credits,Sports arb scanner
-GET /v1/data-quality/audit/latest,1 credit,Latest bookmaker audits
-GET /v1/health/connectors,1 credit,Per-connector freshness
-GET /v1/racing/acceptances,2 credits,"Full-day AU thoroughbred acceptance card: every meeting, race and runner"
-GET /v1/racing/changes,2 credits,Races and prices that changed since a timestamp
-GET /v1/racing/connections/race,3 credits,"Every runner's jockey or driver and trainer statistics for one race, as at its jump"
-GET /v1/racing/connections/stats,3 credits,"Jockey, driver and trainer statistics from our own collected results"
-GET /v1/racing/consensus,3 credits,The market consensus on one race: margin-free probability per runner
-GET /v1/racing/events,1 credit,Upcoming race list
-GET /v1/racing/greyhounds/field,3 credits,"Every dog in one greyhound race with its recent runs, from our own results"
-GET /v1/racing/greyhounds/form,3 credits,"Greyhound form history for one dog, from our own results"
-GET /v1/racing/greyhounds/stats,3 credits,"Greyhound record by track, distance, box or grade, from our own results"
-GET /v1/racing/horses/form,3 credits,"Thoroughbred form, career record and profile for one horse"
-GET /v1/racing/horses/runs,3 credits,One thoroughbred's runs in our own settled results
-GET /v1/racing/intelligence,3 credits,"Market intelligence on one race: consensus at fixed marks, time-anchored moves, breadth, first mover, signal"
-GET /v1/racing/intelligence/scan,5 credits,"Scan the live window for runners that moved: time-anchored, breadth-gated Plus, Business, Platform and Scale only — 403 on Free, Hobby and Standard."
-GET /v1/racing/jockeys/stats,2 credits,Jockey premiership leaderboards and lookup
-GET /v1/racing/price-paths,5 / 20 credits,"Bulk export of the price-movement archive Plus, Business, Platform and Scale only — 403 on Free, Hobby and Standard. Standard keys issued before 20 September 2026 keep it."
-GET /v1/racing/results/coverage,1 credit,What the results field coverage actually is
-GET /v1/racing/tote,2 credits,North American tote odds (TVG): live win odds and morning line
-GET /v1/racing/track-conditions,1 credit,"Track condition, weather and rail: current state and today's change log"
-GET /v1/racing/trainers/stats,2 credits,Trainer premiership leaderboards and lookup
-GET /v1/racing/venues,1 credit,Canonical venue directory
-GET /v1/sports/{sport_key}/results,1 credit,Final scores by sport
-POST /v1/racing/clv,5 credits,"Score bets against the closing line (CLV) Plus, Business, Platform and Scale only — 403 on Free, Hobby and Standard."
-POST /v1/racing/horses/backfill,3 credits,"Queue a batch of horses for paced form collection Plus, Business, Platform and Scale only — 403 on Free, Hobby and Standard."
+Endpoint,Cost
+GET /v1/sports,1 credit
+GET /v1/sports/{key}/odds,1 credit per market type (max 3)
+GET /v1/best-odds/{key},3 credits
+GET /v1/racing/next-to-go,2 / 3 / 4 credits
+GET /v1/racing/best-odds,3 credits
+GET /v1/racing/markets,2 credits
+GET /v1/racing/form,3 credits
+GET /v1/racing/results,2 credits
+GET /v1/racing/movers,3 credits
+GET /v1/racing/price-history,5 credits
+GET /v1/racing/closing-lines,5 credits (JSON) / 20 credits (CSV)
+GET /v1/racing/closing-lines/coverage,1 credit
+GET /v1/racing/market-summary,5 credits (JSON) / 20 credits (CSV)
+GET /v1/bulk/{dataset}/{period},20 credits per daily file / 100 per monthly bundle
+GET /v1/sports/{key}/odds/history,5 credits
+GET /v1/sports/{key}/odds/movements,5 credits
+GET /v1/sports/{key}/closing-lines,5 credits
+GET /v1/data-quality/summary,1 credit
+POST/GET/PATCH/DELETE /v1/widgets,0 credits
+GET /v1/usage,0 credits
+GET /v1/health,0 credits
+GET /v1/arb/best-prices,2 credits
+GET /v1/arb/lines,3 credits
+GET /v1/arb/sports,3 credits
+GET /v1/data-quality/audit/latest,1 credit
+GET /v1/health/connectors,1 credit
+GET /v1/racing/acceptances,2 credits
+GET /v1/racing/changes,2 credits
+GET /v1/racing/connections/race,3 credits
+GET /v1/racing/connections/stats,3 credits
+GET /v1/racing/consensus,3 credits
+GET /v1/racing/events,1 credit
+GET /v1/racing/greyhounds/field,3 credits
+GET /v1/racing/greyhounds/form,3 credits
+GET /v1/racing/greyhounds/stats,3 credits
+GET /v1/racing/horses/form,3 credits
+GET /v1/racing/horses/runs,3 credits
+GET /v1/racing/intelligence,3 credits
+GET /v1/racing/intelligence/scan,5 credits
+GET /v1/racing/jockeys/stats,2 credits
+GET /v1/racing/price-paths,5 / 20 credits
+GET /v1/racing/results/coverage,1 credit
+GET /v1/racing/tote,2 credits
+GET /v1/racing/track-conditions,1 credit
+GET /v1/racing/trainers/stats,2 credits
+GET /v1/racing/venues,1 credit
+GET /v1/sports/{sport_key}/results,1 credit
+POST /v1/racing/clv,5 credits
+POST /v1/racing/horses/backfill,3 credits

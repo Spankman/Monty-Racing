@@ -1,13 +1,13 @@
-,Free,Hobby,Standard,Plus,Business,Platform,Scale
-"Live racing and sports odds, results, next-to-go",✓,✓,✓,✓,✓,✓,✓
-Historical sports odds and movements,—,—,✓,✓,✓,✓,✓
-Closing-line archive,—,—,90 days,Full,Full,Full,Full
-Price-path exports and CLV scoring,—,—,—,✓,✓,✓,✓
-Race markets view and webhooks,—,—,—,✓,✓,✓,✓
-Live push stream (server-sent events),—,—,—,—,✓,✓,✓
-Replay any recorded race day over the stream,—,—,—,—,✓,✓,✓
-Daily bulk dataset files,—,—,—,—,✓,✓,✓
-Monthly dataset bundles,—,—,—,—,—,✓,✓
-Team keys on one credit pool,—,—,—,—,✓,✓,✓
-White-label widget,—,—,—,—,—,✓,✓
-Licence (Terms 8.1),Personal use,Personal use,Personal use,Display with attribution,Commercial use,Redistribution,Redistribution
+Capability,Free,Hobby,Standard,Plus,Business,Platform,Scale
+Current odds and results,✓,✓,✓,✓,✓,✓,✓
+Older sports prices,—,—,✓,✓,✓,✓,✓
+Closing archive,—,—,90 days,Full,Full,Full,Full
+Price exports and CLV,—,—,—,✓,✓,✓,✓
+Market view and callbacks,—,—,—,✓,✓,✓,✓
+Live streaming,—,—,—,—,✓,✓,✓
+Recorded-day streaming,—,—,—,—,✓,✓,✓
+Daily bulk files,—,—,—,—,✓,✓,✓
+Monthly bulk bundles,—,—,—,—,—,✓,✓
+Shared team quota,—,—,—,—,✓,✓,✓
+Unbranded widget,—,—,—,—,—,✓,✓
+Use permission,Personal use,Personal use,Personal use,Display with attribution,Commercial use,Redistribution,Redistribution
