@@ -1,0 +1,29 @@
+name: Monty bounded live quote comparison
+on:
+  pull_request:
+    types: [opened]
+    paths: ['.github/workflows/monty-live-quote-probe.yml']
+permissions:
+  contents: read
+jobs:
+  comparison:
+    if: github.head_ref == 'audit/live-data-reliability' && github.base_ref == 'integration/data-cost-controls' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m operations.audit.live_quote_probe | tee live-quote-probe.json
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          KROK_FREE_API_KEY: ${{ secrets.KROK_FREE_API_KEY }}
+          FORMFAV_API_KEY: ${{ secrets.FORMFAV_API_KEY }}
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monty-live-quote-counts
+          path: live-quote-probe.json
