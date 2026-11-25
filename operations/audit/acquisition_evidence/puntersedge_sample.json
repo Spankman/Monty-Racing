@@ -1,0 +1,58 @@
+{
+  "source": "PuntersEdge Australian racing closing-line sample (puntersedge.online)",
+  "licence": "CC BY 4.0",
+  "version": "2026-09.3",
+  "sha256": "c07364381341bf7d1f1c6f29fd40fd0b984d87d95507b1ad75c336e575a7ee60",
+  "total_rows": 234230,
+  "au_thoroughbred_rows": 55420,
+  "au_thoroughbred_races": 1283,
+  "books": {
+    "betright": {
+      "race_vectors": 1279,
+      "provider_union_complete": 686,
+      "same_integer_capture_offset": 21,
+      "underround": 4,
+      "quarantined_vectors": 1
+    },
+    "ladbrokes_au": {
+      "race_vectors": 1281,
+      "provider_union_complete": 752,
+      "same_integer_capture_offset": 9,
+      "underround": 9,
+      "quarantined_vectors": 2
+    },
+    "pointsbetau": {
+      "race_vectors": 1282,
+      "provider_union_complete": 582,
+      "same_integer_capture_offset": 7,
+      "underround": 4,
+      "quarantined_vectors": 11
+    },
+    "tab": {
+      "race_vectors": 1276,
+      "provider_union_complete": 436,
+      "same_integer_capture_offset": 20,
+      "underround": 4,
+      "quarantined_vectors": 4
+    },
+    "tabtouch": {
+      "race_vectors": 1276,
+      "provider_union_complete": 465,
+      "same_integer_capture_offset": 10,
+      "underround": 3,
+      "quarantined_vectors": 3
+    }
+  },
+  "excluded_rows": {
+    "duplicate_saddlecloth_rows": 2,
+    "invalid_or_outside_pre_advertised_jump_rows": 37
+  },
+  "result_status_rows": {
+    "final": 55279,
+    "": 141
+  },
+  "horse_ref_namespaces": {
+    "pe": 55420
+  },
+  "limitation": "Provider-union completeness and integer offsets do not prove independent field, registered identity or simultaneous executable prices."
+}
