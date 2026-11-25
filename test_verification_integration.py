@@ -128,3 +128,15 @@ class QuoteProvenanceTests(unittest.TestCase):
         runner.update(odds=[],fixed_win=3,fixed_win_bookmaker='Sportsbet')
         f=self.run_it()
         self.assertEqual(f['models']['V7']['blocked_races'],1)
+
+class AuthorityUpdateTests(unittest.TestCase):
+    def test_live_scratchings_supersede_programme_and_multiple_same_line(self):
+        from operations.public_sources import rq_declaration
+        from types import SimpleNamespace
+        html=b'<h2>Ipswich 25 Nov 2026 4.33pm 1200m</h2><p>Soft 5 Turf</p><h3>Scratchings</h3><p>2. Second 3. Third</p><h3>Stewards Summary</h3>'
+        pdf='Ipswich Wednesday 25 November, 2026\n7 THE LAWN SHED BENCHMARK 70\n1200 metres\n01 First(Trainer One) Jockey\n02 Second(Trainer Two) Jockey\n03 Third(Trainer Three) Jockey\n04 Fourth(Trainer Four) Jockey\n'
+        with patch('subprocess.run',return_value=SimpleNamespace(stdout=pdf.encode())):
+            result=rq_declaration(html,b'%PDF','2026-11-25','Ipswich',7)
+        states={r['number']:r['scratched'] for r in result['runners']}
+        self.assertEqual(states,{'1':False,'2':True,'3':True,'4':False})
+        self.assertTrue(result['emergency_status_verified'])

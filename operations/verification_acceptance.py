@@ -30,7 +30,7 @@ def main():
     os.environ['OPERATIONS_RESULTS_BRANCH']='monty-verification-staging-results'
     os.environ['OPERATIONS_ISSUE_COMMENTS']='1'
     from operations import transport,issue_delivery,client
-    issue=int(json.loads(Path('.monty/operations-staging.json').read_text())['issue_id']);tag=os.environ['GITHUB_RUN_ID'];workflow=f'https://github.com/{transport.REPO}/actions/runs/{tag}'
+    config=json.loads(Path('.monty/operations-staging.json').read_text());issue=int(config['issue_id']);pilot_race=int(config.get('pilot_race',4));tag=os.environ['GITHUB_RUN_ID'];workflow=f'https://github.com/{transport.REPO}/actions/runs/{tag}'
     opened=transport.api(f'issues/{issue}')
     if opened['user']['login']!='Spankman' or opened['title']!='Monty verification staging — integrated command and source pilot':raise ValueError('Wrong staging issue')
     started=ops.utcnow();day=started.astimezone(ops.TZ).date().isoformat()
@@ -42,14 +42,14 @@ def main():
     summary['acknowledged_at']=ops.utcnow().isoformat()
     stage=time.monotonic()
     urls=[('tab','https://www.tab.com.au/racing/'+day),
-          ('authority_ipswich','https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/'+day.replace('-','')+'/race/4'),
+          ('authority_ipswich','https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/'+day.replace('-','')+'/race/'+str(pilot_race)),
           ('authority_wyong','https://racing.racingnsw.com.au/FreeFields/Acceptances.aspx?Key='+day[:4]+'Nov'+day[-2:]+',NSW,Wyong')]
     authority=None;authority_body=None;authority_meta=None
     for key,url in urls:
         meta,body=capture(url,private);summary['sources'].append(dict(meta,role=key))
         if key=='authority_ipswich' and body:
             try:
-                authority=rq_facts(body,day,'Ipswich',4);summary['authority_metadata']=authority
+                authority=rq_facts(body,day,'Ipswich',pilot_race);summary['authority_metadata']=authority
                 authority_body=body;authority_meta=meta
                 from bs4 import BeautifulSoup
                 from urllib.parse import urljoin
@@ -57,12 +57,12 @@ def main():
                 if len(links)==1:
                     pdf_meta,pdf=capture(urljoin(url,links[0]),private);summary['sources'].append(dict(pdf_meta,role='authority_field_pdf'))
                     if pdf and pdf.startswith(b'%PDF'):
-                        authority=rq_declaration(body,pdf,day,'Ipswich',4);summary['authority_metadata']=authority
+                        authority=rq_declaration(body,pdf,day,'Ipswich',pilot_race);summary['authority_metadata']=authority
             except Exception as exc:summary['authority_parse_error']=type(exc).__name__
     # Second Australian pilot: record the actual NSW source outcome, not a cached
     # search snippet. No attempt to defeat a challenge or repeat a denied request.
     summary['independent_verification_seconds']=round(time.monotonic()-stage,6)
-    operator_url='https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566'
+    operator_url=config.get('operator_url','https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-4-11204566')
     packet_path=Path('.monty/verification-operator-packet.json')
     operator=None
     if packet_path.exists():
@@ -76,7 +76,7 @@ def main():
     else:
         op_meta,body=capture(operator_url,private)
         if body:
-            try:operator=sportsbet(body,operator_url,day,'Ipswich',4)
+            try:operator=sportsbet(body,operator_url,day,'Ipswich',pilot_race)
             except Exception as exc:summary['operator_parse_error']=type(exc).__name__
     summary['sources'].append(dict(op_meta,role='operator_ipswich'))
     from krok_adapter import fetch
@@ -99,7 +99,7 @@ def main():
             captured=min(provider_at,ops.timestamp(op_meta['observed_at']))
             summary['price_input_policy']='Explicit direct Sportsbet WIN overlay on matched Ipswich R4 only; Krok field features unchanged'
     verification=dict(race_verified=False,fixed_win_verified=bool(summary.get('operator_field_matches_provider')),emergency_status_verified=False,
-        sources=[dict(s,date=day,meeting='Ipswich',race='4') for s in summary['sources'] if s['role'] in ('authority_ipswich','authority_field_pdf','operator_ipswich')],blockers=['independent_authority_complete_field_and_final_emergencies_not_verified'])
+        sources=[dict(s,date=day,meeting='Ipswich',race=str(pilot_race)) for s in summary['sources'] if s['role'] in ('authority_ipswich','authority_field_pdf','operator_ipswich')],blockers=['independent_authority_complete_field_and_final_emergencies_not_verified'])
     if authority and authority.get('field_verified') and operator and summary.get('operator_field_matches_provider'):
         direct={(r['number'],comparable_name(r['horse']),r['scratched']) for r in operator['runners']}
         official={(r['number'],comparable_name(r['horse']),r['scratched']) for r in authority['runners']}
@@ -112,7 +112,8 @@ def main():
         race['track_condition']=authority['condition']
         summary['authority_input_overlay']='Verified primary authority track condition; original frozen going normalization unchanged'
 
-    commands=['RM6','RM7','RM6PS','RM7PS','RM6 Ipswich 4','RM7 Ipswich 4','RM6PS Ipswich 4','RM7PS Ipswich 4','Ipswich 4']
+    singles=[f'{name} Ipswich {pilot_race}' for name in ['RM6','RM7','RM6PS','RM7PS']]+[f'Ipswich {pilot_race}']
+    commands=singles if config.get('single_pilot_only') else ['RM6','RM7','RM6PS','RM7PS']+singles
     first=None
     for i,text in enumerate(commands,1):
         req=ops.command(text,day,'AU');run_id=f'{tag}-integration-{i}';out=base/run_id;stage=time.monotonic()
@@ -128,11 +129,15 @@ def main():
              elapsed_seconds=round(time.monotonic()-stage,6),capture_age_seconds=(ops.utcnow()-captured).total_seconds(),
              forecast_sha256=receipt['forecast_sha256'],receipt_sha256=ops.sha(public/'receipt.json')))
         if i==1:first=(req,forecast,public)
-        if text=='RM6 Ipswich 4' and forecast.get('races'):
+        if text==f'RM6 Ipswich {pilot_race}' and forecast.get('races'):
             target=forecast['races'][0]
             if all(m['status']=='SCORED' for m in target['models'].values()):
                 try:
-                    frozen=freeze(forecast,target,verification,base/(tag+'-prospective')/'public'/'record.json')
+                    record_path=public/'record.json'
+                    frozen=freeze(forecast,target,verification,record_path)
+                    if first and public!=first[2]:
+                        for source in [record_path,Path(str(record_path)+'.receipt.json')]:
+                            with (first[2]/source.name).open('xb') as handle:handle.write(source.read_bytes())
                     summary['prospective_cohort_admitted']=frozen['cohort_admitted']
                 except Exception as exc:summary['prospective_freeze_blocker']=type(exc).__name__
     req,forecast,public=first

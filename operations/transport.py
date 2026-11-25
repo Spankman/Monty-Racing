@@ -219,7 +219,7 @@ def publish(directory, run_id, day, issue=None, workflow_url=None, *, request=No
              'v7-official.json','v7-provisional.json','v6-official.txt','v6-provisional.txt',
              'v7-official.txt','v7-provisional.txt','v6-official.html','v6-provisional.html',
              'v7-official.html','v7-provisional.html', 'v7-shadow.json','v7-shadow.txt','v7-shadow.html'}
-    allowed.update({'delivery-manifest.json','compact-v6-official.json','compact-v6-provisional.json','compact-v7-official.json','compact-v7-provisional.json','compact-v7-shadow.json'})
+    allowed.update({'record.json','record.json.receipt.json','delivery-manifest.json','compact-v6-official.json','compact-v6-provisional.json','compact-v7-official.json','compact-v7-provisional.json','compact-v7-shadow.json'})
     files=sorted(Path(directory).iterdir())
     if any(not file.is_file() or file.is_symlink() or file.name not in allowed for file in files):
         raise ValueError('Unapproved public file')
@@ -249,6 +249,12 @@ def publish(directory, run_id, day, issue=None, workflow_url=None, *, request=No
             if preview['path'] not in allowed or not preview['path'].startswith('compact-'):raise ValueError('Unsafe preview path')
             if hashlib.sha256((Path(directory)/preview['path']).read_bytes()).hexdigest()!=preview['sha256']:raise ValueError('Preview integrity mismatch')
         index.update(delivery_manifest_path=prefix+'delivery-manifest.json',delivery_manifest_sha256=receipt['delivery_manifest_sha256'])
+    record_file=Path(directory)/'record.json'
+    if record_file.exists():
+        record_receipt=record_file.with_name('record.json.receipt.json')
+        record=json.loads(record_file.read_text());verified=json.loads(record_receipt.read_text())
+        if hashlib.sha256(record_file.read_bytes()).hexdigest()!=verified['record_sha256'] or record['provider_snapshot_sha256']!=saved_forecast['provider_snapshot_sha256']:raise ValueError('Prospective record integrity mismatch')
+        index.update(prospective_record_path=prefix+'record.json',prospective_record_sha256=verified['record_sha256'],prospective_receipt_path=prefix+'record.json.receipt.json',prospective_receipt_sha256=hashlib.sha256(record_receipt.read_bytes()).hexdigest(),prospective_cohort_admitted=record['cohort_admitted'])
     if request is not None:index['request']=request
     if issue is not None:
         state = 'FAILED' if receipt['status'] == 'FAILED' else 'COMPLETED'

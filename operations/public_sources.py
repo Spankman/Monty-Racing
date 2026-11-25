@@ -127,9 +127,17 @@ def rq_declaration(body,pdf,day,meeting,race):
     text=BeautifulSoup(body,'html.parser').get_text('\n',strip=True)
     if 'Scratchings' not in text or 'Stewards Summary' not in text:raise ValueError('Authority scratching section not available')
     section=text.rsplit('Scratchings',1)[1].split('Stewards Summary',1)[0]
-    scratched=[dict(number=str(int(n)),horse=horse.strip(),scratched=True,emergency=False) for n,horse in re.findall(r'(?m)^\s*(\d+)\.\s*([^\n]+)',section)]
+    flat=' '.join(section.split())
+    scratched=[dict(number=str(int(n)),horse=horse.strip(),scratched=True,emergency=False) for n,horse in re.findall(r'(\d+)\.\s+(.+?)(?=\s+\d+\.\s+|$)',flat)]
     if not scratched and not re.search(r'no scratchings|nil',section,re.I):raise ValueError('Authority scratching status not explicit')
-    rows+=scratched
     if len(rows)<2 or len({r['number'] for r in rows})!=len(rows):raise ValueError('Authority declared field incomplete or contradictory')
-    facts.update(runners=rows,field_verified=True,emergency_status_verified=not any(r['emergency'] for r in rows))
+    declared={r['number']:r for r in rows}
+    same_race_name=lambda s:' '.join(re.sub(r'\s*\((?:NZ|AUS|GB|IRE|FR|USA)\)\s*$','',s,flags=re.I).casefold().split())
+    for withdrawal in scratched:
+        previous=declared.get(withdrawal['number'])
+        if previous and same_race_name(previous['horse'])!=same_race_name(withdrawal['horse']):raise ValueError('Authority scratching name conflict')
+        if previous:previous['scratched']=True  # Live authority withdrawals supersede the published programme.
+        else:declared[withdrawal['number']]=withdrawal
+    rows=list(declared.values())
+    facts.update(runners=rows,field_verified=True,emergency_status_verified=all(not r['emergency'] or r['scratched'] for r in rows))
     return facts
