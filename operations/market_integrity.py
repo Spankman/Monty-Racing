@@ -21,6 +21,7 @@ def quote_evidence(runner):
     from krok_adapter import price, named_bookmaker
     selected, origin = price(runner)
     times = []
+    selected_offer=None
     if origin == 'TAB':
         # price() takes the FIRST valid TAB price, not a later matching offer.
         for quote in runner.get('odds', []) if isinstance(runner.get('odds'), list) else []:
@@ -28,13 +29,28 @@ def quote_evidence(runner):
             if str(quote.get('bookmaker', '')).strip().lower() == 'tab':
                 from krok_adapter import number
                 if number(quote.get('win')):
-                    times = [quote[k] for k in ('quoted_at', 'updated_at') if quote.get(k) is not None]
+                    selected_offer=quote
                     break
     elif origin:
-        times = [runner[k] for k in (origin+'_quoted_at', origin+'_updated_at') if runner.get(k) is not None]
+        times = [runner[k] for k in (origin+'_captured_at',origin+'_quoted_at', origin+'_updated_at') if runner.get(k) is not None]
+        if not times:
+            from krok_adapter import FIXED_BOOKMAKERS,number
+            book=named_bookmaker(runner,selected,origin)
+            matches=[q for q in runner.get('odds',[]) if isinstance(q,dict) and number(q.get('win'))==selected
+                     and book and FIXED_BOOKMAKERS.get(str(q.get('bookmaker','')).strip().casefold())==book] if isinstance(runner.get('odds'),list) else []
+            if len(matches)==1:selected_offer=matches[0]
+    basis='OFFER_REPORTED_TIME_UNVERIFIED'
+    if selected_offer is not None:
+        # Capture and bookmaker update are distinct vintages. Never compare
+        # unlike semantics as if they were duplicate timestamps.
+        captured=[selected_offer[k] for k in ('captured_at','capturedAt') if selected_offer.get(k) is not None]
+        times=captured or [selected_offer[k] for k in ('quoted_at','updated_at') if selected_offer.get(k) is not None]
+        if captured:basis='KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE'
+    elif origin and runner.get(origin+'_captured_at') is not None:
+        times=[runner[origin+'_captured_at']];basis='KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE'
     return dict(number=str(runner.get('number')), horse=runner.get('name'), odds=selected,
                 bookmaker=named_bookmaker(runner, selected, origin) if selected else None,
-                quote_timestamps=times)
+                quote_timestamps=times,quote_time_basis=basis,independent_price_verification=False)
 
 
 def analyze(rows, *, expected_active, captured_at=None, now=None, context=None):
@@ -102,6 +118,7 @@ def analyze(rows, *, expected_active, captured_at=None, now=None, context=None):
         market_only_baseline=None if total is None else [dict(number=str(r['number']),horse=r['horse'],odds=r['odds'],
             probability=(1/r['odds'])/total) for r in rows],
         bookmakers=books,quote_timestamp_count=len(quote_times),capture_age_seconds=age,
+        quote_timestamp_semantics=sorted({r.get('quote_time_basis') or 'UNVERIFIED' for r in rows}),
         captured_at=captured_at,oldest_quote_at=min(quote_times).isoformat() if quote_times else None,
         latest_quote_at=max(quote_times).isoformat() if quote_times else None,warnings=flags)
 

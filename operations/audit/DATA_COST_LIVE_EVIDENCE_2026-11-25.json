@@ -1,0 +1,851 @@
+{
+  "date": "2026-11-25",
+  "started_at": "2026-11-25T07:05:10.145569+00:00",
+  "commit": "b44635aa763b217fb09c502ced2a795fee5e3210",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45565320852",
+  "new_live_inference": true,
+  "production_changed": false,
+  "credential_configured": true,
+  "meetings": {
+    "meetings": 6,
+    "races": 44,
+    "active_runners": 411,
+    "race_keys": [
+      [
+        "Albany",
+        "1",
+        9
+      ],
+      [
+        "Albany",
+        "2",
+        12
+      ],
+      [
+        "Albany",
+        "3",
+        8
+      ],
+      [
+        "Albany",
+        "4",
+        8
+      ],
+      [
+        "Albany",
+        "5",
+        8
+      ],
+      [
+        "Albany",
+        "6",
+        11
+      ],
+      [
+        "Albany",
+        "7",
+        11
+      ],
+      [
+        "Geelong",
+        "1",
+        10
+      ],
+      [
+        "Geelong",
+        "2",
+        7
+      ],
+      [
+        "Geelong",
+        "3",
+        11
+      ],
+      [
+        "Geelong",
+        "4",
+        9
+      ],
+      [
+        "Geelong",
+        "5",
+        11
+      ],
+      [
+        "Geelong",
+        "6",
+        9
+      ],
+      [
+        "Geelong",
+        "7",
+        9
+      ],
+      [
+        "Geelong",
+        "8",
+        10
+      ],
+      [
+        "Ipswich",
+        "1",
+        9
+      ],
+      [
+        "Ipswich",
+        "2",
+        8
+      ],
+      [
+        "Ipswich",
+        "3",
+        11
+      ],
+      [
+        "Ipswich",
+        "4",
+        8
+      ],
+      [
+        "Ipswich",
+        "5",
+        13
+      ],
+      [
+        "Ipswich",
+        "6",
+        11
+      ],
+      [
+        "Ipswich",
+        "7",
+        13
+      ],
+      [
+        "Launceston",
+        "1",
+        7
+      ],
+      [
+        "Launceston",
+        "2",
+        6
+      ],
+      [
+        "Launceston",
+        "3",
+        13
+      ],
+      [
+        "Launceston",
+        "4",
+        12
+      ],
+      [
+        "Launceston",
+        "5",
+        6
+      ],
+      [
+        "Launceston",
+        "6",
+        9
+      ],
+      [
+        "Launceston",
+        "7",
+        7
+      ],
+      [
+        "Launceston",
+        "8",
+        6
+      ],
+      [
+        "Strathalbyn",
+        "1",
+        9
+      ],
+      [
+        "Strathalbyn",
+        "2",
+        11
+      ],
+      [
+        "Strathalbyn",
+        "3",
+        10
+      ],
+      [
+        "Strathalbyn",
+        "4",
+        10
+      ],
+      [
+        "Strathalbyn",
+        "5",
+        13
+      ],
+      [
+        "Strathalbyn",
+        "6",
+        13
+      ],
+      [
+        "Strathalbyn",
+        "7",
+        12
+      ],
+      [
+        "Wyong",
+        "1",
+        7
+      ],
+      [
+        "Wyong",
+        "2",
+        6
+      ],
+      [
+        "Wyong",
+        "3",
+        7
+      ],
+      [
+        "Wyong",
+        "4",
+        10
+      ],
+      [
+        "Wyong",
+        "5",
+        8
+      ],
+      [
+        "Wyong",
+        "6",
+        7
+      ],
+      [
+        "Wyong",
+        "7",
+        6
+      ]
+    ],
+    "selected_offer_timestamp_count": 340,
+    "invalid_selected_timestamp_count": 0,
+    "selected_age_min_seconds": 385.173861,
+    "selected_age_max_seconds": 4831.507861,
+    "selected_stale_count": 340,
+    "selected_future_count": 0,
+    "nested_timestamp_fields": {
+      "captured_at": 11209,
+      "capturedAt": 0,
+      "quoted_at": 0,
+      "updated_at": 0
+    },
+    "selected_bookmakers": {
+      "UNKNOWN": 71,
+      "PointsBet": 32,
+      "BetDeluxe": 1,
+      "TABtouch": 20,
+      "Ladbrokes": 27,
+      "Dabble": 1,
+      "TAB": 257,
+      "Betr": 1,
+      "Sportsbet": 1
+    },
+    "pages": 1
+  },
+  "dated_card": {
+    "meetings": 6,
+    "races": 44,
+    "active_runners": 411,
+    "race_keys": [
+      [
+        "Albany",
+        "1",
+        9
+      ],
+      [
+        "Albany",
+        "2",
+        12
+      ],
+      [
+        "Albany",
+        "3",
+        8
+      ],
+      [
+        "Albany",
+        "4",
+        8
+      ],
+      [
+        "Albany",
+        "5",
+        8
+      ],
+      [
+        "Albany",
+        "6",
+        11
+      ],
+      [
+        "Albany",
+        "7",
+        11
+      ],
+      [
+        "Geelong",
+        "1",
+        10
+      ],
+      [
+        "Geelong",
+        "2",
+        7
+      ],
+      [
+        "Geelong",
+        "3",
+        11
+      ],
+      [
+        "Geelong",
+        "4",
+        9
+      ],
+      [
+        "Geelong",
+        "5",
+        11
+      ],
+      [
+        "Geelong",
+        "6",
+        9
+      ],
+      [
+        "Geelong",
+        "7",
+        9
+      ],
+      [
+        "Geelong",
+        "8",
+        10
+      ],
+      [
+        "Ipswich",
+        "1",
+        9
+      ],
+      [
+        "Ipswich",
+        "2",
+        8
+      ],
+      [
+        "Ipswich",
+        "3",
+        11
+      ],
+      [
+        "Ipswich",
+        "4",
+        8
+      ],
+      [
+        "Ipswich",
+        "5",
+        13
+      ],
+      [
+        "Ipswich",
+        "6",
+        11
+      ],
+      [
+        "Ipswich",
+        "7",
+        13
+      ],
+      [
+        "Launceston",
+        "1",
+        7
+      ],
+      [
+        "Launceston",
+        "2",
+        6
+      ],
+      [
+        "Launceston",
+        "3",
+        13
+      ],
+      [
+        "Launceston",
+        "4",
+        12
+      ],
+      [
+        "Launceston",
+        "5",
+        6
+      ],
+      [
+        "Launceston",
+        "6",
+        9
+      ],
+      [
+        "Launceston",
+        "7",
+        7
+      ],
+      [
+        "Launceston",
+        "8",
+        6
+      ],
+      [
+        "Strathalbyn",
+        "1",
+        9
+      ],
+      [
+        "Strathalbyn",
+        "2",
+        11
+      ],
+      [
+        "Strathalbyn",
+        "3",
+        10
+      ],
+      [
+        "Strathalbyn",
+        "4",
+        10
+      ],
+      [
+        "Strathalbyn",
+        "5",
+        13
+      ],
+      [
+        "Strathalbyn",
+        "6",
+        13
+      ],
+      [
+        "Strathalbyn",
+        "7",
+        12
+      ],
+      [
+        "Wyong",
+        "1",
+        7
+      ],
+      [
+        "Wyong",
+        "2",
+        6
+      ],
+      [
+        "Wyong",
+        "3",
+        7
+      ],
+      [
+        "Wyong",
+        "4",
+        10
+      ],
+      [
+        "Wyong",
+        "5",
+        8
+      ],
+      [
+        "Wyong",
+        "6",
+        7
+      ],
+      [
+        "Wyong",
+        "7",
+        6
+      ]
+    ],
+    "selected_offer_timestamp_count": 340,
+    "invalid_selected_timestamp_count": 0,
+    "selected_age_min_seconds": 387.014666,
+    "selected_age_max_seconds": 4833.348666,
+    "selected_stale_count": 340,
+    "selected_future_count": 0,
+    "nested_timestamp_fields": {
+      "captured_at": 11209,
+      "capturedAt": 0,
+      "quoted_at": 0,
+      "updated_at": 0
+    },
+    "selected_bookmakers": {
+      "UNKNOWN": 71,
+      "PointsBet": 32,
+      "BetDeluxe": 1,
+      "TABtouch": 20,
+      "Ladbrokes": 27,
+      "Dabble": 1,
+      "TAB": 257,
+      "Betr": 1,
+      "Sportsbet": 1
+    },
+    "pages": 1
+  },
+  "comparison": {
+    "same_race_keys_and_active_counts": true,
+    "meetings_only": 0,
+    "dated_only": 0,
+    "limitation": "Sequential calls; moving prices and field changes may differ. Dated route is documented alias, not another independent source."
+  },
+  "command_acquisition_trials": [
+    {
+      "command": "RM6",
+      "acquisition_status": "RETURNED",
+      "captured_at": "2026-11-25T07:05:16.663488+00:00"
+    },
+    {
+      "command": "RM7",
+      "acquisition_status": "RETURNED",
+      "captured_at": "2026-11-25T07:05:20.744219+00:00"
+    },
+    {
+      "command": "RM6PS",
+      "acquisition_status": "BLOCKED",
+      "reason": "ValueError"
+    },
+    {
+      "command": "RM7PS",
+      "acquisition_status": "BLOCKED",
+      "reason": "ValueError"
+    },
+    {
+      "command": "RM6 Strathalbyn 6",
+      "acquisition_status": "BLOCKED",
+      "reason": "ValueError"
+    },
+    {
+      "command": "RM6 Strathalbyn 6",
+      "acquisition_status": "BLOCKED",
+      "reason": "ValueError"
+    },
+    {
+      "command": "RM6 Strathalbyn 6",
+      "acquisition_status": "BLOCKED",
+      "reason": "ValueError"
+    }
+  ],
+  "batch_receipts": [
+    {
+      "command": "RM6",
+      "cache": "NETWORK_ACQUISITION",
+      "captured_at": "2026-11-25T07:05:16.663488+00:00",
+      "acquisition_id": "716e12572da6440ac956602d978e0b572eb9b4098dc76a238f8e597bc4b8e1ed",
+      "attempts": 1,
+      "measured_credits": 0,
+      "unknown_cost_attempts": 1,
+      "remaining_balance_is_not_monty_usage": true
+    },
+    {
+      "command": "RM7",
+      "cache": "NETWORK_ACQUISITION",
+      "captured_at": "2026-11-25T07:05:20.744219+00:00",
+      "acquisition_id": "716e12572da6440ac956602d978e0b572eb9b4098dc76a238f8e597bc4b8e1ed",
+      "attempts": 1,
+      "measured_credits": 0,
+      "unknown_cost_attempts": 1,
+      "remaining_balance_is_not_monty_usage": true
+    }
+  ],
+  "C": {
+    "provider_calls": 0,
+    "mode": "not submitted to acquisition; existing read-only status path unchanged"
+  },
+  "rq_primary": [
+    {
+      "race": "7",
+      "sources": [
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7",
+          "started_at": "2026-11-25T07:05:20.865397+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 07:05:21 GMT",
+          "cache_age": null,
+          "sha256": "d8bea155b7d569730ca7a2b6de20cc6e42d706675273478fa4a3b6460e0a6ee2",
+          "observed_at": "2026-11-25T07:05:21.419070+00:00",
+          "elapsed_seconds": 0.553691
+        },
+        {
+          "source": "Racing Queensland",
+          "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_IPSW_20261125.pdf&v=639312221763467234",
+          "started_at": "2026-11-25T07:05:21.473946+00:00",
+          "status": "CAPTURED",
+          "http_status": 200,
+          "response_date": "Wed, 25 Nov 2026 07:05:21 GMT",
+          "cache_age": null,
+          "sha256": "ea02ee81db1e8be5162d52a3bdf44b34b35ebc7c37f0798a6a2da840ea61f4ba",
+          "observed_at": "2026-11-25T07:05:21.722131+00:00",
+          "elapsed_seconds": 0.248199
+        }
+      ],
+      "primary_authority": "Racing Queensland",
+      "verified": false,
+      "price_verification": false,
+      "blocker": "ValueError"
+    }
+  ],
+  "rq_cohort_prejump_available": false,
+  "live_pilot": {
+    "meeting": "Strathalbyn",
+    "race": 6,
+    "jump": "2026-11-25T07:10:00.000Z",
+    "status": "COMPLETED_ASSESSMENTS",
+    "captured_at": "2026-11-25T07:05:12.945861+00:00",
+    "models": {
+      "V6": {
+        "commit": "14f35c8aeda8dafffaa20b581f2c00c40f9d79c7",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 1,
+        "failed_races": 0,
+        "blocked_races": 0,
+        "expired_races": 0,
+        "delivery_status": "SCORED"
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 1,
+        "failed_races": 0,
+        "blocked_races": 0,
+        "expired_races": 0,
+        "delivery_status": "SCORED"
+      }
+    },
+    "races": [
+      {
+        "meeting": "Strathalbyn",
+        "race": "6",
+        "market_integrity": {
+          "schema": "monty.market_integrity.v1",
+          "status": "QUARANTINED",
+          "actionable_value_allowed": false,
+          "independently_verified": false,
+          "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+          "expected_active_runners": 13,
+          "observed_price_runners": 13,
+          "complete_price_vector": true,
+          "observed_book_lower_bound_pct": 130.1732626266945,
+          "book_percentage": 130.1732626266945,
+          "overround_percentage_points": 30.17326262669451,
+          "underround_percentage_points": 0,
+          "market_only_numerical_edge": -0.23179308882519245,
+          "market_only_baseline": [
+            {
+              "number": "1",
+              "horse": "Rock Shot",
+              "odds": 71.0,
+              "probability": 0.010819815650349403
+            },
+            {
+              "number": "2",
+              "horse": "Big Mav",
+              "odds": 6.0,
+              "probability": 0.12803448519580124
+            },
+            {
+              "number": "3",
+              "horse": "Little Rocket",
+              "odds": 14.0,
+              "probability": 0.054871922226771966
+            },
+            {
+              "number": "4",
+              "horse": "Mikki Tango",
+              "odds": 34.0,
+              "probability": 0.022594320916906104
+            },
+            {
+              "number": "5",
+              "horse": "Voltage Point",
+              "odds": 6.0,
+              "probability": 0.12803448519580124
+            },
+            {
+              "number": "6",
+              "horse": "Rhinestone Rory",
+              "odds": 31.0,
+              "probability": 0.024780868102413145
+            },
+            {
+              "number": "7",
+              "horse": "Goodwin Guru",
+              "odds": 41.0,
+              "probability": 0.018736753931092868
+            },
+            {
+              "number": "8",
+              "horse": "Shalhavmusik",
+              "odds": 6.5,
+              "probability": 0.1181856786422781
+            },
+            {
+              "number": "10",
+              "horse": "Lysander",
+              "odds": 26.0,
+              "probability": 0.029546419660569524
+            },
+            {
+              "number": "12",
+              "horse": "Zarkana",
+              "odds": 8.0,
+              "probability": 0.09602586389685094
+            },
+            {
+              "number": "14",
+              "horse": "Archdeacon",
+              "odds": 26.0,
+              "probability": 0.029546419660569524
+            },
+            {
+              "number": "11",
+              "horse": "Nolabell",
+              "odds": 2.4,
+              "probability": 0.3200862129895031
+            },
+            {
+              "number": "13",
+              "horse": "Angry Berdi",
+              "odds": 41.0,
+              "probability": 0.018736753931092868
+            }
+          ],
+          "bookmakers": [
+            "TAB"
+          ],
+          "quote_timestamp_count": 13,
+          "capture_age_seconds": 10.29314,
+          "quote_timestamp_semantics": [
+            "KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE"
+          ],
+          "captured_at": "2026-11-25T07:05:12.945861+00:00",
+          "oldest_quote_at": "2026-11-25T06:43:46.765000+00:00",
+          "latest_quote_at": "2026-11-25T06:43:46.765000+00:00",
+          "warnings": [
+            "independent_field_unverified",
+            "stale_price"
+          ]
+        },
+        "outcomes": {
+          "V6": {
+            "status": "SCORED",
+            "classification": "PROVISIONAL",
+            "reasons": [
+              "independent_fields_scratchings_and_going_unverified",
+              "historical_form_incomplete",
+              "prospective_value_unverified"
+            ]
+          },
+          "V7": {
+            "status": "SCORED",
+            "classification": "RESEARCH ONLY",
+            "reasons": [
+              "independent_fields_scratchings_and_going_unverified",
+              "historical_form_incomplete",
+              "prospective_value_unverified",
+              "V7_RESEARCH_ONLY_NOT_APPROVED"
+            ]
+          }
+        }
+      }
+    ],
+    "forecast_sha256": "ae0cf6338a5099d5f4a79b653e84b5c3c5000eec22a27a6267aacf49d6a02f33",
+    "receipt_sha256": "cb0a1db2e69d7d0c074402c070b0d807c6b1ee553b8174ed03b809875a0a48ba",
+    "independently_verified": false,
+    "admission": "NOT ADMITTED \u2014 authority/operator/history verification incomplete"
+  },
+  "usage": [
+    {
+      "endpoint": "/api/v1/racing/meetings",
+      "status": 200,
+      "command": "RM6 acquisition pilot",
+      "attempted_at": "2026-11-25T07:05:12.900401+00:00",
+      "elapsed_seconds": 2.754546,
+      "x-credits-cost": 1,
+      "x-credits-remaining": 49418,
+      "x-credits-limit": 50000,
+      "x-ratelimit-limit": 500,
+      "x-ratelimit-remaining": 499,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/api/v1/racing/meetings/2026-11-25",
+      "status": 200,
+      "command": "DATED_CARD comparison",
+      "attempted_at": "2026-11-25T07:05:14.742191+00:00",
+      "elapsed_seconds": 1.781106,
+      "credit_cost_known": false
+    },
+    {
+      "endpoint": "/api/v1/racing/meetings",
+      "status": 200,
+      "command": "RM6",
+      "attempted_at": "2026-11-25T07:05:16.621565+00:00",
+      "elapsed_seconds": 1.770896,
+      "credit_cost_known": false
+    },
+    {
+      "endpoint": "/api/v1/racing/meetings",
+      "status": 200,
+      "command": "RM7",
+      "attempted_at": "2026-11-25T07:05:20.703830+00:00",
+      "elapsed_seconds": 3.932479,
+      "credit_cost_known": false
+    }
+  ],
+  "usage_summary": {
+    "attempts": 4,
+    "measured_credits": 1,
+    "unknown_cost_attempts": 3,
+    "remaining_balance_is_not_monty_usage": true,
+    "total_credits": null
+  },
+  "free_trial": {
+    "separate_free_credential_configured": false,
+    "verified_free_plan": false,
+    "blocker": "Existing credential tier is not proof of a Free account; no plan/billing changes made"
+  },
+  "formfav": {
+    "credential_configured": false
+  },
+  "puntersedge": {
+    "credential_configured": false,
+    "live_independence_verified": false
+  },
+  "finished_at": "2026-11-25T07:05:23.260516+00:00",
+  "artifact_zip_sha256": "35fa7f0748ff370ff1787aa67eeadeadc93d8456f3c6b21452c93ea963717d82",
+  "artifact_id": 15000270778,
+  "forecast_and_receipt_independently_rehashed": true,
+  "evidence_note": "Original live run; total credits unknown where cost headers were absent. New final code explicitly represents unknown total as null."
+}
