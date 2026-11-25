@@ -10,8 +10,11 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+from time import monotonic
 from zoneinfo import ZoneInfo
 from operations.timing import timed
+from operations.single_race import RaceUnavailable
+from operations.assessment import OutputContractError, classify, diagnostic, feature_evidence, validate_output, provider_inventory, summarize
 
 TZ = ZoneInfo('Australia/Brisbane')
 V7_COMMIT = 'efc51abb1595ef1eb8417e2d4e0d591f6d3c9378'
@@ -68,14 +71,15 @@ def command(text, date=None, country=None):
     canonical = model.upper() + (f' {track.upper()} {race}' if track else '')
     return dict(command=canonical, version=model[:3].upper().replace('RM','V'),
                 view='provisional' if model.upper().endswith('PS') or track else 'shadow' if model.upper() == 'RM7' else 'official',
-                date=day, meeting=track, race=race, country=country)
+                date=day, meeting=track, race=race, country=country,
+                provisional_requested=model.upper().endswith('PS'))
 
 
 def freshness(record, now=None):
     now = now or utcnow()
     try:
         age = (now-timestamp(record['captured_at'])).total_seconds()
-        if age < 0 or age > MAX_AGE_SECONDS:
+        if age < 0 or age >= MAX_AGE_SECONDS:
             return 'STALE — REQUEST A FRESH RUN'
         if timestamp(record['scheduled_start']) <= now:
             return 'CLOSED — JUMP TIME REACHED'
@@ -88,6 +92,12 @@ def current_result(race, saved, mode, now):
     result = dict(saved)
     result['freshness_at_retrieval']=freshness(race, now)
     result['freshness_checked_at']=now.isoformat()
+    if result['freshness_at_retrieval'].startswith(('STALE','CLOSED')):
+        result['delivery_classification']='EXPIRED'
+        result['betting_decision']='EXPIRED'
+    result.pop('diagnostic_assessment', None)
+    if mode=='official' and result['freshness_at_retrieval'] == 'FRESH AT CHECK TIME':
+        result['diagnostic_assessment'] = saved.get('diagnostic_assessment') or diagnostic(saved)
     if mode=='official' or result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
         for key in ('best_bets', 'ordered_selections', 'roughies'):
             result[key] = []
@@ -126,6 +136,8 @@ def projection(forecast, request, now=None):
     return dict(schema=SCHEMA,run_id=forecast['run_id'],date=forecast['date'],view=request['view'],
                 version=request['version'],status=forecast['status'],races=selected,
                 receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]),
+                operational_outcome=forecast.get('operational_outcome'), operational_reason=forecast.get('operational_reason'),
+                operational_evidence=forecast.get('operational_evidence'),
                 captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'))
 
 
@@ -136,6 +148,10 @@ def normalized_snapshot(payload, day, allow_restricted=False):
     # not claims that a provider verified field completeness or eligibility.
     for row in snapshot['runners']:
         row['betting_authorised']=False
+        # Quote field names are not bookmaker identities. Preserve the raw
+        # provenance and use the evidenced fixed operator as the common label.
+        row['_provider_price_field']=row['_price_source']
+        if row.get('_bookmaker'):row['_price_source']=row['_bookmaker']
     for row in snapshot['races']:
         row['betting_authorised']=False
     return snapshot,audit
@@ -150,7 +166,9 @@ def metadata(payload, day):
             key=(str(meeting.get('venue','')).casefold(),str(race.get('number')))
             row=dict(country=meeting['country'],meeting=meeting.get('venue'),race=str(race.get('number')),
                      scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
-                     scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in race.get('runners',[]) if r.get('is_scratched') is True])
+                     provider_track_condition=race.get('track_condition') or meeting.get('track_hint'),
+                     provider_surface=race.get('surface') or meeting.get('surface'),
+                     scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in (race.get('runners') if isinstance(race.get('runners'), list) else []) if isinstance(r,dict) and r.get('is_scratched') is True])
             if key in result:
                 raise ValueError('Ambiguous country or duplicate race identity')
             result[key]=row
@@ -180,12 +198,17 @@ def invoke(version, snapshot_path, meta, directory, v7_root):
     file=directory/('monty_selections.csv' if version=='V6' else 'v7_research_scores.csv')
     with file.open() as f:
         rows=list(csv.DictReader(f))
+    from operations.model_audit import trace
+    component_trace=trace(version,directory,v7_root,ROOT/'monty_v6')
     value_watch=None
     if version=='V7':
         value_watch=json.loads((directory/'provisional_selection.json').read_text()).get('provisional_value_candidate')
     return [dict(number=str(r['number'] if version=='V6' else r['runner_id']),horse=r['horse'],
                  odds=float(r['odds'] if version=='V6' else r['fixed_win_odds']),
                  probability=float(r['monty_prob'] if version=='V6' else r['v7_win_probability']),
+                 score_trace=component_trace[str(r['number'] if version=='V6' else r['runner_id'])],
+                 feature_coverage=float(r['feature_coverage']) if version=='V6' else None,
+                 known_feature_count=int(r['known_feature_count']) if version=='V7' else None,
                  research_category=r.get('research_category'),
                  value_watch=value_watch if value_watch and str(value_watch['number'])==str(r['runner_id']) else None) for r in rows]
 
@@ -193,27 +216,34 @@ def invoke(version, snapshot_path, meta, directory, v7_root):
 def selection(rows,version='V6'):
     from monty_single_race_ladder import price_ladder
     if len({r['number'] for r in rows})!=len(rows) or not rows:
-        raise ValueError('Invalid scoring identities')
+        raise OutputContractError('invalid_scoring_identities')
     if not all(math.isfinite(r['probability']) and 0<r['probability']<=1 and math.isfinite(r['odds']) and r['odds']>1 for r in rows):
-        raise ValueError('Invalid scored values')
+        raise OutputContractError('invalid_scored_values')
     if not math.isclose(sum(r['probability'] for r in rows),1,abs_tol=1e-6):
-        raise ValueError('Unnormalized race probabilities')
-    ranked=sorted(rows,key=lambda r:-r['probability'])
+        raise OutputContractError('unnormalized_race_probabilities')
+    market_total=sum(1/r['odds'] for r in rows)
+    ranked=[dict(r,market_probability=(1/r['odds'])/market_total,
+                 fair_win_odds=1/r['probability'],numerical_win_edge=r['probability']*r['odds']-1)
+            for r in sorted(rows,key=lambda r:-r['probability'])]
     ladder=price_ladder(ranked,short_price=4.0)
     # V7's single value-watch marker is separate from the roughie shortlist.
     min_odds, min_probability = (6, 0) if version == 'V6' else (4, .06)
     roughies = [r for r in ranked if r['odds'] >= min_odds
                 and r['probability'] >= min_probability
                 and r['probability'] * r['odds'] > 1]
-    return dict(ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
+    return dict(ranked_runners=ranked,ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
                 recommended_bet_type='NO BET',best_bets=[],
                 best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in roughies],
-                official_classification='NO BET',provisional_classification='PROVISIONAL RESEARCH ONLY',
+                official_classification='DATA BLOCKED',provisional_classification='RESEARCH ONLY' if version=='V7' else 'PROVISIONAL',
+                value_evidence=dict(calibration_verified=False,
+                    method='probability * captured fixed-win odds - 1; diagnostic only',
+                    approval_evaluator='not implemented; numerical edge cannot authorise betting'),
                 betting_authorised=False)
 
 
 def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False):
     """Capture once, run both frozen models on byte-identical per-race snapshots."""
+    execution_started=monotonic();durations={}
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
     public=output/'public';public.mkdir()
     v7_root=Path(v7_root).resolve()
@@ -222,13 +252,14 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 generated_at=started.isoformat(),receipt=f'runs/{day}/{run_id}/receipt.json',source_mode='SIMULATED FIXTURE' if fixture else 'LIVE',
                 status='FAILED',models={},races=[],blockers=[],coverage={},qualifying_forecasts=0)
     pins={}
+    from krok_adapter import IncompleteFields
     stage='date_validation'
     try:
         if not fixture and day!=started.astimezone(TZ).date().isoformat():
             raise ValueError('Live request date is not today in Brisbane')
-        stage='frozen_artifact_verification'
+        stage='frozen_artifact_verification';phase_started=monotonic()
         with timed('frozen_verification', run_id, enabled=timings):
-            from monty.integrity import verify_artifacts
+            from monty.integrity import verify_artifacts, validate_model_contract
             verify_artifacts(ROOT/'monty_v6')
             pins={'V6':sha(ROOT/'monty_v6/results/frozen_model.json'),'V7':sha(v7_root/'v7/artifacts/fold_3_model.json')}
             if pins['V7']!=V7_MODEL_SHA:
@@ -238,7 +269,13 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 if version=='V7' and commit!=V7_COMMIT:
                     raise ValueError('Pinned V7 commit mismatch')
                 result['models'][version]=dict(commit=commit,model_sha256=pins[version],status='NOT_RUN',research_only=version=='V7')
+        durations['frozen_verification_seconds']=monotonic()-phase_started
+        v6_model=json.loads((ROOT/'monty_v6/results/frozen_model.json').read_text())
+        v7_model=json.loads((v7_root/'v7/artifacts/fold_3_model.json').read_text())
+        schemas={'V6':(v6_model['input_feature_names'],validate_model_contract(v6_model,v6_model['input_feature_names'])),
+                 'V7':(v7_model.get('names',[]),[n for n,a in zip(v7_model.get('names',[]),v7_model.get('active',[])) if a])}
         stage='provider_capture'
+        phase_started=monotonic()
         if payload is None:
             from krok_adapter import fetch
             key=os.environ.get('KROK_API_KEY','').strip()
@@ -247,29 +284,40 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 raise ValueError('KROK_API_KEY absent; live request not attempted')
             with timed('provider_fetch', run_id, enabled=timings):
                 payload=fetch(day,key)
+        durations['provider_acquisition_seconds']=monotonic()-phase_started
+        durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
         result['captured_at']=captured.isoformat()
-        if not 0<=(utcnow()-captured).total_seconds()<=MAX_AGE_SECONDS:
-            raise ValueError('Stale or future-dated provider snapshot')
+        capture_age = (utcnow() - captured).total_seconds()
+        if capture_age < 0:
+            raise RaceUnavailable('DATA BLOCKED', 'provider_capture_in_future')
+        if capture_age >= MAX_AGE_SECONDS:
+            raise RaceUnavailable('EXPIRED', 'provider_capture_expired')
         stage='snapshot_validation'
         single=bool(request.get('meeting'))
         facts=None;model_ready=True
         if single:
             from operations.single_race import prepare
             source,facts=prepare(payload,day,request)
-        else:source=payload
+        else:
+            source = payload
+            if request.get('country') and isinstance(payload, dict) and isinstance(payload.get('data'), list):
+                source = dict(payload, data=[meeting for meeting in payload['data']
+                                            if isinstance(meeting, dict) and meeting.get('country') == request['country']])
         meta=metadata(source,day)
         from krok_adapter import IncompleteFields
         try:
+            if single and facts.get('field_outcome'):
+                raise IncompleteFields('Incomplete requested field')
             snapshot,audit=normalized_snapshot(source,day,single)
         except IncompleteFields:
             if not single:raise
             model_ready=False
             snapshot=dict(runners=[],races=[dict(meeting=facts['meeting'],race=facts['race'])])
             audit={'skipped':['Requested field lacks complete valid active identities/prices or is closed']}
-        result['coverage']=dict(provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
+        result['coverage']=dict(provider_inventory=provider_inventory(source,day),provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
             accepted_races=len(snapshot['races']),scored_both=0,independently_verified=0,
             complete_au_nz_coverage_verified=False,provider_skips=audit['skipped'],
             jurisdictions_observed=sorted({r['country'] for r in meta.values()}),
@@ -285,23 +333,22 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             runners=[r for r in snapshot['runners'] if (r['meeting'].casefold(),str(r['race']))==k]
             record=dict(**{n:m[n] for n in ['meeting','race','country','scheduled_start','scratchings']},
                         captured_at=captured.isoformat(),independent_verification=False,
+                        provider_track_condition=m.get('provider_track_condition'),provider_surface=m.get('provider_surface'),
                         scratching_status='PROVIDER ASSERTION ONLY',models={})
             if single:
                 record['single_race_assessment']=True
                 record['assessment_facts']=dict(facts,captured_at=captured.isoformat(),scheduled_start=m['scheduled_start'])
             reasons=['independent_fields_scratchings_and_going_unverified','historical_form_incomplete','prospective_value_unverified']
             if single and not model_ready:reasons.append('complete_market_field_required_by_frozen_models')
-            if any(r.get('_price_source')!='TAB' for r in runners):
+            if any(not r.get('_bookmaker') for r in runners):
                 reasons.append('named_bookmaker_fixed_win_not_available_for_entire_field')
             try:
                 if timestamp(m['scheduled_start'])<=utcnow():reasons.append('race_already_due')
             except (TypeError,ValueError):reasons.append('jump_time_unverified')
-            if not single and len(runners)<3:reasons.append('common_V7_minimum_three_runners_not_met')
             record['data_completeness']=dict(active_runners=facts['active_runners'] if single else len(runners),form_history_verified=False)
             blocked_by=['race_already_due','jump_time_unverified','complete_market_field_required_by_frozen_models']
             # A missing TAB attribution is an official evidence gap, not a
             # missing market input. Complete provider prices support research.
-            if not single:blocked_by+=['common_V7_minimum_three_runners_not_met']
             if not any(x in reasons for x in blocked_by):
                 private=output/'private'/str(len(result['races']))
                 common=private/'snapshot.json'
@@ -314,61 +361,94 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             if v7_gap:
                                 record['models'][version]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons+[v7_gap],betting_authorised=False)
                                 continue
-                        rows=scorer(version,common,m,private/version,v7_root)
-                        if sha(common)!=record['shared_model_input_sha256']:
-                            raise ValueError('Shared input mutated')
-                        if {(r['number'],r['horse'],r['odds']) for r in rows}!={(r['number'],r['horse'],r['odds']) for r in runners}:
-                            raise ValueError('Model output identities/odds differ from common input')
                         if freshness(record)!='FRESH AT CHECK TIME':
-                            raise ValueError('Race closed or snapshot expired during inference')
+                            record['models'][version]=dict(status='BLOCKED',expired_at_completion=True,ordered_selections=[],no_bet_reasons=['capture_expired_or_race_closed_before_inference'])
+                            continue
+                        model_started=monotonic()
+                        rows=scorer(version,common,m,private/version,v7_root)
+                        model_seconds=monotonic()-model_started
+                        if sha(common)!=record['shared_model_input_sha256']:
+                            raise OutputContractError('shared_model_input_mutated')
+                        validate_output(rows,runners)
+                        books={r['number']:r.get('_bookmaker') for r in runners}
+                        rows=[dict(r,bookmaker=books[r['number']]) for r in rows]
+                        expired_at_completion=freshness(record)!='FRESH AT CHECK TIME'
                         view=selection(rows,version)
+                        view['input_evidence']=feature_evidence(runners,*schemas[version])
                         if single:
                             origins={r['number']:r['_price_source'] for r in runners}
-                            ranked=[dict(r,price_source=origins[r['number']]) for r in sorted(rows,key=lambda r:-r['probability'])]
+                            ranked=[dict(r,price_source=origins[r['number']]) for r in view['ranked_runners']]
                             candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
                             view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
-                        view.update(status='SCORED',decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
-                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
+                        view.update(status='SCORED',model_elapsed_seconds=model_seconds,decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
+                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Named fixed-win quotes (Krok attributed)' if all(r.get('_bookmaker') for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
                                     model_version=version,model_commit=result['models'][version]['commit'])
+                        if expired_at_completion:
+                            view['expired_at_completion']=True
+                            view['no_bet_reasons'].append('race_closed_or_snapshot_expired_during_inference')
                         if version=='V7':view['no_bet_reasons'].append('V7_RESEARCH_ONLY_NOT_APPROVED')
                         record['models'][version]=view
                     except Exception as exc:
                         record['models'][version]=dict(status='FAILED',official_classification='NO BET',ordered_selections=[],
-                            no_bet_reasons=['inference_failed_'+type(exc).__name__],betting_authorised=False)
+                            no_bet_reasons=[exc.code if isinstance(exc,OutputContractError) else 'inference_failed_'+type(exc).__name__],betting_authorised=False)
                 if all(x['status']=='SCORED' for x in record['models'].values()):result['coverage']['scored_both']+=1
             else:
                 for v in ['V6','V7']:
                     record['models'][v]=dict(status='BLOCKED',official_classification='NO BET',ordered_selections=[],no_bet_reasons=reasons.copy(),betting_authorised=False)
+            for version in ['V6','V7']:classify(record['models'][version],version)
             if single:
+                outcome = ('DATA BLOCKED' if 'race_already_due' in reasons else
+                           facts.get('field_outcome', 'FIELD UNAVAILABLE') if not model_ready else None)
+                if outcome:
+                    result['operational_outcome'] = record['operational_outcome'] = outcome
+                    result['operational_reason'] = ('scheduled_jump_time_reached_status_unconfirmed'
+                                                    if 'race_already_due' in reasons else 'incomplete_requested_field')
+                    for model in record['models'].values():
+                        model.update(prediction_classification=outcome, betting_decision=outcome)
                 from operations.single_race import annotate
                 for version in ['V6','V7']:annotate(record,version)
             result['races'].append(record)
-        for version in ['V6','V7']:
-            scored=sum(r['models'][version]['status']=='SCORED' for r in result['races'])
-            failed=sum(r['models'][version]['status']=='FAILED' for r in result['races'])
-            result['models'][version].update(scored_races=scored,status='PARTIAL' if failed and scored else 'FAILED' if failed else 'SCORED' if scored else 'BLOCKED')
-        result['status']='COMPLETED_NO_BET' if result['races'] and all(v['status']=='SCORED' for v in result['models'].values()) else 'PARTIAL_OR_BLOCKED'
-        result['blockers']=['No independently verified TAB field/conditions attestation; official NO BET','V7 remains research only']
+        result['status']=summarize(result,request['version'])
+        result['blockers']=['Betting approval DATA BLOCKED: no independent field/conditions attestation, compatible as-of history or validated prospective approval evaluator','V7 remains research only']
+    except RaceUnavailable as exc:
+        result.update(status='EXPIRED' if exc.outcome == 'EXPIRED' else 'DATA_BLOCKED', operational_outcome=exc.outcome,
+                      operational_reason=exc.code, blockers=[exc.outcome + ' — ' + exc.code])
+        if exc.code in ('provider_meeting_status', 'provider_race_status'):
+            result['operational_evidence'] = 'KROK PROVIDER ASSERTION ONLY'
     except Exception as exc:
         # Do not expose arbitrary exception strings or URLs containing credentials.
         result['blockers']=[stage+': '+type(exc).__name__]
-        result['status']='FAILED'
+        result['status']='DATA_BLOCKED' if isinstance(exc,IncompleteFields) else 'FAILED'
     finally:
+        if 'operational_outcome' not in result and result['status'] in ('DATA_BLOCKED', 'FAILED', 'EXPIRED'):
+            result['operational_outcome'] = {'DATA_BLOCKED': 'DATA BLOCKED', 'FAILED': 'EXECUTION FAILED',
+                                             'EXPIRED': 'EXPIRED'}[result['status']]
         for version,path in [('V6',ROOT/'monty_v6/results/frozen_model.json'),('V7',v7_root/'v7/artifacts/fold_3_model.json')]:
             if version in pins and sha(path)!=pins[version]:raise RuntimeError('Frozen model changed')
     result['generated_at']=utcnow().isoformat()
     result['valid_until']=(captured+timedelta(seconds=MAX_AGE_SECONDS)).isoformat() if captured else None
+    report_started=monotonic()
+    durations['before_report_seconds']=report_started-execution_started
     write(public/'forecast.json',result)
-    receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
-                 forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
-                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
-                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
-    write(public/'receipt.json',receipt)
+    durations['forecast_write_seconds']=monotonic()-report_started
+    delivery_views=[]
     for version in ['V6','V7']:
         modes = ['official', 'provisional', 'shadow'] if version == 'V7' else ['official', 'provisional']
         for mode in modes:
             view = projection(result, dict(version=version, view=mode))
-            write(public/(version.lower()+'-'+mode+'.json'), dict(view, snapshot_only=True))
+            filename=version.lower()+'-'+mode+'.json'
+            value=dict(view,snapshot_only=True)
+            write(public/filename,value)
+            delivery_views.append((filename,value))
+    from operations.delivery import manifest
+    delivery_hash=manifest(public,result,delivery_views)
+    receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
+                 forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
+                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 operational_outcome=result.get('operational_outcome'), operational_reason=result.get('operational_reason'),
+                 processing_timings=durations,delivery_manifest_sha256=delivery_hash,
+                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
+    write(public/'receipt.json',receipt)
     return result
 
 
@@ -377,31 +457,38 @@ def ticket(view, *, archived=False, now=None):
         view = refresh_view(view, now)
     version=view['version'];mode=view['view']
     title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
-    lines=[title,view['date']+' · Australia/Brisbane','NO BET — no qualified wagers','']
+    lines=[title,view['date']+' · Australia/Brisbane','No qualified wagers — see prediction and betting decisions separately','']
+    if mode=='provisional':lines.insert(2,'PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet')
     if archived:
         lines.insert(2, 'ARCHIVED SNAPSHOT — check request freshness before use')
     from operations.single_race import quote_text
     for race in view['races']:
         lines.append(race['meeting']+' R'+str(race['race']))
         result=race['result'];rows=result.get('ordered_selections',[])
+        lines.append('Prediction: '+result.get('prediction_classification',result.get('status','UNKNOWN'))+' · Betting: '+result.get('betting_decision',result.get('official_classification','UNKNOWN')))
+        diag=result.get('diagnostic_assessment')
+        if diag:
+            lines.append('DIAGNOSTIC '+diag['classification']+' — genuine model assessment; NOT QUALIFIED')
+            rows=diag['ordered_selections']
         if race.get('single_race_assessment'):
             lines.append(result.get('assessment_level','NO CURRENT ASSESSMENT'))
-            lines.append('REDUCED CONFIDENCE — missing data disclosed; official NO BET')
+            lines.append('REDUCED CONFIDENCE — missing data disclosed; betting approval unavailable')
         if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
             lines.append('No Monty model rankings were generated.')
         if rows:
-            lines.append(result['progression_bet_type']+' assessment only — NO BET')
+            lines.append((diag['progression_bet_type'] if diag else result['progression_bet_type'])+' assessment only — no wager authorised')
             for i,r in enumerate(rows):
                 text=f"#{r['number']} {r['horse']} — {quote_text(r)}"
+                if r.get('bookmaker'):text+=' ('+r['bookmaker']+')'
                 lines.append(('**'+text+'**') if i==0 else text)
         if race.get('single_race_assessment') and rows:
             value=result.get('value_selection')
             lines.append('MOST LIKELY: #'+str(rows[0]['number'])+' '+rows[0]['horse']+' — not automatically a value bet')
             lines.append(('PROVISIONAL VALUE WATCH · WIN ONLY · #'+str(value['number'])+' '+value['horse']+' — '+quote_text(value)+' · NO BET') if value else 'VALUE: no supported positive-edge candidate')
-        if mode in ('provisional', 'shadow'):
-            for roughie in result.get('roughies',[]):
-                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)} · NO BET")
-        lines.append('NO BET: '+', '.join(result.get('no_bet_reasons',[])))
+        for roughie in (diag or result).get('roughies', []):
+            book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
+            lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)}{book} · NO BET")
+        lines.append('Limitations: '+', '.join(result.get('no_bet_reasons',[])))
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)
         lines.append('')

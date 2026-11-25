@@ -31,6 +31,27 @@ def price(r):
         if p:return p,key
     return None,None
 
+# Named fixed-odds operators only; an exchange quote is not a bookmaker price.
+FIXED_BOOKMAKERS={name.casefold():name for name in
+    ('TAB','TABtouch','Sportsbet','Ladbrokes','Neds','bet365','PointsBet','Unibet',
+     'Betr','BetDeluxe','PlayUp','Dabble','BlueBet','Bet Nation','Amused')}
+
+
+def named_bookmaker(r,selected,origin):
+    """Attribute only the exact price already selected; never substitute odds."""
+    if origin=='TAB':return 'TAB'
+    def known(value):
+        return FIXED_BOOKMAKERS.get(str(value or '').strip().casefold())
+    # A best-win operator describes best_win, not a differently priced fixed_win.
+    name=known(r.get(origin+'_bookmaker'))
+    if name and number(r.get(origin))==selected:return name
+    for quote in r.get('odds',[]) if isinstance(r.get('odds'),list) else []:
+        if not isinstance(quote,dict):continue
+        name=known(quote.get('bookmaker'))
+        if name and str(quote.get('bookmaker_type','fixed')).lower()=='fixed' and number(quote.get('win'))==selected:
+            return name
+    return None
+
 def normalize(payload,date,*,allow_restricted_classes=False):
     if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
         raise ValueError('Unexpected API response; expected success=true and data[]')
@@ -85,6 +106,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                 for g in ('good','soft','heavy','firm','synthetic','unknown'):
                     item['going_'+g] = float(going == g)
                 item['_price_source']=origin
+                item['_bookmaker']=named_bookmaker(r,p,origin)
                 parsed.append(item)
             if len(parsed)!=len(active):
                 skipped.append(f'{venue} R{n}: active runner lacks identity/price');continue

@@ -8,33 +8,27 @@ import datetime
 import json
 import urllib.parse
 import urllib.request
-import urllib.robotparser
 from pathlib import Path
 from monty_expert_candidate_extract import extract
 
-USER_AGENT = "MontyResearchBot/0.1 (research; respect robots.txt)"
+from monty_expert_article_discovery import NoRedirects, SOURCES as SOURCE_URLS, USER_AGENT, robots_permit, safe_https
+
 MAX_BYTES = 350_000
 
-class NoRedirects(urllib.request.HTTPRedirectHandler):
-    # A redirect must never fetch an unreviewed URL or bypass its robots check.
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        return None
 
 def capture_article(source_url, article_url, fetcher=None, robots_allowed=None, clock=None):
-    source = urllib.parse.urlsplit(source_url)
-    article = urllib.parse.urlsplit(article_url)
-    if (source.scheme != "https" or article.scheme != "https"
-            or not source.hostname or article.hostname != source.hostname
-            or source.username or source.password or source.port not in (None, 443)
-            or article.username or article.password or article.port not in (None, 443)):
+    try:
+        source = urllib.parse.urlsplit(source_url)
+        article = urllib.parse.urlsplit(article_url)
+        allowed_host = safe_https(source) and safe_https(article) and article.hostname == source.hostname
+    except ValueError:
+        allowed_host = False
+    if not allowed_host:
         return {"url": article_url, "status": "rejected", "reason": "Unsafe or cross-host article URL", "candidates": []}
     if robots_allowed is None:
-        robots = urllib.robotparser.RobotFileParser()
-        robots.set_url(f"https://{article.hostname}/robots.txt")
         try:
-            robots.read()
-            allowed = robots.can_fetch(USER_AGENT, article_url)
-        except Exception:
+            allowed = robots_permit(article_url, urllib.request.build_opener(NoRedirects()))
+        except (OSError, ValueError):
             allowed = False
     else:
         allowed = robots_allowed(article_url)
@@ -77,7 +71,6 @@ def process_leads(data, limit=10, fetcher=None, robots_allowed=None, clock=None)
                 robots_allowed=robots_allowed, clock=clock))
     return {"articles": results, "verified_tip_count": 0, "status": "RESEARCH_ONLY_NO_BET"}
 
-from monty_expert_article_discovery import SOURCES as SOURCE_URLS
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

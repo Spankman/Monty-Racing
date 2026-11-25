@@ -1,5 +1,14 @@
 # ChatGPT operational interface — GitHub Actions
 
+> Repair branch classification update (25 November 2026): successful inference
+> is `COMPLETED_ASSESSMENTS`, with V6 `PROVISIONAL` / V7 `RESEARCH ONLY`
+> predictions and a separate betting decision. Missing verification is
+> `DATA BLOCKED`; technical failure is `EXECUTION FAILED`. Earlier NO BET
+> wording below describes the legacy no-wager instruction, not evidence of
+> a fully verified negative value decision. RM6 retains separately labelled
+> diagnostic assessments. See [the investigation](INVESTIGATION_2026-11-25.md).
+
+
 Production PR #104 is active. The small reliability repair remains on a separate
 unmerged branch; see `CHATGPT.md` for the ordinary-chat operating instructions.
 PR #123 was closed: dedicated hosting, custom services and private plugins are

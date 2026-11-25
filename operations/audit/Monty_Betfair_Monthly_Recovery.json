@@ -1,0 +1,454 @@
+{
+  "2025_05": {
+    "raw_rows": 16892,
+    "retained_runners": 14512,
+    "retained_races": 1479,
+    "date_min": "2025-05-01",
+    "date_max": "2025-05-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "fewer_than_four_runners": 4,
+      "quote_not_clearly_before_actual_off": 4,
+      "not_single_winner": 2,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_05.csv",
+    "source_sha256": "2f22725f32f4f01e10b47dd0b2abd5e2edb688f5c90a673a883d1d4df58db576"
+  },
+  "2025_06": {
+    "raw_rows": 16503,
+    "retained_runners": 14322,
+    "retained_races": 1411,
+    "date_min": "2025-06-01",
+    "date_max": "2025-06-30",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 4,
+      "not_single_winner": 3,
+      "fewer_than_four_runners": 1,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_06.csv",
+    "source_sha256": "28506a24860054d2a6165efbec08099224fb680396f32820f732da1f815f5577"
+  },
+  "2025_07": {
+    "raw_rows": 15680,
+    "retained_runners": 13798,
+    "retained_races": 1382,
+    "date_min": "2025-07-01",
+    "date_max": "2025-07-31",
+    "conflicting_races": 0,
+    "exclusions": {},
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_07.csv",
+    "source_sha256": "3381369858fa4a7bc0e30cfda7c5c2c2d542f2ac08adfd82e5be3bd52a033ea4"
+  },
+  "2025_08": {
+    "raw_rows": 15635,
+    "retained_runners": 13749,
+    "retained_races": 1420,
+    "date_min": "2025-08-01",
+    "date_max": "2025-08-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 1,
+      "quote_not_clearly_before_actual_off": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_08.csv",
+    "source_sha256": "98ca69442ae85fa9eda9bba08a56640dc8bd71fa42b132e5904b3da2f48506ab"
+  },
+  "2025_09": {
+    "raw_rows": 14408,
+    "retained_runners": 12308,
+    "retained_races": 1283,
+    "date_min": "2025-09-01",
+    "date_max": "2025-09-30",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 4,
+      "quote_not_clearly_before_actual_off": 4,
+      "fewer_than_four_runners": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_09.csv",
+    "source_sha256": "a8bb67486193db792448d4f085c2d2e3903a74a1e237364854476ca80dc8c1a3"
+  },
+  "2025_10": {
+    "raw_rows": 15615,
+    "retained_runners": 13444,
+    "retained_races": 1460,
+    "date_min": "2025-10-01",
+    "date_max": "2025-10-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "fewer_than_four_runners": 4,
+      "not_single_winner": 3,
+      "quote_not_clearly_before_actual_off": 3
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_10.csv",
+    "source_sha256": "c832455488722962367d4fe7abebce01fbaa49335aeac07478ad0028afa7c07a"
+  },
+  "2025_11": {
+    "raw_rows": 17112,
+    "retained_runners": 14098,
+    "retained_races": 1488,
+    "date_min": "2025-11-01",
+    "date_max": "2025-11-30",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 5,
+      "not_single_winner": 2,
+      "fewer_than_four_runners": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_11.csv",
+    "source_sha256": "5558a1f40ae2a4c2aeba341c6bf4021e079ef90454ed3b4967e5b40d5468677c"
+  },
+  "2025_12": {
+    "raw_rows": 16269,
+    "retained_runners": 13839,
+    "retained_races": 1442,
+    "date_min": "2025-12-01",
+    "date_max": "2025-12-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 3,
+      "not_single_winner": 3,
+      "fewer_than_four_runners": 2,
+      "inconsistent_race_metadata": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2025_12.csv",
+    "source_sha256": "3c1fdf1d816d486e2dd75cbfb55629abe66a1d1114b57922d131ceff94f972d1"
+  },
+  "2026_01": {
+    "raw_rows": 16284,
+    "retained_runners": 13634,
+    "retained_races": 1433,
+    "date_min": "2026-01-01",
+    "date_max": "2026-01-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 3,
+      "quote_not_clearly_before_actual_off": 2
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_01.csv",
+    "source_sha256": "c7a6bf081cec2ed381a8c84f88470ce014c8980fbbb414b8eafbc1660d76e0d0"
+  },
+  "2026_02": {
+    "raw_rows": 14368,
+    "retained_runners": 12280,
+    "retained_races": 1314,
+    "date_min": "2026-02-01",
+    "date_max": "2026-02-28",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 9,
+      "not_single_winner": 3,
+      "fewer_than_four_runners": 2,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_02.csv",
+    "source_sha256": "c3e6ad7b2b9ad279164a78e7888744a17c569fc0a09ff04fe315baaa9b485041"
+  },
+  "2026_03": {
+    "raw_rows": 14923,
+    "retained_runners": 12942,
+    "retained_races": 1377,
+    "date_min": "2026-03-01",
+    "date_max": "2026-03-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 4,
+      "fewer_than_four_runners": 3,
+      "quote_not_clearly_before_actual_off": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_03.csv",
+    "source_sha256": "71b60c4f1472cc32356e24bd08e0f9aabaedd92a984307b8779f66cd3f4ddd88"
+  },
+  "2026_04": {
+    "raw_rows": 16324,
+    "retained_runners": 13970,
+    "retained_races": 1498,
+    "date_min": "2026-04-01",
+    "date_max": "2026-04-30",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 5,
+      "invalid_any_runner_quote": 2,
+      "fewer_than_four_runners": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_04.csv",
+    "source_sha256": "41b5dac09e83d611d9cabb257f3577364ed5e9a3ae917ec088d330a776ba9e32"
+  },
+  "2026_05": {
+    "raw_rows": 13056,
+    "retained_runners": 11331,
+    "retained_races": 1137,
+    "date_min": "2026-05-01",
+    "date_max": "2026-05-24",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 4,
+      "not_single_winner": 3,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_05.csv",
+    "source_sha256": "4814fb3cb27a902ec9d3a684d822549ee4c6a9a4ed10adfe2e2134a293eb0df1"
+  },
+  "2026_06": {
+    "raw_rows": 15747,
+    "retained_runners": 13819,
+    "retained_races": 1380,
+    "date_min": "2026-06-01",
+    "date_max": "2026-06-30",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 4,
+      "quote_not_clearly_before_actual_off": 3,
+      "fewer_than_four_runners": 3,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_06.csv",
+    "source_sha256": "2dd54c8192a3343682d4a58dc8009cb977ced248e3a964d576806b6f0b159657"
+  },
+  "2026_07": {
+    "raw_rows": 13194,
+    "retained_runners": 11462,
+    "retained_races": 1161,
+    "date_min": "2026-07-01",
+    "date_max": "2026-07-25",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 2,
+      "quote_not_clearly_before_actual_off": 1,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_07.csv",
+    "source_sha256": "ab41b42e2ebb017ecae7330308daf3f2d37ce26f8b4087a214984046002bd5ca"
+  },
+  "2026_08": {
+    "raw_rows": 15236,
+    "retained_runners": 13294,
+    "retained_races": 1382,
+    "date_min": "2026-08-01",
+    "date_max": "2026-08-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "not_single_winner": 4,
+      "fewer_than_four_runners": 3
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_08.csv",
+    "source_sha256": "95924de75b45c12ae0287cd4f995de8473b70b3b3996c38cbebcbf4f3617ef7a"
+  },
+  "2026_09": {
+    "raw_rows": 14377,
+    "retained_runners": 12302,
+    "retained_races": 1275,
+    "date_min": "2026-09-01",
+    "date_max": "2026-09-30",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 2,
+      "not_single_winner": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_09.csv",
+    "source_sha256": "0f617ead2a413a0b706b8070af299c7dfc2d9bd8ae46bc5955280a2f96f035f1"
+  },
+  "2026_10": {
+    "raw_rows": 16646,
+    "retained_runners": 14055,
+    "retained_races": 1475,
+    "date_min": "2026-10-01",
+    "date_max": "2026-10-31",
+    "conflicting_races": 0,
+    "exclusions": {
+      "quote_not_clearly_before_actual_off": 4,
+      "not_single_winner": 3,
+      "invalid_any_runner_quote": 1
+    },
+    "missing_metadata": [
+      "barrier",
+      "jockey",
+      "trainer",
+      "going"
+    ],
+    "nz_supported_by_frozen_baseline": false,
+    "source": "Official Betfair ANZ historical CSV",
+    "predictions_generated": false,
+    "betting_ready": false,
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_10.csv",
+    "source_sha256": "e68c268a6872bc01ec88325c9eaa3a697ba4f2d48f439211e990a653c554402f"
+  },
+  "2026_11": {
+    "source_url": "https://betfair-datascientists.github.io/data/assets/ANZ_Thoroughbreds_2026_11.csv",
+    "error": "HTTPError",
+    "status": 404
+  }
+}

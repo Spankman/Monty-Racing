@@ -21,7 +21,7 @@ DELIVERY_TIMEOUT_SECONDS = 120
 def with_form_handoff(result, req):
     if req and req.get('meeting'):
         blockers = result.get('blockers') or [result['semantic_outcome']]
-        reason = result['semantic_outcome'] or result.get('delivery_status')
+        reason = 'FAILED' if result['request_status'] == 'FAILED' else result['semantic_outcome'] or result.get('delivery_status')
         result['form_assessment_requests'] = [research_request(req, blockers, reason)]
     return result
 
@@ -39,7 +39,7 @@ def archived_rankings(forecast, req, now):
         if result['status'] != 'SCORED' or not result.get('ranked_runners'):
             continue
         captured, decided, jump = map(timestamp, (race['captured_at'], result['decision_at'], race['scheduled_start']))
-        if not (captured <= decided < jump and decided <= now and (decided - captured).total_seconds() <= MAX_AGE_SECONDS):
+        if not (captured <= decided < jump and decided <= now and (decided - captured).total_seconds() < MAX_AGE_SECONDS):
             continue
         records.append(dict(label='HISTORICAL PRE-RACE ASSESSMENT — NO BET', meeting=race['meeting'],
                             race=race['race'], version=req['version'], decision_at=result['decision_at'],
@@ -87,6 +87,10 @@ def retrieve(index, request_id=None, req=None, now=None):
                   captured_at=forecast.get('captured_at'), valid_until=forecast.get('valid_until'),
                   blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),
                   models=forecast.get('models', {}))
+    if forecast.get('operational_outcome'):
+        result.update(semantic_outcome=forecast['operational_outcome'],
+                      operational_reason=forecast.get('operational_reason'),
+                      operational_evidence=forecast.get('operational_evidence'))
     now = now or utcnow()
     captured = result['captured_at']
     if captured:
@@ -95,7 +99,7 @@ def retrieve(index, request_id=None, req=None, now=None):
             age = (now - capture).total_seconds()
             result['capture_age_seconds'] = age
             valid_until = min(timestamp(result['valid_until']), capture + timedelta(seconds=MAX_AGE_SECONDS))
-            result['freshness'] = 'FRESH' if age >= 0 and now <= valid_until else 'EXPIRED'
+            result['freshness'] = 'FRESH' if age >= 0 and now < valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
     if req and req.get('meeting') and result.get('freshness')=='FRESH':
@@ -110,9 +114,9 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'EXPIRED' if all(
                 race['result']['freshness_at_retrieval'].startswith(('CLOSED', 'STALE'))
                 for race in view['races']) else 'UNVERIFIED'
-        elif not view['races']:
+        elif not view['races'] and not forecast.get('operational_outcome'):
             result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT', freshness='UNVERIFIED')
-        else:
+        elif view['races']:
             result.update(view=view, ticket=ticket(view, now=now), html=render(view, now=now))
     if state == 'COMPLETED' and req and result.get('freshness') == 'EXPIRED':
         try:

@@ -2,7 +2,7 @@ name: Monty ChatGPT operations (shared snapshot)
 run-name: Monty operations ${{ inputs.command || github.event.issue.title || github.event.schedule }}
 on:
   push:
-    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback]
+    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback, fix/prediction-approval-diagnostics, integration/verified-operations]
     paths: ['.github/workflows/monty-operations.yml', '.monty/operations-staging.json']
   workflow_dispatch:
     inputs:
@@ -78,6 +78,13 @@ jobs:
         if: steps.event.outputs.settled != 'true'
         continue-on-error: true
         run: python -m pip install -r requirements-runner.txt
+      - name: Install public authority PDF reader for the isolated pilot
+        if: github.ref_name == 'integration/verified-operations'
+        run: |
+          if ! command -v pdftotext >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq poppler-utils
+          fi
       - name: Restore original private artifacts without changing manifest
         if: steps.event.outputs.settled != 'true'
         continue-on-error: true
@@ -96,7 +103,14 @@ jobs:
           OPERATIONS_DATE: ${{ inputs.date }}
           OPERATIONS_ISSUE: ${{ inputs.request_issue || github.event.issue.number }}
           OPERATIONS_MODE: ${{ (github.event_name == 'issues' || inputs.request_issue || github.event.schedule == '*/5 * * * *') && 'queue' || 'daily' }}
-        run: python operations/worker.py
+        run: |
+          if [ "$GITHUB_REF_NAME" = "integration/verified-operations" ]; then
+            python operations/verification_acceptance.py
+          elif [ "$GITHUB_REF_NAME" = "fix/prediction-approval-diagnostics" ]; then
+            python operations/acceptance.py
+          else
+            python operations/worker.py
+          fi
       - name: Derived receipt and forecast artifact (no private snapshots)
         if: always() && steps.event.outputs.settled != 'true'
         uses: actions/upload-artifact@v4

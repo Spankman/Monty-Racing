@@ -38,6 +38,7 @@ class CommandTests(unittest.TestCase):
         now=ops.utcnow();row=dict(captured_at=now.isoformat(),scheduled_start=(now+timedelta(hours=1)).isoformat())
         self.assertEqual(ops.freshness(row,now),'FRESH AT CHECK TIME')
         self.assertIn('STALE',ops.freshness(row,now+timedelta(minutes=6)))
+        self.assertIn('STALE',ops.freshness(row,now+timedelta(seconds=ops.MAX_AGE_SECONDS)))
         self.assertIn('STALE',ops.freshness(row,now-timedelta(seconds=1)))
         row['scheduled_start']=now.isoformat();self.assertIn('CLOSED',ops.freshness(row,now))
         self.assertIn('UNVERIFIED',ops.freshness({},now))
@@ -62,7 +63,7 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(result['best_chance']['number'], '1')
         self.assertEqual([r['number'] for r in result['roughies']], ['2'])
         self.assertEqual(result['roughies'][0]['bet_type'], 'WIN')
-        self.assertEqual(result['official_classification'], 'NO BET')
+        self.assertEqual(result['official_classification'], 'DATA BLOCKED')
         self.assertFalse(result['betting_authorised'])
 
 
@@ -89,7 +90,7 @@ class RunTests(unittest.TestCase):
         return ops.execute(self.day,self.root/'output',self.v7,run_id='test',**params)
 
     def test_shared_snapshot_official_provisional_and_integrity(self):
-        f=self.run_it();self.assertEqual(f['status'],'COMPLETED_NO_BET')
+        f=self.run_it();self.assertEqual(f['status'],'COMPLETED_ASSESSMENTS')
         self.assertEqual([c[0] for c in self.calls],['V6','V7']);self.assertEqual(self.calls[0][1],self.calls[1][1])
         p=self.root/'output/public';receipt=json.loads((p/'receipt.json').read_text())
         self.assertEqual(receipt['forecast_sha256'],ops.sha(p/'forecast.json'))
@@ -106,6 +107,21 @@ class RunTests(unittest.TestCase):
         f=self.run_it(request=ops.command('RM6',self.day,'AU'))
         self.assertEqual(f['races'],[]);self.assertFalse(self.calls)
 
+    def test_malformed_nz_races_do_not_block_au_daily(self):
+        self.payload['data'].append(dict(self.payload['data'][0], country='NZ', races=None))
+        result = self.run_it(request=ops.command('RM6', self.day, 'AU'))
+        self.assertEqual(result['status'], 'COMPLETED_ASSESSMENTS')
+        self.assertEqual(result['coverage']['jurisdictions_observed'], ['AU'])
+
+    def test_fresh_official_view_renders_diagnostic_roughies_only(self):
+        from operations.render import render
+        forecast = self.run_it()
+        view = ops.projection(forecast, dict(version='V6', view='official'), self.now)
+        for show in (ops.ticket, render):
+            self.assertIn('RUFFY / VALUE WATCH', show(view, now=self.now))
+            self.assertNotIn('RUFFY / VALUE WATCH', show(view, now=self.now+timedelta(minutes=6)))
+        self.assertFalse(view['races'][0]['result']['betting_authorised'])
+
     def test_same_capture_features_and_provisional_price_gate_for_both_scopes(self):
         full=self.run_it()
         single=ops.execute(self.day,self.root/'single',self.v7,run_id='single',payload=self.payload,
@@ -119,7 +135,7 @@ class RunTests(unittest.TestCase):
             f=ops.execute(self.day,self.root/name,self.v7,run_id=name,payload=self.payload,captured=self.now,
                           request=req,fixture=True,scorer=self.scorer)
             self.assertTrue(all(r['status']=='SCORED' for r in f['races'][0]['models'].values()))
-            self.assertTrue(all(r['official_classification']=='NO BET' for r in f['races'][0]['models'].values()))
+            self.assertTrue(all(r['official_classification']=='DATA BLOCKED' for r in f['races'][0]['models'].values()))
             for version in ('V6','V7'):
                 result=f['races'][0]['models'][version]
                 self.assertFalse(result['betting_authorised'])
@@ -135,7 +151,7 @@ class RunTests(unittest.TestCase):
         f=self.run_it(scorer=broken)
         self.assertEqual(f['races'][0]['models']['V7']['status'],'FAILED')
         self.assertEqual(f['races'][0]['models']['V6']['status'],'SCORED')
-        self.assertNotIn('secret',json.dumps(f));self.assertEqual(f['status'],'PARTIAL_OR_BLOCKED')
+        self.assertNotIn('secret',json.dumps(f));self.assertEqual(f['status'],'COMPLETED_ASSESSMENTS')
 
     def test_identity_and_price_changes_rejected(self):
         def bad(v,*args):
@@ -145,11 +161,12 @@ class RunTests(unittest.TestCase):
 
     def test_stale_capture_never_scored(self):
         f=self.run_it(captured=self.now-timedelta(minutes=6))
-        self.assertEqual(f['status'],'FAILED');self.assertFalse(self.calls)
+        self.assertEqual(f['status'],'EXPIRED');self.assertFalse(self.calls)
 
     def test_single_race_missing_and_country_ambiguity(self):
         f=self.run_it(request=ops.command('RM6 Missing 2',self.day))
-        self.assertEqual(f['status'],'FAILED');self.assertFalse(self.calls)
+        self.assertEqual(f['status'],'DATA_BLOCKED');self.assertFalse(self.calls)
+        self.assertEqual(f['operational_outcome'], 'RACE NOT FOUND')
 
     def test_unknown_country_not_guessed(self):
         self.payload['data'][0]['country']=None
@@ -169,7 +186,7 @@ class RunTests(unittest.TestCase):
         self.payload['data'][0]['races'][0]['runners'][0]['odds']=[]
         f=self.run_it()
         self.assertFalse(self.calls)
-        self.assertEqual(f['status'],'FAILED')
+        self.assertEqual(f['status'],'DATA_BLOCKED')
         self.assertFalse(f['races'])
 
     def test_render_escapes_names_and_has_copyable_ticket(self):

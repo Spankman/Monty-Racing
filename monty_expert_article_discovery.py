@@ -27,32 +27,64 @@ SOURCES={
  'RSN':'https://www.rsn.net.au/',
 }
 USER_AGENT='MontyResearchBot/0.1 (research; respect robots.txt)'
+
+
+class NoRedirects(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def safe_https(parts):
+    return (parts.scheme == 'https' and parts.hostname and not parts.username
+            and not parts.password and parts.port in (None, 443))
+
+
+def robots_permit(url, opener):
+    parts = urllib.parse.urlsplit(url)
+    robots_url = urllib.parse.urlunsplit((parts.scheme, parts.netloc, '/robots.txt', '', ''))
+    request = urllib.request.Request(robots_url, headers={'User-Agent': USER_AGENT})
+    with opener.open(request, timeout=10) as response:
+        body = response.read(100_001)
+        if len(body) > 100_000 or 'text/plain' not in response.headers.get('Content-Type', '').lower():
+            raise ValueError('Unusable robots response')
+    robots = urllib.robotparser.RobotFileParser(robots_url)
+    robots.parse(body.decode('utf-8-sig').splitlines())
+    return robots.can_fetch(USER_AGENT, url)
+
+
 def discover(source,url,max_links=30,fetcher=None):
-    parts=urllib.parse.urlparse(url)
-    if parts.scheme!='https' or not parts.hostname:raise ValueError('HTTPS source required')
+    parts=urllib.parse.urlsplit(url)
+    if not safe_https(parts):
+        raise ValueError('Safe HTTPS source required')
     if fetcher is None:
-        robots=urllib.robotparser.RobotFileParser()
-        robots.set_url(f'{parts.scheme}://{parts.netloc}/robots.txt')
+        opener = urllib.request.build_opener(NoRedirects())
         try:
-            robots.read()
-        except Exception:
+            allowed = robots_permit(url, opener)
+        except (OSError, ValueError):
             return {'source':source,'status':'unavailable','reason':'Cannot check robots policy','articles':[]}
-        if not robots.can_fetch(USER_AGENT,url):
+        if not allowed:
             return {'source':source,'status':'rejected','reason':'Robots policy disallows fetch','articles':[]}
         request=urllib.request.Request(url,headers={'User-Agent':USER_AGENT})
-        with urllib.request.urlopen(request,timeout=12) as response:
-            if 'html' not in response.headers.get('Content-Type','').lower():
+        with opener.open(request,timeout=12) as response:
+            if 'text/html' not in response.headers.get('Content-Type','').lower():
                 raise ValueError('Source did not return HTML')
-            html=response.read(600_000).decode('utf-8','replace')
+            raw = response.read(600_001)
+            if len(raw) > 600_000:
+                raise ValueError('Source HTML exceeds size limit')
+            html = raw.decode('utf-8','replace')
     else:
         html=fetcher(url)
     soup=BeautifulSoup(html,'html.parser')
     seen=set();articles=[]
     for anchor in soup.select('a[href]'):
         label=anchor.get_text(' ',strip=True)
-        href=urllib.parse.urljoin(url,anchor.get('href',''))
-        link=urllib.parse.urlparse(href)
-        if link.scheme!='https' or link.hostname!=parts.hostname:continue
+        try:
+            href = urllib.parse.urljoin(url, anchor['href'])
+            link = urllib.parse.urlsplit(href)
+            if not safe_https(link) or link.hostname != parts.hostname:
+                continue
+        except ValueError:
+            continue
         if href in seen or href==url:continue
         # Broad discovery, never parse these links as actual selections.
         if not re.search(r'(tip|best bet|preview|thursday best|racing)',label+' '+link.path,re.I):continue
