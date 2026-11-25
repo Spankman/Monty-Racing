@@ -22,3 +22,8 @@ Owner direction, 25 November 2026. Read before planning Work or Codex sessions. 
 - [ ] Validate all research with chronological leakage-free comparisons, matched fields, adequate samples, calibration, best-bet and ruffy results separately, exotic accuracy and risk. No promotion until robust prospective improvement and owner approval.
 
 Research modules are non-blocking: include reliable pre-race variables in experimental modelling, omit unavailable inputs rather than delay operations; no arbitrary weights. V6 remains frozen and official, V7 research-only. No fabricated data, after-race backfill or deployment without approval. Keep this register current as new owner-approved ideas arise; mark completion only with evidence.
+
+## Research-first programme
+- [ ] Complete source reading and existing-feature/code/licence audit using [research library](MONTY_RESEARCH_LIBRARY.md).
+- [ ] Reproduce simple market, conditional logit, Benter combination and Australian PLS benchmarks on common historical data before advanced models.
+- [ ] Test incremental feature groups, adjusted speed, hidden form, uncertainty, race-relative rankings and coherent finishing-order probabilities; record negative findings and prospective results.
