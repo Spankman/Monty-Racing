@@ -1,0 +1,952 @@
+{
+  "started_at": "2026-11-25T08:12:29.060691+00:00",
+  "commit": "85dc10b1dc9b42049e2a83da65322bc708f31c20",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45574218049",
+  "credential_configured": true,
+  "model_inference": true,
+  "production_changed": false,
+  "usage_before": {
+    "plan": "free",
+    "credits_used": 48,
+    "credits_limit": 1500,
+    "credits_remaining": 1452,
+    "period_start": "2026-11-25T07:37:08.098912",
+    "next_reset_at": "2026-12-01T00:00:00",
+    "reset_at": "2026-11-25T07:37:08.098912"
+  },
+  "authentication_verified": true,
+  "board": {
+    "races": 35,
+    "confirmed_au": 35,
+    "country_unresolved": 0,
+    "venues": [
+      "Albany",
+      "Geraldton",
+      "Hawkesbury",
+      "Launceston",
+      "Mornington",
+      "Rockhampton"
+    ]
+  },
+  "events": {
+    "count": 35
+  },
+  "target": {
+    "race_id": "2ab613d7-0d98-4216-8478-5fb70f53fbbc",
+    "venue": "Launceston",
+    "race_number": 6,
+    "category": "horse",
+    "country": "AU",
+    "start_time": "2026-11-25T09:57:00Z",
+    "distance_m": 1600,
+    "track_condition": "GOOD (4)"
+  },
+  "acceptances": {
+    "date": "2026-11-25",
+    "meeting_count": 1,
+    "race_count": 8,
+    "runner_count": 75,
+    "scratched_count": 9,
+    "emergency_count": 3,
+    "as_of": "2026-11-25T06:17:03.011932Z",
+    "completeness": {
+      "races_checks_passed": 8,
+      "races_gap_detected": 0,
+      "races_unverified": 0,
+      "known_missing_runners": 0,
+      "meetings_acceptances_unpublished": 0,
+      "meetings_emergency_data_unknown": 0,
+      "meetings_scratching_data_unknown": 0,
+      "meetings_scratching_sheet_absent_for_whole_date": 0,
+      "runners_without_emergency_data": 0,
+      "runners_without_scratching_data": 0,
+      "withheld_acceptances": "unknown_date",
+      "meetings_withheld_acceptance_data_unknown": 1,
+      "withheld_acceptance_slots": 0,
+      "withheld_acceptance_slots_unplaced": 0,
+      "counts_cover_every_published_meeting": true,
+      "runners_from_tabtouch": 0,
+      "races_from_tabtouch": 0,
+      "meetings_from_tabtouch_only": 0
+    }
+  },
+  "form": {
+    "card_source": "live",
+    "form_as_at": "2026-11-25T09:57:00Z",
+    "runners_total": 10,
+    "runners_with_runs": 10,
+    "runs_per_runner": 10,
+    "source": {
+      "feed": "puntersedge",
+      "region": "AU",
+      "sport": "thoroughbred",
+      "coverage_from": "2025-05-28",
+      "coverage_to": "2026-11-25",
+      "collectors": [
+        "racing_australia",
+        "tabtouch"
+      ],
+      "refreshed_hourly": true
+    },
+    "runner_keys": [
+      "age",
+      "barrier",
+      "held_rows_total",
+      "horse_ref",
+      "jockey",
+      "last10",
+      "last_start_date",
+      "name",
+      "number",
+      "rating",
+      "runner_ref",
+      "runs",
+      "runs_total",
+      "scratched",
+      "stats",
+      "trainer",
+      "weight_kg"
+    ],
+    "past_runs": 99
+  },
+  "market_view_entitlement": "Free test previously returned 200 despite published Plus restriction; not relied on or re-requested",
+  "market_book_summary": [],
+  "epochs": [
+    {
+      "request_window_start": "2026-11-25T08:12:34.955874+00:00",
+      "request_window_end": "2026-11-25T08:12:37.782466+00:00",
+      "krok_status": {
+        "status": 200,
+        "x-credits-cost": 1,
+        "x-credits-remaining": 49385,
+        "x-ratelimit-limit": 500,
+        "x-ratelimit-remaining": 499
+      },
+      "comparison": {
+        "exact_runner_name_number_book_matches": 81,
+        "same_price": 72,
+        "first_only": 18,
+        "second_only": 217,
+        "exact_observation_time_matches": 0,
+        "first": {
+          "offers": 81,
+          "bookmakers": {
+            "betdeluxe": 6,
+            "palmerbet": 9,
+            "betright": 7,
+            "tabtouch": 9,
+            "tab": 9,
+            "pointsbet": 9,
+            "neds": 7,
+            "sportsbet": 9,
+            "ladbrokes": 9,
+            "unibet": 7
+          },
+          "clocks": {
+            "last_update": {
+              "count": 81,
+              "min_age_seconds": 3.141156,
+              "max_age_seconds": 668.782466,
+              "under_300_seconds": 72
+            },
+            "age_seconds": {
+              "count": 81,
+              "min_age_seconds": 0.0,
+              "max_age_seconds": 666.0,
+              "under_300_seconds": 72
+            },
+            "observation_at": {
+              "count": 81,
+              "min_age_seconds": 3.141156,
+              "max_age_seconds": 668.782466,
+              "under_300_seconds": 72
+            }
+          }
+        },
+        "second": {
+          "offers": 81,
+          "bookmakers": {
+            "betdeluxe": 6,
+            "palmerbet": 9,
+            "betright": 7,
+            "tabtouch": 9,
+            "tab": 9,
+            "pointsbet": 9,
+            "neds": 7,
+            "sportsbet": 9,
+            "ladbrokes": 9,
+            "unibet": 7
+          },
+          "clocks": {
+            "observed_at": {
+              "count": 81,
+              "min_age_seconds": 671.670466,
+              "max_age_seconds": 5331.017466,
+              "under_300_seconds": 0
+            },
+            "captured_at": {
+              "count": 81,
+              "min_age_seconds": 671.670466,
+              "max_age_seconds": 5331.017466,
+              "under_300_seconds": 0
+            },
+            "observation_at": {
+              "count": 81,
+              "min_age_seconds": 671.670466,
+              "max_age_seconds": 5331.017466,
+              "under_300_seconds": 0
+            }
+          }
+        },
+        "independence_established": false,
+        "limitation": "Same-request window is not identical upstream observation time; matching prices never prove collector independence"
+      },
+      "pe_runner_keys": [
+        "barrier",
+        "bookmakers",
+        "form",
+        "horse_ref",
+        "jockey",
+        "name",
+        "number",
+        "runner_ref",
+        "trainer",
+        "weight"
+      ],
+      "pe_quote_keys": [
+        "age_basis",
+        "age_seconds",
+        "betslip_app_only",
+        "betslip_place_url",
+        "betslip_win_url",
+        "flucs",
+        "key",
+        "last_update",
+        "open_price",
+        "place_price",
+        "places_paid",
+        "refresh_tier",
+        "source_url",
+        "stale",
+        "top2_price",
+        "top3_price",
+        "top4_price",
+        "tote_place",
+        "tote_win",
+        "win_price"
+      ],
+      "pe_scratchings": 1,
+      "krok_scratchings": 1,
+      "age_basis_counts": {
+        "poll": 99
+      },
+      "acceptance_reconciliation": {
+        "exact_declared_field_and_scratchings": true,
+        "acceptance_runners": 10,
+        "live_declared_runners": 10,
+        "missing_from_live": 0,
+        "emergencies": 0,
+        "independently_verified": false
+      },
+      "single_book_checks": {
+        "tab": {
+          "schema": "monty.market_integrity.v1",
+          "status": "QUARANTINED",
+          "actionable_value_allowed": false,
+          "independently_verified": false,
+          "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+          "expected_active_runners": 9,
+          "observed_price_runners": 9,
+          "complete_price_vector": true,
+          "observed_book_lower_bound_pct": 129.928001416627,
+          "book_percentage": 129.928001416627,
+          "overround_percentage_points": 29.928001416627016,
+          "underround_percentage_points": 0,
+          "market_only_numerical_edge": -0.23034296756909167,
+          "bookmakers": [
+            "TAB"
+          ],
+          "quote_timestamp_count": 9,
+          "capture_age_seconds": 0.0,
+          "quote_timestamp_semantics": [
+            "PUNTERSEDGE_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE"
+          ],
+          "captured_at": "2026-11-25T08:12:37.782466+00:00",
+          "oldest_quote_at": "2026-11-25T08:12:26.473205+00:00",
+          "latest_quote_at": "2026-11-25T08:12:26.473205+00:00",
+          "warnings": [
+            "independent_field_unverified"
+          ]
+        },
+        "sportsbet": {
+          "schema": "monty.market_integrity.v1",
+          "status": "QUARANTINED",
+          "actionable_value_allowed": false,
+          "independently_verified": false,
+          "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+          "expected_active_runners": 9,
+          "observed_price_runners": 9,
+          "complete_price_vector": true,
+          "observed_book_lower_bound_pct": 128.72261595087681,
+          "book_percentage": 128.72261595087681,
+          "overround_percentage_points": 28.72261595087682,
+          "underround_percentage_points": 0,
+          "market_only_numerical_edge": -0.2231357383370608,
+          "bookmakers": [
+            "Sportsbet"
+          ],
+          "quote_timestamp_count": 9,
+          "capture_age_seconds": 0.0,
+          "quote_timestamp_semantics": [
+            "PUNTERSEDGE_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE"
+          ],
+          "captured_at": "2026-11-25T08:12:37.782466+00:00",
+          "oldest_quote_at": "2026-11-25T08:12:23+00:00",
+          "latest_quote_at": "2026-11-25T08:12:23+00:00",
+          "warnings": [
+            "independent_field_unverified"
+          ]
+        }
+      },
+      "age_clock_max_difference_seconds": 3.141156
+    },
+    {
+      "request_window_start": "2026-11-25T08:13:49.924731+00:00",
+      "request_window_end": "2026-11-25T08:13:51.348808+00:00",
+      "krok_status": {
+        "status": 200,
+        "x-credits-cost": 1,
+        "x-credits-remaining": 49384,
+        "x-ratelimit-limit": 500,
+        "x-ratelimit-remaining": 499
+      },
+      "comparison": {
+        "exact_runner_name_number_book_matches": 72,
+        "same_price": 72,
+        "first_only": 27,
+        "second_only": 217,
+        "exact_observation_time_matches": 0,
+        "first": {
+          "offers": 72,
+          "bookmakers": {
+            "sportsbet": 9,
+            "betdeluxe": 6,
+            "palmerbet": 9,
+            "betright": 7,
+            "tabtouch": 9,
+            "ladbrokes": 9,
+            "pointsbet": 9,
+            "neds": 7,
+            "unibet": 7
+          },
+          "clocks": {
+            "last_update": {
+              "count": 72,
+              "min_age_seconds": 5.297788,
+              "max_age_seconds": 742.348808,
+              "under_300_seconds": 63
+            },
+            "age_seconds": {
+              "count": 72,
+              "min_age_seconds": 4.0,
+              "max_age_seconds": 741.0,
+              "under_300_seconds": 63
+            },
+            "observation_at": {
+              "count": 72,
+              "min_age_seconds": 5.297788,
+              "max_age_seconds": 742.348808,
+              "under_300_seconds": 63
+            }
+          }
+        },
+        "second": {
+          "offers": 72,
+          "bookmakers": {
+            "sportsbet": 9,
+            "betdeluxe": 6,
+            "palmerbet": 9,
+            "betright": 7,
+            "tabtouch": 9,
+            "ladbrokes": 9,
+            "pointsbet": 9,
+            "neds": 7,
+            "unibet": 7
+          },
+          "clocks": {
+            "observed_at": {
+              "count": 72,
+              "min_age_seconds": 745.236808,
+              "max_age_seconds": 2515.188808,
+              "under_300_seconds": 0
+            },
+            "captured_at": {
+              "count": 72,
+              "min_age_seconds": 745.236808,
+              "max_age_seconds": 2515.188808,
+              "under_300_seconds": 0
+            },
+            "observation_at": {
+              "count": 72,
+              "min_age_seconds": 745.236808,
+              "max_age_seconds": 2515.188808,
+              "under_300_seconds": 0
+            }
+          }
+        },
+        "independence_established": false,
+        "limitation": "Same-request window is not identical upstream observation time; matching prices never prove collector independence"
+      },
+      "pe_runner_keys": [
+        "barrier",
+        "bookmakers",
+        "form",
+        "horse_ref",
+        "jockey",
+        "name",
+        "number",
+        "runner_ref",
+        "trainer",
+        "weight"
+      ],
+      "pe_quote_keys": [
+        "age_basis",
+        "age_seconds",
+        "betslip_app_only",
+        "betslip_place_url",
+        "betslip_win_url",
+        "flucs",
+        "key",
+        "last_update",
+        "open_price",
+        "place_price",
+        "places_paid",
+        "refresh_tier",
+        "source_url",
+        "stale",
+        "top2_price",
+        "top3_price",
+        "top4_price",
+        "tote_place",
+        "tote_win",
+        "win_price"
+      ],
+      "pe_scratchings": 1,
+      "krok_scratchings": 1,
+      "age_basis_counts": {
+        "poll": 99
+      },
+      "acceptance_reconciliation": {
+        "exact_declared_field_and_scratchings": true,
+        "acceptance_runners": 10,
+        "live_declared_runners": 10,
+        "missing_from_live": 0,
+        "emergencies": 0,
+        "independently_verified": false
+      },
+      "single_book_checks": {
+        "tab": {
+          "schema": "monty.market_integrity.v1",
+          "status": "QUARANTINED",
+          "actionable_value_allowed": false,
+          "independently_verified": false,
+          "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+          "expected_active_runners": 9,
+          "observed_price_runners": 9,
+          "complete_price_vector": true,
+          "observed_book_lower_bound_pct": 129.928001416627,
+          "book_percentage": 129.928001416627,
+          "overround_percentage_points": 29.928001416627016,
+          "underround_percentage_points": 0,
+          "market_only_numerical_edge": -0.23034296756909167,
+          "bookmakers": [
+            "TAB"
+          ],
+          "quote_timestamp_count": 9,
+          "capture_age_seconds": 0.0,
+          "quote_timestamp_semantics": [
+            "PUNTERSEDGE_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE"
+          ],
+          "captured_at": "2026-11-25T08:13:51.348808+00:00",
+          "oldest_quote_at": "2026-11-25T08:13:44.418603+00:00",
+          "latest_quote_at": "2026-11-25T08:13:44.418603+00:00",
+          "warnings": [
+            "independent_field_unverified"
+          ]
+        },
+        "sportsbet": {
+          "schema": "monty.market_integrity.v1",
+          "status": "QUARANTINED",
+          "actionable_value_allowed": false,
+          "independently_verified": false,
+          "release_requirement": "Independent same-race complete field/scratchings and executable named-bookmaker quote verification; approval evaluator still required",
+          "expected_active_runners": 9,
+          "observed_price_runners": 9,
+          "complete_price_vector": true,
+          "observed_book_lower_bound_pct": 128.72261595087681,
+          "book_percentage": 128.72261595087681,
+          "overround_percentage_points": 28.72261595087682,
+          "underround_percentage_points": 0,
+          "market_only_numerical_edge": -0.2231357383370608,
+          "bookmakers": [
+            "Sportsbet"
+          ],
+          "quote_timestamp_count": 9,
+          "capture_age_seconds": 0.0,
+          "quote_timestamp_semantics": [
+            "PUNTERSEDGE_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE"
+          ],
+          "captured_at": "2026-11-25T08:13:51.348808+00:00",
+          "oldest_quote_at": "2026-11-25T08:13:10+00:00",
+          "latest_quote_at": "2026-11-25T08:13:10+00:00",
+          "warnings": [
+            "independent_field_unverified"
+          ]
+        }
+      },
+      "pe_since_prior": {
+        "exact_runner_name_number_book_matches": 99,
+        "same_price": 99,
+        "first_only": 0,
+        "second_only": 0,
+        "exact_observation_time_matches": 27,
+        "first": {
+          "offers": 99,
+          "bookmakers": {
+            "betdeluxe": 9,
+            "palmerbet": 9,
+            "betright": 9,
+            "tabtouch": 9,
+            "tab": 9,
+            "pointsbet": 9,
+            "neds": 9,
+            "playup": 9,
+            "sportsbet": 9,
+            "ladbrokes": 9,
+            "unibet": 9
+          },
+          "clocks": {
+            "last_update": {
+              "count": 99,
+              "min_age_seconds": 76.707498,
+              "max_age_seconds": 2149.054173,
+              "under_300_seconds": 81
+            },
+            "age_seconds": {
+              "count": 99,
+              "min_age_seconds": 0.0,
+              "max_age_seconds": 2073.0,
+              "under_300_seconds": 81
+            },
+            "observation_at": {
+              "count": 99,
+              "min_age_seconds": 76.707498,
+              "max_age_seconds": 2149.054173,
+              "under_300_seconds": 81
+            }
+          }
+        },
+        "second": {
+          "offers": 99,
+          "bookmakers": {
+            "betdeluxe": 9,
+            "palmerbet": 9,
+            "betright": 9,
+            "tabtouch": 9,
+            "tab": 9,
+            "pointsbet": 9,
+            "neds": 9,
+            "playup": 9,
+            "sportsbet": 9,
+            "ladbrokes": 9,
+            "unibet": 9
+          },
+          "clocks": {
+            "last_update": {
+              "count": 99,
+              "min_age_seconds": 5.297788,
+              "max_age_seconds": 2149.054173,
+              "under_300_seconds": 81
+            },
+            "age_seconds": {
+              "count": 99,
+              "min_age_seconds": 4.0,
+              "max_age_seconds": 2148.0,
+              "under_300_seconds": 81
+            },
+            "observation_at": {
+              "count": 99,
+              "min_age_seconds": 5.297788,
+              "max_age_seconds": 2149.054173,
+              "under_300_seconds": 81
+            }
+          }
+        },
+        "independence_established": false,
+        "limitation": "Same-request window is not identical upstream observation time; matching prices never prove collector independence"
+      },
+      "changed_poll_time_unchanged_price": 72,
+      "age_clock_max_difference_seconds": 1.576257
+    }
+  ],
+  "staged_engine_test": {
+    "status": "COMPLETED_ASSESSMENTS",
+    "models": {
+      "V6": {
+        "commit": "85dc10b1dc9b42049e2a83da65322bc708f31c20",
+        "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+        "status": "SCORED",
+        "research_only": false,
+        "scored_races": 1,
+        "failed_races": 0,
+        "blocked_races": 0,
+        "expired_races": 0,
+        "delivery_status": "SCORED"
+      },
+      "V7": {
+        "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+        "status": "SCORED",
+        "research_only": true,
+        "scored_races": 1,
+        "failed_races": 0,
+        "blocked_races": 0,
+        "expired_races": 0,
+        "delivery_status": "SCORED"
+      }
+    },
+    "forecast_sha256": "05c3cd765b079d5feb96113f3d4d843c8e925752edd6e132fc08e59f79b4b287",
+    "receipt_sha256": "9acc04453cdc3da18ca7eb39f52a4073fff9faf7cb6bc792c3474d2d0f6e77bd",
+    "outcomes": [
+      {
+        "model": "V6",
+        "status": "SCORED",
+        "classification": "PROVISIONAL",
+        "betting": "DATA BLOCKED"
+      },
+      {
+        "model": "V7",
+        "status": "SCORED",
+        "classification": "RESEARCH ONLY",
+        "betting": "DATA BLOCKED"
+      }
+    ]
+  },
+  "direct_bookmaker_evidence": [
+    {
+      "source": "TAB",
+      "source_url": "https://www.tab.com.au/racing/2026-11-25/LAUNCESTON/LAU/R/6",
+      "started_at": "2026-11-25T08:12:39.059488+00:00",
+      "status": "HTTP_ERROR",
+      "http_status": 500,
+      "elapsed_seconds": 0.622188,
+      "race_parse_verified": false
+    },
+    {
+      "source": "Sportsbet",
+      "source_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/launceston/race-6-11204536",
+      "started_at": "2026-11-25T08:12:39.681745+00:00",
+      "status": "ACCESS_DENIED",
+      "http_status": 403,
+      "elapsed_seconds": 0.24274,
+      "race_parse_verified": false
+    }
+  ],
+  "track_conditions": {
+    "meetings": 1,
+    "keys": [
+      "coverage_from",
+      "date",
+      "meetings",
+      "note",
+      "official_block_from"
+    ]
+  },
+  "changes": {
+    "server_time": "2026-11-25T08:13:22.661684Z",
+    "races": 21
+  },
+  "results": {
+    "sample_races": 35,
+    "statuses": {
+      "interim": 2,
+      "final": 33
+    },
+    "full_runner_rows": 355,
+    "unavailable_runner_lists": 5,
+    "independent_official_settlement": false
+  },
+  "usage_after": {
+    "plan": "free",
+    "credits_used": 67,
+    "credits_limit": 1500,
+    "credits_remaining": 1433,
+    "period_start": "2026-11-25T07:37:08.098912",
+    "next_reset_at": "2026-12-01T00:00:00",
+    "reset_at": "2026-11-25T07:37:08.098912"
+  },
+  "usage_period_delta": 19,
+  "request_usage": [
+    {
+      "endpoint": "/v1/usage",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:12:30.083447+00:00",
+      "elapsed_seconds": 1.018424,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 29,
+      "credit_cost_known": false
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:12:31.799895+00:00",
+      "elapsed_seconds": 1.716304,
+      "x-credits-cost": 4,
+      "x-credits-remaining": 1448,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 28,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/events",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:12:32.750345+00:00",
+      "elapsed_seconds": 0.938255,
+      "x-credits-cost": 1,
+      "x-credits-remaining": 1447,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 27,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:12:33.928327+00:00",
+      "elapsed_seconds": 1.17765,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1445,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 26,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:12:34.955363+00:00",
+      "elapsed_seconds": 1.026426,
+      "x-credits-cost": 3,
+      "x-credits-remaining": 1442,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 25,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "status": 200,
+      "command": "PAIRED_SINGLE_RACE",
+      "attempted_at": "2026-11-25T08:12:36.865557+00:00",
+      "elapsed_seconds": 1.909366,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1440,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 24,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "status": 200,
+      "command": "PAIRED_SINGLE_RACE",
+      "attempted_at": "2026-11-25T08:13:51.345323+00:00",
+      "elapsed_seconds": 1.420248,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1438,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 29,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/track-conditions",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:13:52.154735+00:00",
+      "elapsed_seconds": 0.804103,
+      "x-credits-cost": 1,
+      "x-credits-remaining": 1437,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 28,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/changes",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:13:53.140525+00:00",
+      "elapsed_seconds": 0.985505,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1435,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 27,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/results",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:13:54.696770+00:00",
+      "elapsed_seconds": 1.555844,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1433,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 26,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/usage",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T08:13:55.268649+00:00",
+      "elapsed_seconds": 0.569524,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 25,
+      "credit_cost_known": false
+    }
+  ],
+  "response_evidence": [
+    {
+      "endpoint": "/v1/usage",
+      "request_at": "2026-11-25T08:12:29.065045+00:00",
+      "received_at": "2026-11-25T08:12:30.083550+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:12:29 GMT",
+      "cache_control": null,
+      "sha256": "da48bfed0afd98020b1d67449c8d2373053650a52bf027ee1b2aa57a93ad042b",
+      "bytes": 5084,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "request_at": "2026-11-25T08:12:30.083615+00:00",
+      "received_at": "2026-11-25T08:12:31.805223+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:12:30 GMT",
+      "cache_control": "private, max-age=0, must-revalidate",
+      "sha256": "12111bd4aab16e4605c9200e25e6f89af62363783894564dd1d0c388c4ca37ac",
+      "bytes": 914696,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/events",
+      "request_at": "2026-11-25T08:12:31.812115+00:00",
+      "received_at": "2026-11-25T08:12:32.750558+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:12:32 GMT",
+      "cache_control": null,
+      "sha256": "d07c5e2c522c401da1d5baba893e14a65608d1c7e974824ad9836b8c571eceb0",
+      "bytes": 30522,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "request_at": "2026-11-25T08:12:32.750700+00:00",
+      "received_at": "2026-11-25T08:12:33.928871+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:12:33 GMT",
+      "cache_control": null,
+      "sha256": "bc126e37b9a7b0243aebeb645821e435cf152797240cab30f2b8e622538cc026",
+      "bytes": 80925,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "request_at": "2026-11-25T08:12:33.928960+00:00",
+      "received_at": "2026-11-25T08:12:34.955789+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:12:34 GMT",
+      "cache_control": null,
+      "sha256": "a6fe8148e4224a1669a6de9c819a7f6c6e0fc0a43a80786d0e8f29de2107ef65",
+      "bytes": 72210,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "request_at": "2026-11-25T08:12:34.956217+00:00",
+      "received_at": "2026-11-25T08:12:36.868577+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:12:36 GMT",
+      "cache_control": "private, max-age=0, must-revalidate",
+      "sha256": "e1b5228674fa9b0307198e65172b7b13517027a2189ea24a7801a4be165dcb7c",
+      "bytes": 279512,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "request_at": "2026-11-25T08:13:49.925102+00:00",
+      "received_at": "2026-11-25T08:13:51.346990+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:13:50 GMT",
+      "cache_control": "private, max-age=0, must-revalidate",
+      "sha256": "de75a4eb56d3c926ea3fe04096aee73c86d4c7944b7e9bfb8e8b968b9958f8ea",
+      "bytes": 279635,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/track-conditions",
+      "request_at": "2026-11-25T08:13:51.350656+00:00",
+      "received_at": "2026-11-25T08:13:52.154946+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:13:51 GMT",
+      "cache_control": null,
+      "sha256": "883bf07f4992b68b48d15cc3da6122e368c79610237f24183c815ee49e46cc5e",
+      "bytes": 34306,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/changes",
+      "request_at": "2026-11-25T08:13:52.155047+00:00",
+      "received_at": "2026-11-25T08:13:53.140868+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:13:52 GMT",
+      "cache_control": null,
+      "sha256": "cd261d383af0c17315d25cac6bd909132b52e39f2e20940275ad47e575c8055b",
+      "bytes": 61178,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/results",
+      "request_at": "2026-11-25T08:13:53.140951+00:00",
+      "received_at": "2026-11-25T08:13:54.698931+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:13:53 GMT",
+      "cache_control": null,
+      "sha256": "792807bf657956bc05798ff3bc98cafffdb64e9b9419867cde4b3553bb9b0172",
+      "bytes": 316741,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/usage",
+      "request_at": "2026-11-25T08:13:54.699148+00:00",
+      "received_at": "2026-11-25T08:13:55.268735+00:00",
+      "response_date": "Wed, 25 Nov 2026 08:13:55 GMT",
+      "cache_control": null,
+      "sha256": "78146292e64f80799f8163a2e841478dcd9b62e42dfd638526fc91d3954b4af1",
+      "bytes": 5597,
+      "status": 200
+    }
+  ],
+  "usage_summary": {
+    "attempts": 11,
+    "measured_credits": 19,
+    "unknown_cost_attempts": 2,
+    "total_credits": null,
+    "remaining_balance_is_not_monty_usage": true
+  },
+  "finished_at": "2026-11-25T08:13:55.268783+00:00",
+  "artifact_id": 15003810515,
+  "artifact_zip_sha256": "9e477e7444b646741b866168a6b5805a8309c761ba006fc05f7b7459718c9555",
+  "artifact_hash_verified": true,
+  "raw_responses_published": false
+}

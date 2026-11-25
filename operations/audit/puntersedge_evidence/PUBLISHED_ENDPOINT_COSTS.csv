@@ -1,0 +1,50 @@
+Endpoint,Cost
+GET /v1/sports,1 credit
+GET /v1/sports/{key}/odds,1 credit per market type (max 3)
+GET /v1/best-odds/{key},3 credits
+GET /v1/racing/next-to-go,2 / 3 / 4 credits
+GET /v1/racing/best-odds,3 credits
+GET /v1/racing/markets,2 credits
+GET /v1/racing/form,3 credits
+GET /v1/racing/results,2 credits
+GET /v1/racing/movers,3 credits
+GET /v1/racing/price-history,5 credits
+GET /v1/racing/closing-lines,5 credits (JSON) / 20 credits (CSV)
+GET /v1/racing/closing-lines/coverage,1 credit
+GET /v1/racing/market-summary,5 credits (JSON) / 20 credits (CSV)
+GET /v1/bulk/{dataset}/{period},20 credits per daily file / 100 per monthly bundle
+GET /v1/sports/{key}/odds/history,5 credits
+GET /v1/sports/{key}/odds/movements,5 credits
+GET /v1/sports/{key}/closing-lines,5 credits
+GET /v1/data-quality/summary,1 credit
+POST/GET/PATCH/DELETE /v1/widgets,0 credits
+GET /v1/usage,0 credits
+GET /v1/health,0 credits
+GET /v1/arb/best-prices,2 credits
+GET /v1/arb/lines,3 credits
+GET /v1/arb/sports,3 credits
+GET /v1/data-quality/audit/latest,1 credit
+GET /v1/health/connectors,1 credit
+GET /v1/racing/acceptances,2 credits
+GET /v1/racing/changes,2 credits
+GET /v1/racing/connections/race,3 credits
+GET /v1/racing/connections/stats,3 credits
+GET /v1/racing/consensus,3 credits
+GET /v1/racing/events,1 credit
+GET /v1/racing/greyhounds/field,3 credits
+GET /v1/racing/greyhounds/form,3 credits
+GET /v1/racing/greyhounds/stats,3 credits
+GET /v1/racing/horses/form,3 credits
+GET /v1/racing/horses/runs,3 credits
+GET /v1/racing/intelligence,3 credits
+GET /v1/racing/intelligence/scan,5 credits
+GET /v1/racing/jockeys/stats,2 credits
+GET /v1/racing/price-paths,5 / 20 credits
+GET /v1/racing/results/coverage,1 credit
+GET /v1/racing/tote,2 credits
+GET /v1/racing/track-conditions,1 credit
+GET /v1/racing/trainers/stats,2 credits
+GET /v1/racing/venues,1 credit
+GET /v1/sports/{sport_key}/results,1 credit
+POST /v1/racing/clv,5 credits
+POST /v1/racing/horses/backfill,3 credits
