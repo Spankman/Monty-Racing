@@ -1,0 +1,31 @@
+{
+  "counts": {
+    "registered": 3,
+    "unavailable": 1,
+    "excluded": 2,
+    "admitted": 0,
+    "settled": 0
+  },
+  "blockers": {
+    "paired_V7_run_blocked_mixed_book": 1,
+    "independent_named_executable_quote_unverified": 2,
+    "compatible_history_unverified": 2,
+    "official_field_not_reconciled": 2,
+    "race_verified_required": 2,
+    "fixed_win_verified_required": 2,
+    "emergency_status_verified_required": 2,
+    "fresh_primary_authority_and_operator_evidence_required": 2,
+    "complete_current_nonquarantined_book_required": 2,
+    "compatible_asof_history_attestation_required": 2
+  },
+  "predeclared_window": null,
+  "models": {},
+  "actual_roi": null,
+  "roi_definition": "One-unit top-ranked WIN fixed-quote proxy. No stakes, fills, deductions or actual ROI inferred.",
+  "audited_capture_window": [
+    "2026-11-25T06:15:00Z",
+    "2026-11-25T06:16:00Z"
+  ],
+  "scope": "Existing AU diagnostic capture inventory. This window was selected for archive review and is not a predeclared performance cohort.",
+  "archive_zip_sha256": "9d8fbe1c22fcbb8cbb51897a9bd6b2b7d9d177c095356ba52ecc33797c117165"
+}

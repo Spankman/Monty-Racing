@@ -1,0 +1,26 @@
+{
+  "archive_sha256": "f409638e60501d14e0e419574484421b3111ebeb85b360803817c600dec86f37",
+  "parsed_starts": 1451,
+  "archived_link_status": {
+    "missing_or_ambiguous_historical_row": 701,
+    "matched_retained_market": 375,
+    "unmapped_track_code": 375
+  },
+  "overlap_recheck": {
+    "exact_market_selection_date_distance_name": 348,
+    "context_mismatch": 27
+  },
+  "archived_latest_start_features": 103,
+  "latest_links_in_pinned_subset": 103,
+  "source_months_excluded": [
+    "2026_05",
+    "2026_07"
+  ],
+  "authority_registration_ids_verified_here": 0,
+  "live_features_admitted": 0,
+  "limitation": "Archived PDF-derived leads, not stable registrations or complete original feature windows. No archive rows published or injected into either model.",
+  "mismatch_breakdown": {
+    "apostrophe_only_name_variation": 27
+  },
+  "latest_links_exact_context_count": 94
+}
