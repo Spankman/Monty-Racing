@@ -15,3 +15,6 @@ V6 remains frozen and official; V7 is research-only. Preserve betting policy, fr
 Update the living development register with evidence-backed status and leave a concise dated handover in the relevant issue/PR or linked document. Include exact branch/commit, completed work, tests and limitations, blockers, observable credits/costs, next actionable step and required owner approvals. Link evidence rather than duplicate it. Do not mark unverified work complete.
 
 GitHub is the shared source of truth, not an automatic messaging service. Agents must explicitly inspect current repository state at startup; do not assume another agent has read a new issue or branch.
+
+## Research before development
+Read MONTY_RESEARCH_LIBRARY.md before proposing modelling changes. Complete outstanding source reviews as needed, audit existing implementations, and reuse verified methods and legally reusable code before inventing replacements. Maintain source access status, experiment evidence and negative findings. Use ordinary ChatGPT for preliminary literature work and batch implementation/validation to conserve credits.
