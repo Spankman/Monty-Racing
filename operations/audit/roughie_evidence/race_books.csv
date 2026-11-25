@@ -1,0 +1,27 @@
+meeting,race,v6_status,expected,observed,observed_book_pct,book_pct,assessment,v6_watches,v7_watches
+Albany,3,SCORED,8,3,93.75,,unknown,0,0
+Albany,4,SCORED,8,2,66.3627152988855,,unknown,0,0
+Albany,5,SCORED,8,2,60.00000000000001,,unknown,0,0
+Albany,6,SCORED,11,2,66.9172932330827,,unknown,0,0
+Albany,7,SCORED,11,2,48.57142857142857,,unknown,0,0
+Geelong,5,SCORED,11,1,23.809523809523807,,unknown,0,0
+Geelong,6,SCORED,9,1,25.0,,unknown,0,0
+Geelong,7,SCORED,9,3,101.0989010989011,,overround lower bound,0,0
+Geelong,8,SCORED,10,10,95.92415945710076,95.92415945710076,underround,5,0
+Ipswich,5,SCORED,11,2,55.714285714285715,,unknown,0,0
+Ipswich,6,SCORED,11,3,69.17293233082707,,unknown,0,0
+Ipswich,7,SCORED,12,1,25.0,,unknown,0,0
+Launceston,1,SCORED,7,2,58.44155844155844,,unknown,0,0
+Launceston,2,SCORED,6,3,91.96575181796857,,unknown,0,0
+Launceston,5,SCORED,6,3,113.04843304843304,,overround lower bound,0,0
+Launceston,6,SCORED,9,9,72.74642159661809,72.74642159661809,underround,7,2
+Launceston,7,SCORED,7,2,64.77541371158392,,unknown,0,0
+Launceston,8,SCORED,6,3,103.70370370370372,,overround lower bound,0,0
+Strathalbyn,3,SCORED,10,3,79.57264957264957,,unknown,0,0
+Strathalbyn,4,SCORED,10,3,74.23245614035088,,unknown,0,0
+Strathalbyn,5,SCORED,13,2,49.411764705882355,,unknown,0,0
+Strathalbyn,6,SCORED,13,2,58.333333333333336,,unknown,0,0
+Strathalbyn,7,SCORED,12,1,18.181818181818183,,unknown,0,0
+Wyong,5,BLOCKED,8,0,0.0,,unknown,0,0
+Wyong,6,SCORED,7,2,84.4155844155844,,unknown,0,0
+Wyong,7,SCORED,6,4,120.69964349376114,,overround lower bound,0,0

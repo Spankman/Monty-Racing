@@ -1,0 +1,185 @@
+{
+  "forecast_sha256": "3dd8547fdaab7dafa70e45907e6f8c52a8e7d7114753e7f3a36dc89580abc8fe",
+  "race_records": 26,
+  "complete_quote_vectors": 2,
+  "exchange_snapshot_baseline": {
+    "races": 24797,
+    "dates": [
+      "2025-05-01",
+      "2026-10-31"
+    ],
+    "underround_races": 866,
+    "geelong_like_races": 588,
+    "launceston_like_races": 92,
+    "market_only_v6_all": {
+      "races": 864,
+      "watches": 5170,
+      "winners": 243,
+      "quote_units": 1312.5999999999997,
+      "quote_roi": 0.25388781431334617,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 5170,
+      "bsp_roi": 0.004614796905222402
+    },
+    "market_only_v6_cluster_5_plus": {
+      "races": 626,
+      "watches": 4435,
+      "winners": 199,
+      "quote_units": 930.0999999999997,
+      "quote_roi": 0.20971815107102587,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 4435,
+      "bsp_roi": -0.03270642615558065
+    },
+    "market_only_v7_probability_floor_all": {
+      "races": 723,
+      "watches": 1588,
+      "winners": 152,
+      "quote_units": 466.3749999999999,
+      "quote_roi": 0.29368702770780847,
+      "largest_winning_quote": 50.0,
+      "bsp_watches": 1588,
+      "bsp_roi": 0.0413268261964735
+    },
+    "market_only_v7_probability_floor_cluster_5_plus": {
+      "races": 46,
+      "watches": 253,
+      "winners": 28,
+      "quote_units": 146.44999999999996,
+      "quote_roi": 0.5788537549407113,
+      "largest_winning_quote": 28.0,
+      "bsp_watches": 253,
+      "bsp_roi": 0.14737351778656127
+    }
+  },
+  "frozen_v6_replay": {
+    "races": 1787,
+    "dates": [
+      "2025-05-01",
+      "2025-06-15"
+    ],
+    "underround_races": 59,
+    "geelong_like_races": 45,
+    "launceston_like_races": 8,
+    "market_only_v6_all": {
+      "races": 58,
+      "watches": 419,
+      "winners": 24,
+      "quote_units": 785.85,
+      "quote_roi": 1.8755369928400956,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 419,
+      "bsp_roi": 0.7000763723150358
+    },
+    "market_only_v6_cluster_5_plus": {
+      "races": 50,
+      "watches": 393,
+      "winners": 23,
+      "quote_units": 716.8,
+      "quote_roi": 1.823918575063613,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 393,
+      "bsp_roi": 0.6393918575063613
+    },
+    "market_only_v7_probability_floor_all": {
+      "races": 48,
+      "watches": 112,
+      "winners": 14,
+      "quote_units": 69.19999999999999,
+      "quote_roi": 0.6178571428571428,
+      "largest_winning_quote": 17.0,
+      "bsp_watches": 112,
+      "bsp_roi": 0.4478749999999999
+    },
+    "market_only_v7_probability_floor_cluster_5_plus": {
+      "races": 4,
+      "watches": 23,
+      "winners": 3,
+      "quote_units": 13.724999999999998,
+      "quote_roi": 0.5967391304347825,
+      "largest_winning_quote": 17.0,
+      "bsp_watches": 23,
+      "bsp_roi": 0.2311956521739129
+    },
+    "frozen_v6_all": {
+      "races": 1507,
+      "watches": 4047,
+      "winners": 160,
+      "quote_units": 71.17499999999984,
+      "quote_roi": 0.017587101556708635,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 4047,
+      "bsp_roi": -0.10050679515690637
+    },
+    "frozen_v6_cluster_5_plus": {
+      "races": 212,
+      "watches": 1292,
+      "winners": 54,
+      "quote_units": 531.3749999999999,
+      "quote_roi": 0.4112809597523219,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 1292,
+      "bsp_roi": 0.056398606811145446
+    },
+    "frozen_v6_no_underround_all": {
+      "races": 1450,
+      "watches": 3694,
+      "winners": 139,
+      "quote_units": -696.925,
+      "quote_roi": -0.1886640498105035,
+      "largest_winning_quote": 140.0,
+      "bsp_watches": 3694,
+      "bsp_roi": -0.18766878722252303
+    },
+    "frozen_v6_no_underround_cluster_5_plus": {
+      "races": 172,
+      "watches": 990,
+      "winners": 35,
+      "quote_units": -177.42500000000004,
+      "quote_roi": -0.17921717171717175,
+      "largest_winning_quote": 85.0,
+      "bsp_watches": 990,
+      "bsp_roi": -0.18574242424242432
+    },
+    "frozen_v6_positive_uplift_and_edge_all": {
+      "races": 1504,
+      "watches": 3885,
+      "winners": 149,
+      "quote_units": -12.950000000000287,
+      "quote_roi": -0.0033333333333334073,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 3885,
+      "bsp_roi": -0.11641879021879026
+    },
+    "frozen_v6_positive_uplift_and_edge_cluster_5_plus": {
+      "races": 183,
+      "watches": 1070,
+      "winners": 38,
+      "quote_units": -195.52500000000006,
+      "quote_roi": -0.18273364485981314,
+      "largest_winning_quote": 85.0,
+      "bsp_watches": 1070,
+      "bsp_roi": -0.1843495327102804
+    },
+    "frozen_v6_price_normalized_to_even_book_all": {
+      "races": 1649,
+      "watches": 5635,
+      "winners": 218,
+      "quote_units": -401.0000000000001,
+      "quote_roi": -0.07116237799467615,
+      "largest_winning_quote": 650.0,
+      "bsp_watches": 5635,
+      "bsp_roi": -0.14517302573203197
+    },
+    "frozen_v6_price_normalized_to_even_book_cluster_5_plus": {
+      "races": 415,
+      "watches": 2554,
+      "winners": 87,
+      "quote_units": -731.3500000000001,
+      "quote_roi": -0.2863547376664057,
+      "largest_winning_quote": 85.0,
+      "bsp_watches": 2554,
+      "bsp_roi": -0.28373238057948325
+    }
+  }
+}

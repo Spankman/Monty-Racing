@@ -199,3 +199,10 @@ avoid resetting branches or rewriting forecasts, and use existing queue controls
 if processing needs to pause. Never edit model manifests or completed requests.
 
 IN MONTY WE TRUST.
+
+## Roughie concentration follow-up
+
+The [roughie concentration audit](ROUGHIE_CONCENTRATION_2026-11-25.md) adds
+a market-only control, historical settlement sensitivities and a display replay
+to the feature-recovery and predictive-performance work. Keep this incident
+diagnostic and preserve the existing approval gate and owner review.
