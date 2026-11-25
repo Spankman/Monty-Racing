@@ -1,0 +1,188 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45531754731-1-218",
+  "date": "2026-11-25",
+  "view": "official",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Wyong",
+      "race": "1",
+      "country": "AU",
+      "scheduled_start": "2026-11-25T02:45:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Grandini"
+        }
+      ],
+      "captured_at": "2026-11-25T02:17:10.239089+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-25",
+        "meeting": "Wyong",
+        "race": "1",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Freddie Bassett",
+            "scratched": false,
+            "odds": 3.8,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Tom Sherry",
+            "trainer": "Annabel & Rob Archibald"
+          },
+          {
+            "number": "2",
+            "horse": "My Charm",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Dylan Gibbons",
+            "trainer": "Brad Widdup"
+          },
+          {
+            "number": "7",
+            "horse": "Don's Party",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Andrew Calder",
+            "trainer": "P & M Cave"
+          },
+          {
+            "number": "3",
+            "horse": "Astrogazer",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 56,
+            "age": 5,
+            "jockey": "Alysha Collett",
+            "trainer": "David Pfieffer"
+          },
+          {
+            "number": "5",
+            "horse": "War Ribbon",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 56,
+            "age": 5,
+            "jockey": "Keagan Latham",
+            "trainer": "David Payne"
+          },
+          {
+            "number": "8",
+            "horse": "Powerful Prayer",
+            "scratched": false,
+            "odds": 4.0,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Kerrin McEvoy",
+            "trainer": "John Thompson"
+          },
+          {
+            "number": "4",
+            "horse": "Dolce Dior",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 56,
+            "age": 5,
+            "jockey": "Andrew Adkins",
+            "trainer": "Peter Snowden"
+          },
+          {
+            "number": "6",
+            "horse": "Grandini",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Tyler Schiller",
+            "trainer": "Rodney Northam"
+          }
+        ],
+        "active_runners": 7,
+        "priced_active_runners": 7,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 2100,
+        "track_condition": "Soft6",
+        "captured_at": "2026-11-25T02:17:10.239089+00:00",
+        "scheduled_start": "2026-11-25T02:45:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "9f13c0b90be5c9ca217d1c6efc9612bb09a313ddd75486953f9d9b4ebcd30ce3",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-25T02:17:10.697604+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-25T02:17:10.239089+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-25T02:17:11.294947+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-25/45531754731-1-218/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-25T02:17:10.239089+00:00",
+  "valid_until": "2026-11-25T02:22:10.239089+00:00",
+  "snapshot_only": true
+}
