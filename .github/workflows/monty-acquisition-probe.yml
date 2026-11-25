@@ -1,0 +1,26 @@
+name: Monty one-shot acquisition evidence
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - '.github/workflows/monty-acquisition-probe.yml'
+permissions:
+  contents: read
+jobs:
+  bounded-probe:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'audit/free-low-cost-data' && github.base_ref == 'audit/au-data-validation'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m operations.audit.provider_entitlement_probe | tee acquisition-probe.json
+        env:
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          FORMFAV_API_KEY: ${{ secrets.FORMFAV_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monty-acquisition-counts
+          path: acquisition-probe.json

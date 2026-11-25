@@ -1,0 +1,28 @@
+endpoint,published_tier,published_credits,group,monty_role,retrieval_evidence
+/api/v1/racing/arbs,Free tier,1,overview,operator-derived signal; not Monty input,documented; no new authenticated endpoint sample
+/api/v1/racing/bookmakers,Free tier,1,overview,operator metadata only,documented; no new authenticated endpoint sample
+/api/v1/racing/futures,Free tier,1,overview,outside day-of Monty,documented; no new authenticated endpoint sample
+/api/v1/racing/meetings,Free tier,1,overview,active production acquisition,current hosted HTTP 200; 1 measured credit
+/api/v1/racing/meetings/{date},Free tier,1,overview,candidate alternate only,documented; no new authenticated endpoint sample
+/api/v1/racing/movers,Free tier,1,overview,derived market movement; not authoritative odds,documented; no new authenticated endpoint sample
+/api/v1/racing/odds-history,Free tier,5,overview,selected price history diagnostics,documented; no new authenticated endpoint sample
+/api/v1/racing/flucs,Free tier,5,overview,selected price history diagnostics,documented; no new authenticated endpoint sample
+/api/v1/racing/tote-pools,Free tier,1,overview,tote; not fixed-win proof,documented; no new authenticated endpoint sample
+/api/v1/racing/field-form,Free tier,5,form,existing diagnostic tool; not required per race,current hosted HTTP 200; 5 measured credits
+/api/v1/racing/ratings,Free tier,1,form,provider model; not a Monty input,documented; no new authenticated endpoint sample
+/api/v1/racing/runner-form,Free tier,1,form,selected historical research only,documented; no new authenticated endpoint sample
+/api/v1/racing/runner-stats,Free tier,1,form,summary only; not original residuals,documented; no new authenticated endpoint sample
+/api/v1/racing/sectionals,Free tier,1,form,research only; no frozen sectional input,documented; no new authenticated endpoint sample
+/api/v1/racing/sectionals/{horseCode},Free tier,1,form,research only; no frozen sectional input,documented; no new authenticated endpoint sample
+/api/v1/racing/international,API plan,2,results,outside Australian thoroughbred scope,documented; no new authenticated endpoint sample
+/api/v1/racing/international/results,API plan,2,results,outside Australian thoroughbred scope,documented; no new authenticated endpoint sample
+/api/v1/racing/predictions,Free tier,1,results,provider model; not a Monty input,documented; no new authenticated endpoint sample
+/api/v1/racing/results,Free tier,5,results,bulk results corroboration candidate,documented; no new authenticated endpoint sample
+/api/v1/racing/results/{date},Free tier,5,results,results corroboration; authority settlement separately,archived authenticated Free HTTP 200; November 2025 and 2026
+/api/v1/racing/connections,Free tier,1,connections,identity research,documented; no new authenticated endpoint sample
+/api/v1/racing/connections/combinations,Free tier,1,connections,summary only,documented; no new authenticated endpoint sample
+/api/v1/racing/connections/season-stats,Free tier,1,connections,summary only,documented; no new authenticated endpoint sample
+/api/v1/racing/harness/search,Free tier,1,harness,outside Australian thoroughbred scope,documented; no new authenticated endpoint sample
+/api/v1/racing/harness/drivers/{slug},Free tier,1,harness,outside Australian thoroughbred scope,documented; no new authenticated endpoint sample
+/api/v1/racing/harness/horses/{id},Free tier,1,harness,outside Australian thoroughbred scope,documented; no new authenticated endpoint sample
+/api/v1/racing/harness/trainers/{slug},Free tier,1,harness,outside Australian thoroughbred scope,documented; no new authenticated endpoint sample

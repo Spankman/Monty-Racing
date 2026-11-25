@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-25",
+  "krok": {
+    "credential_configured": true,
+    "meetings_first_page": {
+      "status": 200,
+      "x-credits-cost": 1,
+      "x-credits-remaining": 49424,
+      "x-ratelimit-limit": 500,
+      "x-ratelimit-remaining": 499,
+      "page_count": 1,
+      "meetings": 39,
+      "more_pages": false,
+      "au_race_count": 44,
+      "offer_count": 11841,
+      "offer_fields": {
+        "bookmaker": 11841,
+        "captured_at": 11841,
+        "win": 11841
+      }
+    },
+    "field_form": {
+      "status": 200,
+      "x-credits-cost": 5,
+      "x-credits-remaining": 49419,
+      "x-ratelimit-limit": 500,
+      "x-ratelimit-remaining": 498,
+      "returned_object": true
+    }
+  },
+  "formfav": {
+    "credential_configured": false
+  }
+}

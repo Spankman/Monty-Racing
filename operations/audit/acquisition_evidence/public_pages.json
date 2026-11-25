@@ -1,0 +1,116 @@
+{
+  "rq-open": {
+    "url": "https://www.racingqueensland.com.au/about/reports-and-data/open-data",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 223496,
+    "sha256": "a2e89c2fa5107362bb2b99113ccda24931e193d8079ea7649340c3e869996153",
+    "final_url": "https://www.racingqueensland.com.au/about/reports-and-data/open-data"
+  },
+  "rq-sectionals": {
+    "url": "https://www.racingqueensland.com.au/industry/thoroughbred/thoroughbred-sectionals",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 1534590,
+    "sha256": "a80496e1769c04d554d356a858a7749fdd965e18fd6c103956dcfe7af981c731",
+    "final_url": "https://www.racingqueensland.com.au/industry/thoroughbred/thoroughbred-sectionals"
+  },
+  "rq-field": {
+    "url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 243606,
+    "sha256": "75255ede04b468b6975e02ac024ce2c24c125b4259224b987814b8d214d89be7",
+    "final_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7"
+  },
+  "nsw-field": {
+    "url": "https://racing.racingnsw.com.au/FreeFields/Calendar.aspx",
+    "robots_status": 200,
+    "status": "ROBOTS_DENIED"
+  },
+  "ra-field": {
+    "url": "https://www.racingaustralia.horse/FreeFields/Calendar.aspx",
+    "robots_status": 200,
+    "status": "ROBOTS_DENIED"
+  },
+  "rwwa": {
+    "url": "https://www.rwwa.com.au/",
+    "status": "ROBOTS_UNAVAILABLE",
+    "http": 403
+  },
+  "tas": {
+    "url": "https://www.tasracing.com.au/",
+    "robots_status": 200,
+    "status": "REDIRECTED_HOST_UNVERIFIED",
+    "final_url": "https://tasracing.com.au/"
+  },
+  "racingsa": {
+    "url": "https://www.racingsa.com.au/",
+    "robots_status": 202,
+    "status": "CAPTURED",
+    "http": 202,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final_url": "https://www.racingsa.com.au/"
+  },
+  "racingcom": {
+    "url": "https://www.racing.com/",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 755915,
+    "sha256": "f0389834c559a2b9783cb91d57b5ca74b7d9143886ff3c0495ab6fdfa80d909b",
+    "final_url": "https://www.racing.com/"
+  },
+  "punters": {
+    "url": "https://www.punters.com.au/form-guide/",
+    "robots_status": 200,
+    "status": "ROBOTS_DENIED"
+  },
+  "breednet": {
+    "url": "https://www.breednet.com.au/race-fields/horse-racing",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 170395,
+    "sha256": "8e50393c891cf4f49cbd118940ae8d4dced8960215ca9dd2357fc645ffe108ef",
+    "final_url": "https://www.breednet.com.au/race-fields/horse-racing"
+  },
+  "racingandsports": {
+    "url": "https://www.racingandsports.com.au/form-guide",
+    "robots_status": 200,
+    "status": "PAGE_UNAVAILABLE",
+    "http": 403,
+    "error": "HTTPError"
+  },
+  "krok-docs": {
+    "url": "https://krokodds.com.au/api-docs/racing",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 279272,
+    "sha256": "a109bb25f4b3df34dd2b9c490f886effe89f3da95b0d9d9a0f56d1a9d8885609",
+    "final_url": "https://krokodds.com.au/api-docs/racing"
+  },
+  "krok-form": {
+    "url": "https://krokodds.com.au/api-docs/racing/form",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 245768,
+    "sha256": "0b669e8490b474773b84f3b725390ba9fa063a847113be4336183059786b2f2f",
+    "final_url": "https://krokodds.com.au/api-docs/racing/form"
+  },
+  "formfav-docs": {
+    "url": "https://formfav.com/docs/subscription-tiers",
+    "robots_status": 200,
+    "status": "CAPTURED",
+    "http": 200,
+    "bytes": 61807,
+    "sha256": "d864545fdfd0937f5f19d3a0274362b5a4a612e492176d770f308b575298878b",
+    "final_url": "https://formfav.com/docs/subscription-tiers"
+  }
+}

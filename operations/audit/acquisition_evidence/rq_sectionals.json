@@ -1,0 +1,76 @@
+[
+  {
+    "url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/Sectional/20261122_Ladbrokes_Cannon_Park_T.csv",
+    "status": "VALIDATED_FORMAT",
+    "http": 200,
+    "media_type": "text/csv",
+    "sha256": "717d96e6b46e9c96c20db9b68751ff2b1f38b814ad4b421fc264c21fb72929b9",
+    "bytes": 14347,
+    "dates": [
+      "2026-11-22"
+    ],
+    "races": 8,
+    "runner_rows": 81,
+    "segments": 438,
+    "missing_segments": 53,
+    "runner_rows_without_measurements": 10,
+    "segments_by_runner": {
+      "0": 10,
+      "5": 32,
+      "6": 22,
+      "7": 8,
+      "10": 9
+    },
+    "used_in_model": false
+  },
+  {
+    "url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/Sectional/20261121_Sunshine_Coast_T.csv",
+    "status": "VALIDATED_FORMAT",
+    "http": 200,
+    "media_type": "text/csv",
+    "sha256": "f38a1498938660b00419840a8c4c37d85598020a8e96daf6015b63495dcd7dcd",
+    "bytes": 27639,
+    "dates": [
+      "2026-11-21"
+    ],
+    "races": 10,
+    "runner_rows": 152,
+    "segments": 786,
+    "missing_segments": 219,
+    "runner_rows_without_measurements": 33,
+    "segments_by_runner": {
+      "0": 33,
+      "5": 33,
+      "6": 23,
+      "7": 35,
+      "8": 14,
+      "9": 14
+    },
+    "used_in_model": false
+  },
+  {
+    "url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/Sectional/20261121_Toowoomba_T.csv",
+    "status": "VALIDATED_FORMAT",
+    "http": 200,
+    "media_type": "text/csv",
+    "sha256": "f5df4901f1293bcd442f216260f667f484914258eb2e0c6e6e997f3731f62779",
+    "bytes": 19692,
+    "dates": [
+      "2026-11-21"
+    ],
+    "races": 8,
+    "runner_rows": 109,
+    "segments": 489,
+    "missing_segments": 237,
+    "runner_rows_without_measurements": 36,
+    "segments_by_runner": {
+      "0": 36,
+      "5": 16,
+      "6": 12,
+      "7": 29,
+      "8": 10,
+      "9": 6
+    },
+    "used_in_model": false
+  }
+]
