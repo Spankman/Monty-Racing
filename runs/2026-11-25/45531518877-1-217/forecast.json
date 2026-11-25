@@ -1,0 +1,34 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-25",
+  "timezone": "Australia/Brisbane",
+  "run_id": "45531518877-1-217",
+  "generated_at": "2026-11-25T02:15:16.097829+00:00",
+  "receipt": "runs/2026-11-25/45531518877-1-217/receipt.json",
+  "source_mode": "LIVE",
+  "status": "FAILED",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "NOT_RUN",
+      "research_only": false
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "NOT_RUN",
+      "research_only": true
+    }
+  },
+  "races": [],
+  "blockers": [
+    "snapshot_validation: ValueError"
+  ],
+  "coverage": {},
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "cc495264ea19ce11deeef793eaddde2d1789edc61f0e64751c30455c178cc6f0",
+  "captured_at": "2026-11-25T02:15:15.996737+00:00",
+  "valid_until": "2026-11-25T02:20:15.996737+00:00"
+}
