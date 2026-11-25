@@ -1,0 +1,11 @@
+{
+  "schema": "monty.evidence-policy.v1",
+  "enabled": true,
+  "retention_days": 7,
+  "max_bundle_bytes": 100000000,
+  "sources": {
+    "SIMULATED FIXTURE": {"private_retention_permitted": true, "permission_reference": "Owner-authorised engineering acceptance; synthetic fields, no provider data", "review_expires_at": "2027-01-01T00:00:00Z"},
+    "Krok": {"private_retention_permitted": false, "permission_reference": "Explicit current licence/retention assessment required", "review_expires_at": "2027-01-01T00:00:00Z"},
+    "PuntersEdge": {"private_retention_permitted": false, "permission_reference": "Personal-use entitlement is not public redistribution permission; establish private retention scope", "review_expires_at": "2027-01-01T00:00:00Z"}
+  }
+}

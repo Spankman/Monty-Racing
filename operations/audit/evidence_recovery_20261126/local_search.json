@@ -1,0 +1,7 @@
+{
+  "target_canonical_sha256": "54ad2cba0ae8bfd622d93db8e2ea0b4d1d23f6c6b5fb2743cb35713edda855d2",
+  "candidate_files_examined": 14,
+  "matching_original_snapshots": [],
+  "provider_calls": 0,
+  "limitation": "Only authorised persistent workspace and backup/workflow artifact inventories searched; ephemeral deleted runner files cannot be recreated"
+}

@@ -24,11 +24,11 @@ class NoRedirect(HTTPRedirectHandler):
 
 
 class Client:
-    def __init__(self,key=None,*,budget=40,opener=None,sleeper=time.sleep):
+    def __init__(self,key=None,*,budget=40,opener=None,sleeper=time.sleep,observer=None):
         self._key=key or os.getenv('PUNTERSEDGE_API_KEY','')
         if not self._key:raise ProviderError('PuntersEdge credential unavailable')
         self.open=opener or build_opener(NoRedirect()).open
-        self.sleep=sleeper;self.budget=budget;self.reserved=0;self.usage=[];self.responses=[]
+        self.observer=observer;self.observer_errors=[];self.sleep=sleeper;self.budget=budget;self.reserved=0;self.usage=[];self.responses=[]
 
     def get(self,path,params=None,*,command='STAGING'):
         if command.strip().upper()=='C':raise ProviderError('C cannot acquire data')
@@ -49,6 +49,9 @@ class Client:
                     body=response.read(10_000_001);headers=response.headers;status=response.status
                 record_usage(self.usage,url,status,headers,command,started)
                 if len(body)>10_000_000:raise ProviderError('Provider response exceeds bound')
+                if self.observer is not None:
+                    try:self.observer(body,path)
+                    except Exception:self.observer_errors.append('raw_observer_failed')
                 value=json.loads(body)
                 if not isinstance(value,(dict,list)):raise ProviderError('Unexpected provider payload')
                 self.responses.append(dict(endpoint=path,request_at=request_at,received_at=datetime.now(timezone.utc).isoformat(),

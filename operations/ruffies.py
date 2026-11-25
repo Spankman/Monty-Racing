@@ -91,7 +91,15 @@ def audit(race,model,version,now):
             price_observed_at=quoted.isoformat() if quoted else None,price_valid_until=expires.isoformat() if expires else None,
             capture_valid_until=capture_until,
             official_betting_approval='NOT APPROVED',betting_authorised=False,bet_type='WIN ONLY'))
-    return dict(schema='monty.ruffies.v1',version=version,complete_scored_field=bool(usable),
+    candidate_count=sum(r['research_candidate'] for r in saved)
+    uncertain=bool(essential) or any(r['status']=='DATA BLOCKED' for r in saved)
+    potential=any(r['numerical_expected_value'] is not None and r['numerical_expected_value']>0
+                  and r['predictive_advantage'] is not None and r['predictive_advantage']>1e-12 for r in saved)
+    state=('INSUFFICIENT DATA TO ASSESS RUFFIES' if not usable or model.get('status')!='SCORED' else
+           'UNVERIFIED OR ANOMALOUS MARKET CONDITIONS' if uncertain else
+           'RESEARCH RUFFIES IDENTIFIED — NOT APPROVED' if candidate_count else
+           'RUFFIES IDENTIFIED BUT EXCLUDED' if potential else 'NO RUFFIES IDENTIFIED')
+    return dict(schema='monty.ruffies.v1',assessment_state=state,version=version,complete_scored_field=bool(usable),
         expected_active_runners=expected,observed_ranked_runners=len(rows),
         longshots_identified=len(saved),unknown_unpreserved_runners=max(0,expected-len(rows)) if type(expected) is int else None,
         covered_runner_numbers=[r['number'] for r in saved],
@@ -109,7 +117,7 @@ def attach(race,model,version,now):
 def text(model):
     section=model.get('ruffies_to_watch')
     if not section:return []
-    lines=['RUFFIES TO WATCH — WIN ONLY · RESEARCH · NO BET']
+    lines=['RUFFIES TO WATCH — WIN ONLY · RESEARCH · NO BET','Scope: $10+ audit; original lower-price watch rules remain unchanged.','Assessment: '+section.get('assessment_state','INSUFFICIENT DATA TO ASSESS RUFFIES')]
     if section.get('none_reason'):lines.append(section['none_reason'])
     for row in section['rows']:
         if not row['display_watch']:continue
@@ -143,5 +151,7 @@ def refresh(section,model,now):
             row['reasons']=list(dict.fromkeys(row['reasons']+essential))
         row['official_betting_approval']='NOT APPROVED';row['betting_authorised']=False
     out['research_candidates']=sum(r['research_candidate'] for r in out['rows'])
+    if any(r['status']=='EXPIRED' for r in out['rows']) and not any(r['display_watch'] for r in out['rows']):out['assessment_state']='INSUFFICIENT DATA TO ASSESS RUFFIES — EXPIRED'
+    elif essential:out['assessment_state']='UNVERIFIED OR ANOMALOUS MARKET CONDITIONS'
     if not out['research_candidates']:out['none_reason']='No current research candidates pass the unchanged policy/data checks; inspect exclusions and expiry.'
     return out

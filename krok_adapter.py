@@ -167,7 +167,7 @@ def _fetch_body(req,deadline,meter=None,command=None):
             time.sleep(min(.5*2**attempt,max(0,deadline-time.monotonic())))
 
 
-def fetch(date,key,*,meter=None,command=None,country=None,venue=None,dated_card=False):
+def fetch(date,key,*,meter=None,command=None,country=None,venue=None,dated_card=False,observer=None):
     """Follow explicit pagination markers; never accept an incomplete meeting feed."""
     if not key:raise ValueError('Set KROK_API_KEY; never paste API keys into chat')
     params={'date':date,'race_type':'T','limit':50}
@@ -188,6 +188,9 @@ def fetch(date,key,*,meter=None,command=None,country=None,venue=None,dated_card=
         req=urllib.request.Request(url,headers={'X-API-Key':key,'Accept':'application/json','User-Agent':'Monty-V6/0.5'})
         body=_fetch_body(req,deadline,meter,command) if meter is not None else _fetch_body(req,deadline)
         if len(body)>20_000_000:raise ValueError('Response too large')
+        if observer is not None:
+            try:observer(body,urllib.parse.urlsplit(endpoint).path)
+            except Exception:pass  # Evidence failure must not trigger another provider call.
         payload=json.loads(body)
         if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
             raise ValueError('Invalid meeting feed page')

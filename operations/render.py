@@ -14,6 +14,7 @@ def render(view, *, archived=False, now=None):
     parts=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
       '<title>'+e(title)+'</title><style>body{background:white;color:#111;font:16px Arial;margin:0;padding:24px}main{max-width:760px;margin:auto;border-top:6px solid #b29446;padding-top:12px}h1{font-size:22px}h2{font-size:18px;color:#715917;margin-top:24px}table{width:100%;border-collapse:collapse}td{padding:6px 0;vertical-align:top}td:last-child{text-align:right;white-space:nowrap}p{line-height:1.5}textarea{box-sizing:border-box;width:100%;min-height:240px}section{border-bottom:1px solid #ded5bc;padding-bottom:12px}footer{color:#715917;margin-top:24px;font-weight:bold}</style><main>',
       '<h1>'+e(title)+'</h1><p>'+e(view['date'])+' · Australia/Brisbane</p><p><b>No qualified wagers — prediction and betting decisions are separate. Diagnostic rankings are not betting recommendations.</b></p>']
+    if view.get('privacy_notice'):parts.append('<p><b>'+e(view['privacy_notice'])+'</b></p>')
     if view['view']=='provisional':parts.append('<p><b>PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet</b></p>')
     if archived:
         parts.append('<p>ARCHIVED SNAPSHOT — check request freshness before use</p>')

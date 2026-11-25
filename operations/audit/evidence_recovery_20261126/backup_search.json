@@ -1,0 +1,8 @@
+{
+  "backup_captured_at": "2026-11-25T13:38:26.260189+00:00",
+  "requested_snapshot_captured_at": "2026-11-25T22:49:33.466304Z",
+  "backup_predates_snapshot": true,
+  "logical_snapshot_objects_examined": 3,
+  "matching_original_snapshots": [],
+  "provider_calls": 0
+}
