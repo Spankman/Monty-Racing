@@ -1,0 +1,54 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-25",
+  "run_id": "45519528731-integration-1",
+  "status": "COMPLETED_ASSESSMENTS",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-25/45519528731-integration-1/receipt.json",
+  "forecast_path": "runs/2026-11-25/45519528731-integration-1/forecast.json",
+  "forecast_sha256": "17181d71304708a6de9753959b0304bb9c50d72c80435ea1fbf50ea827601f39",
+  "generated_at": "2026-11-25T00:38:43.883479+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45519528731",
+  "captured_at": "2026-11-25T00:37:32.063368+00:00",
+  "valid_until": "2026-11-25T00:42:32.063368+00:00",
+  "models": {
+    "V6": {
+      "commit": "f31aa73943bfd3efc1d9cc783b528cb1a676601a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 28,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "PARTIAL",
+      "research_only": true,
+      "scored_races": 26,
+      "failed_races": 0,
+      "blocked_races": 2,
+      "expired_races": 0,
+      "delivery_status": "PARTIAL"
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "a71cc66cdd35def98972c9156d64053461890359ef9a5a74ca853855a6742a0c",
+  "delivery_manifest_path": "runs/2026-11-25/45519528731-integration-1/delivery-manifest.json",
+  "delivery_manifest_sha256": "e3a75ae51ee40cdeba5310b5fe76ce9015fc8c28759233c37e6c51940f2c84a0",
+  "request": {
+    "command": "RM6",
+    "version": "V6",
+    "view": "official",
+    "date": "2026-11-25",
+    "meeting": null,
+    "race": null,
+    "country": "AU",
+    "provisional_requested": false
+  },
+  "request_id": 214,
+  "request_status": "COMPLETED"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45519528731-integration-1",
+  "date": "2026-11-25",
+  "status": "COMPLETED_ASSESSMENTS",
+  "forecast_sha256": "17181d71304708a6de9753959b0304bb9c50d72c80435ea1fbf50ea827601f39",
+  "provider_snapshot_sha256": "f0335caea2bc2859266b320bf54076cd1593abbf36a5cdebfc2219361393a582",
+  "models": {
+    "V6": {
+      "commit": "f31aa73943bfd3efc1d9cc783b528cb1a676601a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 28,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "PARTIAL",
+      "research_only": true,
+      "scored_races": 26,
+      "failed_races": 0,
+      "blocked_races": 2,
+      "expired_races": 0,
+      "delivery_status": "PARTIAL"
+    }
+  },
+  "generated_at": "2026-11-25T00:38:43.883479+00:00",
+  "source_mode": "LIVE",
+  "processing_timings": {
+    "frozen_verification_seconds": 0.05220414499999748,
+    "provider_acquisition_seconds": 3.9100000037706195e-07,
+    "provider_supplied_by_caller": true,
+    "before_report_seconds": 29.656409080999993,
+    "forecast_write_seconds": 0.029614197000000786
+  },
+  "delivery_manifest_sha256": "e3a75ae51ee40cdeba5310b5fe76ce9015fc8c28759233c37e6c51940f2c84a0",
+  "qualifying_forecasts": 0,
+  "model_artifacts_unchanged": true
+}
