@@ -14,3 +14,20 @@ A separately designated current master handover was not located in the examined 
 The protocol review revisited the Benter logit combination and the Bolton–Chapman journal entry. The Australian West–Kazakov PLS full text could not be retrieved from the DOI during this check. The previous abstract-level record stands. Complete the relevant full methods review before claiming any replication. The 25 November historical study remains retrospective evidence, with insufficient support for an advantage over the market. No new experiment was run for this documentation update.
 
 Begin future sessions by checking the latest PR #234 and the relevant workstream head, then record their full SHAs and governing document versions. Review applicable literature, previous results and data constraints before implementing changes. Update the research register, Living Development Plan and workstream handover when closing the work. V6 stays frozen and official. V7 remains research-only pending independent validation and owner approval. This documentation update authorises no production, provider, betting, scheduling or billing change.
+
+## Shared baseline supplement — 26 November 2026
+
+This reconciliation reviewed PR234 `6b205a5cab7e79a237d9fd1903a203c72d1bf8f1`: AGENTS.md, Living Development Plan, Research Library, this baseline handover, README, Betting Policy, Selection Rules and operations guide. Its protocol already implements the latest owner directive. The earlier table remains historical review evidence, not a latest-workstream inventory.
+
+| Workstream | Exact reviewed ref | Status |
+| --- | --- | --- |
+| Governing documents | PR234 `6b205a5cab7e79a237d9fd1903a203c72d1bf8f1` | Mandatory protocol; additive evidence reconciliation only; unmerged |
+| Production | `623d46b449e46cfc5fa63b633c3f19b404bba41a` | Existing approved source; unchanged by this work |
+| Six-day PE trial | PR235 `84689048a374f2af824da77057623d20809f6baa` | Separate staged branch/automation; no change here; inspect actual latest receipts for status |
+| Roughie audit | PR241 `cd775dc07a0a716ecb47a6e4db934c5fb451a72a` | Exact-head CI green,200operational/158runner/13frozen tests; no production activation |
+
+The shared Research Library now records the reporting success, null/negative model comparisons and blocked reconstruction/fixed-win acceptance. [Workstream handover](https://github.com/Spankman/Monty-Racing/blob/cd775dc07a0a716ecb47a6e4db934c5fb451a72a/operations/audit/RUFFIE_AUDIT_2026-11-26.md). This documentation update performed no new experiment or academic replication.
+
+Missing material: separately designated master handover; applicable full methodologies where only abstracts/excerpts were accessible, including the unavailable Australian PLS full text; original236inputs for complete named runner tracing; earlier-fold records and authenticated fixed-win vectors for stronger historical claims. Identify the scope of each limitation and keep dependent claims pending; continue independent work that does not need it.
+
+All ChatGPT, Codex and Work sessions must inspect current shared documentation and their workstream, cite full SHAs/document versions, review applicable prior research/results, and reconcile new owner decisions before implementation. A saved index does not prove that every agent has read it, and no automatic cross-session notification is claimed. V6 stays official/frozen; V7 research-only. Preserve all integrity, betting, reporting, freshness and approval rules. No merge, deployment, spending, schedule or model changes authorised by this supplement.

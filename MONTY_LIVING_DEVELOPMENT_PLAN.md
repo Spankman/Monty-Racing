@@ -40,3 +40,14 @@ Research modules are non-blocking: include reliable pre-race variables in experi
 
 ## Delegated feature pruning — owner approval 25 November 2026
 ChatGPT, Work and Codex may independently remove or disable redundant, ineffective or unjustifiably costly predictive factors and research features in development candidates without seeking prior owner approval. Use proportionate evidence (existing tests, ablations, redundancy or documented cost/benefit); retain reproducible baseline and rollback, record rationale and uncertainty, and notify owner afterwards in the next handover with affected features, evidence and impact. Do not treat inconclusive evidence as proof of harm. This authority does not permit changing frozen V6 artifacts, saved baselines, betting rules, safety/data-integrity controls, production deployment, model promotion, billing or merging without existing approvals. No separate approval needed for individual research pruning decisions.
+
+## Shared baseline reconciliation — 26 November 2026
+
+- [x] Reviewed the mandatory protocol at PR234 `6b205a5cab7e79a237d9fd1903a203c72d1bf8f1`; retain its startup/completion rules for current and future development.
+- [x] Index completed issue240 workstream `cd775dc07a0a716ecb47a6e4db934c5fb451a72a` as `RUFFIES-240-20261126` in the shared Research Library, including null/negative and blocked findings.
+- [x] Update the shared baseline handover with governing, production, trial and audit refs.
+- [ ] Identify the separately designated master handover; the current baseline handover is an interim index, not an invented replacement.
+- [ ] Complete relevant full-method reviews and academic replications before dependent modelling claims; Australian PLS full text remains an explicit access gap.
+- [ ] Require genuinely later prospective improvement and owner approval before model/weight/threshold activation.
+
+PR241 carries an older copied plan plus its additive issue240 section; reconcile it with this newer shared PR234 register before any eventual merge, retaining the substantive audit findings. Both remain unmerged. Keep both test_ruffies and test_pe_trial when eventually integrating their parallel CI additions. The six-day PE trial is untouched. Explicit owner instructions, including the $4 fixed-win progression, supersede older unresolved-cutoff wording. No betting policy change is made here.
