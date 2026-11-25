@@ -14,6 +14,8 @@ def assess(version, inference_status, verified_field, verification_blockers, row
         raise ValueError('Unknown version')
     if inference_status == 'FAILED':
         return {'prediction': 'EXECUTION FAILED', 'decision': 'EXECUTION FAILED'}
+    if inference_status == 'EXPIRED':
+        return {'prediction': 'EXPIRED', 'decision': 'EXPIRED'}
     if inference_status != 'SCORED':
         return {'prediction': 'DATA BLOCKED', 'decision': 'DATA BLOCKED'}
     prediction = 'RESEARCH ONLY' if version == 'V7' else 'PROVISIONAL'
@@ -21,7 +23,11 @@ def assess(version, inference_status, verified_field, verification_blockers, row
               'betting_authorised': False, 'blockers': list(verification_blockers)}
     if result['blockers']:
         return result
-    numbers = {row['number'] for row in rows}
+    try:
+        numbers = {row['number'] for row in rows}
+    except (TypeError, KeyError):
+        result['blockers'].append('invalid_calibrated_market_field')
+        return result
     if not numbers or numbers != set(verified_field) or len(numbers) != len(rows):
         result['blockers'].append('incomplete_calibrated_market_field')
         return result
@@ -29,9 +35,13 @@ def assess(version, inference_status, verified_field, verification_blockers, row
     edges = {}
     for row in rows:
         number = row['number']
-        p_low, probability, p_high = row['probability_bounds']
-        floor, quote = row['price_floor'], row['fixed_win']
-        if (not all(isinstance(v, (float, int)) and isfinite(v)
+        try:
+            p_low, probability, p_high = row['probability_bounds']
+            floor, quote = row['price_floor'], row['fixed_win']
+        except (TypeError, ValueError, KeyError):
+            result['blockers'].append('invalid_calibration_or_executable_price')
+            return result
+        if (not all(type(v) in (float, int) and isfinite(v)
                     for v in (p_low, probability, p_high, floor, quote))
                 or not 0 <= p_low <= probability <= p_high <= 1
                 or not 1 < floor <= quote or quote != verified_field[number]):

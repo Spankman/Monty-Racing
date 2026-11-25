@@ -1,0 +1,59 @@
+# Australian live data validation and handover
+
+Baseline reviewed: draft [#226](https://github.com/Spankman/Monty-Racing/pull/226) at `7a64063c98c7bcdce45cb2475de3c940d16445a5`, stacked on [#225](https://github.com/Spankman/Monty-Racing/pull/225) and [#213](https://github.com/Spankman/Monty-Racing/pull/213). Keep the stack draft. The evidence does not yet justify production approval.
+
+## Market repair and current live evidence
+
+Recomputed the archived Geelong R8 and Launceston R6 books from their recorded price vectors. They sum to 95.9242% and 72.7464%, respectively. A normalized market-only model would have shown +4.2490% and +37.4638% arithmetic EV on every runner in those respective books. The arithmetic decomposition and quarantine are justified. Both archived books have zero source quote timestamps. [Incident replay](MARKET_INTEGRITY_REPLAY_2026-11-25.json)
+
+Ran an isolated Australian-only Actions workflow using the existing Krok connection and frozen checkpoints, with no production issue or results-branch publication. Independently checked the artifact ZIP against GitHub's SHA-256, three forecast/receipt hashes, two frozen diagnostic/receipt hashes and their pre-jump times. The diagnostic market baseline is normalized inverse price on the exact common runner field. [Actions run](https://github.com/Spankman/Monty-Racing/actions/runs/45559165191) · [Artifact](https://github.com/Spankman/Monty-Racing/actions/runs/45559165191/artifacts/14996653216)
+
+| Race | Evidence | Admission |
+| --- | --- | --- |
+| Ipswich R7 | V6, V7 and market baseline frozen 06:15:26 UTC before scheduled 06:33 UTC jump. Provider-attributed TAB book 126.2941%. | Blocked. No exact quote timestamps, verified final emergency or compatible as-of history. |
+| Geelong R8 | V6, V7 and market baseline frozen 06:15:27 UTC before scheduled 07:30 UTC jump. Provider-attributed TAB book 126.8852%. | Blocked. No exact quote timestamps, independent field reconciliation or compatible as-of history. |
+| Albany R7 | V6 scored from the captured data. Six bookmaker labels on the selected price vector; V7 blocked. | Blocked. A mixed-book market has no independent executable single-book verification. |
+
+Ipswich's Racing Queensland race page returned 200 from Actions and reported Good 4 turf, 1,200 m and 06:33 UTC. Good 4 corroborated the same provider capture and was newer than a prior Soft 5 observation. The authority PDF returned 200 in a separate workspace capture. A parser defect split a wrapped barrier/weight continuation into a false runner. The repaired parser produced 17 declarations. The full 13 provisionally non-scratched and four scratched rows matched the recorded provider by saddlecloth and normalized name. One non-scratched row was still marked as an emergency in the available authority evidence. The row match does not resolve its final status or validate its registered identity for historical joins. [Racing Queensland race](https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7)
+
+Both paired diagnostics used 16 of 55 frozen inputs. No new verified live history joined. No verified race entered the cohort, so no official settlement or prospective performance result was recorded. Later results cannot promote these diagnostics retroactively.
+
+## Data acquisition decision
+
+| Source | Evidence and appropriate use |
+| --- | --- |
+| Krok | Keep the existing credential as the AU discovery and primary provider feed during validation. Real pre-jump captures worked. The exact selected named offers in this sample had zero verified quote timestamps. Meter the current request load before switching to the 50-credit free tier. At one credit per shared daily card, 30–31 credits leave 19–20 monthly for extra calls. No paid tier was shown to resolve quote attestation or original historical definitions. |
+| Racing Queensland / Racing NSW | Start with one jurisdiction. A dated authoritative HTML/PDF and steward/result path provide primary field, scratches, going, jump and settlement evidence when the documents expressly resolve those facts. Obtain stable profile IDs, dated connections and final reserve status through a permitted route. The published PDF has use restrictions. Keep raw source bytes private and confirm reuse permission for any intended publication or commercial use. |
+| Independent bookmakers | Earlier TAB/Sportsbet access was unavailable. TABtouch robots returned 404 in both workspace and Actions; workspace VicBet and LetsBet robots returned 403. A follow-up hosted Actions probe returned HTTP 200 for both VicBet and LetsBet on the actual Ipswich R7 pages at 06:19 UTC. The race and fixed-win labels were visible. The probe did not attest exact offer timestamps or reconcile either book’s active price vector. These are leading candidates to request a permitted timestamped feed sample. [Follow-up Actions run](https://github.com/Spankman/Monty-Racing/actions/runs/45559644334) |
+| Other public sources | Next2Go returned 200 for the dated race in the workspace. Treat it as corroboration pending proof of independent price lineage, operator identity, full coverage and quote timestamp semantics. Do not treat a form site, quoted tip, or sportsbook affiliate as an independent operator. |
+| FormFav | Free form can be sampled for original field/context compatibility. Pro results and Premium real-time bookmaker odds have distinct roles. No usable configured credential was available to test coverage or independence here. Before purchasing, require a one-race sample with direct lineage, race and registered horse IDs, withdrawal status, exact timestamped win offers and licensed unattended access. Both feeds can share upstream data. |
+| Betfair and restored private data | Retain the verified frozen checkpoint and 16 pinned public months for validation. May and July remain quarantined. Exchange scheduled-off best-back is the original residual input. Official SP, book close and BSP are different. Use original compatible earlier fields, verified horse/jockey/trainer identity and condition vintage for history. |
+
+Lowest-cost viable path to test: use current Krok and published authority data, then obtain an authorised direct operator endpoint or a sample from a licensed independent price feed. Add paid data only if the same-race sample passes identity, completeness, quote-vintage and independence checks. No cost saving or completed dual source was verified. [Krok](https://krokodds.com.au/api-docs/racing) · [FormFav prices](https://formfav.com/docs/endpoints/prices) · [Racing Queensland Open Data](https://www.racingqueensland.com.au/about/reports-and-data/open-data)
+
+The order of historical recovery is the original V5 warm-up, pinned missing exchange files, registered horse crosswalk, then independent context such as dated track, distance, going, jockey and trainer. Record source hashes, availability and cutoff for each join. Same-day outcomes remain deferred as in the frozen builder. Report live coverage by runner, with unknown fields kept missing. [Historical feature and performance report](HISTORICAL_PERFORMANCE_2026-11-25.md)
+
+## Admission and approval
+
+The old prospective admission contract could admit a source-asserted race while the market was quarantined and compatible history was absent. It now requires a matching complete non-underround market vector, one bookmaker, source quote timestamps, fresh primary authority and operator provenance, and a compatible-history attestation bound to the scored input digest. It records explicit blockers and requires the model decision time to fall between capture and freeze. Settlement rechecks eligibility against recorded evidence and verifies the final result’s source role and digest. Callers still have to authenticate the source bytes and prove what the sources represent.
+
+The existing shadow win evaluator now returns EXPIRED distinctly and blocks malformed price/calibration records. It can test a genuine negative upper EV bound on fully supplied evidence. Positive lower EV remains provisional. Production activation remains blocked because there are no independently verified prospective calibration intervals and executable quote evidence. Model intelligence, market release, value qualification and owner wagering approval remain separate. No exotic dividend proxy can satisfy approval.
+
+## Prospective program
+
+1. Predeclare an AU jurisdiction, date range, eligible thoroughbred classes, snapshot cutoff and primary operator before seeing results. Aim first for one reconciled trial, then register all eligible races over a fixed calendar window. Log attempts, rejected races and reasons to measure coverage. NZ failures stay outside this AU scope.
+2. Preserve source bytes privately. Freeze exact input hashes, versions, probabilities, period, complete active field, signed book, quote vintage, qualification decisions and rejection reasons before jump. Use the same book for both models and market. Quarantine incomplete or underround books. Keep the five-minute freshness limit.
+3. Capture official final results as separate hashed records. Treat dead heats or late field changes as separately adjudicated cases. Publish paired race log loss versus market as the primary accuracy measure, plus Brier, strike, winner rank, reliability by odds band and day-clustered intervals. Report stake-weighted ROI with fees, deductions, executable quote and realistic availability. A claim of profitability requires uncertainty bounds that account for field and quote selection and demonstrate positive net returns on later data.
+4. Compare V6, V7 and market under the same predeclared rule. Report best bets and roughies separately. Simulate quinella, trifecta and first four only with official dividends, exact declared permutations and actual stake costs. Keep repeated race-day cases together in uncertainty estimates. Reserve a later non-overlapping window before validating any calibration or threshold change.
+5. Review frozen-artifact integrity and approval inputs with the owner before any release. Preserve existing commands, betting progression and ticket display. Production and rollout branches stay unmerged.
+
+## Copyable ChatGPT handover
+
+```text
+Monty Racing AU live validation. Draft PR #226, stacked on #225 and #213.
+V6 official. V7 research-only. No production thresholds, engine or expert changes.
+Actions run 45559165191 froze V6, V7 and market diagnostics for Ipswich R7 and Geelong R8 before jump. Hashes verified. Zero cohort admissions and zero settlements.
+Ipswich official and provider declarations matched 13 provisionally non-scratched and four scratched runners. One emergency was unresolved. The captured provider TAB offers had zero verified quote timestamps. Both engines still used 16/55 inputs.
+Keep DATA BLOCKED for production approval. Retain Krok provisionally, use one independently permitted AU authority and obtain a licensed timestamped operator sample. Recover registered identities and original as-of history before admission.
+Freeze common inputs and evidence before jump, settle with official hashes, and report paired performance against the market on a predeclared AU cohort. Preserve immutable forecasts and no-wager safeguards.
+```

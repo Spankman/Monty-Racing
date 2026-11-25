@@ -34,14 +34,61 @@ class IntegrationTests(unittest.TestCase):
         self.assertFalse(ops.projection(f,ops.command('RM6',self.day),self.now+timedelta(minutes=5))['races'][0]['result']['ordered_selections'])
         self.assertEqual([v for v,_ in self.calls],['V6'])
     def test_prejump_freeze_is_immutable_and_unverified_data_never_settles(self):
-        f=self.run_it();p=self.root/'prospective.json'
+        with patch.object(ops,'utcnow',return_value=self.now):
+            f=self.run_it()
+        p=self.root/'prospective.json'
         record=prospective.freeze(f,f['races'][0],{},p,self.now)
         self.assertFalse(record['cohort_admitted'])
         with self.assertRaises(FileExistsError):prospective.freeze(f,f['races'][0],{},p,self.now)
         with self.assertRaises(ValueError):prospective.settle(p,{},self.root/'settlement.json',self.now)
+    def verified_fixture(self):
+        runners = self.payload['data'][0]['races'][0]['runners']
+        for runner, odds in zip(runners, (2, 3, 4)):
+            runner['odds'][0]['win'] = odds
+        with patch.object(ops,'utcnow',return_value=self.now):
+            f=self.run_it()
+        r=f['races'][0]
+        rows = r['models']['V6']['ranked_runners']
+        r['market_integrity'].update(status='EVIDENCE_REVIEW_REQUIRED', warnings=[],
+                                     complete_price_vector=True, quote_timestamp_count=len(rows),
+                                     bookmakers=['Sportsbet'])
+        verification = dict(race_verified=True, fixed_win_verified=True, emergency_status_verified=True,
+                            compatible_history=dict(verified=True, crosswalk_sha256='b'*64, manifest_sha256='c'*64,
+                                                    shared_model_input_sha256=r['shared_model_input_sha256']),
+                            sources=[dict(source_url=url,date=f['date'],meeting=r['meeting'],race=r['race'],
+                                          observed_at=self.now.isoformat(),sha256='a'*64,status='CAPTURED',http_status=200)
+                                     for url in ['https://www.racingqueensland.com.au/fixture-only',
+                                                 'https://www.sportsbet.com.au/fixture-only']])
+        return f, r, verification
+
+    def test_quarantine_and_missing_history_block_admission_despite_source_assertions(self):
+        f, r, evidence = self.verified_fixture()
+        r['market_integrity']['status'] = 'QUARANTINED'
+        evidence['compatible_history']['shared_model_input_sha256'] = '0'*64
+        p = self.root/'blocked.json'
+        record = prospective.freeze(f, r, evidence, p, self.now)
+        self.assertFalse(record['cohort_admitted'])
+        self.assertIn('complete_current_nonquarantined_book_required', record['admission_blockers'])
+        self.assertIn('compatible_asof_history_attestation_required', record['admission_blockers'])
+
+    def test_same_race_market_assertion_cannot_replace_selected_quote(self):
+        f, r, evidence = self.verified_fixture()
+        r['market_integrity']['market_only_baseline'][0]['odds'] += .1
+        record = prospective.freeze(f, r, evidence, self.root/'wrong-price.json', self.now)
+        self.assertFalse(record['cohort_admitted'])
+        self.assertIn('market_audit_vector_mismatch_or_underround', record['admission_blockers'])
+
+    def test_freeze_rejects_a_future_model_decision(self):
+        f, r, evidence = self.verified_fixture()
+        r['models']['V7']['decision_at'] = (self.now+timedelta(seconds=1)).isoformat()
+        with self.assertRaisesRegex(ValueError, 'genuine pre-jump'):
+            prospective.freeze(f, r, evidence, self.root/'future.json', self.now)
+
     def test_fixture_verified_cohort_metrics_and_official_result_guard(self):
-        f=self.run_it();p=self.root/'verified.json';r=f['races'][0]
-        prospective.freeze(f,r,dict(race_verified=True,fixed_win_verified=True,emergency_status_verified=True,sources=[dict(source_url=url,date=f['date'],meeting=r['meeting'],race=r['race'],observed_at=self.now.isoformat(),sha256='a'*64,status='CAPTURED',http_status=200) for url in ['https://www.racingqueensland.com.au/fixture-only','https://www.sportsbet.com.au/fixture-only']]),p,self.now)
+        p=self.root/'verified.json'
+        f, r, evidence = self.verified_fixture()
+        record = prospective.freeze(f,r,evidence,p,self.now)
+        self.assertTrue(record['cohort_admitted'])
         result=dict(official=True,status='FINAL',date=f['date'],meeting=r['meeting'],race=r['race'],country=r['country'],
             active_runners={x['number']:x['horse'] for x in r['models']['V6']['ranked_runners']},winners=['1'],late_field_change=False,
             source_url='https://www.racingqueensland.com.au/fixture-only',source_sha256='a'*64,
@@ -140,6 +187,21 @@ class AuthorityUpdateTests(unittest.TestCase):
         states={r['number']:r['scratched'] for r in result['runners']}
         self.assertEqual(states,{'1':False,'2':True,'3':True,'4':False})
         self.assertTrue(result['emergency_status_verified'])
+
+    def test_wrapped_barrier_and_weight_does_not_split_runner(self):
+        from operations.public_sources import rq_declaration
+        from types import SimpleNamespace
+        html = (b'<h2>Ipswich 25 Nov 2026 4.33pm 1200m</h2><p>Good 4 Turf</p>'
+                b'<h3>Scratchings</h3><p>Nil</p><h3>Stewards Summary</h3>')
+        document = ('Ipswich Wednesday 25 November, 2026\n7 BENCHMARK HANDICAP\n1200 metres\n'
+                    '01 First(Trainer\nOne)\n10 62.5\nRider One\n'
+                    '02 Second(Trainer Two) 8 60.5\nRider Two\n'
+                    '\f03 (EM)Third (NZ)(Trainer\nThree)\n11 58.0\nRider Three\n')
+        with patch('subprocess.run', return_value=SimpleNamespace(stdout=document.encode())):
+            result = rq_declaration(html, b'%PDF', '2026-11-25', 'Ipswich', 7)
+        self.assertEqual([row['number'] for row in result['runners']], ['1', '2', '3'])
+        self.assertFalse(result['emergency_status_verified'])
+
 
 class SuspendedQuoteTests(PrimaryBookTests):
     def test_inactive_price_is_not_a_scratching(self):

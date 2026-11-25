@@ -127,7 +127,10 @@ def rq_declaration(body,pdf,day,meeting,race):
     block=tail[:end.start()] if end else tail
     if not re.search(r'\b'+str(facts['distance_m'])+r'\s+metres\b',block):raise ValueError('Authority PDF distance mismatch')
     rows=[]
-    for chunk in re.split(r'(?m)(?=^\s*\d{2}\s+)',block):
+    # pdftotext may place just the barrier and weight on a continuation line.
+    # A two-digit barrier followed by a weight is not a new saddlecloth.
+    runner_start = r'(?m)(?=^[ 	]*\d{2}[ 	]+(?!\d{2}(?:\.\d+)?[ 	]*$))'
+    for chunk in re.split(runner_start, block):
         flat=' '.join(chunk.split())
         match=re.match(r'^(\d{2})\s+(\(EM\))?\s*(.+?)\((?!(?:NZ|AUS|GB|IRE|FR|USA)\))[^()]+\)',flat)
         if match:rows.append(dict(number=str(int(match[1])),horse=match[3].strip(),scratched=False,emergency=bool(match[2])))

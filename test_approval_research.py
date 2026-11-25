@@ -24,3 +24,10 @@ class ApprovalResearchTests(unittest.TestCase):
         self.assertFalse(result['betting_authorised'])
         entries[0]['price_floor'] = 3.
         self.assertEqual(assess('V6', 'SCORED', prices, [], entries)['positive_lower_bound'], [])
+
+    def test_expiry_and_missing_bounds_never_become_no_bet(self):
+        rows = [dict(number=1, fixed_win=1.8), dict(number=2, fixed_win=1.8)]
+        self.assertEqual(assess('V6', 'EXPIRED', {}, [], [])['decision'], 'EXPIRED')
+        result = assess('V6', 'SCORED', {1: 1.8, 2: 1.8}, [], rows)
+        self.assertEqual(result['decision'], 'DATA BLOCKED')
+        self.assertIn('invalid_calibration_or_executable_price', result['blockers'])
