@@ -108,6 +108,59 @@ def rq_facts(body,day,meeting,race):
     return fields
 
 
+def rq_scratchings(body, race):
+    """Read the race-local withdrawal list without relying on surrounding buttons."""
+    page = BeautifulSoup(body, 'html.parser')
+    panels = page.select('[data-js-expandable="RaceDetailsScratchings"]')
+    if panels:
+        if len(panels) != 1:
+            raise ValueError('Authority scratching panel ambiguous')
+        panel = panels[0]
+        groups = panel.select('.c-race-scratchings__race')
+        matching = [group for group in groups
+                    if (number := group.select_one('.c-race-scratchings__race-number'))
+                    and number.get_text(strip=True) == str(int(race))]
+        if len(matching) != 1:
+            if not groups and re.fullmatch(r'(?:no scratchings|nil)\.?', panel.get_text(' ', strip=True), re.I):
+                return []
+            raise ValueError('Authority race scratching group unavailable or ambiguous')
+        horses = matching[0].select_one('.c-race-scratchings__horses')
+        if horses is None:
+            raise ValueError('Authority race scratching rows absent')
+        values = [node.get_text(' ', strip=True)
+                  for node in horses.select('.c-race-stratchings__horse, .c-race-scratchings__horse')]
+        if not values:
+            if re.fullmatch(r'(?:no scratchings|nil)\.?', horses.get_text(' ', strip=True), re.I):
+                return []
+            raise ValueError('Authority scratching status not explicit')
+        parsed = [re.fullmatch(r'(\d+)\.\s+(.+)', value) for value in values]
+        if not all(parsed):
+            raise ValueError('Authority scratching row invalid')
+        pairs = [(m[1], m[2]) for m in parsed]
+    else:
+        headings = [node for node in page.find_all(['h2', 'h3', 'h4'])
+                    if node.get_text(' ', strip=True).casefold() == 'scratchings']
+        if len(headings) != 1:
+            raise ValueError('Authority scratching section not available')
+        text = []
+        for node in headings[0].next_siblings:
+            if getattr(node, 'name', None) in ('h2', 'h3', 'h4'):
+                break
+            if hasattr(node, 'get_text'):
+                text.append(node.get_text(' ', strip=True))
+        section = ' '.join(' '.join(text).split())
+        if re.fullmatch(r'(?:no scratchings|nil)\.?', section, re.I):
+            return []
+        if not re.match(r'^\d+\.\s+', section):
+            raise ValueError('Authority scratching status not explicit')
+        pairs = re.findall(r'(\d+)\.\s+(.+?)(?=\s+\d+\.\s+|$)', section)
+    numbers = [str(int(number)) for number, _ in pairs]
+    if not numbers or '0' in numbers or len(numbers) != len(set(numbers)):
+        raise ValueError('Authority scratching identities absent or conflicting')
+    return [dict(number=number, horse=horse.strip(), scratched=True, emergency=False)
+            for number, (_, horse) in zip(numbers, pairs)]
+
+
 def rq_declaration(body,pdf,day,meeting,race):
     """Join the published authority field PDF and its explicit scratching section.
 
@@ -135,12 +188,7 @@ def rq_declaration(body,pdf,day,meeting,race):
         match=re.match(r'^(\d{2})\s+(\(EM\))?\s*(.+?)\((?!(?:NZ|AUS|GB|IRE|FR|USA)\))[^()]+\)',flat)
         if match:rows.append(dict(number=str(int(match[1])),horse=match[3].strip(),scratched=False,emergency=bool(match[2])))
         elif re.match(r'^\d{2}\s+',flat):raise ValueError('Authority numbered runner could not be parsed; field incomplete')
-    text=BeautifulSoup(body,'html.parser').get_text('\n',strip=True)
-    if 'Scratchings' not in text or 'Stewards Summary' not in text:raise ValueError('Authority scratching section not available')
-    section=text.rsplit('Scratchings',1)[1].split('Stewards Summary',1)[0]
-    flat=' '.join(section.split())
-    scratched=[dict(number=str(int(n)),horse=horse.strip(),scratched=True,emergency=False) for n,horse in re.findall(r'(\d+)\.\s+(.+?)(?=\s+\d+\.\s+|$)',flat)]
-    if not scratched and not re.search(r'no scratchings|nil',section,re.I):raise ValueError('Authority scratching status not explicit')
+    scratched = rq_scratchings(body, race)
     if len(rows)<2 or len({r['number'] for r in rows})!=len(rows):raise ValueError('Authority declared field incomplete or contradictory')
     declared={r['number']:r for r in rows}
     same_race_name=lambda s:' '.join(re.sub(r'\s*\((?:NZ|AUS|GB|IRE|FR|USA)\)\s*$','',s,flags=re.I).casefold().split())

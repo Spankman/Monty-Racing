@@ -1,0 +1,276 @@
+{
+  "date": "2026-11-25",
+  "venue": "Launceston",
+  "race": 6,
+  "bookmaker": "tab",
+  "credential_configured": {
+    "KROK_API_KEY": true,
+    "KROK_FREE_API_KEY": false,
+    "FORMFAV_API_KEY": false,
+    "PUNTERSEDGE_API_KEY": false
+  },
+  "scope": "Single AU race and bookmaker; two collection windows, not long-run SLA evidence",
+  "epochs": [
+    {
+      "comparison_at": "2026-11-25T07:18:55.557716+00:00",
+      "routes": {
+        "meetings": {
+          "status": 200,
+          "started_at": "2026-11-25T07:18:44.574656+00:00",
+          "received_at": "2026-11-25T07:18:47.129064+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            2108.792716,
+            2108.792716
+          ],
+          "consistent_sample_times": true
+        },
+        "dated": {
+          "status": 200,
+          "started_at": "2026-11-25T07:18:44.575394+00:00",
+          "received_at": "2026-11-25T07:18:47.084476+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            2108.792716,
+            2108.792716
+          ],
+          "consistent_sample_times": true
+        },
+        "flucs": {
+          "status": 200,
+          "x-credits-cost": 5,
+          "x-credits-remaining": 49403,
+          "x-ratelimit-limit": 500,
+          "x-ratelimit-remaining": 495,
+          "started_at": "2026-11-25T07:18:44.575979+00:00",
+          "received_at": "2026-11-25T07:18:49.128298+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            414.643716,
+            414.643716
+          ],
+          "consistent_sample_times": true
+        },
+        "history": {
+          "status": 200,
+          "x-credits-cost": 5,
+          "x-credits-remaining": 49408,
+          "retry-after": 20,
+          "x-ratelimit-limit": 500,
+          "x-ratelimit-remaining": 496,
+          "started_at": "2026-11-25T07:18:44.576776+00:00",
+          "received_at": "2026-11-25T07:18:55.557373+00:00",
+          "rows": 10,
+          "named_matches": 0,
+          "fresh": 0,
+          "age_range_s": null,
+          "consistent_sample_times": false
+        }
+      },
+      "against_meetings": {
+        "dated": {
+          "matched": 9,
+          "newer": 0,
+          "equal": 9,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 0.0,
+          "matched_second_age_range_s": [
+            2108.792716,
+            2108.792716
+          ],
+          "matched_second_fresh": 0
+        },
+        "flucs": {
+          "matched": 9,
+          "newer": 9,
+          "equal": 0,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 1694.149,
+          "matched_second_age_range_s": [
+            414.643716,
+            414.643716
+          ],
+          "matched_second_fresh": 0
+        },
+        "history": {
+          "matched": 0,
+          "newer": 0,
+          "equal": 0,
+          "older": 0,
+          "same_price": 0,
+          "max_newer_seconds": null,
+          "matched_second_age_range_s": null,
+          "matched_second_fresh": 0
+        }
+      },
+      "against_prior_same_route": {},
+      "provider_active_runners": 9
+    },
+    {
+      "comparison_at": "2026-11-25T07:20:15.337809+00:00",
+      "routes": {
+        "meetings": {
+          "status": 200,
+          "started_at": "2026-11-25T07:20:00.558850+00:00",
+          "received_at": "2026-11-25T07:20:11.391820+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            2188.572809,
+            2188.572809
+          ],
+          "consistent_sample_times": true
+        },
+        "dated": {
+          "status": 200,
+          "started_at": "2026-11-25T07:20:00.559419+00:00",
+          "received_at": "2026-11-25T07:20:15.326498+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            2188.572809,
+            2188.572809
+          ],
+          "consistent_sample_times": true
+        },
+        "flucs": {
+          "status": 200,
+          "x-credits-cost": 5,
+          "x-credits-remaining": 49393,
+          "x-ratelimit-limit": 500,
+          "x-ratelimit-remaining": 498,
+          "started_at": "2026-11-25T07:20:00.560024+00:00",
+          "received_at": "2026-11-25T07:20:01.088346+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            494.423809,
+            494.423809
+          ],
+          "consistent_sample_times": true
+        },
+        "history": {
+          "status": 200,
+          "x-credits-cost": 5,
+          "x-credits-remaining": 49393,
+          "x-ratelimit-limit": 500,
+          "x-ratelimit-remaining": 499,
+          "started_at": "2026-11-25T07:20:00.560709+00:00",
+          "received_at": "2026-11-25T07:20:01.290133+00:00",
+          "rows": 10,
+          "named_matches": 9,
+          "fresh": 0,
+          "age_range_s": [
+            494.423809,
+            494.423809
+          ],
+          "consistent_sample_times": true
+        }
+      },
+      "against_meetings": {
+        "dated": {
+          "matched": 9,
+          "newer": 0,
+          "equal": 9,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 0.0,
+          "matched_second_age_range_s": [
+            2188.572809,
+            2188.572809
+          ],
+          "matched_second_fresh": 0
+        },
+        "flucs": {
+          "matched": 9,
+          "newer": 9,
+          "equal": 0,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 1694.149,
+          "matched_second_age_range_s": [
+            494.423809,
+            494.423809
+          ],
+          "matched_second_fresh": 0
+        },
+        "history": {
+          "matched": 9,
+          "newer": 9,
+          "equal": 0,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 1694.149,
+          "matched_second_age_range_s": [
+            494.423809,
+            494.423809
+          ],
+          "matched_second_fresh": 0
+        }
+      },
+      "against_prior_same_route": {
+        "meetings": {
+          "matched": 9,
+          "newer": 0,
+          "equal": 9,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 0.0,
+          "matched_second_age_range_s": [
+            2188.572809,
+            2188.572809
+          ],
+          "matched_second_fresh": 0
+        },
+        "dated": {
+          "matched": 9,
+          "newer": 0,
+          "equal": 9,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 0.0,
+          "matched_second_age_range_s": [
+            2188.572809,
+            2188.572809
+          ],
+          "matched_second_fresh": 0
+        },
+        "flucs": {
+          "matched": 9,
+          "newer": 0,
+          "equal": 9,
+          "older": 0,
+          "same_price": 9,
+          "max_newer_seconds": 0.0,
+          "matched_second_age_range_s": [
+            494.423809,
+            494.423809
+          ],
+          "matched_second_fresh": 0
+        },
+        "history": {
+          "matched": 0,
+          "newer": 0,
+          "equal": 0,
+          "older": 0,
+          "same_price": 0,
+          "max_newer_seconds": null,
+          "matched_second_age_range_s": null,
+          "matched_second_fresh": 0
+        }
+      },
+      "provider_active_runners": 9
+    }
+  ]
+}

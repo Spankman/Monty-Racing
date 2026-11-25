@@ -1,0 +1,128 @@
+{
+  "1": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/1",
+      "started_at": "2026-11-25T07:19:45.825913+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:19:50 GMT",
+      "cache_age": null,
+      "sha256": "692cd8f0ffcaaa8bca14a2eebe3b0a1d950866b6b42e0b9ef75bbf265879cdd8",
+      "observed_at": "2026-11-25T07:19:50.491983+00:00",
+      "elapsed_seconds": 4.66609
+    },
+    "declarations": 13,
+    "scratchings": 5,
+    "emergency_status_verified": true,
+    "field_verified": true
+  },
+  "2": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/2",
+      "started_at": "2026-11-25T07:19:45.827416+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:19:50 GMT",
+      "cache_age": null,
+      "sha256": "cc6ef9b12cff24ab99a3d27ffaeb4ecccba9ef2d9ee1d0e91cfb4422571879e9",
+      "observed_at": "2026-11-25T07:19:50.684121+00:00",
+      "elapsed_seconds": 4.85672
+    },
+    "declarations": 11,
+    "scratchings": 3,
+    "emergency_status_verified": true,
+    "field_verified": true
+  },
+  "3": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/3",
+      "started_at": "2026-11-25T07:19:45.828048+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:19:50 GMT",
+      "cache_age": null,
+      "sha256": "12ce644e386e5529bf45f0a0872bb80bcefc63c89219678c17c12b65373535b3",
+      "observed_at": "2026-11-25T07:19:50.810286+00:00",
+      "elapsed_seconds": 4.982254
+    },
+    "declarations": 16,
+    "scratchings": 5,
+    "emergency_status_verified": false,
+    "field_verified": true
+  },
+  "4": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/4",
+      "started_at": "2026-11-25T07:19:51.112795+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:19:54 GMT",
+      "cache_age": null,
+      "sha256": "9aca2515a9535770a91ad0122a8d2660d6b126d71d67aba9dedeaa676964d96b",
+      "observed_at": "2026-11-25T07:19:54.734687+00:00",
+      "elapsed_seconds": 3.621905
+    },
+    "declarations": 10,
+    "scratchings": 2,
+    "emergency_status_verified": true,
+    "field_verified": true
+  },
+  "5": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/5",
+      "started_at": "2026-11-25T07:19:51.113969+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:19:54 GMT",
+      "cache_age": null,
+      "sha256": "b9de4861d3eaf4ce73e54db803e22bdbc3b32ce3abf06fffa2d3e35a8a0145f9",
+      "observed_at": "2026-11-25T07:19:54.781646+00:00",
+      "elapsed_seconds": 3.667691
+    },
+    "declarations": 18,
+    "scratchings": 5,
+    "emergency_status_verified": false,
+    "field_verified": true
+  },
+  "6": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/6",
+      "started_at": "2026-11-25T07:19:51.181829+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:19:54 GMT",
+      "cache_age": null,
+      "sha256": "cd744f1a07c0bc8d9c6c6f2402a0a0102193fd3320e0dc39c087e5f61920d97a",
+      "observed_at": "2026-11-25T07:19:54.685721+00:00",
+      "elapsed_seconds": 3.50391
+    },
+    "declarations": 16,
+    "scratchings": 5,
+    "emergency_status_verified": true,
+    "field_verified": true
+  },
+  "7": {
+    "source": {
+      "source": "Racing Queensland",
+      "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/20261125/race/7",
+      "started_at": "2026-11-25T07:17:07.225075+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 07:17:12 GMT",
+      "cache_age": null,
+      "sha256": "5c241a93f0ad7cf048b3a40c53afa97801b5b4c57386fadf8a95d1cae78f8fad",
+      "observed_at": "2026-11-25T07:17:12.984877+00:00",
+      "elapsed_seconds": 5.759822
+    },
+    "declarations": 17,
+    "scratchings": 4,
+    "emergency_status_verified": false,
+    "field_verified": true
+  }
+}
