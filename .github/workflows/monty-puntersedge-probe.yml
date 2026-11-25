@@ -1,0 +1,29 @@
+name: Monty bounded PuntersEdge comparison
+on:
+  pull_request:
+    types: [opened]
+    paths: ['.github/workflows/monty-puntersedge-probe.yml']
+permissions:
+  contents: read
+jobs:
+  comparison:
+    if: github.head_ref == 'integration/puntersedge-staging' && github.base_ref == 'audit/live-data-reliability' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - run: python operations/audit/puntersedge_probe.py
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-puntersedge-aggregate-evidence
+          path: operations_output/puntersedge-probe/public/

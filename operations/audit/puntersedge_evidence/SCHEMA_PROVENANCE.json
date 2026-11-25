@@ -1,0 +1,7 @@
+{
+  "url": "https://api.puntersedge.online/openapi.json",
+  "sha256": "6f27bc5670eebc1b37bfde5daf90064ece3687de9fbd1ab21b72434bd5c9ec69",
+  "paths": 98,
+  "operations": 112,
+  "restriction": "Public schema is not authenticated entitlement proof; no account-changing routes called"
+}
