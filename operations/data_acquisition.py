@@ -23,6 +23,7 @@ def record_usage(rows,url,status,headers,command,started):
 def usage_summary(rows):
     costs=[r['x-credits-cost'] for r in rows if r.get('credit_cost_known')]
     return dict(attempts=len(rows),measured_credits=sum(costs),unknown_cost_attempts=len(rows)-len(costs),
+                total_credits=sum(costs) if len(costs)==len(rows) else None,
                 remaining_balance_is_not_monty_usage=True)
 
 

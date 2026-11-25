@@ -1,0 +1,111 @@
+{
+  "kind": "Local verified source indexing, not new feature reconstruction",
+  "months": 16,
+  "races": 22499,
+  "runners": 216366,
+  "network_requests": 0,
+  "repeat_ingestion_created_new_data_blobs": false,
+  "excluded": [
+    "2026_05",
+    "2026_07"
+  ],
+  "live_features_added": 0,
+  "sources": [
+    {
+      "month": "2025_05",
+      "source_sha256": "2f22725f32f4f01e10b47dd0b2abd5e2edb688f5c90a673a883d1d4df58db576",
+      "retained_races": 1479,
+      "retained_runners": 14512
+    },
+    {
+      "month": "2025_06",
+      "source_sha256": "28506a24860054d2a6165efbec08099224fb680396f32820f732da1f815f5577",
+      "retained_races": 1411,
+      "retained_runners": 14322
+    },
+    {
+      "month": "2025_07",
+      "source_sha256": "3381369858fa4a7bc0e30cfda7c5c2c2d542f2ac08adfd82e5be3bd52a033ea4",
+      "retained_races": 1382,
+      "retained_runners": 13798
+    },
+    {
+      "month": "2025_08",
+      "source_sha256": "98ca69442ae85fa9eda9bba08a56640dc8bd71fa42b132e5904b3da2f48506ab",
+      "retained_races": 1420,
+      "retained_runners": 13749
+    },
+    {
+      "month": "2025_09",
+      "source_sha256": "a8bb67486193db792448d4f085c2d2e3903a74a1e237364854476ca80dc8c1a3",
+      "retained_races": 1283,
+      "retained_runners": 12308
+    },
+    {
+      "month": "2025_10",
+      "source_sha256": "c832455488722962367d4fe7abebce01fbaa49335aeac07478ad0028afa7c07a",
+      "retained_races": 1460,
+      "retained_runners": 13444
+    },
+    {
+      "month": "2025_11",
+      "source_sha256": "5558a1f40ae2a4c2aeba341c6bf4021e079ef90454ed3b4967e5b40d5468677c",
+      "retained_races": 1488,
+      "retained_runners": 14098
+    },
+    {
+      "month": "2025_12",
+      "source_sha256": "3c1fdf1d816d486e2dd75cbfb55629abe66a1d1114b57922d131ceff94f972d1",
+      "retained_races": 1442,
+      "retained_runners": 13839
+    },
+    {
+      "month": "2026_01",
+      "source_sha256": "c7a6bf081cec2ed381a8c84f88470ce014c8980fbbb414b8eafbc1660d76e0d0",
+      "retained_races": 1433,
+      "retained_runners": 13634
+    },
+    {
+      "month": "2026_02",
+      "source_sha256": "c3e6ad7b2b9ad279164a78e7888744a17c569fc0a09ff04fe315baaa9b485041",
+      "retained_races": 1314,
+      "retained_runners": 12280
+    },
+    {
+      "month": "2026_03",
+      "source_sha256": "71b60c4f1472cc32356e24bd08e0f9aabaedd92a984307b8779f66cd3f4ddd88",
+      "retained_races": 1377,
+      "retained_runners": 12942
+    },
+    {
+      "month": "2026_04",
+      "source_sha256": "41b5dac09e83d611d9cabb257f3577364ed5e9a3ae917ec088d330a776ba9e32",
+      "retained_races": 1498,
+      "retained_runners": 13970
+    },
+    {
+      "month": "2026_06",
+      "source_sha256": "2dd54c8192a3343682d4a58dc8009cb977ced248e3a964d576806b6f0b159657",
+      "retained_races": 1380,
+      "retained_runners": 13819
+    },
+    {
+      "month": "2026_08",
+      "source_sha256": "95924de75b45c12ae0287cd4f995de8473b70b3b3996c38cbebcbf4f3617ef7a",
+      "retained_races": 1382,
+      "retained_runners": 13294
+    },
+    {
+      "month": "2026_09",
+      "source_sha256": "0f617ead2a413a0b706b8070af299c7dfc2d9bd8ae46bc5955280a2f96f035f1",
+      "retained_races": 1275,
+      "retained_runners": 12302
+    },
+    {
+      "month": "2026_10",
+      "source_sha256": "e68c268a6872bc01ec88325c9eaa3a697ba4f2d48f439211e990a653c554402f",
+      "retained_races": 1475,
+      "retained_runners": 14055
+    }
+  ]
+}

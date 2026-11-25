@@ -59,6 +59,7 @@ class DataTests(unittest.TestCase):
             {'X-Credits-Cost':'1','X-Credits-Remaining':'900','Authorization':'never-log'},'RM6',time.monotonic())
         record_usage(rows,'https://krokodds.com.au/api/v1/racing/meetings',503,{},'RM7',time.monotonic())
         summary=usage_summary(rows);self.assertEqual(summary['measured_credits'],1);self.assertEqual(summary['unknown_cost_attempts'],1)
+        self.assertIsNone(summary['total_credits'])
         self.assertNotIn('never-log',json.dumps(rows))
 
     def test_dated_card_alias_keeps_strict_pagination_and_filters(self):
