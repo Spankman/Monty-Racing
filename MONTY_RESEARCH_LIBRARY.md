@@ -1,0 +1,17 @@
+# Monty research library — initial evidence register
+25 November 2026. Research only; no profitability claim or model promotion. Access status below reflects retrieved excerpts/abstracts, not exhaustive full-paper review.
+
+## Sources and actionable hypotheses
+- Benter (1994), https://gwern.net/doc/statistics/decision/1994-benter.pdf — PDF excerpts reviewed. Fit race-normalised probabilities proportional to exp(a log(p_form) + b log(p_market)); estimate combination on out-of-fold form predictions. Compare incremental log likelihood over market alone. His reported example shows expert consensus added much less than independent form, despite similar standalone performance. Test expert signals for incremental value, not popularity.
+- Bolton & Chapman (1986), https://doi.org/10.1287/mnsc.32.8.1040 — abstract reviewed; full PDF located at https://www.fsb.miamioh.edu/lij14/411_read_horse.pdf. Race-grouped multinomial logit and rank information; holdout evaluation.
+- West & Kazakov (2024), https://doi.org/10.5750/jpm.v18i1.2093 — abstract reviewed in current session. Australian partial least squares approach to correlated variables and class imbalance; reproduce methodology after full-text review. Reported returns are not independently validated.
+- Sung & Johnson, https://doi.org/10.5750/jpm.v1i1.419 — abstract reviewed. Compare one-stage and two-stage conditional logit.
+- Lessmann, Sung & Johnson, https://doi.org/10.5750/jpm.v1i3.427 — abstract/PDF excerpts reviewed. Evaluate top-rank metrics rather than treating every finishing position equally.
+- Lessmann, Sung & Johnson (2010), https://doi.org/10.1016/j.ijforecast.2009.12.013 — abstract reviewed. Compare race-aware random forests and conditional logit; model relative opponent strength.
+- Outstanding: locate and verify Silverman/Suchard regularised conditional logit and Sugiura 2026 feature and uncertainty studies; complete full-text reads of all above, noting access limitations. No paid access without approval.
+
+## Research-first workflow
+Before coding, inventory existing Monty features and methods; search literature and licensed reusable libraries; record overlap, implementation/licence suitability and incremental hypothesis. Do not copy unlicensed code or redistribute papers. Reuse shared datasets and automated evaluation, and stop weak approaches early.
+Benchmark ladder: uniform, margin-normalised market at identical decision timestamp, existing V6/V7, race-grouped regularised logit, Benter two-stage, PLS, then more complex race-aware ranking models only if justified. Compare adjusted speed, hidden form, recent trainer/jockey performance with shrinkage, feature redundancy, uncertainty, pedigree, gear, bias and trainer intent via ablations.
+Use chronological nested validation grouped by race, identical eligible fields, untouched final holdout and frozen prospective paper forecasts. Record log loss, Brier, calibration by odds band, top-k ranking, realistic net ROI with deductions and commissions, uncertainty intervals clustered by meeting/day, drawdown, sample size and closing-price comparison (diagnostic only). Closing odds must not leak into earlier forecasts. Test rank/exotic probabilities separately and enforce coherent race probabilities. Account for multiple comparisons and selection bias; publish negative results.
+Research must not block live operations. V6 official/frozen, V7 research-only. No subscriptions, merge, deployment, wagering or promotion without owner approval.
