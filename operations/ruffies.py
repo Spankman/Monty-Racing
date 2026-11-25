@@ -52,6 +52,9 @@ def audit(race,model,version,now):
         if version=='V7' and type(p) in (int,float) and p<.06:reasons.append('existing_V7_probability_floor_6pct')
         if not row.get('bookmaker'):reasons.append('named_bookmaker_unverified')
         quotes=row.get('quote_timestamps') or []
+        basis=row.get('quote_time_basis')
+        if basis not in ('KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE','PUNTERSEDGE_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE'):
+            reasons.append('offer_observation_basis_unverified');quotes=[]
         quoted=None;expires=None
         try:
             times=[timestamp(q) for q in quotes]

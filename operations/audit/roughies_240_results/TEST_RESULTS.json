@@ -1,7 +1,7 @@
 {
   "operational": {
-    "tests": 199,
-    "seconds": 1.567,
+    "tests": 200,
+    "seconds": 1.535,
     "exit_code": 0
   },
   "runner": {
@@ -18,7 +18,7 @@
     "replayed_races": 1787,
     "maximum_probability_difference": 1.6653345369377348e-16
   },
-  "new_ruffie_tests": 17,
+  "new_ruffie_tests": 18,
   "live_credit_consumption": 0,
   "offline_fixtures_are_not_live_acceptance": true
 }

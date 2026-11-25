@@ -11,7 +11,7 @@ class Ruffies(unittest.TestCase):
     def setUp(self):
         self.now=datetime(2026,11,26,1,tzinfo=timezone.utc)
         self.race=dict(meeting='Synthetic Track',race='1',captured_at=self.now.isoformat(),scheduled_start=(self.now+timedelta(minutes=10)).isoformat(),data_completeness=dict(active_runners=4))
-        rows=[dict(number=str(i),horse='TEST RUNNER '+str(i),odds=o,probability=p,bookmaker='TAB',quote_timestamps=[self.now.isoformat()]) for i,(o,p) in enumerate([(2,.45),(3,.3),(5,.11),(10,.14)],1)]
+        rows=[dict(number=str(i),horse='TEST RUNNER '+str(i),odds=o,probability=p,bookmaker='TAB',quote_timestamps=[self.now.isoformat()],quote_time_basis='KROK_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE') for i,(o,p) in enumerate([(2,.45),(3,.3),(5,.11),(10,.14)],1)]
         self.model=ops.selection(rows,'V6');self.model.update(status='SCORED',model_version='V6',no_bet_reasons=['independent_verification_missing'],input_evidence=dict(historical_form_verified=False,active_features=43,fully_observed_active_features=12))
         market=analyze(rows,expected_active=4,captured_at=self.race['captured_at'],now=self.now,context=dict(active_identities=[[r['number'],r['horse']] for r in rows]))
         market_attach(self.model,market)
@@ -131,4 +131,10 @@ class Ruffies(unittest.TestCase):
         for r in model['ranked_runners']:r['quote_timestamps']=[(self.now+timedelta(seconds=1)).isoformat()]
         row=audit(self.race,model,'V6',self.now)['rows'][0]
         self.assertFalse(row['research_candidate']);self.assertIn('future_offer_timestamp',row['reasons'])
+    def test_recent_price_change_is_not_a_provider_observation(self):
+        model=deepcopy(self.model)
+        for row in model['ranked_runners']:row['quote_time_basis']='OFFER_REPORTED_TIME_UNVERIFIED'
+        row=audit(self.race,model,'V6',self.now)['rows'][0]
+        self.assertFalse(row['research_candidate']);self.assertIsNone(row['price_observed_at'])
+        self.assertIn('offer_observation_basis_unverified',row['reasons'])
 if __name__=='__main__':unittest.main()

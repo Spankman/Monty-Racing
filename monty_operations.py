@@ -435,6 +435,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 attach(model,market_audit)
                 for row in model.get('ranked_runners',[]):
                     row['quote_timestamps']=evidence.get(row['number'],{}).get('quote_timestamps',[])
+                    row['quote_time_basis']=evidence.get(row['number'],{}).get('quote_time_basis')
                 from operations.ruffies import attach as attach_ruffies
                 attach_ruffies(record,model,version,utcnow())
                 model['quoted_at']=None  # Capture time does not establish upstream offer age.
