@@ -1,0 +1,67 @@
+{
+  "label": "PRETRIAL PUBLIC-SOURCE PREFLIGHT, not a required relative capture or current forecast",
+  "race": {
+    "date": "2026-11-26",
+    "race_id": "88486ae8-7602-4651-8025-8d4fd7521b2a",
+    "venue": "Rockhampton",
+    "race_number": 2,
+    "start_time": "2026-11-26T04:20:00Z",
+    "state": "QLD",
+    "meeting_class": "provincial",
+    "rq_code": "rock",
+    "weekday": "Thursday",
+    "country": "AU",
+    "category": "horse"
+  },
+  "authority": {
+    "primary_authority": "Racing Queensland",
+    "verified": false,
+    "sources": [
+      {
+        "source": "Racing Queensland",
+        "source_url": "https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/rock/20261126/race/2",
+        "started_at": "2026-11-25T18:43:44.926726+00:00",
+        "status": "CAPTURED",
+        "http_status": 200,
+        "response_date": "Wed, 25 Nov 2026 18:43:45 GMT",
+        "cache_age": null,
+        "sha256": "210487b5e8b8cdec87d8e892efd5bedb68974d6d81d960c36027a8a079c6acb6",
+        "observed_at": "2026-11-25T18:43:46.242709+00:00",
+        "elapsed_seconds": 1.316
+      },
+      {
+        "source": "Racing Queensland",
+        "source_url": "https://www.racingqueensland.com.au/RacingFile.ashx?path=/ThoroughbredMeetingFiles/rfd_ROCK_20261126.pdf&v=639312077374480305",
+        "started_at": "2026-11-25T18:43:46.288683+00:00",
+        "status": "CAPTURED",
+        "http_status": 200,
+        "response_date": "Wed, 25 Nov 2026 18:43:46 GMT",
+        "cache_age": null,
+        "sha256": "1a0d5cb39ab559d5a6e2262f5827bdb960a2198f21c94979829fdd87807c3e35",
+        "observed_at": "2026-11-25T18:43:46.614636+00:00",
+        "elapsed_seconds": 0.325966
+      }
+    ],
+    "blocker": "Authority scratching section not available"
+  },
+  "field_reconciled_against_archived_preregistration_card": false,
+  "direct_tab": [
+    {
+      "source": "TAB",
+      "source_url": "https://www.tab.com.au/racing/2026-11-26/ROCKHAMPTON/ROC/R/2",
+      "started_at": "2026-11-25T18:43:46.808908+00:00",
+      "status": "CAPTURED",
+      "http_status": 200,
+      "response_date": "Wed, 25 Nov 2026 18:43:47 GMT",
+      "cache_age": null,
+      "sha256": "c5eaf38d065111d33b05672fb8df840decfa6f41d3657854243d286ca7442bdc",
+      "observed_at": "2026-11-25T18:43:47.567096+00:00",
+      "elapsed_seconds": 0.758203,
+      "parse_evidence": {
+        "full_field_fixed_win_prices": false,
+        "app_shell_only": true,
+        "runner_data_markers": 0
+      }
+    }
+  ]
+}

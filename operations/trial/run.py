@@ -26,6 +26,7 @@ def load(path):return json.loads(Path(path).read_text())
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def safe_error(exc):return str(exc) if isinstance(exc,ProviderError) else type(exc).__name__
 def guard():
+    if os.getenv('GITHUB_REPOSITORY')!='Spankman/Monty-Racing':raise ValueError('Owner repository required')
     if os.getenv('GITHUB_REF_NAME')!='trial/puntersedge-acceptance-20261126':raise ValueError('Trial staging branch required')
     if os.getenv('GITHUB_EVENT_NAME')!='push':raise ValueError('Only staged marker pushes permitted')
 def reserve(client,phase):
@@ -41,10 +42,10 @@ def lineage(day,phase):
         betting_authorised=False,production_changed=False)
 def finish(public,private,entry,client):
     if client:
-        entry.update(request_usage=client.usage,response_evidence=client.responses,usage=usage_summary(client.usage),
-                     reserved_credits=client.reserved)
         try:entry['usage_after']=safe_usage(client.get('/v1/usage',command='PE_TRIAL_USAGE'))
         except Exception as exc:entry['usage_after_error']=safe_error(exc)
+        entry.update(request_usage=client.usage,response_evidence=client.responses,usage=usage_summary(client.usage),
+                     reserved_credits=client.reserved)
         a=entry.get('usage_before',{}).get('credits_used');b=entry.get('usage_after',{}).get('credits_used')
         entry['account_counter_delta']=b-a if type(a) is type(b) is int and b>=a else None
         entry['account_delta_attribution']='Account-wide; concurrent production calls may contribute; endpoint headers separately recorded'
@@ -53,6 +54,37 @@ def finish(public,private,entry,client):
     save(public/'receipt.json',entry)
     (public/'receipt.sha256').write_text(sha(public/'receipt.json')+'  receipt.json\n')
     print(json.dumps({k:entry.get(k) for k in ('phase','status','workflow_url','blocker','reserved_credits')}))
+
+def market_summaries(values,expected,at,collector):
+    from operations.market_integrity import analyze
+    result={}
+    for book in sorted({k[2] for k in values}):
+        rows=[dict(number=n,horse=name,odds=v['price'],bookmaker=book,
+            quote_timestamps=[v['clocks']['observation_at']] if v['clocks'].get('observation_at') else [],
+            quote_time_basis=collector+'_PROVIDER_OBSERVATION_NOT_BOOKMAKER_UPDATE')
+            for (n,name,b),v in values.items() if b==book]
+        audit=analyze(rows,expected_active=len(expected),captured_at=at.isoformat(),now=at,
+                      context=dict(active_identities=expected))
+        audit.pop('market_only_baseline',None)  # Runner prices/distribution private.
+        result[book]=audit
+    return result
+
+def history_inventory(form,received):
+    rows=[r for horse in form.get('runners',[]) for r in horse.get('runs',[])]
+    valid=[];rejected=0
+    for row in rows:
+        try:
+            # Exclude same-day outcomes even when an exact race clock is present.
+            date=str(row['date'])[:10]
+            if date>=received.astimezone(TZ).date().isoformat():raise ValueError('same-day/future')
+            if row.get('start_time') and stamp(row['start_time'])>=received:raise ValueError('future clock')
+            datetime.strptime(date,'%Y-%m-%d');valid.append(row)
+        except (ValueError,KeyError,TypeError):rejected+=1
+    try:future_asof=stamp(form['form_as_at'])>received
+    except (ValueError,TypeError,KeyError):future_asof=None
+    return dict(candidate_strictly_prior_day_rows=len(valid),excluded_same_day_future_or_invalid_rows=rejected,
+                declared_form_as_at_after_capture=future_asof,verified_lifetime_identity=False,
+                feature_activation=False,limitation='Provider form_as_at may denote scheduled race cutoff; not treated as observation time or historical availability proof')
 
 def plan(day):
     public=ROOT/'public/plan';private=ROOT/'private/plan';public.mkdir(parents=True);private.mkdir(parents=True)
@@ -75,6 +107,7 @@ def plan(day):
             entry['historical_form'].append(dict(race_id=race['race_id'],source_sha256=digest(form),
                 runners=form.get('runners_total'),runners_with_runs=form.get('runners_with_runs'),
                 past_runs=sum(len(r.get('runs') or []) for r in form.get('runners',[])),
+                temporal_inventory=history_inventory(form,now()),
                 form_as_at=form.get('form_as_at'),activated_features=False,
                 limitation='Candidate history only; no national identity crosswalk or original residual reconstruction attested'))
     except Exception as exc:entry.update(status='FAILED',blocker=safe_error(exc))
@@ -94,7 +127,7 @@ def authority(race,folder):
             if not pdf:raise ValueError('Authority PDF unavailable')
             facts=rq_declaration(body,pdf,race['date'],race['venue'],race['race_number'])
             result.update(facts=facts,verified=facts['field_verified'] and facts['emergency_status_verified'])
-        except Exception as exc:result['blocker']=safe_error(exc)
+        except Exception as exc:result['blocker']=str(exc) if isinstance(exc,ValueError) else safe_error(exc)
     return result
 
 def reconcile_authority(evidence,target):
@@ -118,6 +151,8 @@ def direct(target,folder,denied,minutes):
         # bounded later retry at T-2; 401/403/challenges stop that host all day.
         if minutes not in (60,2):continue
         meta,body=capture(url,folder);meta['race_parse_verified']=False
+        if body and parts.hostname=='www.tab.com.au':
+            meta['parse_blocker']='TAB public HTML is not attested to contain an executable full-field fixed-win vector; HTTP200 alone is insufficient'
         if meta.get('http_status') in (401,403) or meta.get('status')=='ACCESS_CHALLENGE':denied.add(parts.hostname)
         if body and parts.hostname=='www.sportsbet.com.au':
             try:
@@ -126,6 +161,26 @@ def direct(target,folder,denied,minutes):
             except Exception as exc:meta['parse_blocker']=safe_error(exc)
         result.append(meta)
     return result
+
+def acceptance_inventory(value,target,at):
+    candidates=[r for m in value.get('meetings',[]) if norm(m.get('venue'))==norm(target['venue'])
+        for r in m.get('races',[]) if r.get('race_id')==target['race_id'] and r.get('race_number')==target['race_number']]
+    if value.get('date')!=stamp(target['start_time']).astimezone(TZ).date().isoformat() or len(candidates)!=1:
+        return dict(reconciled=False,blocker='Exact acceptance date/venue/race ID unavailable',independent=False)
+    declared=candidates[0];rows=declared.get('runners') or []
+    expected={str(r['number']):(norm(r['runner_name']),r.get('scratched')) for r in rows}
+    actual={str(r['number']):(norm(r['name']),False) for r in target['runners']}
+    actual.update({str(r['number']):(norm(r['name']),True) for r in target.get('scratchings',[])})
+    try:age=(at-stamp(value['as_of'])).total_seconds()
+    except (ValueError,TypeError,KeyError):age=None
+    return dict(reconciled=bool(expected) and len(expected)==len(rows) and expected==actual,
+        independent=False,acceptance_as_of=value.get('as_of'),acceptance_age_seconds=age,
+        declared_runners=len(rows),live_declared_runners=len(actual),
+        missing_live_declarations=len(set(expected)-set(actual)),extra_live_declarations=len(set(actual)-set(expected)),
+        contradictory_identity_or_scratching_count=sum(expected[n]!=actual[n] for n in set(expected)&set(actual)),
+        unresolved_emergencies=sum(r.get('emergency') is True and r.get('scratched') is not True for r in rows),
+        provider_runner_set_status=declared.get('runner_set_status'),provider_missing_rows=len(declared.get('missing_runners') or []),
+        limitation='Baseline declaration cache; current live quotes/SCR inspected each point; not independent final field/emergency approval')
 
 def exact_target(card,race):
     targets=[r for r in card if r.get('race_id')==race['race_id'] and r.get('country')=='AU' and r.get('category')=='horse'
@@ -149,29 +204,42 @@ def point(day,index,plan_path):
         if late>protocol()['capture_start_lateness_seconds']:entry['status']='MISSED_WINDOW';return entry
         client=Client(budget=protocol()['daily_capture_credit_cap']-state['reserved'])
         entry['usage_before']=reserve(client,'capture');entry['acquisition_started_at']=now().isoformat()
+        entry['pair_request_start_delay_seconds']=(now()-scheduled).total_seconds()
+        if entry['pair_request_start_delay_seconds']>protocol()['capture_start_lateness_seconds']:
+            entry['status']='MISSED_WINDOW';return entry
         if state['krok_requests']>=protocol()['krok_daily_request_cap']:raise ProviderError('Krok daily request cap reached')
         def krok():
-            if not os.getenv('KROK_API_KEY'):return dict(error='Krok credential unavailable'),None
-            if state.get('krok_remaining',1000000)<protocol()['krok_operational_reserve']+10:return dict(error='Krok reserve stop'),None
+            if not os.getenv('KROK_API_KEY'):return dict(error='Krok credential unavailable',attempted=False),None
+            if state['krok_requests'] and 'krok_remaining' not in state:return dict(error='Krok remaining allowance unverified; stop after single probe',attempted=False),None
+            if state.get('krok_remaining',1000000)<protocol()['krok_operational_reserve']+10:return dict(error='Krok reserve stop',attempted=False),None
             begin=time.monotonic();meta,payload=krok_request('https://krokodds.com.au','/api/v1/racing/meetings',os.environ['KROK_API_KEY'],
                 dict(date=day,country='AU',race_type='T',venue=race['venue'],limit=50))
-            meta['elapsed_seconds']=time.monotonic()-begin;return meta,payload
+            meta.update(elapsed_seconds=time.monotonic()-begin,attempted=True);return meta,payload
         with ThreadPoolExecutor(max_workers=3) as pool:
             pe_future=pool.submit(client.get,'/v1/racing/next-to-go',dict(num_races=20,categories='horse',country='AU',venue=race['venue'],include_unresolved='true'),command='PE_TRIAL_PAIR')
             k_future=pool.submit(krok);a_future=pool.submit(authority,race,private/'authority')
             card=pe_future.result();pe_received=now();km,kpayload=k_future.result();a=a_future.result()
-        state['krok_requests']+=int(km.get('status') is not None)
+        state['krok_requests']+=int(km.get('attempted',False))
         if km.get('x-credits-remaining') is not None:state['krok_remaining']=km['x-credits-remaining']
         entry.update(acquisition_finished_at=now().isoformat(),pe_received_at=pe_received.isoformat(),krok=km)
-        target=exact_target(card,race);save(private/'puntersedge.json',card);save(private/'krok.json',kpayload);save(private/'authority.json',a)
+        target=exact_target(card,race)
+        cached=state.setdefault('acceptances',{})
+        if race['venue'] not in cached:
+            cached[race['venue']]=client.get('/v1/racing/acceptances',dict(date=day,venue=race['venue']),command='PE_TRIAL_FIELD_BASELINE')
+        save(private/'acceptance-baseline.json',cached[race['venue']])
+        entry['acceptance_reconciliation']=acceptance_inventory(cached[race['venue']],target,pe_received)
+        save(private/'puntersedge.json',card);save(private/'krok.json',kpayload);save(private/'authority.json',a)
         entry['authority']=dict(verified=a.get('verified',False),race_field_reconciled=reconcile_authority(a,target),
                                blocker=a.get('blocker'),sources=a['sources'])
         pv,_,_=observe(target,'PuntersEdge');entry['puntersedge_prices']=summarize(pv,pe_received)
+        expected=[[str(r['number']),norm(r['name'])] for r in target['runners']]
+        entry['puntersedge_markets']=market_summaries(pv,expected,pe_received,'PUNTERSEDGE')
         matches=[r for m in (kpayload or {}).get('data',[]) if norm(m.get('venue'))==norm(race['venue']) and m.get('country')=='AU' and m.get('type')=='T' and str(m.get('date',''))[:10]==day
             for r in m.get('races',[]) if r.get('number')==race['race_number'] and stamp(r['jump_time'])==stamp(race['start_time'])]
         entry['krok_pagination_complete']=(kpayload or {}).get('meta',{}).get('has_more') is False
         if len(matches)==1:
             kv,_,_=observe(matches[0],'Krok');entry['comparison']=compare(pv,kv,pe_received)
+            entry['krok_markets']=market_summaries(kv,expected,pe_received,'KROK')
         else:entry['comparison_blocker']='Exact Krok same-race unavailable; no name-only/race substitution'
         denied=set(state['denied_hosts']);entry['direct_bookmakers']=direct(target,private/'direct',denied,minutes);state['denied_hosts']=sorted(denied)
         import monty_operations as ops
@@ -199,7 +267,7 @@ def point(day,index,plan_path):
         entry['collector_independence_established']=False
     except Exception as exc:entry.update(status='DATA_BLOCKED' if isinstance(exc,ProviderError) else 'EXECUTION_FAILED',blocker=safe_error(exc))
     finally:
-        if client:state['reserved']+=client.reserved
+        if client:state['reserved']+=max(client.reserved,sum(x.get('x-credits-cost',0) for x in client.usage))
         state_path.parent.mkdir(parents=True,exist_ok=True);state_path.write_text(json.dumps(state))
         finish(public,private,entry,client)
     return entry
@@ -227,5 +295,5 @@ def main():
     if args.mode=='plan':result=plan(day)
     elif args.mode=='capture':result=point(day,args.index,plan_path)
     else:result=results(day,plan_path)
-    if result['status']=='FAILED':raise SystemExit(1)
+    if result['status'] in ('FAILED','EXECUTION_FAILED'):raise SystemExit(1)
 if __name__=='__main__':main()

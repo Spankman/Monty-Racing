@@ -1,0 +1,24 @@
+{
+  "operational": {
+    "tests": 198,
+    "seconds": 1.766,
+    "exit_code": 0
+  },
+  "runner": {
+    "tests": 158,
+    "seconds": 1.237,
+    "exit_code": 0
+  },
+  "frozen": {
+    "tests": 13,
+    "exit_code": 0,
+    "replay": {
+      "runners": 17987,
+      "races": 1787,
+      "max_probability_difference": 1.6653345369377348e-16,
+      "refitted": false
+    },
+    "artifact_hashes": 55
+  },
+  "simulation_notice": "Trial unit tests use explicit synthetic inputs/mocks; no fixtures counted as genuine live captures. Frozen replay is historical verification."
+}
