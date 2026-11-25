@@ -153,6 +153,7 @@ def policy_metrics(data, predictions):
                 'all_runners': band, 'point_positive_6pct': band & book & (p >= .06) & (p*odds > 1+1e-12),
                 'point_positive_3pct': band & book & (p >= .03) & (p*odds > 1+1e-12),
                 'point_positive_no_floor': band & book & (p*odds > 1+1e-12),
+                'positive_net_ev': calibration,
                 'commission_and_2pct_price_haircut': band & book & (p*adverse > 1+1e-12),
                 'prior_band_lower_bound_at_haircut': calibration & (p*min(1, lower or 0)*adverse > 1+1e-12),
             }
@@ -170,6 +171,31 @@ def policy_metrics(data, predictions):
                                   adverse_roi=float((wins*adverse-1)[subset].mean()))
                 observations.append(result)
     return observations
+
+
+def archive_price_band_metrics(data, predictions):
+    odds = data.BEST_AVAIL_BACK_AT_SCHEDULED_OFF.to_numpy()
+    wins = data.y.to_numpy()
+    gross = 1+.95*(odds-1)
+    actual = wins*gross-1
+    book = pd.Series(1/odds).groupby(data.WIN_MARKET_ID).transform('sum').to_numpy() >= 1-1e-12
+    boot = DayBootstrap(data.date)
+    output = []
+    for name, p in predictions.items():
+        for lo, hi in BANDS:
+            band = (odds >= lo) & (odds < hi)
+            edge = p*gross-1
+            for sample, mask in (('all_runners', band), ('positive_net_ev', band & book & (edge > 1e-12))):
+                row = dict(model=name, band_floor=lo, sample=sample, runners=int(mask.sum()))
+                if mask.any():
+                    row.update(wins=int(wins[mask].sum()), strike=float(wins[mask].mean()),
+                               calibration_gap=float((wins-p)[mask].mean()),
+                               calibration_gap_ci=boot.interval(mask, wins-p),
+                               runner_brier=float(np.square(p-wins)[mask].mean()),
+                               expected_ev=float(edge[mask].mean()), exchange_roi=float(actual[mask].mean()),
+                               roi_ci=boot.interval(mask, actual))
+                output.append(row)
+    return output
 
 
 def main():
@@ -196,6 +222,8 @@ def main():
     active_v6 = [names.index(n) for n in active_v6[:len(active_v6)//2]]
     raw_v7 = json.loads((a.v7/'v7/artifacts/fold_3_model.json').read_text())
     active_v7 = np.asarray(raw_v7['active'], bool)
+    historic_predictions = {'market': full_p['market'], 'v6_minimal': sparse_p['v6'], 'v7_minimal': sparse_p['v7'],
+                             'v6_original_inputs': full_p['v6'], 'v7_original_inputs': full_p['v7']}
     report = dict(verified_v6_artifacts=verified, v7_commit=V7_COMMIT,
                   prior_dates=['2025-07-01', '2026-04-30'],
                   later_dates=['2026-06-01', '2026-10-31'], excluded_months=['2026-05', '2026-07'],
@@ -203,9 +231,8 @@ def main():
                                                                 {k:v[later] for k,v in p.items()}),
                   later_policy_metrics=policy_metrics(data, p),
                   original_archive_dates=['2025-06-01', '2025-06-15'],
-                  original_archive_probability_metrics=probability_metrics(original,
-                      {'market': full_p['market'], 'v6_minimal': sparse_p['v6'], 'v7_minimal': sparse_p['v7'],
-                       'v6_original_inputs': full_p['v6'], 'v7_original_inputs': full_p['v7']}),
+                  original_archive_probability_metrics=probability_metrics(original, historic_predictions),
+                  original_archive_price_bands=archive_price_band_metrics(original, historic_predictions),
                   original_archive_coverage=dict(runners=len(original), all_inputs_complete=int(np.isfinite(complete).all(axis=1).sum()),
                       active_v7_inputs_complete=int(np.isfinite(complete[:,active_v7]).all(axis=1).sum()),
                       median_observed_inputs=float(np.median(np.isfinite(complete).sum(axis=1))),
