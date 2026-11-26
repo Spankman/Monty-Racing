@@ -98,6 +98,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           OPERATIONS_RESULTS_BRANCH: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'monty-single-staging-results' || 'monty-simple-staging-results') || 'monty-operations-results' }}
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+          MONTY_EVIDENCE_POLICY: ${{ vars.MONTY_EVIDENCE_POLICY }}
           OPERATIONS_COMMAND: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'RM6 Ballina 7' || 'RMV6PS') || inputs.command }}
           OPERATIONS_ISSUE_COMMENTS: ${{ github.ref_name == github.event.repository.default_branch && '1' || '0' }}
           OPERATIONS_DATE: ${{ inputs.date }}
@@ -119,6 +120,14 @@ jobs:
           path: operations_output/*/public/
           if-no-files-found: warn
           retention-days: 90
+      - name: Licence-approved encrypted inference evidence only
+        if: always() && steps.event.outputs.settled != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: monty-inference-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: operations_output/*/evidence-sealed/
+          if-no-files-found: ignore
+          retention-days: 7
   report_failure:
     needs: [operate, acknowledge]
     if: always() && github.event_name == 'issues' && (needs.operate.result == 'failure' || needs.operate.result == 'cancelled' || needs.acknowledge.result == 'failure')

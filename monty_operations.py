@@ -111,7 +111,7 @@ def current_result(race, saved, mode, now):
             attach(existing_diagnostic,result['market_integrity'])
         result['diagnostic_assessment'] = existing_diagnostic or diagnostic(result)
     if result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
-        result['ruffies_to_watch'].update(rows=[],research_candidates=0,none_reason='EXPIRED OR CLOSED — no current research watches; request a fresh assessment')
+        result['ruffies_to_watch'].update(rows=[],research_candidates=0,assessment_state='INSUFFICIENT DATA TO ASSESS RUFFIES — EXPIRED',none_reason='EXPIRED OR CLOSED — no current research watches; request a fresh assessment')
     if mode=='official' or result['freshness_at_retrieval'] != 'FRESH AT CHECK TIME':
         for key in ('best_bets', 'ordered_selections', 'roughies'):
             result[key] = []
@@ -155,7 +155,8 @@ def projection(forecast, request, now=None):
                 receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]),
                 operational_outcome=forecast.get('operational_outcome'), operational_reason=forecast.get('operational_reason'),
                 operational_evidence=forecast.get('operational_evidence'),
-                captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'))
+                captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'),
+                delivery_visibility=forecast.get('delivery_visibility'),privacy_notice=forecast.get('privacy_notice'))
 
 
 def normalized_snapshot(payload, day, allow_restricted=False):
@@ -266,7 +267,7 @@ def selection(rows,version='V6'):
                 betting_authorised=False)
 
 
-def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False):
+def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False, evidence_policy=None, evidence_certificate=None, evidence_raw_pages=None):
     """Capture once, run both frozen models on byte-identical per-race snapshots."""
     execution_started=monotonic();durations={}
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
@@ -276,6 +277,10 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     result=dict(schema=SCHEMA,date=day,timezone='Australia/Brisbane',run_id=str(run_id),
                 generated_at=started.isoformat(),receipt=f'runs/{day}/{run_id}/receipt.json',source_mode='SIMULATED FIXTURE' if fixture else 'LIVE',
                 status='FAILED',models={},races=[],blockers=[],coverage={},qualifying_forecasts=0)
+    from operations.evidence.store import Recorder
+    source='SIMULATED FIXTURE' if fixture else ((payload.get('meta') or {}).get('provider','Krok') if isinstance(payload,dict) else 'Krok')
+    recorder=Recorder(output,run_id,source,policy=evidence_policy,certificate=evidence_certificate)
+    for body,endpoint in evidence_raw_pages or []:recorder.raw(body,endpoint)
     pins={}
     from krok_adapter import IncompleteFields
     stage='date_validation'
@@ -309,9 +314,10 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 raise ValueError('KROK_API_KEY absent; live request not attempted')
             with timed('provider_fetch', run_id, enabled=timings):
                 result['provider_usage']=[]
-                payload=fetch(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'))
+                payload=fetch(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'),**({'observer':recorder.raw} if recorder.enabled else {}))
         durations['provider_acquisition_seconds']=monotonic()-phase_started
         durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
+        recorder.snapshot(payload)
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
@@ -473,6 +479,18 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     result['valid_until']=(captured+timedelta(seconds=MAX_AGE_SECONDS)).isoformat() if captured else None
     report_started=monotonic()
     durations['before_report_seconds']=report_started-execution_started
+    from operations.evidence.store import public_result
+    evidence=recorder.seal(result)
+    import shutil
+    private_path=output/'private'
+    cleanup_status='NOT_CREATED'
+    if private_path.exists():
+        try:
+            if private_path.is_symlink():private_path.unlink()
+            else:shutil.rmtree(private_path)
+            cleanup_status='REMOVED'
+        except OSError:cleanup_status='FAILED; RUNNER_TEARDOWN_REQUIRED'
+    result=public_result(result,evidence,recorder)
     write(public/'forecast.json',result)
     durations['forecast_write_seconds']=monotonic()-report_started
     delivery_views=[]
@@ -492,7 +510,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                  operational_outcome=result.get('operational_outcome'), operational_reason=result.get('operational_reason'),
                  processing_timings=durations,delivery_manifest_sha256=delivery_hash,
                  provider_usage=result.get('provider_usage'),
-                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
+                 qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2,evidence=result['evidence'],private_plaintext_cleanup=cleanup_status)
     write(public/'receipt.json',receipt)
     return result
 
@@ -503,6 +521,7 @@ def ticket(view, *, archived=False, now=None):
     version=view['version'];mode=view['view']
     title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
     lines=[title,view['date']+' · Australia/Brisbane','No qualified wagers — see prediction and betting decisions separately','']
+    if view.get('privacy_notice'):lines.extend([view['privacy_notice'],''])
     if mode=='provisional':lines.insert(2,'PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet')
     if archived:
         lines.insert(2, 'ARCHIVED SNAPSHOT — check request freshness before use')

@@ -48,3 +48,14 @@ ChatGPT, Work and Codex may independently remove or disable redundant, ineffecti
 - [ ] Require owner-reviewed later prospective improvement before any calibration/weighting/threshold change. Six-day PE trial is untouched; no new live API credits consumed.
 
 Evidence and handover: [issue240audit](operations/audit/RUFFIE_AUDIT_2026-11-26.md). This plan copies the unmerged owner document from draft234; reconcile its additive update with that draft before any eventual merge. No production merge or model activation is authorised.
+
+## Inference evidence engineering — 26 November 2026
+
+Staged workstream `engineering/inference-evidence`, based on #241. Canonical shared governance remains PR #234 (`fb5f8b4481c535f5415b8ad3ed285579885bd48b` reviewed); reconcile this older copied plan before eventual integration.
+
+- [x] Complete private evidence packet, all scored/declaration records, frozen feature/contribution replay and receipt-bound encryption implemented.
+- [x] Historical #236–239 archive search: originals not recovered; 121 V6/118 V7 records remain unavailable.
+- [x] Research-only diagnostics/consumer and explicit roughie assessment states implemented; no training or weighting activation.
+- [ ] Source retention/public-display permission, durable owner key custody and live wrapper verification before production approval.
+
+See [engineering handover](operations/audit/INFERENCE_EVIDENCE_HANDOVER_2026-11-26.md). Work's #242 research remains separate; trial #235 untouched. No provider credits, merge or deployment.
