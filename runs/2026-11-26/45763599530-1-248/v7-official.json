@@ -1,0 +1,301 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45763599530-1-248",
+  "date": "2026-11-26",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Hawkesbury",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-26T05:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "15",
+          "horse": "Binit"
+        },
+        {
+          "number": "13",
+          "horse": "Sky Kirk"
+        },
+        {
+          "number": "16",
+          "horse": "Pressed Tough"
+        },
+        {
+          "number": "11",
+          "horse": "Miss Moulaga"
+        },
+        {
+          "number": "6",
+          "horse": "Cold Gin"
+        }
+      ],
+      "captured_at": "2026-11-26T05:45:48.109952+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-26",
+        "meeting": "Hawkesbury",
+        "race": "6",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Extreme Courage",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 59,
+            "age": 5,
+            "jockey": "Rachel King",
+            "trainer": "R & L Price"
+          },
+          {
+            "number": "3",
+            "horse": "Captain Black",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Alysha Collett",
+            "trainer": "Sara Ryan"
+          },
+          {
+            "number": "2",
+            "horse": "Southport",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "TAB",
+            "barrier": 16,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Kerrin McEvoy",
+            "trainer": "Brad Widdup"
+          },
+          {
+            "number": "12",
+            "horse": "Sheeza Whistler",
+            "scratched": false,
+            "odds": 71.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Reece Jones",
+            "trainer": "M & D Kearney"
+          },
+          {
+            "number": "4",
+            "horse": "Got Here",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Anna Roper",
+            "trainer": "Damien Lane"
+          },
+          {
+            "number": "5",
+            "horse": "Hikari Rising",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Andrew Adkins",
+            "trainer": "Kerry Parker"
+          },
+          {
+            "number": "7",
+            "horse": "Shalaa And Willyn",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Brock Ryan",
+            "trainer": "R & L Price"
+          },
+          {
+            "number": "8",
+            "horse": "Tickelova",
+            "scratched": false,
+            "odds": 3.4,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Jason Collett",
+            "trainer": "Kris Lees"
+          },
+          {
+            "number": "9",
+            "horse": "Writteninlyrics",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Olivia Chambers",
+            "trainer": "Peter D Green"
+          },
+          {
+            "number": "10",
+            "horse": "Ariana Reign",
+            "scratched": false,
+            "odds": 9.5,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Andrew Gibbons",
+            "trainer": "Nathan Doyle"
+          },
+          {
+            "number": "14",
+            "horse": "Wootton Touch It",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Braith Nock",
+            "trainer": "Angela Davies"
+          },
+          {
+            "number": "15",
+            "horse": "Binit",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Sara Ryan"
+          },
+          {
+            "number": "13",
+            "horse": "Sky Kirk",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Jean Van Overmeire",
+            "trainer": "Blake Ryan"
+          },
+          {
+            "number": "16",
+            "horse": "Pressed Tough",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 5,
+            "weight": 59,
+            "age": 5,
+            "jockey": "N.r",
+            "trainer": "Sara Ryan"
+          },
+          {
+            "number": "11",
+            "horse": "Miss Moulaga",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 9,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Ashley Morgan",
+            "trainer": "Edward Cummings"
+          },
+          {
+            "number": "6",
+            "horse": "Cold Gin",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 15,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Dylan Gibbons",
+            "trainer": "Mitchell & George Beer & Carpenter"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1100,
+        "track_condition": "Soft5",
+        "captured_at": "2026-11-26T05:45:48.109952+00:00",
+        "scheduled_start": "2026-11-26T05:50:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "4e2401780bd12e265a86a48662e13e301bff49eae9c0dbd93343bb7f7182478e",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-26T05:45:49.674885+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-26T05:45:48.109952+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-26T05:45:49.677186+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-26/45763599530-1-248/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-26T05:45:48.109952+00:00",
+  "valid_until": "2026-11-26T05:50:48.109952+00:00",
+  "snapshot_only": true
+}
