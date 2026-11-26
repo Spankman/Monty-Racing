@@ -1,0 +1,363 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45747589136-1-247",
+  "date": "2026-11-26",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Hawkesbury",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-26T03:25:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-26T03:14:45.514066+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-26",
+        "meeting": "Hawkesbury",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "6",
+            "horse": "Responsibility",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Alysha Collett",
+            "trainer": "G & S Ryan & Alexiou"
+          },
+          {
+            "number": "1",
+            "horse": "Flying Party",
+            "scratched": false,
+            "odds": 2.8,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Louise Day",
+            "trainer": "Ciaron Maher"
+          },
+          {
+            "number": "2",
+            "horse": "Mister Dee Jay",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 58.5,
+            "age": 5,
+            "jockey": "L P Beuzelin",
+            "trainer": "Jim & Greg Lee"
+          },
+          {
+            "number": "3",
+            "horse": "Hey Furston",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 58,
+            "age": 4,
+            "jockey": "Reece Jones",
+            "trainer": "Rodney Bailey"
+          },
+          {
+            "number": "5",
+            "horse": "Calippo",
+            "scratched": false,
+            "odds": 2.6,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Tyler Schiller",
+            "trainer": "Marc Chevalier"
+          },
+          {
+            "number": "7",
+            "horse": "Swift Delivery",
+            "scratched": false,
+            "odds": 16.0,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Mollie Fitzgerald",
+            "trainer": "David Pfieffer"
+          },
+          {
+            "number": "8",
+            "horse": "Awesome Offa",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55,
+            "age": 4,
+            "jockey": "Jeff Penza",
+            "trainer": "T & P Vigouroux"
+          },
+          {
+            "number": "9",
+            "horse": "Medieval Mayhem",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 55,
+            "age": 4,
+            "jockey": "Beany Panya",
+            "trainer": "Graham M Brown"
+          },
+          {
+            "number": "10",
+            "horse": "Propane",
+            "scratched": false,
+            "odds": 18.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 55,
+            "age": 4,
+            "jockey": "Grant Buckley",
+            "trainer": "Peter D Green"
+          },
+          {
+            "number": "11",
+            "horse": "Titan Of Fury",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Jess Taylor",
+            "trainer": "Paul Perry"
+          },
+          {
+            "number": "4",
+            "horse": "Hallowedismyname",
+            "scratched": false,
+            "odds": 81.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Chad Lever",
+            "trainer": "Stephen O'Halloran"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1300,
+        "track_condition": "Soft5",
+        "captured_at": "2026-11-26T03:14:45.514066+00:00",
+        "scheduled_start": "2026-11-26T03:25:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "1b28052afdffad5aae8df16d5914a27e4365cfaef3b9d216faf96d2f84d5d699",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "5",
+            "horse": "Calippo",
+            "odds": 2.6,
+            "probability": 0.2963778325924326,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Flying Party",
+            "odds": 2.8,
+            "probability": 0.2807537661439691,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Mister Dee Jay",
+            "odds": 5.0,
+            "probability": 0.15733683800886658,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "5",
+          "horse": "Calippo",
+          "odds": 2.6,
+          "probability": 0.2963778325924326,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "5",
+            "horse": "Calippo",
+            "odds": 2.6,
+            "probability": 0.2963778325924326,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "1",
+            "horse": "Flying Party",
+            "odds": 2.8,
+            "probability": 0.2807537661439691,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "2",
+            "horse": "Mister Dee Jay",
+            "odds": 5.0,
+            "probability": 0.15733683800886658,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "Titan Of Fury",
+            "odds": 6.5,
+            "probability": 0.1209982071098289,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "Swift Delivery",
+            "odds": 16.0,
+            "probability": 0.04914414343482201,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "Propane",
+            "odds": 18.0,
+            "probability": 0.043662698966517914,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "3",
+            "horse": "Hey Furston",
+            "odds": 41.0,
+            "probability": 0.01880372446295113,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Responsibility",
+            "odds": 61.0,
+            "probability": 0.012880867634008168,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "Hallowedismyname",
+            "odds": 81.0,
+            "probability": 0.00972148796481177,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Medieval Mayhem",
+            "odds": 151.0,
+            "probability": 0.005212332892358313,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "8",
+            "horse": "Awesome Offa",
+            "odds": 151.0,
+            "probability": 0.005108100789433606,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "5",
+          "horse": "Calippo",
+          "odds": 2.6,
+          "probability": 0.2963778325924326,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-26T03:14:45.969040+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-26T03:14:45.514066+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-26T03:14:46.693337+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-26/45747589136-1-247/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-26T03:14:45.514066+00:00",
+  "valid_until": "2026-11-26T03:19:45.514066+00:00",
+  "snapshot_only": true
+}

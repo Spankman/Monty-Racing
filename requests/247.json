@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-26",
+  "run_id": "45747589136-1-247",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-26/45747589136-1-247/receipt.json",
+  "forecast_path": "runs/2026-11-26/45747589136-1-247/forecast.json",
+  "forecast_sha256": "818363b07a807c288e1e7e5a54bf8b6909cbabaa90f1a95dd18a32e880808607",
+  "generated_at": "2026-11-26T03:14:46.692278+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45747589136",
+  "captured_at": "2026-11-26T03:14:45.514066+00:00",
+  "valid_until": "2026-11-26T03:19:45.514066+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "7e920d64bae3bc7b3de6a04741a84d2b5ed21832343bb2f6c10ec05109344ae5",
+  "request": {
+    "command": "RM6 HAWKESBURY 2",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-26",
+    "meeting": "Hawkesbury",
+    "race": "2",
+    "country": "AU"
+  },
+  "request_id": 247,
+  "request_status": "COMPLETED"
+}
