@@ -1,4 +1,4 @@
-> **ALL DEVELOPMENT AGENTS — START HERE:** Follow [AGENTS.md](AGENTS.md) at the beginning and end of every session. Review open issues and draft PRs before starting; the current owner rules and development register are staged in PR #234 until integrated.
+> **ALL DEVELOPMENT AGENTS — START HERE:** Follow [AGENTS.md](AGENTS.md) and the [Monty master handover](MONTY_MASTER_HANDOVER.md) at the beginning and end of every session. Review open issues and draft PRs before starting; the current owner rules and development register are staged in PR #234 until integrated.
 
 > **WORK / CODEX — OWNER RULES (25 Nov 2026):** Read [Monty's Living Development Plan](MONTY_LIVING_DEVELOPMENT_PLAN.md) before further development. Resource efficiency, existing Krok historical acquisition and non-blocking V7 research priorities are mandatory planning requirements; existing betting and integrity policies remain in force.
 

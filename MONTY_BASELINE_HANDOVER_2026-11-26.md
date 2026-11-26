@@ -1,5 +1,7 @@
 # Monty development baseline handover
 
+The [permanent master handover](MONTY_MASTER_HANDOVER.md) now holds the active baseline. This dated document records the earlier governance and engineering checkpoints.
+
 26 November 2026, Brisbane. Applies to ChatGPT, Codex and Work.
 
 | Material reviewed | Exact revision |

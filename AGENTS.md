@@ -3,7 +3,7 @@
 Applies to all repository development sessions, including Codex, ChatGPT Work and other agents. Owner instructions and existing safety policies take precedence.
 
 ## Mandatory startup
-1. Before starting or resuming any development, read the latest versions of this file, README.md, MONTY_BETTING_POLICY.md, SELECTION_RULES.md, MONTY_LIVING_DEVELOPMENT_PLAN.md, MONTY_RESEARCH_LIBRARY.md, operations/README.md, the master handover, the active workstream handover and any applicable owner-approved rules.
+1. Before starting or resuming any development, read the latest versions of this file, README.md, MONTY_BETTING_POLICY.md, SELECTION_RULES.md, MONTY_LIVING_DEVELOPMENT_PLAN.md, MONTY_RESEARCH_LIBRARY.md, operations/README.md, [MONTY_MASTER_HANDOVER.md](MONTY_MASTER_HANDOVER.md), the active workstream handover and any applicable owner-approved rules.
 2. Check open issues and draft PRs, their latest comments, dependencies and exact tested commits. Review PR #234 for the owner-approved development register until integrated. Record each governing document's date or version and GitHub ref and full commit SHA, including the exact workstream base. Identify unavailable documents and research explicitly, record the access limitation and its scope, and leave any work that depends on them pending.
 3. Reconcile conflicting or superseded instructions against explicit owner decisions. Identify blockers and the highest-priority authorised task; do not expand scope without approval.
 4. Reuse existing evidence and datasets. Avoid repeated audits of unchanged commits; use scripts for repetitive work, checkpoint long tasks and bound retries. Report observable resource consumption and never guess credit balances.

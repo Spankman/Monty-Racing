@@ -76,3 +76,14 @@ PR241 carries an older copied plan plus its additive issue240 section; reconcile
 ### Final engineering acceptance checkpoint — 26 November 2026
 
 Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all four CI checks green, 225 operational/158 runner/13 frozen local tests, 25 new contract checks. Native connector artifact download + authenticated private replay verified 24 files/7 declarations/12 scores/both 55-feature matrices, max probability error 1.0061396160665481e-16. [Exact receipt and CI proof](operations/audit/evidence_retention_acceptance_20261126). Synthetic inputs, genuine unchanged frozen engines; zero provider calls, not live acceptance. Historical originals remain missing and licensing/key custody/live PE wrapper approval blockers remain open. Production and trial unchanged.
+
+## Historical evidence and independent validation — 26 November 2026
+
+- [x] Established [MONTY_MASTER_HANDOVER.md](MONTY_MASTER_HANDOVER.md) as the shared startup reference on draft #234.
+- [x] Published historical source and feature coverage registers, eight disjoint chronological ablations and the #243 negative check showing the old archive fails verified availability.
+- [x] Recovered the full West–Kazakov paper and evaluated a paper-informed eight-component comparison. No market edge demonstrated. Exact PLSGLR replication remains open.
+- [x] Registered future Queensland test dates and evaluation rules before outcomes. Test capture and final candidate freeze not yet ready.
+- [ ] Secure lawful official identity crosswalks, confirmed publication-time revisions, complete bookmaker vectors and independently settled results. Isolate additional feature blocks after verified acquisition.
+- [ ] Freeze candidate manifest or mark 2027 window blocked. No production action without independent evidence and owner approval.
+
+[Draft #244](https://github.com/Spankman/Monty-Racing/pull/244), `29239357579422148091a3320401d5e0572d774c`.
