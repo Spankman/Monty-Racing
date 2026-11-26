@@ -1,0 +1,269 @@
+{
+  "trial_id": "PE-AU-20261126-6D",
+  "date": "2026-11-27",
+  "registered_at": "2026-11-26T22:34:18.301545+00:00",
+  "protocol_sha256": "16aeb128fe8ce5f9656702937942887994569a244ca4de4f1a67fbee0f0527c3",
+  "races": [
+    {
+      "date": "2026-11-27",
+      "race_id": "4e984c98-e7a4-43e5-9cb2-bdb1134e5caa",
+      "venue": "Muswellbrook",
+      "race_number": 3,
+      "start_time": "2026-11-27T03:24:00Z",
+      "state": "NSW",
+      "meeting_class": "country",
+      "rq_code": null,
+      "weekday": "Friday",
+      "country": "AU",
+      "category": "horse"
+    },
+    {
+      "date": "2026-11-27",
+      "race_id": "588681fe-3ced-49f0-bad0-30658bd4d4a8",
+      "venue": "Wodonga",
+      "race_number": 4,
+      "start_time": "2026-11-27T03:55:00Z",
+      "state": "VIC",
+      "meeting_class": "country",
+      "rq_code": null,
+      "weekday": "Friday",
+      "country": "AU",
+      "category": "horse"
+    },
+    {
+      "date": "2026-11-27",
+      "race_id": "a43aa9a1-ff02-4400-bbf8-fdcddb6d5aae",
+      "venue": "Wodonga",
+      "race_number": 5,
+      "start_time": "2026-11-27T04:30:00Z",
+      "state": "VIC",
+      "meeting_class": "country",
+      "rq_code": null,
+      "weekday": "Friday",
+      "country": "AU",
+      "category": "horse"
+    }
+  ],
+  "eligible_candidates": 9,
+  "exclusions": [
+    {
+      "race_id": "ff2b6f7a-a8f5-43ac-95dc-5b22635f8d37",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "0f5d1b91-9afa-4031-a8c0-6b5789215218",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "01ad9408-a137-4502-ad66-8f5cb761bcfe",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "b5bb56be-af56-414c-a2e1-b94c6a50c289",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "55fa5c57-6320-406d-8bbb-eeea0ca2a175",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "53d73ea9-2b21-44df-954b-e445aa88174d",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "8a26382e-87eb-4f51-9241-bfda2074db75",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "c15a89de-b940-43ec-aee5-7adf2eefdd74",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "a3388431-1cb7-4c8c-9bb2-f5059ea23bc9",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "a415b9dc-5ce9-4b6c-9b8a-977de3b583f7",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "d679d3c8-2886-40b9-a073-434f61117016",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "a1d48a34-c912-4cef-a342-50ad9ee53f91",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "17294c6a-59b0-47bf-81e6-354ca898789c",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "fb3c4e0f-64a7-4e2d-85aa-c7665b791b12",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "ce36323e-4578-4c78-90a6-e6d77d9c30cf",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "b86f86c3-1a6c-48f9-8429-b50e87f0bad1",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "68c61941-8f6c-4174-a905-f32565c52275",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "acc6939a-4610-4dc4-a2fd-010dcb3fa99b",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "3a24beda-204f-41d6-81ca-884105badb79",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "dc9716b2-2332-4f70-b86b-4bfce0bbd116",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "1577b25a-eca3-456e-a927-897e3eab6686",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "127b09d7-a65e-4eb3-85c8-9da8a82bffdb",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "544ede26-00f8-4842-b48e-f4a26d00dd96",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "3f37aae6-e237-47b9-88c4-c4beebcc4273",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "c8ecbbe6-7f1f-4953-8339-ade2b5cd6d3a",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "6fea7268-0648-44f3-88cc-149da5a45652",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "e4891cfd-5ffa-47c7-aa8a-187aad8898b7",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "70c6a379-c345-4ffd-9b98-81be711941d3",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "1e424a0c-5d34-436f-b1db-e65e1782809a",
+      "reason": "excluded_class"
+    },
+    {
+      "race_id": "b148ae7d-63b1-44ec-b592-bccaf2967b96",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "8a3f0045-4155-4a63-a00f-bf96ea2bbd24",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "f8f19a76-5b6b-4852-b4ee-a360ee1074fe",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "6f5020bd-752b-4909-8f2c-cb7a82f0f5cc",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "924420b1-2e3e-47a2-b9a9-82a83d0e7607",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "e2f8c092-9154-421a-b254-b504f5d668c0",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "65f2368f-cf37-4745-8740-073da3c834d7",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "2e4b9dc3-1639-4f2f-adc7-92d9326d08d3",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "6fe0db1a-fe5e-4516-b8d0-e2081d4cb3d3",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "1baacfe8-68c9-459f-93f7-b1e93fecd6a3",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "05bfa25b-2177-445a-9dec-76c0fe0f3502",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "8a59cc4c-675c-4616-9dd6-e758ed20ff5e",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "196eda1e-641e-4cb3-bcc1-b8c1ffccc5bc",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "268aa0c6-2c74-4956-9a5f-4d1d45d047db",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "bce54010-5412-4d3f-9894-615e12e208cc",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "79286608-6a1f-48d4-a648-294dc17a2c60",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "eb0735fd-37f1-4d3d-9d9e-52a10be0f6bd",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "33a57a73-2ad1-46d3-a7ee-59cd0379a7a3",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "72b76104-b13a-4dbe-a34d-a002618bedd8",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "0297c9d2-4b8d-4ef0-b9c7-2a3a1cb653cf",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "008fa804-2cfd-466f-b211-c2528c9434c6",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "56bde915-02bc-4a3a-99cc-b9b47d45986d",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "fd7a8550-d572-4336-b426-bef43d38ea69",
+      "reason": "outside_runner_window"
+    },
+    {
+      "race_id": "d9176dd1-21b2-4297-8f19-c5c11337e0ff",
+      "reason": "venue_classification_unverified"
+    },
+    {
+      "race_id": "9308c122-6df5-45b5-95b9-2fec0d7fd7fd",
+      "reason": "outside_runner_window"
+    }
+  ],
+  "status": "PREREGISTERED",
+  "future_slots_are_not_claimed_registered_races": true,
+  "plan_sha256": "21e180c58f1e17886d576a16f5da8b3764a39a3763e61cb1f679676f0e7644e8"
+}
