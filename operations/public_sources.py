@@ -161,7 +161,11 @@ def rq_scratchings(body, race):
             for number, (_, horse) in zip(numbers, pairs)]
 
 
-def rq_declaration(body,pdf,day,meeting,race):
+class AuthorityDependencyError(RuntimeError):
+    """Required local authority-document decoder is unavailable."""
+
+
+def rq_declaration(body,pdf,day,meeting,race, *, scratchings_body=None):
     """Join the published authority field PDF and its explicit scratching section.
 
     No emergency is declared resolved from a missing marker in a partial field.
@@ -169,7 +173,10 @@ def rq_declaration(body,pdf,day,meeting,race):
     """
     import subprocess,calendar
     facts=rq_facts(body,day,meeting,race)
-    document=subprocess.run(['pdftotext','-raw','-','-'],input=pdf,capture_output=True,timeout=10,check=True).stdout.decode()
+    try:
+        document=subprocess.run(['pdftotext','-raw','-','-'],input=pdf,capture_output=True,timeout=10,check=True).stdout.decode()
+    except FileNotFoundError as exc:
+        raise AuthorityDependencyError('pdftotext unavailable; install poppler-utils before authority acquisition') from exc
     normalized=' '.join(document.replace(',','').split())
     date=datetime.fromisoformat(day)
     if meeting.casefold() not in normalized.casefold() or f'{date.day} {calendar.month_name[date.month]} {date.year}' not in normalized:
@@ -188,7 +195,7 @@ def rq_declaration(body,pdf,day,meeting,race):
         match=re.match(r'^(\d{2})\s+(\(EM\))?\s*(.+?)\((?!(?:NZ|AUS|GB|IRE|FR|USA)\))[^()]+\)',flat)
         if match:rows.append(dict(number=str(int(match[1])),horse=match[3].strip(),scratched=False,emergency=bool(match[2])))
         elif re.match(r'^\d{2}\s+',flat):raise ValueError('Authority numbered runner could not be parsed; field incomplete')
-    scratched = rq_scratchings(body, race)
+    scratched = rq_scratchings(body if scratchings_body is None else scratchings_body, race)
     if len(rows)<2 or len({r['number'] for r in rows})!=len(rows):raise ValueError('Authority declared field incomplete or contradictory')
     declared={r['number']:r for r in rows}
     same_race_name=lambda s:' '.join(re.sub(r'\s*\((?:NZ|AUS|GB|IRE|FR|USA)\)\s*$','',s,flags=re.I).casefold().split())

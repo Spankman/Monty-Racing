@@ -25,7 +25,14 @@ class ProspectiveMetricsTests(unittest.TestCase):
                         active_runners={r['number']: r['horse'] for r in record['market_baseline']},
                         source_url='https://www.racingqueensland.com.au/fixture-only',
                         source_sha256='a'*64)
-        settle(path, official, settled, post_jump)
+        first=settle(path, official, settled, post_jump)
+        original=settled.read_bytes()
+        repeated=settle(path, official, settled, post_jump+timedelta(minutes=1))
+        self.assertEqual(first,repeated)
+        self.assertEqual(original,settled.read_bytes())
+        with self.assertRaisesRegex(ValueError,'Conflicting settlement'):
+            settle(path,dict(official,winners=['2']),settled,post_jump)
+        self.assertEqual(original,settled.read_bytes())
         entry = dict(key, forecast=str(path), settlement=str(settled))
         missing = dict(key, race='99', reason='quotes unavailable')
         window = dict(start=self.now.isoformat(), end=post_jump.isoformat())
@@ -38,6 +45,8 @@ class ProspectiveMetricsTests(unittest.TestCase):
         tampered = json.loads(settled.read_text())
         tampered['metrics']['V6']['log_loss'] += 1
         settled.write_text(json.dumps(tampered))
+        with self.assertRaisesRegex(ValueError,'Settlement integrity'):
+            settle(path,official,settled,post_jump)
         with self.assertRaisesRegex(ValueError, 'metric mismatch'):
             report([entry], **window)
         with self.assertRaisesRegex(ValueError, 'Duplicate race'):

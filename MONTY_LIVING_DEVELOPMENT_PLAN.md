@@ -99,3 +99,8 @@ Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all fou
 - [ ] Owner source/cloud-processing confirmation, durable key backup, private sink authentication/access approval and genuinely live/mobile acceptance before deployment.
 
 Current branch `integration/evidence-readiness-20261126` atop #243. [Assessment and rollback](operations/governance/INTEGRATION_READINESS_2026-11-26.md). Exact tests/CI are recorded in the draft PR. Zero provider API credits; trial #235 untouched.
+
+
+## Operational consolidation staging — 26 November 2026
+
+[Evidence and task register](operations/audit/consolidation_20261126/REPORT.md): decoder/wrong-page authority failures reproduced; separate scratching-source acquisition and batch deduplication staged; settlement repeat/conflict integrity repaired. No absent scratching entry is treated as nil. NSW/WA lawful authority interfaces, independent complete books and strict as-of history remain blocked data dependencies for Work. Active trial and frozen engines unchanged; no paid provider calls, merge or deployment. Reviewed canonical PR234 at3d113582d756edb4edf193b34f308c37517168da. This engineering note supplements the canonical Plan, not a new research programme.

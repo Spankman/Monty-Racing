@@ -8,11 +8,19 @@ from bs4 import BeautifulSoup
 from operations.public_sources import capture,rq_declaration
 
 
-def capture_races(day,races,directory,fetch=capture):
+def capture_races(day,races,directory,fetch=capture, *, meeting='Ipswich', meeting_code='ipsw'):
+    # Explicit allowlist prevents arbitrary URL construction and silent venue aliases.
+    if (meeting, meeting_code) not in {('Ipswich', 'ipsw'), ('Rockhampton', 'rock')}:
+        raise ValueError('Authority meeting mapping not validated')
+    races=list(dict.fromkeys(int(number) for number in races))
+    if any(number < 1 for number in races):raise ValueError('Invalid race number')
+    if not races:return []
+    meeting_url=f'https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/{meeting_code}/{day.replace("-", "")}'
+    scratching_meta,scratching_body=fetch(meeting_url,directory)
     pdfs={};result=[]
     for number in races:
-        url=f'https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/ipsw/{day.replace("-","")}/race/{int(number)}'
-        meta,body=fetch(url,directory);row=dict(race=str(number),sources=[meta],primary_authority='Racing Queensland',
+        url=f'https://www.racingqueensland.com.au/racing/full-calendar/thoroughbred/meeting/{meeting_code}/{day.replace("-","")}/race/{int(number)}'
+        meta,body=fetch(url,directory);row=dict(race=str(number),sources=[meta,scratching_meta],primary_authority='Racing Queensland',
             verified=False,price_verification=False)
         if body:
             stage='authority_pdf_link'
@@ -24,8 +32,12 @@ def capture_races(day,races,directory,fetch=capture):
                 pdf_meta,pdf=pdfs[links[0]];row['sources'].append(pdf_meta)
                 if not pdf:raise ValueError('Authority PDF acquisition blocked')
                 stage='authority_declaration_parse'
-                facts=rq_declaration(body,pdf,day,'Ipswich',number)
+                if not scratching_body:raise ValueError('Authority meeting scratching acquisition blocked')
+                # Validate the separate page identity before consuming withdrawals.
+                from operations.public_sources import rq_facts
+                rq_facts(scratching_body,day,meeting,number)
+                facts=rq_declaration(body,pdf,day,meeting,number,scratchings_body=scratching_body)
                 row.update(facts=facts,verified=facts['field_verified'] and facts['emergency_status_verified'])
-            except Exception as exc:row.update(blocker=type(exc).__name__, blocker_stage=stage)
+            except Exception as exc:row.update(blocker=type(exc).__name__, blocker_stage=stage, blocker_detail=str(exc))
         result.append(row)
     return result

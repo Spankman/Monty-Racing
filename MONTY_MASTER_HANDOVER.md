@@ -68,3 +68,8 @@ Responsibilities: ChatGPT handles user commands, truthful status/slips and retri
 No merge, deployment, activation, new API credits, permissions/secret changes, purchases, subscriptions, retraining, model promotion or wagers without the applicable explicit owner approval. Existing research-pruning authority never overrides frozen engines or integrity safeguards. Proposed deployment and rollback remain staged and require owner approval. Report exact blockers and continue independent achievable work.
 
 The former [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) is historical evidence; this expanded file continues the permanent entry point Work established on draft #234; it is not a competing master. Until approved integration, all agents must explicitly read this branch's master and the newer shared PR #234 documents.
+
+
+## Operational consolidation staging — 26 November 2026
+
+[Evidence and task register](operations/audit/consolidation_20261126/REPORT.md): decoder/wrong-page authority failures reproduced; separate scratching-source acquisition and batch deduplication staged; settlement repeat/conflict integrity repaired. No absent scratching entry is treated as nil. NSW/WA lawful authority interfaces, independent complete books and strict as-of history remain blocked data dependencies for Work. Active trial and frozen engines unchanged; no paid provider calls, merge or deployment. Reviewed canonical PR234 at3d113582d756edb4edf193b34f308c37517168da. This engineering note supplements the canonical Plan, not a new research programme.
