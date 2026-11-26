@@ -86,3 +86,9 @@ Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested he
 ## Final operations planning — 26 November 2026
 
 `FINAL-OPERATIONS-20261126`: documentation/readiness review only, no new model experiment or academic replication. Reused #245 frozen synthetic replay and #244 null incremental-market research. Source/publication/identity gates and 2027 preregistration unchanged. [Decision/checklist/acceptance plan](operations/readiness/FINAL_OPERATIONAL_READINESS.md). Provider correspondence remains unsent;zero new live API credits.
+
+## Queensland role identity recovery — 26 November 2026
+
+`AU-RQ-AUTHORITY-20261126`, [draft #246](https://github.com/Spankman/Monty-Racing/pull/246) `49d967668ebb7c298a5f041b9fd814e924025de4`. Success in bounded retrospective identity acquisition, blocked pre-jump publication and prospective evidence. 68/97 horse, 47/97 trainer, 30/97 jockey same-event corroborations over nine races. Three captured form books contain current-day outcomes. Thin or missing official role assignments stay missing. No national registration, full historic result chain or incremental model performance established. A$0 external spend, no authenticated provider requests. 11 checks and identical aggregate rerun.
+
+[West–Kazakov appendix map](https://github.com/Spankman/Monty-Racing/blob/49d967668ebb7c298a5f041b9fd814e924025de4/operations/audit/WEST_KAZAKOV_REPLICATION_REQUIREMENTS_2026-11-26.md): paper states 22 selected inputs, Appendix lists 26 candidates including morning odds. Original factors and dataset remain open. CRAN plsRglm is a documented methodological candidate, untested here. Keep #244 results as the evaluated adaptation, with no exact replication claim. Use December for new verified data, with the January test cohort untouched.

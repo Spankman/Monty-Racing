@@ -113,3 +113,13 @@ Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested he
 - [ ] Obtain provider/cloud/archival confirmation and owner-approved private access/key backup; then scoped routing/presentation work and separately authorised live/iPhone/schedule acceptance.
 
 [Consolidated report](operations/readiness/FINAL_OPERATIONAL_READINESS.md). No provider API credits, permission/secret changes, trial changes, merge or deployment. Existing #245 exact-head CI/replay evidence reused honestly.
+
+## Historical data acquisition and December preparation — 26 November 2026
+
+- [x] Verify free Racing Queensland historical meeting/race and horse/role endpoints. Publish 23-source and 79-feature coverage register, tested aggregate and bounded parser. Recover 68/97 issuer-scoped identity links across nine races and record 29 unresolved rows.
+- [x] Check West–Kazakov appendix/input mismatch and record data and PLSGLR requirements. Do not fit again without compatible new data.
+- [ ] Obtain dated declared/changed/final revisions and repeat identity observations, then build verified separate prior-start, trainer and jockey performance histories. Obtain rights before any wider collection.
+- [ ] Add documented earlier gear/gelding, pedigree, grade, distance, speed, pace and interference only where source timing and identity pass.
+- [ ] Authenticate independently published official outcomes and complete named fixed-win books. Exercise authorised shadow preparation only within existing permissions. Document the candidate freeze and fit-through-29-November/December calibration gates or mark the January–March cohort BLOCKED. No test-cohort tuning.
+
+[Draft #246 at 49d9676](https://github.com/Spankman/Monty-Racing/pull/246). No refit or market-edge claim, paid product recommendation, new live API credits, merge, deployment or trial modification.
