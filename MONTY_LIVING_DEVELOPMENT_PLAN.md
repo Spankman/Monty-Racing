@@ -62,3 +62,13 @@ PR241 carries an older copied plan plus its additive issue240 section; reconcile
 - [ ] Obtain genuinely later paired confirmation before considering any promotion or weight change. Existing official approval and all integrity rules apply.
 
 [Draft #242 and evidence](https://github.com/Spankman/Monty-Racing/pull/242), research head `ad47142f9b824d74d05d30cdc467a416ad987229`. Codex data and engineering requirements are in the linked research handover. The six-day PuntersEdge trial remains a separate workstream.
+
+## P0 inference evidence engineering — 26 November 2026
+
+- [x] Staged full private runner/features/contribution evidence with licence gates, encrypted receipt binding and bounded recovery. [Draft #243](https://github.com/Spankman/Monty-Racing/pull/243), engineering head `19f6eede08d71349484fd4594d4c18262d68a3ad`, stacked on #241.
+- [x] Historical #236–239 recovery searched existing artifacts, authorised workspace and backup. Original snapshot not recovered; 121 V6/118 V7 omitted runner records remain unavailable. No new provider calls.
+- [x] Research-only consumer and diagnostic contracts expose market offsets, calibration, missingness/cancellation and market-normalisation effects without pretending conditional corrections are independent form predictions. Work's #242 remains separate and authoritative for its historical study.
+- [x] Local 224 operational, 158 runner and 13 frozen integrity tests passed; all55V6hashes and17,987-runner/1,787-race replay verified. Synthetic-input genuine frozen V6/V7 evidence round-trip verified complete7declarations/12scores,55features and numerical replay <=1.1e-16. Exact-head CI evidence is tracked in #243.
+- [ ] Provider-specific private-retention and separate public-display permission, durable owner recovery-key custody, original PE HTTP wrapper wiring and separately approved live acceptance before activation. Public metadata-only delivery when rights absent is explicit, not model NO BET.
+
+[Engineering handover](https://github.com/Spankman/Monty-Racing/blob/19f6eede08d71349484fd4594d4c18262d68a3ad/operations/audit/INFERENCE_EVIDENCE_HANDOVER_2026-11-26.md) and [consumer contract](https://github.com/Spankman/Monty-Racing/blob/19f6eede08d71349484fd4594d4c18262d68a3ad/operations/RESEARCH_INTERFACE.md). No merge/deploy, model/threshold/weight change or interference with trial #235.
