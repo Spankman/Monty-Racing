@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-26",
+  "attribution": "Owner-supplied summary of commissioned independent Grok read-only audit",
+  "overall": 7.5,
+  "scores_out_of_10": {
+    "Overall project quality": 7.5,
+    "Software engineering": 8,
+    "Architecture": 6.5,
+    "Model integrity": 9,
+    "Testing": 8,
+    "Operational reliability": 7.5,
+    "Historical data quality": 6,
+    "Data acquisition": 5.5,
+    "Academic research": 5,
+    "Statistical methodology": 7,
+    "Independent predictive capability": 3.5,
+    "Market probability modelling": 8,
+    "Roughie identification": 4,
+    "Betting decision methodology": 8.5,
+    "Proven profitability": 2,
+    "Security": 8,
+    "Governance": 8.5,
+    "Cost efficiency": 6,
+    "User experience": 7,
+    "Long-term development potential": 7
+  },
+  "independently_reproduced": false,
+  "original_full_audit_available": false,
+  "access_limits": [
+    "private archives",
+    "complete coefficient vectors",
+    "recent high-numbered PRs",
+    "non-public evidence",
+    "subsequently recovered West-Kazakov paper"
+  ]
+}

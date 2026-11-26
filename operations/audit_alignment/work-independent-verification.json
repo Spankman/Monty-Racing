@@ -1,0 +1,9 @@
+{
+  "work_source": "operations/audit/QLD_VALIDATION_POWER_2026-11-26.json",
+  "work_json_sha256": "576528ec3c0dde376254ed009a0ef8ee00d2cf662b12638aa2b641a050fd9484",
+  "max_mde_absolute_difference": 3.413761564654075e-07,
+  "max_logloss_power_absolute_difference": 5.9030396305503885e-06,
+  "max_binomial_probability_difference": 4.663892651489421e-07,
+  "max_required_sample_relative_difference": 0.0,
+  "verification": "ARITHMETIC_ONLY; historical SD and future admission assumptions remain unverified"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "monty.audit-alignment-reproduction.v1",
+  "scope": "Hypothetical planning;no model fit or target outcomes",
+  "python": "3.12.14",
+  "scipy": "1.17.0",
+  "power_results_sha256": "c325bd889746c3ed935e9db57d6ff1acaf0b517487fc0244b85d90032b704cac",
+  "new_regression_tests": 6,
+  "local_reproduction": "BYTE_IDENTICAL",
+  "provider_calls": 0,
+  "frozen_files_changed": false,
+  "formal_protocol_changed": false,
+  "verification_scope": "Independent verification of Work canonical power arithmetic plus planning assumptions;no new model study",
+  "work_verification_sha256": "9b977e1e2b04da218e5a360da085b6f93931f82bf7cbd654c06a0ca1d180b38d"
+}
