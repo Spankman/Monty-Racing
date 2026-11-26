@@ -6,12 +6,15 @@ on:
       - 'operations/model_audit.py'
       - 'operations/evidence_acceptance.py'
       - 'operations/research_interface.py'
+      - 'operations/puntersedge_capture.py'
+      - 'test_evidence_readiness.py'
+      - 'operations/readiness_acceptance.py'
       - '.github/workflows/monty-evidence-ci.yml'
 permissions:
   contents: read
 jobs:
   offline-evidence:
-    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'engineering/inference-evidence'
+    if: github.event.pull_request.head.repo.full_name == github.repository && (github.head_ref == 'engineering/inference-evidence' || github.head_ref == 'integration/evidence-readiness-20261126')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -32,14 +35,24 @@ jobs:
           V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
           V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
       - name: Offline contracts and synthetic acquisition observers
-        run: python -m unittest test_evidence_retention test_research_interface -v
+        run: python -m unittest test_evidence_retention test_research_interface test_evidence_readiness -v
       - name: Both real frozen engines on explicitly synthetic fields, no provider keys
         run: python -m operations.evidence_acceptance operations_output/evidence-fixture v7_engine
+      - name: Synthetic PE HTTP wrapper and operational command compatibility
+        env:
+          MONTY_EVIDENCE_ARTIFACT_NAME: monty-readiness-evidence-${{ github.run_id }}
+        run: python -m operations.readiness_acceptance operations_output/readiness-fixture v7_engine
+      - name: Reconcile interrupted evidence
+        if: always()
+        run: python -m operations.evidence.interrupted operations_output
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: monty-inference-evidence-${{ github.run_id }}-${{ github.run_attempt }}
-          path: operations_output/evidence-fixture/evidence-sealed/
+          path: |
+            operations_output/evidence-fixture/evidence-sealed/
+            operations_output/evidence-fixture/evidence-checkpoints/
+            operations_output/evidence-fixture/evidence-recovery.json
           retention-days: 7
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
@@ -49,6 +62,23 @@ jobs:
           path: operations_output/evidence-fixture/public/
           retention-days: 7
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-readiness-evidence-${{ github.run_id }}
+          path: |
+            operations_output/readiness-fixture/evidence-sealed/
+            operations_output/readiness-fixture/evidence-checkpoints/
+            operations_output/readiness-fixture/evidence-recovery.json
+          retention-days: 7
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-readiness-receipts-${{ github.run_id }}
+          path: operations_output/readiness-fixture/public/
+          retention-days: 7
+          if-no-files-found: error
       - name: Delete ephemeral private inference files
         if: always()
-        run: rm -rf operations_output/evidence-fixture/private
+        run: rm -rf operations_output/evidence-fixture/private operations_output/readiness-fixture/private

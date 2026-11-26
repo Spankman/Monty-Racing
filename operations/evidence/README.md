@@ -43,3 +43,11 @@ Anchor the receipt hash independently; do not trust an archive's own hash assert
 ## Acceptance scope
 
 The new CI runs genuine frozen V6 and V7 on explicitly synthetic seven-runner fields (six active), seals/deletes plaintext and publishes encrypted evidence plus clearly labelled synthetic receipts. No Krok/PuntersEdge keys, live calls, training, trial changes or betting approval are involved. Private replay with the owner key is a separate acceptance step. A green contract job alone is not proof of complete inference evidence or live provider retention.
+
+## Readiness integration supplement — 26 November 2026
+
+`operations.puntersedge_capture` now connects exact successful response observation to the canonical/shared inference pipeline under the source policy; it is not imported into the production worker or trial. `Recorder.checkpoint` encrypts available private files after each successful HTTP response, canonical capture and completed race, with count/cumulative bounds and explicit capture errors. Normal complete packets and interrupted salvage remain different schemas.
+
+`python -m operations.evidence.interrupted operations_output` is an always-step reconciler for this implementation’s intent-marked directories. It preserves completed receipts, records verified partial checkpoint hashes without manufacturing selections, and cleans remaining plaintext. `recover_checkpoint(...)` checks the anchored interruption receipt, cipher, manifest, expiry and file hashes into a new private directory. It never returns a completed forecast. Runner destruction before upload can still lose local checkpoints; no WORM or external crash journal is claimed.
+
+Review the [permanent master](../../MONTY_MASTER_HANDOVER.md), [current terms/private delivery assessment](../governance/PROVIDER_PERMISSIONS_AND_DELIVERY.md) and [owner custody procedure](../governance/RECOVERY_KEY_CUSTODY.md). Earlier blanket Krok-retention uncertainty is superseded by the documented permitted retention clause; specific cloud/AI/display scope and owner policy remain separately reviewed. No live policy enabled.
