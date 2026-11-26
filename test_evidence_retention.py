@@ -98,7 +98,7 @@ class Retention(unittest.TestCase):
         self.policy['sources']['Krok']=dict(self.policy['sources']['SIMULATED FIXTURE']);r=self.recorder('Krok')
         p=dict(source_mode='LIVE',races=[{'private':'price'}]);self.assertEqual(public_result(p,{},r)['races'],[])
         self.policy['sources']['Krok'].update(public_derived_forecasts_permitted=True,public_display_permission_reference='Synthetic fixture permission only')
-        r=self.recorder('Krok');self.assertEqual(public_result(p,{},r)['races'],p['races'])
+        r=Recorder(self.root/'separate-permitted-run','test-run-2','Krok',self.policy,self.certroot/'cert',clock=lambda:self.at);self.assertEqual(public_result(p,{},r)['races'],p['races'])
     def test_all_four_ruffie_reporting_states(self):
         from operations.ruffies import audit
         from test_ruffies import Ruffies

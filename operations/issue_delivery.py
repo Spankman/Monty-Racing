@@ -65,12 +65,14 @@ def result_body(request, forecast, receipt, index):
     lines.append(f"Requested model: {request['version']} · {model.get('status', 'NOT RUN')} · "
                  f"{model.get('scored_races', 0)} races scored · Source mode: {forecast.get('source_mode', 'UNKNOWN')}")
     if forecast.get('provider_snapshot_sha256'):
-        lines.append('Field and odds data: Krok snapshot · SHA-256 `' + forecast['provider_snapshot_sha256'] + '`')
+        lines.append('Field and odds data: '+forecast.get('evidence',{}).get('source','Provider')+' snapshot · SHA-256 `' + forecast['provider_snapshot_sha256'] + '`')
     if index.get('reused_from_request'):
         lines.append(f"Shared verified forecast from request #{index['reused_from_request']}.")
     if forecast.get('captured_at'):
         lines += [f"Captured: {forecast['captured_at']} · Valid until: {forecast.get('valid_until')}",
                   'Recheck the five-minute limit and race jump at retrieval. Expired slips are historical.', '']
+    if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
+        lines += ['**PRIVATE DELIVERY BLOCKED — not a predictive NO BET**', forecast.get('privacy_notice','Detailed model output requires authorised private delivery.')]
     if view['races']:
         lines.append(ticket(view))
     for race in view['races']:
@@ -81,7 +83,7 @@ def result_body(request, forecast, receipt, index):
         lines.append(f"Operational outcome: {outcome}" + (f" · {evidence}" if evidence else ''))
     if forecast.get('blockers'):
         lines.append('Outcome details: ' + '; '.join(forecast['blockers']))
-    if request.get('meeting') and not any(r['result'].get('ordered_selections') for r in view['races']):
+    if forecast.get('delivery_visibility')!='PRIVATE_EVIDENCE_ONLY' and request.get('meeting') and not any(r['result'].get('ordered_selections') for r in view['races']):
         lines.append('No current Monty model selections for this race. See the model status and blockers above.')
     if index.get('forecast_path'):
         lines += ['', links(index)]

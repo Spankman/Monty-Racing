@@ -102,6 +102,15 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'FRESH' if age >= 0 and now < valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
+    if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
+        # Execution succeeded separately from delivery rights/access. Never hide
+        # valid model execution as scope-missing, NO BET or a manual form handoff.
+        result.update(model_execution_outcome=result['semantic_outcome'],
+                      delivery_status='PRIVATE_DELIVERY_BLOCKED',
+                      semantic_outcome='PRIVATE_DELIVERY_BLOCKED',
+                      privacy_notice=forecast.get('privacy_notice'),
+                      evidence=forecast.get('evidence'),selections_available=False)
+        return result
     if req and req.get('meeting') and result.get('freshness')=='FRESH':
         pending=handoffs(projection(forecast,req,now))
         if pending:result['form_assessment_requests']=pending

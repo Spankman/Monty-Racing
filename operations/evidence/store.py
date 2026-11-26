@@ -40,6 +40,7 @@ class Recorder:
         self.output=Path(output).resolve();self.source=source if source in ('Krok','PuntersEdge','SIMULATED FIXTURE','HISTORICAL REPLAY') else 'UNRECOGNISED_PROVIDER';self.run_id=str(run_id);self.clock=clock
         self.root=self.output/'private'/'retention';self.raw_count=0;self.errors=[]
         self.policy=None;self.enabled=False;self.status='NOT_CONFIGURED';self.created=clock()
+        self.checkpoint_count=0;self.checkpoint_errors=[]
         self.cert=Path(certificate or os.getenv('MONTY_EVIDENCE_CERTIFICATE') or HERE/'recipient-public.pem')
         if policy is None:policy=os.getenv('MONTY_EVIDENCE_POLICY') or None
         if policy is None:return
@@ -53,7 +54,49 @@ class Recorder:
             if type(p['max_bundle_bytes']) is not int or not 1<=p['max_bundle_bytes']<=100_000_000:raise ValueError('Bundle bound invalid')
             if not self.cert.is_file() or b'PRIVATE KEY' in self.cert.read_bytes():raise ValueError('Public-only recipient certificate required')
             self.policy=p;self.enabled=True;self.status='COLLECTING'
-        except Exception:self.status='POLICY_OR_KEY_CONFIGURATION_BLOCKED'
+            write(self.output/'evidence-intent.json',encoded(dict(schema='monty.evidence-intent.v1',run_id=self.run_id,source=self.source,created_at=self.created.isoformat(),expires_at=(self.created+timedelta(days=p['retention_days'])).isoformat(),policy_sha256=sha(encoded(p)))))
+        except Exception:
+            self.enabled=False;self.policy=None;self.status='POLICY_OR_KEY_CONFIGURATION_BLOCKED'
+    def checkpoint(self,stage):
+        """Encrypted bounded best-effort crash evidence, never a completed forecast.
+        No plaintext staging ZIP or external calls. Existing checkpoint files are
+        exclusive; interrupted checkpoints are not silently used as predictions.
+        """
+        if not self.enabled:return
+        try:
+            if stage not in ('http_response','provider_captured','race_scored'):raise ValueError('Unknown checkpoint stage')
+            base=self.output/'evidence-checkpoints';base.mkdir(mode=0o700,exist_ok=True)
+            if self.checkpoint_count>=100:raise ValueError('Checkpoint count bound')
+            entries=[];total=0
+            for path in sorted((self.output/'private').rglob('*')):
+                if path.is_symlink():raise ValueError('Checkpoint symlink')
+                if not path.is_file():continue
+                if path.suffix not in ('.json','.jsonl','.csv','.npz','.txt'):raise ValueError('Checkpoint artifact type')
+                raw=path.read_bytes();total+=len(raw)
+                if total>self.policy['max_bundle_bytes']:raise ValueError('Checkpoint size bound')
+                if path.suffix=='.json':no_secrets(json.loads(raw))
+                elif path.suffix=='.jsonl':
+                    for line in raw.splitlines():no_secrets(json.loads(line))
+                elif path.suffix in ('.csv','.txt'):no_secrets(raw.decode('utf-8'))
+                entries.append((path.relative_to(self.output/'private').as_posix(),raw))
+            manifest=dict(schema='monty.interrupted-evidence.v1',run_id=self.run_id,source=self.source,stage=stage,
+                execution_status='IN_PROGRESS_NOT_A_FORECAST',created_at=self.clock().isoformat(),
+                expires_at=(self.created+timedelta(days=self.policy['retention_days'])).isoformat(),
+                policy_sha256=sha(encoded(self.policy)),files=[dict(path=n,sha256=sha(b),bytes=len(b)) for n,b in entries])
+            import io
+            buffer=io.BytesIO()
+            with zipfile.ZipFile(buffer,'w',zipfile.ZIP_DEFLATED) as z:
+                z.writestr('manifest.json',encoded(manifest))
+                for name,raw in entries:z.writestr('private/'+name,raw)
+            encrypted=subprocess.run(['openssl','cms','-encrypt','-aes-256-gcm','-binary','-outform','DER',str(self.cert)],input=buffer.getvalue(),capture_output=True,check=True).stdout
+            if sum(p.stat().st_size for p in base.glob('*.cms'))+len(encrypted)>self.policy['max_bundle_bytes']:raise ValueError('Cumulative checkpoint bound')
+            prefix=base/f'{self.checkpoint_count:04}'
+            write(prefix.with_suffix('.cms'),encrypted)
+            write(prefix.with_suffix('.json'),encoded(dict(schema='monty.checkpoint-index.v1',run_id=self.run_id,stage=stage,
+                status='IN_PROGRESS_NOT_A_FORECAST',cipher_sha256=sha(encrypted),manifest_sha256=sha(encoded(manifest)),
+                expires_at=manifest['expires_at'],files=len(entries))))
+            self.checkpoint_count+=1
+        except Exception:self.checkpoint_errors.append('checkpoint_capture_failed')
     def raw(self,body,endpoint):
         if not self.enabled:return
         try:
@@ -64,6 +107,7 @@ class Recorder:
             target=self.root/f'raw-{self.raw_count:04}.json';write(target,body)
             write(self.root/f'raw-{self.raw_count:04}.meta.json',encoded(dict(endpoint=endpoint,observed_at=self.clock().isoformat(),sha256=sha(body))))
             self.raw_count+=1
+            self.checkpoint('http_response')
         except Exception:self.errors.append('raw_capture_rejected')
     def snapshot(self,payload):
         if not self.enabled:return
@@ -71,7 +115,7 @@ class Recorder:
         except Exception:self.errors.append('canonical_snapshot_rejected')
     def seal(self,prediction):
         base=dict(schema='monty.evidence-index.v1',source=self.source,status=self.status,complete=False,
-                  raw_http_pages=self.raw_count,errors=list(self.errors))
+                  raw_http_pages=self.raw_count,errors=list(self.errors),encrypted_checkpoints=self.checkpoint_count,checkpoint_errors=list(self.checkpoint_errors))
         if not self.enabled:return base
         try:
             no_secrets(prediction)
@@ -130,6 +174,10 @@ class Recorder:
                 source_code_commit=code_commit,source_checkout_clean=code_clean,expires_at=expires.isoformat(),retention_days=self.policy['retention_days'],private_files=len(files),model_diagnostics=diagnostics,
                 original_capture=manifest['original_capture'],artifact_name='monty-inference-evidence-'+str(os.getenv('GITHUB_RUN_ID',self.run_id))+'-'+str(os.getenv('GITHUB_RUN_ATTEMPT','1')),
                 artifact_file='evidence.cms',errors=list(self.errors))
+            artifact_name=os.getenv('MONTY_EVIDENCE_ARTIFACT_NAME')
+            if artifact_name:
+                if not re.fullmatch(r'[A-Za-z0-9_.-]{1,200}',artifact_name):raise ValueError('Invalid artifact identity')
+                index['artifact_name']=artifact_name
             write(sealed/'evidence-index.json',encoded(index));return index
         except Exception:
             return dict(base,status='RETENTION_FAILED',errors=self.errors+['seal_failed'])

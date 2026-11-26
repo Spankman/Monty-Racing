@@ -112,6 +112,9 @@ jobs:
           else
             python operations/worker.py
           fi
+      - name: Reconcile interrupted private evidence and remove plaintext
+        if: always() && steps.event.outputs.settled != 'true'
+        run: python -m operations.evidence.interrupted operations_output
       - name: Derived receipt and forecast artifact (no private snapshots)
         if: always() && steps.event.outputs.settled != 'true'
         uses: actions/upload-artifact@v4
@@ -125,7 +128,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: monty-inference-evidence-${{ github.run_id }}-${{ github.run_attempt }}
-          path: operations_output/*/evidence-sealed/
+          path: |
+            operations_output/*/evidence-sealed/
+            operations_output/*/evidence-checkpoints/
+            operations_output/*/evidence-recovery.json
           if-no-files-found: ignore
           retention-days: 7
   report_failure:

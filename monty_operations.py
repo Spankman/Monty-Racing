@@ -267,7 +267,7 @@ def selection(rows,version='V6'):
                 betting_authorised=False)
 
 
-def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False, evidence_policy=None, evidence_certificate=None, evidence_raw_pages=None):
+def execute(day, output, v7_root, *, run_id, payload=None, captured=None, request=None, fixture=False, scorer=invoke, timings=False, evidence_policy=None, evidence_certificate=None, evidence_raw_pages=None, acquisition=None, evidence_source=None):
     """Capture once, run both frozen models on byte-identical per-race snapshots."""
     execution_started=monotonic();durations={}
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
@@ -278,7 +278,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 generated_at=started.isoformat(),receipt=f'runs/{day}/{run_id}/receipt.json',source_mode='SIMULATED FIXTURE' if fixture else 'LIVE',
                 status='FAILED',models={},races=[],blockers=[],coverage={},qualifying_forecasts=0)
     from operations.evidence.store import Recorder
-    source='SIMULATED FIXTURE' if fixture else ((payload.get('meta') or {}).get('provider','Krok') if isinstance(payload,dict) else 'Krok')
+    source=evidence_source or ('SIMULATED FIXTURE' if fixture else ((payload.get('meta') or {}).get('provider','Krok') if isinstance(payload,dict) else 'Krok'))
     recorder=Recorder(output,run_id,source,policy=evidence_policy,certificate=evidence_certificate)
     for body,endpoint in evidence_raw_pages or []:recorder.raw(body,endpoint)
     pins={}
@@ -306,6 +306,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                  'V7':(v7_model.get('names',[]),[n for n,a in zip(v7_model.get('names',[]),v7_model.get('active',[])) if a])}
         stage='provider_capture'
         phase_started=monotonic()
+        if payload is None and acquisition is not None:
+            payload=acquisition(recorder)
         if payload is None:
             from krok_adapter import fetch
             key=os.environ.get('KROK_API_KEY','').strip()
@@ -318,6 +320,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         durations['provider_acquisition_seconds']=monotonic()-phase_started
         durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
         recorder.snapshot(payload)
+        recorder.checkpoint('provider_captured')
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
@@ -458,6 +461,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 from operations.single_race import annotate
                 for version in ['V6','V7']:annotate(record,version)
             result['races'].append(record)
+            recorder.checkpoint('race_scored')
         result['status']=summarize(result,request['version'])
         result['blockers']=['Betting approval DATA BLOCKED: no independent field/conditions attestation, compatible as-of history or validated prospective approval evaluator','V7 remains research only']
     except RaceUnavailable as exc:

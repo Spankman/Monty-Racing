@@ -1,6 +1,11 @@
 # Monty Racing — Living Development Plan
 Owner direction, 25 November 2026. Read before planning Work or Codex sessions. Supplements existing betting and integrity policies; does not override them.
 
+## Mandatory development and research protocol — 26 November 2026
+- Apply the startup and completion requirements in [AGENTS.md](AGENTS.md) to current and future development. Keep governing documents, prior findings and workstream commits pinned in the shared handover.
+- Review applicable research before implementation and reproduce relevant academic baselines wherever practical. Compare modern alternatives against matched academic, frozen-engine and independent market baselines using chronological leakage-free evaluation. Record negative and blocked runs along with successful ones.
+- Keep the [research library](MONTY_RESEARCH_LIBRARY.md), this plan and the shared handover current. The [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) records this protocol update and identifies the missing master handover.
+
 ## Permanent resource rules
 - Use ordinary ChatGPT for planning and routine reviews; reserve Work credits for substantial integration and independent audits, Codex for targeted code work. Use conventional scripts and GitHub Actions for repeatable processing.
 - Batch related tasks, avoid re-auditing unchanged components, cache and share data, checkpoint long jobs, bound retries and stop on genuine blockers. Report measurable progress, costs where observable, and concise handovers. Never guess remaining credits.
@@ -36,26 +41,50 @@ Research modules are non-blocking: include reliable pre-race variables in experi
 ## Delegated feature pruning — owner approval 25 November 2026
 ChatGPT, Work and Codex may independently remove or disable redundant, ineffective or unjustifiably costly predictive factors and research features in development candidates without seeking prior owner approval. Use proportionate evidence (existing tests, ablations, redundancy or documented cost/benefit); retain reproducible baseline and rollback, record rationale and uncertainty, and notify owner afterwards in the next handover with affected features, evidence and impact. Do not treat inconclusive evidence as proof of harm. This authority does not permit changing frozen V6 artifacts, saved baselines, betting rules, safety/data-integrity controls, production deployment, model promotion, billing or merging without existing approvals. No separate approval needed for individual research pruning decisions.
 
-## Issue 240 roughie audit update — 26 November 2026
+## Shared baseline reconciliation — 26 November 2026
 
-- [x] Hash-verify requests236–239 shared forecast and artifact; document the unpreserved121V6/118V7 scored runner records without inventing exclusions.
-- [x] Audit static market offsets, saved calibration temperature, missing-history cancellation and inactive expert blending; no operational90/10 claim.
-- [x] Run frozen-model chronological month evaluation and the requested four odds bands, settlement-only place joins, day-bootstrap uncertainty and high-price winner stress tests. Exchange prices are proxies, not named fixed-win validation.
-- [x] Stage RUFFIES TO WATCH diagnostics across official/provisional views and compact/mobile tickets; no quota, production threshold, model or approval change.
-- [ ] Recover the exact original236provider snapshot/shared inputs and missing per-runner scores for a complete named $10+ exclusion audit.
-- [ ] Obtain licensed historical named-bookmaker fixed-win quotes and original fold1/fold2 artifacts/evaluation records before claiming full fixed-win walk-forward acceptance.
-- [ ] Independently validate compatible as-of form and lifetime horse identities; original feature groups, Trainer Intent, pedigree, sectionals and hidden-form hypotheses remain research, not active model additions.
-- [ ] Require owner-reviewed later prospective improvement before any calibration/weighting/threshold change. Six-day PE trial is untouched; no new live API credits consumed.
+- [x] Reviewed the mandatory protocol at PR234 `6b205a5cab7e79a237d9fd1903a203c72d1bf8f1`; retain its startup/completion rules for current and future development.
+- [x] Index completed issue240 workstream `cd775dc07a0a716ecb47a6e4db934c5fb451a72a` as `RUFFIES-240-20261126` in the shared Research Library, including null/negative and blocked findings.
+- [x] Update the shared baseline handover with governing, production, trial and audit refs.
+- [x] Establish permanent [MONTY_MASTER_HANDOVER.md](MONTY_MASTER_HANDOVER.md) under the owner’s 26 November engineering-integration directive; baseline retained as historical evidence.
+- [ ] Complete relevant full-method reviews and academic replications before dependent modelling claims; Australian PLS full text remains an explicit access gap.
+- [ ] Require genuinely later prospective improvement and owner approval before model/weight/threshold activation.
 
-Evidence and handover: [issue240audit](operations/audit/RUFFIE_AUDIT_2026-11-26.md). This plan copies the unmerged owner document from draft234; reconcile its additive update with that draft before any eventual merge. No production merge or model activation is authorised.
+PR241 carries an older copied plan plus its additive issue240 section; reconcile it with this newer shared PR234 register before any eventual merge, retaining the substantive audit findings. Both remain unmerged. Keep both test_ruffies and test_pe_trial when eventually integrating their parallel CI additions. The six-day PE trial is untouched. Explicit owner instructions, including the $4 fixed-win progression, supersede older unresolved-cutoff wording. No betting policy change is made here.
 
-## Inference evidence engineering — 26 November 2026
+## Independent predictive development — 26 November 2026
 
-Staged workstream `engineering/inference-evidence`, based on #241. Canonical shared governance remains PR #234 (`fb5f8b4481c535f5415b8ad3ed285579885bd48b` reviewed); reconcile this older copied plan before eventual integration.
+- [x] P0: Restore and verify the original AU archive, inventory matched context and recheck the pinned place sources, Queensland sectional captures and public PuntersEdge closing lines. Coverage and availability gaps are recorded.
+- [ ] P0: Build registration-level, timestamped form and settlement joins, starting with permitted Australian authority data. Source independently complete named-bookmaker snapshots before testing fixed-win value. Keep missing source vintage and unresolved identities explicit.
+- [x] P1: Test market, conditional logit, Benter-style combination, maintenance of market-calibration control, completeness-adaptive combination, PLS-inspired control and boosted challenger in four historical folds. Independent history helps standalone form but incremental market benefit is unproven. Exact Australian PLS replication remains open.
+- [x] P2: Test a partial prior-start and connection block and four roughie bands. Record insufficient incremental edge and rare-winner sensitivity. No thresholds changed.
+- [ ] P2: Isolate trainer-intent contributions on later authority-linked data. Gear/gelding, pedigree, speed/pace and hidden form require verified dated inputs and a separate ablation. Validate named-bookmaker and prospective outcomes on separate cohorts.
+- [ ] Obtain genuinely later paired confirmation before considering any promotion or weight change. Existing official approval and all integrity rules apply.
 
-- [x] Complete private evidence packet, all scored/declaration records, frozen feature/contribution replay and receipt-bound encryption implemented.
-- [x] Historical #236–239 archive search: originals not recovered; 121 V6/118 V7 records remain unavailable.
-- [x] Research-only diagnostics/consumer and explicit roughie assessment states implemented; no training or weighting activation.
-- [ ] Source retention/public-display permission, durable owner key custody and live wrapper verification before production approval.
+[Draft #242 and evidence](https://github.com/Spankman/Monty-Racing/pull/242), research head `ad47142f9b824d74d05d30cdc467a416ad987229`. Codex data and engineering requirements are in the linked research handover. The six-day PuntersEdge trial remains a separate workstream.
 
-See [engineering handover](operations/audit/INFERENCE_EVIDENCE_HANDOVER_2026-11-26.md). Work's #242 research remains separate; trial #235 untouched. No provider credits, merge or deployment.
+## P0 inference evidence engineering — 26 November 2026
+
+- [x] Staged full private runner/features/contribution evidence with licence gates, encrypted receipt binding and bounded recovery. [Draft #243](https://github.com/Spankman/Monty-Racing/pull/243), engineering head `19f6eede08d71349484fd4594d4c18262d68a3ad`, stacked on #241.
+- [x] Historical #236–239 recovery searched existing artifacts, authorised workspace and backup. Original snapshot not recovered; 121 V6/118 V7 omitted runner records remain unavailable. No new provider calls.
+- [x] Research-only consumer and diagnostic contracts expose market offsets, calibration, missingness/cancellation and market-normalisation effects without pretending conditional corrections are independent form predictions. Work's #242 remains separate and authoritative for its historical study.
+- [x] Local 224 operational, 158 runner and 13 frozen integrity tests passed; all55V6hashes and17,987-runner/1,787-race replay verified. Synthetic-input genuine frozen V6/V7 evidence round-trip verified complete7declarations/12scores,55features and numerical replay <=1.1e-16. Exact-head CI evidence is tracked in #243.
+- [ ] Provider-specific private-retention and separate public-display permission, durable owner recovery-key custody, original PE HTTP wrapper wiring and separately approved live acceptance before activation. Public metadata-only delivery when rights absent is explicit, not model NO BET.
+
+[Engineering handover](https://github.com/Spankman/Monty-Racing/blob/19f6eede08d71349484fd4594d4c18262d68a3ad/operations/audit/INFERENCE_EVIDENCE_HANDOVER_2026-11-26.md) and [consumer contract](https://github.com/Spankman/Monty-Racing/blob/19f6eede08d71349484fd4594d4c18262d68a3ad/operations/RESEARCH_INTERFACE.md). No merge/deploy, model/threshold/weight change or interference with trial #235.
+
+### Final engineering acceptance checkpoint — 26 November 2026
+
+Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all four CI checks green, 225 operational/158 runner/13 frozen local tests, 25 new contract checks. Native connector artifact download + authenticated private replay verified 24 files/7 declarations/12 scores/both 55-feature matrices, max probability error 1.0061396160665481e-16. [Exact receipt and CI proof](operations/audit/evidence_retention_acceptance_20261126). Synthetic inputs, genuine unchanged frozen engines; zero provider calls, not live acceptance. Historical originals remain missing and licensing/key custody/live PE wrapper approval blockers remain open. Production and trial unchanged.
+
+## Engineering readiness integration — 26 November 2026
+
+- [x] Permanent master handover and mandatory startup/update protocol.
+- [x] Reconcile #234 shared docs with #241/#243 evidence code; keep #242 research isolated.
+- [x] Staged PE original-success-response acquisition wrapper, single-use guard and explicit field/provenance diagnostics; no new live calls.
+- [x] Encrypted bounded progress checkpoints, interruption receipt/recovery and cleanup; hard runner-loss limitation explicit.
+- [x] Explicit private-delivery blocked outcome preserves genuine inference classification.
+- [x] Provider terms review and owner key/private-sink procedures documented.
+- [ ] Owner source/cloud-processing confirmation, durable key backup, private sink authentication/access approval and genuinely live/mobile acceptance before deployment.
+
+Current branch `integration/evidence-readiness-20261126` atop #243. [Assessment and rollback](operations/governance/INTEGRATION_READINESS_2026-11-26.md). Exact tests/CI are recorded in the draft PR. Zero provider API credits; trial #235 untouched.
