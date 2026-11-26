@@ -144,3 +144,14 @@ Verified55originalV6hashes and pinnedV7 unchanged;no refit,newprediction,provide
 ## Owner-approved provider investigation — 26 November 2026
 
 - [ ] Work P0: reconcile the existing canonical source register (no duplicate register) with Punting Form, RacingZone, Racing and Sports, Everyrace (Wizard/Superform), Australian Stud Book, Form Focus, Racenet, Punters.com.au, Racing Australia and state authorities. Retain existing Betfair, Krok and PuntersEdge entries. Investigate historical depth, machine-readable/bulk/API access, individual sectionals and positions, weights/claims, gear/gelding, pedigree, regional coverage, identities, publication/revision times, private modelling/backtesting/cloud retention rights, cost and strictly admitted rows. Free lawful sources first; no purchases or additional provider credits. Codex supports existing contracts only. Report verified findings and gaps in the next handover. [Owner instruction](https://github.com/Spankman/Monty-Racing/pull/234#issuecomment-7186406139). No trial or model changes.
+
+
+## Operational consolidation — owner approval 26 November 2026
+
+Day 1 trial report: 12/12 captures, both frozen engines scored, zero admitted forecasts and zero settlements. [Run 45736491530](https://github.com/Spankman/Monty-Racing/actions/runs/45736491530). Owner priority: make Monty reliable, economical and demonstrate net financial performance; defer discretionary redevelopment.
+
+- [ ] Codex P0: diagnose Rockhampton authority FileNotFoundError from existing evidence; repair existing interfaces on separate staging branch, with regression proof. Support NSW/WA authority integration, field/emergency status and named complete fixed-win book verification; reuse existing contracts.
+- [ ] Work P0: identify lawful independent NSW/WA/QLD authority and operator evidence, historical as-of compatibility and verified settlement sources. Compare PE/Krok matched freshness, completeness and actual credit cost using existing trial receipts. Distinguish missing evidence from provider failure.
+- [ ] ChatGPT: track verified selections, settlements, win/exotic ROI separately, actual versus paper results, and operating costs; review exact repair evidence and maintain shared handover.
+
+Preserve six-day trial protocol and branch, frozen models, selection rules and verification gates. No extra provider calls, purchases, merge, deployment or permission changes authorised. No forced bets or stake increases to recover costs. Repairs staged only; report blockers and measured acceptance, not assumed profitability.
