@@ -1,0 +1,42 @@
+# Provider permission and private delivery assessment
+
+Version 1 · 26 November 2026. Staged design; no account, secret, plan, repository permission or production change performed. Public documentation review is not proof of account-specific grandfathered entitlements or approval to send a licensed feed to unrelated users. [Review receipts](provider-terms-receipts.json) record URL, time, HTTP status and response SHA-256; full terms remain on provider sites/private review archive.
+
+## Current evidence and exact outstanding questions
+
+| Source | Documentation reviewed | Supported scope / remaining question |
+| --- | --- | --- |
+| [PuntersEdge terms](https://puntersedge.online/terms) §§3.4, 8.1–8.4 | Personal Free/Hobby/Standard use includes own betting decisions, models, research, backtesting and private dashboards. AI assistants using the API are subject to the same terms. Derived models/analyses/conclusions remain the user's; public price display starts at a different licence. | Supports personal model use. Confirm that the owner's current key covers encrypted raw response retention on GitHub's infrastructure for seven days and private AI-assisted analysis by the owner's authenticated ChatGPT/Work/Codex, including the AI processor's handling/retention. Confirm deletion rules for raw prices/form and whether quoted prices on the owner's private slip need attribution. Do not claim public display or transferable raw feed rights. |
+| PuntersEdge §8.2 | Some older keys retain earlier commercial internal-use rights; public display/redistribution excluded. | Account/key creation licence not authenticated in this task. No grandfathering assumed; no new usage call made. |
+| [Krok terms](https://krokodds.com.au/terms) §§6.1–6.2 | Permitted personal automated/internal tools and retention for permitted purposes, including after a plan ends; restrictions and attribution persist. Display to own-product users is distinguished from standalone feed redistribution. | Retention itself is now documented, superseding the earlier blanket uncertainty. Confirm whether a public-repository encrypted artifact accessible as ciphertext to other GitHub users, owner-private ChatGPT processing and proposed ticket delivery fit the permitted private product scope, with no competing service/redistribution. Use “Data provided by Krok Odds” or “Powered by Krok Odds” with link on each permitted display. |
+| Authority/bookmaker inputs | Existing lawful public acquisition only; neither API provider grants all underlying source rights. | Record source terms, date, URL and per-source retention/display scope. Independence requires provenance, not a second endpoint or matching prices. Do not bypass login/challenges/access restrictions. |
+
+Exact clarification request (owner may forward; not sent by this work): “For my own non-commercial Monty tool, may I retain successful raw racing API responses and derived feature matrices encrypted to my private recovery certificate in GitHub Actions artifacts for up to seven days, process/decrypt them only in my authorised private research environment, and show selected horses, model probabilities and your attributed bookmaker prices only to me in my authenticated ChatGPT conversation on iPhone? Do you permit ChatGPT/Work/Codex as processors under their applicable data controls, and what raw/derived retention, attribution and deletion requirements apply? Does encrypted ciphertext hosted on a public repository count as prohibited distribution? Please confirm the scope for my current key, including underlying form rights.” Never include an API key in such correspondence.
+
+No public redistribution approval is established. Personal use does not require a paid upgrade merely because it is automated, but a public price service is a different use. Do not purchase a plan to resolve a question the current terms already answer. No provider contact or purchase made here.
+
+## Permission records
+
+Keep an owner-approved private policy with source, permitted purpose, licence/confirmation reference, key entitlement reference (not the key), review expiry, private retention duration/maximum size, named processors, authorised consumers and public-derived-display scope. Store a sanitized policy copy inside the encrypted packet. Unknown permissions fail closed for retention/display independently of model execution. Keys/headers/account/billing responses never enter packets or reports.
+
+Current example policy enables synthetic fixtures only. No live policy enabled. Seven days is a conservative implementation cap, not a provider-granted universal entitlement. A current price must still satisfy the five-minute/pre-jump gates; retention length never extends forecast validity.
+
+## Proposed minimal private delivery using existing GitHub/ChatGPT
+
+Keep current public source/Actions command ingress and the iPhone RM/C interface. Publish public status, model execution state, capture/expiry and hashes only. Do not put licensed detailed selections or raw provider evidence in public command comments, Git branches, HTML or artifacts without documented display rights.
+
+If personal cloud-processing permission is confirmed, the simplest proposed private sink is an owner-controlled **private GitHub results repository**, containing only permitted derived slips/JSON/receipts and immutable timestamped paths. Raw inputs/features remain encrypted separately. The existing GitHub connector would read the exact private index and linked receipt/ticket after authenticated access is explicitly demonstrated. Preserve scope, newest-request semantics, receipt checks and freshness on every retrieval; both models may share one capture. C performs reads only.
+
+This is a design, not an installed service. It requires owner approval to create/select the private repository and grant the existing ChatGPT GitHub connector access. Cross-repository Actions writes require an appropriately scoped credential/App installation; current GITHUB_TOKEN must not be presumed able to write another repository. Owner must configure the minimal secret/access route using GitHub's own UI, never chat. Existing secret creation was denied403; no retry or permission change here. Use contents-write only for the private result sink, no administration/billing rights. Check free storage/retention allowance before use; no paid runner or subscription approved.
+
+Compatibility is not demonstrated merely because public connector reads work. Test private-repository reads and exact slips/receipts from a fresh ordinary iPhone ChatGPT conversation after approval. If unavailable, preserve honest pending/delivery-blocked outcomes; do not introduce custom plugins, hosting or manual workspace dispatch as an alleged completed solution.
+
+An encrypted archive in a public repository does not by itself deliver readable slips to ordinary ChatGPT. The key must never be pasted into chat or made available in public Actions logs. Do not decrypt the whole evidence packet inside ordinary chat just to render a ticket. A permissioned derived-selection sink is separate from full research evidence access.
+
+## Explicit state handling
+
+Model SCORED/PROVISIONAL/RESEARCH ONLY and betting approval retain their meanings. Missing private delivery rights/access returns `PRIVATE_DELIVERY_BLOCKED`, preserves `model_execution_outcome`, receipt, capture age and expiry, and supplies no invented selections or manual-form substitute. Issue delivery shows the same limitation. An expired underlying forecast remains expired even if delivery is later authorised. This is not NO BET, scope absence or inference failure. Repeated C reads never acquire data.
+
+## Expiry/deletion
+
+Classify raw provider, shared features and full inference evidence under the approved source-specific deadline. Seven-day hosted ciphertext expiry plus reader enforcement are not guaranteed physical deletion of all copies. Delete authorised consumer plaintext at deadline, record hash-only deletion proof, and retain only permitted aggregate receipts/own conclusions. Git history cannot promise deletion of detailed plaintext previously published publicly; avoid it at source. The private sink design needs an approved shorter/rotating repository strategy for licensed price records before deployment; do not promise Git commits erase data. Provider-plan termination requirements must also be respected. No deletion of historical source archives is authorised by this assessment.

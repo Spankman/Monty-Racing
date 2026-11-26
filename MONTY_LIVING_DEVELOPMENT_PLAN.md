@@ -87,3 +87,15 @@ Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all fou
 - [ ] Freeze candidate manifest or mark 2027 window blocked. No production action without independent evidence and owner approval.
 
 [Draft #244](https://github.com/Spankman/Monty-Racing/pull/244), `29239357579422148091a3320401d5e0572d774c`.
+
+## Engineering readiness integration — 26 November 2026
+
+- [x] Permanent master handover and mandatory startup/update protocol.
+- [x] Reconcile #234 shared docs with #241/#243 evidence code; keep #242 research isolated.
+- [x] Staged PE original-success-response acquisition wrapper, single-use guard and explicit field/provenance diagnostics; no new live calls.
+- [x] Encrypted bounded progress checkpoints, interruption receipt/recovery and cleanup; hard runner-loss limitation explicit.
+- [x] Explicit private-delivery blocked outcome preserves genuine inference classification.
+- [x] Provider terms review and owner key/private-sink procedures documented.
+- [ ] Owner source/cloud-processing confirmation, durable key backup, private sink authentication/access approval and genuinely live/mobile acceptance before deployment.
+
+Current branch `integration/evidence-readiness-20261126` atop #243. [Assessment and rollback](operations/governance/INTEGRATION_READINESS_2026-11-26.md). Exact tests/CI are recorded in the draft PR. Zero provider API credits; trial #235 untouched.

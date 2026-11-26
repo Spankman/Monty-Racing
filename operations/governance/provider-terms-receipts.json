@@ -1,0 +1,23 @@
+[
+  {
+    "name": "pe-terms",
+    "url": "https://puntersedge.online/terms",
+    "status": 200,
+    "sha256": "0933f504bd267d2e4309dc0a6eb36ef1c84614143b66927aebd499ac5618a2c9",
+    "fetched_at": "2026-11-26T00:14:57.665072+00:00"
+  },
+  {
+    "name": "pe-docs",
+    "url": "https://puntersedge.online/docs",
+    "status": 200,
+    "sha256": "37b5b2abd6ff05a669fb43d1ec6743d9eb056f4f48295a7db79846949127df4b",
+    "fetched_at": "2026-11-26T00:14:59.713725+00:00"
+  },
+  {
+    "name": "krok-terms",
+    "url": "https://krokodds.com.au/terms",
+    "status": 200,
+    "sha256": "8855847c21e32b0ed3416e83ebbf49f03015b26e272692b8a593978b36b47f5a",
+    "fetched_at": "2026-11-26T00:15:01.058118+00:00"
+  }
+]

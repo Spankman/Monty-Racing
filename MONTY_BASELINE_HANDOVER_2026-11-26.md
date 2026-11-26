@@ -47,3 +47,7 @@ Reviewed governance at PR #234 `4bf8ddf01ff221081f5abce526fd6e84f55b70ab`, issue
 ### Final engineering acceptance checkpoint — 26 November 2026
 
 Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all four CI checks green, 225 operational/158 runner/13 frozen local tests, 25 new contract checks. Native connector artifact download + authenticated private replay verified 24 files/7 declarations/12 scores/both 55-feature matrices, max probability error 1.0061396160665481e-16. [Exact receipt and CI proof](operations/audit/evidence_retention_acceptance_20261126). Synthetic inputs, genuine unchanged frozen engines; zero provider calls, not live acceptance. Historical originals remain missing and licensing/key custody/live PE wrapper approval blockers remain open. Production and trial unchanged.
+
+## Shared master reconciliation — 26 November 2026
+
+Work’s #234 master at1184da7350fee5a9aec3a48336f5b79caa274654 is extended, not replaced by a competing entry point. Version1.1 includes engineering #245, rights/private delivery and custody procedures, while preserving #244 research and its newly recovered full PLS paper. See current MONTY_MASTER_HANDOVER.md for the active index. No production/trial changes.
