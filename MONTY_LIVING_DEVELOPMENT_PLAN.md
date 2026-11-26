@@ -72,3 +72,7 @@ PR241 carries an older copied plan plus its additive issue240 section; reconcile
 - [ ] Provider-specific private-retention and separate public-display permission, durable owner recovery-key custody, original PE HTTP wrapper wiring and separately approved live acceptance before activation. Public metadata-only delivery when rights absent is explicit, not model NO BET.
 
 [Engineering handover](https://github.com/Spankman/Monty-Racing/blob/19f6eede08d71349484fd4594d4c18262d68a3ad/operations/audit/INFERENCE_EVIDENCE_HANDOVER_2026-11-26.md) and [consumer contract](https://github.com/Spankman/Monty-Racing/blob/19f6eede08d71349484fd4594d4c18262d68a3ad/operations/RESEARCH_INTERFACE.md). No merge/deploy, model/threshold/weight change or interference with trial #235.
+
+### Final engineering acceptance checkpoint — 26 November 2026
+
+Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all four CI checks green, 225 operational/158 runner/13 frozen local tests, 25 new contract checks. Native connector artifact download + authenticated private replay verified 24 files/7 declarations/12 scores/both 55-feature matrices, max probability error 1.0061396160665481e-16. [Exact receipt and CI proof](operations/audit/evidence_retention_acceptance_20261126). Synthetic inputs, genuine unchanged frozen engines; zero provider calls, not live acceptance. Historical originals remain missing and licensing/key custody/live PE wrapper approval blockers remain open. Production and trial unchanged.
