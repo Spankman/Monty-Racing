@@ -1,5 +1,7 @@
 # Monty development baseline handover
 
+The [permanent master handover](MONTY_MASTER_HANDOVER.md) now holds the active baseline. This dated document records the earlier governance and engineering checkpoints.
+
 26 November 2026, Brisbane. Applies to ChatGPT, Codex and Work.
 
 | Material reviewed | Exact revision |
@@ -45,7 +47,3 @@ Reviewed governance at PR #234 `4bf8ddf01ff221081f5abce526fd6e84f55b70ab`, issue
 ### Final engineering acceptance checkpoint — 26 November 2026
 
 Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all four CI checks green, 225 operational/158 runner/13 frozen local tests, 25 new contract checks. Native connector artifact download + authenticated private replay verified 24 files/7 declarations/12 scores/both 55-feature matrices, max probability error 1.0061396160665481e-16. [Exact receipt and CI proof](operations/audit/evidence_retention_acceptance_20261126). Synthetic inputs, genuine unchanged frozen engines; zero provider calls, not live acceptance. Historical originals remain missing and licensing/key custody/live PE wrapper approval blockers remain open. Production and trial unchanged.
-
-## Permanent entry point established — 26 November 2026
-
-The owner explicitly commissioned [MONTY_MASTER_HANDOVER.md](MONTY_MASTER_HANDOVER.md). It is the permanent entry point on the engineering readiness branch; this baseline remains historical evidence. Review current master/AGENTS/Plan/Library and workstream heads before development. No production activation follows from this documentation.

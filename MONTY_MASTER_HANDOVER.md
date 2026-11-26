@@ -1,6 +1,6 @@
 # Monty master handover
 
-Permanent shared entry point · Version 1 · 26 November 2026, Brisbane.
+Permanent shared entry point; reconciled with Work’s canonical #234 master at `1184da7350fee5a9aec3a48336f5b79caa274654` · Version 1.1 · 26 November 2026, Brisbane.
 
 **Every ChatGPT, Codex and Work development assignment must begin here, then read the current authoritative documents and relevant workstream. Update this index after significant work.** Inspect current GitHub heads and cite full SHAs; this file is a dated checkpoint, not a promise that branches never change. Owner instructions take precedence. Do not create competing copies of rules.
 
@@ -24,6 +24,7 @@ V6 is the official frozen engine. V7 fold-3 is research-only. Neither is establi
 | Roughie audit, draft #241 | `cd775dc07a0a716ecb47a6e4db934c5fb451a72a` | All-runner reporting and prior historical diagnostics |
 | Independent research, draft #242 | `ad47142f9b824d74d05d30cdc467a416ad987229` | Separate research branch; not activated/imported into operations |
 | Evidence, draft #243 | `112703369ad8386df50801627b02b2c656092cf2` | Base of this integration; full private evidence and exact-head synthetic frozen replay |
+| Historical coverage, draft #244 | `29239357579422148091a3320401d5e0572d774c` | Separate Work research: full PLS paper recovered, eight ablations and future cohort preregistered |
 | PuntersEdge trial, draft #235 | `84689048a374f2af824da77057623d20809f6baa` | Separate six-day acceptance branch, untouched |
 | V7 engine | `efc51abb1595ef1eb8417e2d4e0d591f6d3c9378` | Frozen research engine/model source |
 
@@ -45,9 +46,11 @@ Raw/canonical/shared inputs, every available declared/scored runner, all 55 actu
 
 ## Research and Work coordination
 
-Review applicable papers and prior findings before development. Reproduce appropriate academic baselines where practical; compare matched market-only/calibrated-market, conditional logit, Benter-style and frozen-engine baselines using chronological, leakage-free, whole-race evaluation. Report missing methodology and distinguish mathematical interfaces from actual replications. Australian PLS full methods remain unavailable; do not claim exact replication.
+Review applicable papers and prior findings before development. Reproduce appropriate academic baselines where practical; compare matched market-only/calibrated-market, conditional logit, Benter-style and frozen-engine baselines using chronological, leakage-free, whole-race evaluation. Report missing methodology and distinguish mathematical interfaces from actual replications. Work’s #244 recovered the [full West–Kazakov paper](https://www.ubplj.org/index.php/jpm/article/download/2093/1839/7190), superseding the earlier unavailable-material report. Its eight-component adaptation is not exact PLSGLR replication; original matching data/method replication remains open.
 
 Work's #242: 4,129 chronological races, stronger standalone form, no established incremental edge over calibrated market. Prior #241: sparse V6 equals market, V7 temperature can worsen loss without changing ranks. Do not rerun unchanged studies or activate expert blends/adaptive weights based on these results. Current model/expert weighting remains 100/0. No inferred production 90/10 market/form setting.
+
+Work’s #244 also preregisters Queensland 4 January–28 March 2027; candidate freeze, lawful authority IDs, publication-time revisions, bookmaker snapshots and independently published settlement are still prerequisites, not completed captures. No retrospective backfill or extra provider credits authorised.
 
 Work consumes [verified private evidence](operations/RESEARCH_INTERFACE.md), coordinates authority registration/as-of feature/result joins and records data definitions, source/licence, publication/observation/ingestion times, identity confidence, hashes and outcomes separately. Same-race number/name matching is not lifetime identity resolution. No name-only historical joins. Preserve exact input/output hashes, cutoffs, seeds, splits, uncertainty and unsuccessful results in the Library.
 
@@ -59,9 +62,9 @@ Responsibilities: ChatGPT handles user commands, truthful status/slips and retri
 - Current staged integration: permanent master, interrupted checkpoints/recovery, PE raw-response wiring and explicit private-delivery outcomes; see integration handover and exact PR CI.
 - Open P0: owner-controlled durable recovery key; provider-specific retention/cloud-processing/display scope; authorised private ChatGPT delivery; genuinely live complete retention after separately approved budget.
 - Open historical: 121 V6/118 V7 missing records from #236–239 and original hash-matching inputs remain unavailable. No current-data reconstruction.
-- Open research: registration crosswalk, verified historical vintage, independent fixed-win and prospective settlement evidence, full missing academic methods.
+- Open research: registration crosswalk, verified historical vintage, independent fixed-win and prospective settlement evidence, compatible data and unfinished exact academic replications.
 - Trial acceptance remains pending actual six-day receipts, at least 12 complete preregistered races/all four windows, geographic/day strata and independent settlement. No acceptance inferred from scheduling configuration.
 
 No merge, deployment, activation, new API credits, permissions/secret changes, purchases, subscriptions, retraining, model promotion or wagers without the applicable explicit owner approval. Existing research-pruning authority never overrides frozen engines or integrity safeguards. Proposed deployment and rollback remain staged and require owner approval. Report exact blockers and continue independent achievable work.
 
-The former [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) is historical evidence; this file is now the permanent entry point on this development branch. Until approved integration, all agents must explicitly read this branch's master and the newer shared PR #234 documents.
+The former [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) is historical evidence; this expanded file continues the permanent entry point Work established on draft #234; it is not a competing master. Until approved integration, all agents must explicitly read this branch's master and the newer shared PR #234 documents.
