@@ -1,34 +1,34 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-26",
-  "run_id": "45718938293-1-daily",
+  "run_id": "45753228263-1-daily",
   "status": "COMPLETED_NO_BET",
   "source_mode": "LIVE",
-  "receipt_path": "runs/2026-11-26/45718938293-1-daily/receipt.json",
-  "forecast_path": "runs/2026-11-26/45718938293-1-daily/forecast.json",
-  "forecast_sha256": "ccba89a32f051c4e25aeb46389c317a333381e92e4541c224a8cdd316f1181ca",
-  "generated_at": "2026-11-25T23:09:19.765479+00:00",
-  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45718938293",
-  "captured_at": "2026-11-25T23:08:58.366909+00:00",
-  "valid_until": "2026-11-25T23:13:58.366909+00:00",
+  "receipt_path": "runs/2026-11-26/45753228263-1-daily/receipt.json",
+  "forecast_path": "runs/2026-11-26/45753228263-1-daily/forecast.json",
+  "forecast_sha256": "2421cfe91af072d3c974a088d9d8307b72b976c554a5aec3cafa26e2bff7c063",
+  "generated_at": "2026-11-26T04:08:30.014878+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45753228263",
+  "captured_at": "2026-11-26T04:08:14.925639+00:00",
+  "valid_until": "2026-11-26T04:13:14.925639+00:00",
   "models": {
     "V6": {
       "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
       "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
       "status": "SCORED",
       "research_only": false,
-      "scored_races": 19
+      "scored_races": 17
     },
     "V7": {
       "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
       "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
       "status": "SCORED",
       "research_only": true,
-      "scored_races": 18
+      "scored_races": 16
     }
   },
   "forecast_integrity_verified": true,
-  "receipt_sha256": "397d5c1bd3aa976e76d051b36f350ce46916c7efbe545990581c7a1982e09e4b",
+  "receipt_sha256": "a2fc4e2c7b0fa5d22b3f2f8416432de2968549b80530aa1c043e5f9ba26460c0",
   "request": {
     "command": "RM6",
     "version": "V6",
