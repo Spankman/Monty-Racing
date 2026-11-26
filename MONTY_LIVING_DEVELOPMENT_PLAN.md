@@ -99,3 +99,7 @@ Draft #243 final tested head `112703369ad8386df50801627b02b2c656092cf2`: all fou
 - [ ] Owner source/cloud-processing confirmation, durable key backup, private sink authentication/access approval and genuinely live/mobile acceptance before deployment.
 
 Current branch `integration/evidence-readiness-20261126` atop #243. [Assessment and rollback](operations/governance/INTEGRATION_READINESS_2026-11-26.md). Exact tests/CI are recorded in the draft PR. Zero provider API credits; trial #235 untouched.
+
+## Final readiness engineering checkpoint — 26 November 2026
+
+Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested head `fd901172448f0197b5adb69d8c196660a416f1f6`: allfourCIchecks green;239operational/158runner/13frozenlocaltests;39evidencecontracts. Native connector download+independent private decryption/replay verified base24files and syntheticPE26files,7declarations/12scores each,both55features,allmodelpins,and checkpoint salvage. Maxprobabilitydifference1.0061396160665481e-16. [Receipts/CI/aggregate proof](operations/governance/readiness_acceptance_20261126). Synthetic transport, genuine frozen engines;zero liveproviderAPIcredits,no live/iPhone acceptance. Source/cloudprocessing/private-display scope,keybackup,approvedprivate-deliveryauthentication and separatelyauthorisedlivevalidation remain deployment blockers. [Work input/identity handoff](operations/governance/WORK_INPUT_CONTRACT.md). Production/trial unchanged;no merge/deploy.

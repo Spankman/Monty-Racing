@@ -21,7 +21,7 @@ V6 is the official frozen engine. V7 fold-3 is research-only. Neither is establi
 | --- | --- | --- |
 | Production main | `623d46b449e46cfc5fa63b633c3f19b404bba41a` | Existing issue/Actions operations; untouched by this staged integration |
 | Governing docs, draft #234 | `14c1d1b7b443b607e0a35e2abff87db40d7f8a74` | Canonical Plan/Library/baseline, integrated here without losing substantive entries |
-| Readiness integration, draft #245 | `9a2f14dfb42fbb8089eb41afebd519d1ce9d83d9` | Encrypted interruption recovery, staged PE wrapper, explicit private delivery and expanded shared master; no deployment |
+| Readiness integration, draft #245 | `fd901172448f0197b5adb69d8c196660a416f1f6` | Encrypted interruption recovery, staged PE wrapper, explicit private delivery and expanded shared master; no deployment |
 | Roughie audit, draft #241 | `cd775dc07a0a716ecb47a6e4db934c5fb451a72a` | All-runner reporting and prior historical diagnostics |
 | Independent research, draft #242 | `ad47142f9b824d74d05d30cdc467a416ad987229` | Separate research branch; not activated/imported into operations |
 | Evidence, draft #243 | `112703369ad8386df50801627b02b2c656092cf2` | Base of this integration; full private evidence and exact-head synthetic frozen replay |
@@ -69,3 +69,7 @@ Responsibilities: ChatGPT handles user commands, truthful status/slips and retri
 No merge, deployment, activation, new API credits, permissions/secret changes, purchases, subscriptions, retraining, model promotion or wagers without the applicable explicit owner approval. Existing research-pruning authority never overrides frozen engines or integrity safeguards. Proposed deployment and rollback remain staged and require owner approval. Report exact blockers and continue independent achievable work.
 
 The former [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) is historical evidence; this expanded file continues the permanent entry point Work established on draft #234; it is not a competing master. Until approved integration, all agents must explicitly read this branch's master and the newer shared PR #234 documents.
+
+## Final readiness engineering checkpoint — 26 November 2026
+
+Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested head `fd901172448f0197b5adb69d8c196660a416f1f6`: allfourCIchecks green;239operational/158runner/13frozenlocaltests;39evidencecontracts. Native connector download+independent private decryption/replay verified base24files and syntheticPE26files,7declarations/12scores each,both55features,allmodelpins,and checkpoint salvage. Maxprobabilitydifference1.0061396160665481e-16. [Receipts/CI/aggregate proof](operations/governance/readiness_acceptance_20261126). Synthetic transport, genuine frozen engines;zero liveproviderAPIcredits,no live/iPhone acceptance. Source/cloudprocessing/private-display scope,keybackup,approvedprivate-deliveryauthentication and separatelyauthorisedlivevalidation remain deployment blockers. [Work input/identity handoff](operations/governance/WORK_INPUT_CONTRACT.md). Production/trial unchanged;no merge/deploy.
