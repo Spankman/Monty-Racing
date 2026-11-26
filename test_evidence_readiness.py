@@ -79,6 +79,17 @@ class Readiness(unittest.TestCase):
         r=self.recorder();r.snapshot({'data':[]});r.checkpoint('provider_captured');reconcile(self.root);base=self.root/'run/evidence-checkpoints';receipt=self.root/'run/evidence-recovery.json'
         with self.assertRaises(ValueError):recover_checkpoint(base/'0000.cms',base/'0000.json',receipt,sha(receipt.read_bytes()),self.key,self.root/'expired',clock=self.at+timedelta(days=2))
 
+    def test_abrupt_child_exit_retains_encrypted_checkpoint_then_cleans(self):
+        import sys
+        policy=self.root/'synthetic-policy.json';policy.write_text(json.dumps(self.policy))
+        code="from pathlib import Path; from operations.evidence.store import Recorder; import os,sys; r=Recorder(Path(sys.argv[1]),'synthetic','PuntersEdge',Path(sys.argv[2]),Path(sys.argv[3])); r.snapshot({'data':[]}); r.checkpoint('provider_captured'); os._exit(23)"
+        child=subprocess.run([sys.executable,'-c',code,str(self.root/'run'),str(policy),str(self.cert)],capture_output=True)
+        self.assertEqual(child.returncode,23);self.assertTrue((self.root/'run/private').exists())
+        result=reconcile(self.root)[0];self.assertEqual(result['status'],'INTERRUPTED_INCOMPLETE_EVIDENCE');self.assertFalse((self.root/'run/private').exists())
+        receipt=self.root/'run/evidence-recovery.json';base=self.root/'run/evidence-checkpoints'
+        recovered=recover_checkpoint(base/'0000.cms',base/'0000.json',receipt,sha(receipt.read_bytes()),self.key,self.root/'child-recovered')
+        self.assertEqual(recovered['status'],'INTERRUPTED_EVIDENCE_ONLY');self.assertFalse(recovered['selections_available'])
+
     def test_intent_collision_fails_closed_without_overwriting(self):
         first=self.recorder();before=(self.root/'run/evidence-intent.json').read_bytes();second=self.recorder()
         self.assertTrue(first.enabled);self.assertFalse(second.enabled)
