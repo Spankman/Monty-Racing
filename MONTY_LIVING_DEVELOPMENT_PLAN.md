@@ -123,3 +123,13 @@ Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested he
 - [ ] Authenticate independently published official outcomes and complete named fixed-win books. Exercise authorised shadow preparation only within existing permissions. Document the candidate freeze and fit-through-29-November/December calibration gates or mark the January–March cohort BLOCKED. No test-cohort tuning.
 
 [Draft #246 at 49d9676](https://github.com/Spankman/Monty-Racing/pull/246). No refit or market-edge claim, paid product recommendation, new live API credits, merge, deployment or trial modification.
+
+## Data quality and independent predictive science — owner alignment, 26 November 2026
+
+Use the [audit disposition register](operations/audit/GROK_AUDIT_RESPONSE_2026-11-26.md) for evidence, responsibilities, dependencies and acceptance. Indicative effort: **45%** data verification, **20%** independent form modelling, **15%** academic replication, **10%** operational reliability/simplification, **10%** validation/statistics. Actual sequencing follows admissible data and readiness.
+
+- [ ] Work P0: prospectively dated authority captures, scoped identities, repeated horse/role histories and independently settled results. Exhaust lawful free/current archives. Count admissible records and exclusion reasons ahead of download totals. Preserve #246 pilot limits.
+- [ ] Work P1: odds-free race probabilities, followed by strictly earlier-fitted Benter and calibrated-market comparison. Keep frozen V6/V7 as references. Use new meaningful evidence or registered research gaps before additional builds.
+- [ ] Work P1/P2: stage shrinkage, Plackett–Luce, explicit favourite–longshot stability and exact West–Kazakov research as data permits. Preserve all existing research indices and transparent no-quota roughie diagnostics.
+- [ ] Codex: improve as-of quality and existing private delivery/one-capture workflow with measured end-to-end acceptance. Reuse evidence and result routing, avoid duplicate queues and preserve guards. Keep [one owner checklist](operations/readiness/OWNER_APPROVAL_CHECKLIST.md). Major redevelopment requires an evidenced blocker.
+- [x] Assess preliminary [Queensland sample size and statistical power](operations/audit/QLD_VALIDATION_POWER_2026-11-26.md). Unmet readiness remains open. Record BLOCKED if gates fail and preregister any distinct follow-up before its outcomes. No change to dates, endpoints, safeguards or the separate six-day trial.
