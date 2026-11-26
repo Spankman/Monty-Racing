@@ -82,3 +82,7 @@ The [recovery handover](https://github.com/Spankman/Monty-Racing/blob/2923935757
 ## Final readiness engineering checkpoint — 26 November 2026
 
 Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested head `fd901172448f0197b5adb69d8c196660a416f1f6`: allfourCIchecks green;239operational/158runner/13frozenlocaltests;39evidencecontracts. Native connector download+independent private decryption/replay verified base24files and syntheticPE26files,7declarations/12scores each,both55features,allmodelpins,and checkpoint salvage. Maxprobabilitydifference1.0061396160665481e-16. [Receipts/CI/aggregate proof](operations/governance/readiness_acceptance_20261126). Synthetic transport, genuine frozen engines;zero liveproviderAPIcredits,no live/iPhone acceptance. Source/cloudprocessing/private-display scope,keybackup,approvedprivate-deliveryauthentication and separatelyauthorisedlivevalidation remain deployment blockers. [Work input/identity handoff](operations/governance/WORK_INPUT_CONTRACT.md). Production/trial unchanged;no merge/deploy.
+
+## Final operations planning — 26 November 2026
+
+`FINAL-OPERATIONS-20261126`: documentation/readiness review only, no new model experiment or academic replication. Reused #245 frozen synthetic replay and #244 null incremental-market research. Source/publication/identity gates and 2027 preregistration unchanged. [Decision/checklist/acceptance plan](operations/readiness/FINAL_OPERATIONAL_READINESS.md). Provider correspondence remains unsent;zero new live API credits.

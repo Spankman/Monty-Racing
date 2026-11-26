@@ -4,7 +4,7 @@ Owner direction, 25 November 2026. Read before planning Work or Codex sessions. 
 ## Mandatory development and research protocol — 26 November 2026
 - Apply the startup and completion requirements in [AGENTS.md](AGENTS.md) to current and future development. Keep governing documents, prior findings and workstream commits pinned in the shared handover.
 - Review applicable research before implementation and reproduce relevant academic baselines wherever practical. Compare modern alternatives against matched academic, frozen-engine and independent market baselines using chronological leakage-free evaluation. Record negative and blocked runs along with successful ones.
-- Keep the [research library](MONTY_RESEARCH_LIBRARY.md), this plan and the shared handover current. The [baseline handover](MONTY_BASELINE_HANDOVER_2026-11-26.md) records this protocol update and identifies the missing master handover.
+- Keep the [research library](MONTY_RESEARCH_LIBRARY.md), this plan and the shared handover current. The [master handover](MONTY_MASTER_HANDOVER.md) is the permanent entry point; the baseline handover preserves earlier review history.
 
 ## Permanent resource rules
 - Use ordinary ChatGPT for planning and routine reviews; reserve Work credits for substantial integration and independent audits, Codex for targeted code work. Use conventional scripts and GitHub Actions for repeatable processing.
@@ -46,8 +46,8 @@ ChatGPT, Work and Codex may independently remove or disable redundant, ineffecti
 - [x] Reviewed the mandatory protocol at PR234 `6b205a5cab7e79a237d9fd1903a203c72d1bf8f1`; retain its startup/completion rules for current and future development.
 - [x] Index completed issue240 workstream `cd775dc07a0a716ecb47a6e4db934c5fb451a72a` as `RUFFIES-240-20261126` in the shared Research Library, including null/negative and blocked findings.
 - [x] Update the shared baseline handover with governing, production, trial and audit refs.
-- [ ] Identify the separately designated master handover; the current baseline handover is an interim index, not an invented replacement.
-- [ ] Complete relevant full-method reviews and academic replications before dependent modelling claims; Australian PLS full text remains an explicit access gap.
+- [x] Permanent master handover established and reconciled with Work; the dated baseline remains historical evidence.
+- [ ] Complete dependent exact academic replications on compatible data; Work #244 recovered the full Australian PLS paper, superseding the former access gap.
 - [ ] Require genuinely later prospective improvement and owner approval before model/weight/threshold activation.
 
 PR241 carries an older copied plan plus its additive issue240 section; reconcile it with this newer shared PR234 register before any eventual merge, retaining the substantive audit findings. Both remain unmerged. Keep both test_ruffies and test_pe_trial when eventually integrating their parallel CI additions. The six-day PE trial is untouched. Explicit owner instructions, including the $4 fixed-win progression, supersede older unresolved-cutoff wording. No betting policy change is made here.
@@ -103,3 +103,13 @@ Current branch `integration/evidence-readiness-20261126` atop #243. [Assessment 
 ## Final readiness engineering checkpoint — 26 November 2026
 
 Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested head `fd901172448f0197b5adb69d8c196660a416f1f6`: allfourCIchecks green;239operational/158runner/13frozenlocaltests;39evidencecontracts. Native connector download+independent private decryption/replay verified base24files and syntheticPE26files,7declarations/12scores each,both55features,allmodelpins,and checkpoint salvage. Maxprobabilitydifference1.0061396160665481e-16. [Receipts/CI/aggregate proof](operations/governance/readiness_acceptance_20261126). Synthetic transport, genuine frozen engines;zero liveproviderAPIcredits,no live/iPhone acceptance. Source/cloudprocessing/private-display scope,keybackup,approvedprivate-deliveryauthentication and separatelyauthorisedlivevalidation remain deployment blockers. [Work input/identity handoff](operations/governance/WORK_INPUT_CONTRACT.md). Production/trial unchanged;no merge/deploy.
+
+## Final operational readiness planning — 26 November 2026
+
+- [x] Review current master/owner rules, #245 dependencies and Work #244 without repeating model experiments or live probes.
+- [x] One [owner approval checklist](operations/readiness/OWNER_APPROVAL_CHECKLIST.md), unsent provider drafts, private sink/history conditions, iPhone custody steps, genuine live acceptance matrix, costs and rollback prepared.
+- [x] Confirm current #226 head is already an ancestor of tested #245; no duplicate integration required.
+- [x] Identify real remaining boundaries: private routing, paired-ticket publication, PNG/approved assets and unverified monitor activity. No new source-code defect demonstrated or speculative runtime change made.
+- [ ] Obtain provider/cloud/archival confirmation and owner-approved private access/key backup; then scoped routing/presentation work and separately authorised live/iPhone/schedule acceptance.
+
+[Consolidated report](operations/readiness/FINAL_OPERATIONAL_READINESS.md). No provider API credits, permission/secret changes, trial changes, merge or deployment. Existing #245 exact-head CI/replay evidence reused honestly.
