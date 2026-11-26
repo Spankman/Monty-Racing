@@ -128,13 +128,13 @@ def load_verified_evidence(directory,clock=None):
         if root not in path.parents or path.is_symlink() or sha(path.read_bytes())!=item['sha256']:raise ValueError('Private evidence integrity/path failure')
         if path.name=='feature-audit.npz':
             with np.load(path,allow_pickle=False) as z:
-                arrays.append(dict(model=path.parent.name,path=item['path'],numbers=z['numbers'].tolist(),
-                    feature_names=z['feature_names'].tolist(),original_values=z['original_values'].copy(),
-                    observed=z['observed'].copy(),imputed_values=z['imputed_values'].copy(),
-                    model_probability=z['model_probability'].copy(),market_probability=z['market_probability'].copy(),
-                    term_names=z['term_names'].tolist(),term_contributions=z['term_contributions'].copy(),
+                # Preserve every diagnostic array rather than a second clipped
+                # research view. Copies prevent accidental mutation of archives.
+                values={name:z[name].copy() for name in z.files}
+                values.update(model=path.parent.name,path=item['path'],
                     features_verified_asof=False,independent_form_predictions=False,
-                    warning='Verified numerical replay does not verify original historical publication vintage, provider fields or betting value.'))
+                    warning='Verified numerical replay does not verify original historical publication vintage, provider fields or betting value.')
+                arrays.append(values)
     decisions=json.loads((root/'retention/declarations-and-decisions.json').read_text())
     return dict(schema='monty.research-evidence.v1',run_id=m['run_id'],source=m['source'],expires_at=m['expires_at'],
         arrays=arrays,decisions=decisions,result_labels=None,production_approved=False,

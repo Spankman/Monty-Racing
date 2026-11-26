@@ -35,4 +35,19 @@ class Research(unittest.TestCase):
             p=Path(d)/'run.json';r=dict(experiment_id='test',code_commit='a'*40,input_sha256='a'*64,status='NULL',protocol='synthetic contract',results_sha256='b'*64,limitations=['not a real experiment'])
             record_experiment(p,r)
             with self.assertRaises(FileExistsError):record_experiment(p,r)
+    def test_private_reader_preserves_every_diagnostic_and_rejects_tamper(self):
+        import hashlib,json
+        from datetime import datetime,timezone,timedelta
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);folder=root/'race/V6';folder.mkdir(parents=True)
+            path=folder/'feature-audit.npz'
+            np.savez_compressed(path,transformed_terms=np.array([[1.,2.]]),term_weights=np.array([.2,.4]),missing_indicators=np.array([[False,True]]),market_temperature_probability_effect=np.array([.01]))
+            decisions=root/'retention/declarations-and-decisions.json';decisions.parent.mkdir();decisions.write_text('{"declared":[],"scored":[]}')
+            files=[dict(path=p.relative_to(root).as_posix(),sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in (path,decisions)]
+            (root/'evidence-manifest.json').write_text(json.dumps(dict(files=files,expires_at=(datetime.now(timezone.utc)+timedelta(hours=1)).isoformat(),run_id='synthetic',source='SIMULATED FIXTURE')))
+            rows=load_verified_evidence(root)['arrays'];self.assertEqual(len(rows),1)
+            np.testing.assert_array_equal(rows[0]['transformed_terms'],[[1.,2.]])
+            self.assertIn('market_temperature_probability_effect',rows[0]);self.assertFalse(rows[0]['features_verified_asof'])
+            path.write_bytes(b'changed')
+            with self.assertRaises(ValueError):load_verified_evidence(root)
 if __name__=='__main__':unittest.main()

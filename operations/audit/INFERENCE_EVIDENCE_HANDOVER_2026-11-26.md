@@ -33,7 +33,7 @@ V6 published 47 of 168 scored runner records; V7 published 44 of 162. The missin
 
 ## Verification and production limitations
 
-Local completed regressions: 224 operational, 158 runner and 13 frozen integrity/replay tests passed. Final draft PR records the exact tested commit, CI URLs and private numerical replay receipts; no claim of live-provider acceptance. All 55 original V6 hashes and original historical replay must remain verified, alongside V7's pinned model. The hosted evidence test uses explicitly synthetic seven-runner fields with six active runners and real unchanged frozen inference; it is not a racing forecast.
+Local completed regressions: 225 operational, 158 runner and 13 frozen integrity/replay tests passed. Final draft PR records the exact tested commit, CI URLs and private numerical replay receipts; no claim of live-provider acceptance. All 55 original V6 hashes and original historical replay must remain verified, alongside V7's pinned model. The hosted evidence test uses explicitly synthetic seven-runner fields with six active runners and real unchanged frozen inference; it is not a racing forecast.
 
 This is application-level append-only/tamper evidence, not WORM or indefinite backup. Seven-day private artifact retention is bounded, readers refuse expiry, and authorised consumers must remove their recovered plaintext. Abrupt cancellation before finalization is not fully crash-proof. Public rights absent means metadata-only delivery; this compatibility constraint must be approved/resolved before integration. Encrypted artifact storage alone does not make detailed predictions accessible in ordinary ChatGPT. Owner key backup and an authorised private consumer are required.
 
