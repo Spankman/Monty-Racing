@@ -1,0 +1,50 @@
+[
+  {
+    "doi": "10.1214/06-BA117",
+    "title": [
+      "A comparison of Bayesian and likelihood-based methods for fitting multilevel models"
+    ],
+    "authors": [
+      "Browne",
+      "Draper"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2006,
+          9,
+          1
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1214/06-ba117",
+    "fetched_at": "2026-11-26T05:42:51.505877+00:00",
+    "response_sha256": "c3323221d13c74eaf28a965165bdf8bad12acf2e8350879be08b917d9aba225d",
+    "review_scope": "Public bibliographic metadata only, not full methods or replication"
+  },
+  {
+    "doi": "10.2307/2346567",
+    "title": [
+      "The Analysis of Permutations"
+    ],
+    "authors": [
+      "Plackett"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1975
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.2307/2346567",
+    "fetched_at": "2026-11-26T05:42:51.790010+00:00",
+    "response_sha256": "c4f76b47d6e46e74310811f09b1bbfb522c3e533650940e87e37c5968dfc8bde",
+    "review_scope": "Public bibliographic metadata only, not full methods or replication"
+  },
+  {
+    "doi": "10.2307/4615733",
+    "error": "HTTPError",
+    "review_scope": "Unavailable in this session; no full method claim"
+  }
+]

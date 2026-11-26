@@ -1,0 +1,26 @@
+name: Monty audit power planning checks
+on:
+  pull_request:
+    paths:
+      - 'operations/audit_alignment/**'
+      - 'test_audit_power.py'
+      - '.github/workflows/monty-audit-power-ci.yml'
+permissions:
+  contents: read
+jobs:
+  planning:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install scipy==1.17.0
+      - run: python -m unittest test_audit_power -v
+      - name: Reproduce planning results without data or provider credentials
+        run: |
+          python -m operations.audit_alignment.power /tmp/power-results.json
+          cmp operations/audit_alignment/power-results.json /tmp/power-results.json

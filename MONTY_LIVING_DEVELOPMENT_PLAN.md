@@ -6,6 +6,12 @@ Owner direction, 25 November 2026. Read before planning Work or Codex sessions. 
 - Review applicable research before implementation and reproduce relevant academic baselines wherever practical. Compare modern alternatives against matched academic, frozen-engine and independent market baselines using chronological leakage-free evaluation. Record negative and blocked runs along with successful ones.
 - Keep the [research library](MONTY_RESEARCH_LIBRARY.md), this plan and the shared handover current. The [master handover](MONTY_MASTER_HANDOVER.md) is the permanent entry point; the baseline handover preserves earlier review history.
 
+## Highest scientific priority — owner direction26November2026
+
+Establish independent predictive information beyond bookmaker probabilities through verified historical fundamentals, issuer/availability joins, market-free form probabilities, matched chronological benchmarks, statistically justified combination and preregistered prospective/economic validation. A form model need not outperform market alone to add useful complementary information. No frozen-model or betting-rule changes authorised.
+
+The [single Grok-response register](operations/audit_alignment/recommendation-register.csv) reconciles the independent criticism with completed #241–246work; [programme](operations/audit_alignment/DATA_AND_RESEARCH_PROGRAMME.md) and [power assessment](operations/audit_alignment/POWER_ASSESSMENT.md) supply details without duplicating this plan. Indicative future effort45%data/20%fundamental modelling/15%academic/10%reliability/10%validation; dependencies decide sequencing. Keep exposed-sample refits, unguided variants, arbitrary weights, new infrastructure and purchases postponed.
+
 ## Permanent resource rules
 - Use ordinary ChatGPT for planning and routine reviews; reserve Work credits for substantial integration and independent audits, Codex for targeted code work. Use conventional scripts and GitHub Actions for repeatable processing.
 - Batch related tasks, avoid re-auditing unchanged components, cache and share data, checkpoint long jobs, bound retries and stop on genuine blockers. Report measurable progress, costs where observable, and concise handovers. Never guess remaining credits.
@@ -123,3 +129,14 @@ Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested he
 - [ ] Authenticate independently published official outcomes and complete named fixed-win books. Exercise authorised shadow preparation only within existing permissions. Document the candidate freeze and fit-through-29-November/December calibration gates or mark the January–March cohort BLOCKED. No test-cohort tuning.
 
 [Draft #246 at 49d9676](https://github.com/Spankman/Monty-Racing/pull/246). No refit or market-edge claim, paid product recommendation, new live API credits, merge, deployment or trial modification.
+
+## Independent audit alignment — 26 November2026
+
+- [x] Owner-supplied Grok scores/access limits and evidence-backed recommendation register recorded permanently; criticism accepted where supported.
+- [x] Work #246verified-data acquisition programme and independent-form/academic queue aligned; no duplicate collector/model fit.
+- [x] Reproducible power/sensitivity grid and regression checks;84daywindow unchanged, actual counts/variance unknown, current readiness BLOCKED pending original gates.
+- [ ] Work: report gains in strictly admitted longitudinal/as-of records and matched earlier-pilot variance/price/outcome evidence; scale lawful free authority methods before paid alternatives.
+- [ ] Work: review/pre-register detailed secondarySAP/material-effect targets or a separate later confirmation cohort before any target outcomes; no retrospective extension/tuning.
+- [ ] Codex: resolve only demonstrated approved contract/private-delivery/custody/iPhone gaps through existing checklist; no extra scaffolding or trial changes.
+
+[Complete alignment handover](operations/audit_alignment/README.md). Scientific direction authorised now;new purchases/providercredits/credentials/protocolchanges/productionactivation not authorised.

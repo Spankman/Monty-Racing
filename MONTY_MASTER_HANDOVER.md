@@ -13,6 +13,12 @@ Permanent shared entry point; reconciled with Work’s canonical #234 master at 
 5. [Provider permissions/private delivery](operations/governance/PROVIDER_PERMISSIONS_AND_DELIVERY.md), [key custody](operations/governance/RECOVERY_KEY_CUSTODY.md), [evidence retention](https://github.com/Spankman/Monty-Racing/blob/9a2f14dfb42fbb8089eb41afebd519d1ce9d83d9/operations/evidence/README.md), [research consumer](https://github.com/Spankman/Monty-Racing/blob/9a2f14dfb42fbb8089eb41afebd519d1ce9d83d9/operations/RESEARCH_INTERFACE.md).
 6. For trial work only, read the [pinned trial requirements](https://github.com/Spankman/Monty-Racing/blob/84689048a374f2af824da77057623d20809f6baa/operations/trial/README.md) and protocol. Do not modify trial branches/automation from an unrelated workstream.
 
+## Current highest development priority — independent predictive information
+
+Owner26November2026Grok audit response is indexed in the [one recommendation register](operations/audit_alignment/recommendation-register.csv), [data/science programme](operations/audit_alignment/DATA_AND_RESEARCH_PROGRAMME.md) and [power assessment](operations/audit_alignment/POWER_ASSESSMENT.md). Prioritise lawful verified fundamentals/identities/as-of joins, independent form probabilities and incremental market contribution before further predictive variants or infrastructure. Strong standalone performance is not a prerequisite for complementary blend information. Work leads data/science;Codex supports contracts/reproducibility/minimal reliability. Indicative45/20/15/10/10allocation is dependency-led. Treat owner-supplied audit scores as opinion with stated access limits, not measured accuracy.
+
+The fixed4Jan–28Mar2027cohort is unchanged;current readiness gates remain unmet and achievedpower is unknown. Scenario results motivate sample planning, not target tuning or a profit claim. Trial235proceeds separately, no method/schedule/budget changes. See the [complete handover](operations/audit_alignment/README.md);preserve negative findings and existing owner approval boundaries.
+
 ## Model and production status
 
 V6 is the official frozen engine. V7 fold-3 is research-only. Neither is established as independently superior to the market. Missing verification is DATA BLOCKED, not a genuine negative-value NO BET; technical failures are EXECUTION FAILED. Successfully scored provisional/research rankings must retain their true classification. Private delivery restrictions are a separate delivery outcome.
