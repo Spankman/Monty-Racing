@@ -104,3 +104,8 @@ Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested he
 [Draft #249](https://github.com/Spankman/Monty-Racing/pull/249), branch `research/audit-alignment-20261126`, supplements Work’s canonical audit register/power study; it does not introduce a competing register, prospective cohort or model variant. Reviewed/reconciled shared6921bf47ed48401175762fff25100e860ff70865. Independent SciPy/NormalDist checks match primary sample counts, with maximum log-loss-power difference5.91e-6 and binomial probability difference4.67e-7 attributable to rounded published output. SD/design/alpha/rare-event sensitivities are hypothetical; actual eligibility/variance/power remain unverified. Six mathematical regressions and byte-identical local reruns passed; exact final-head CI tracked in the draft.
 
 Verified55originalV6hashes and pinnedV7 unchanged;no refit,newprediction,providercredits,spending,credential/permission changes,trial mutation,merge or deployment. Work owns verified-data/science;Codex owns supporting contracts/minimal reliability. The already-authorised data-first scientific sequence and indicative45/20/15/10/10priorities remain in the existing Plan. Existing owner checklist remains the only operational approval list.
+
+
+## Provider discovery queue — 26 November 2026
+
+Owner-approved investigation is tracked in the Living Development Plan and [PR #234 instruction](https://github.com/Spankman/Monty-Racing/pull/234#issuecomment-7186406139). Provider capabilities, costs, rights and historical coverage are hypotheses pending verification; reconcile with the existing historical source register. No new source acquisition or model performance claim is made here.
