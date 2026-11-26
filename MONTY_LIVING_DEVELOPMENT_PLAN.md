@@ -8,9 +8,7 @@ Owner direction, 25 November 2026. Read before planning Work or Codex sessions. 
 
 ## Highest scientific priority — owner direction26November2026
 
-Establish independent predictive information beyond bookmaker probabilities through verified historical fundamentals, issuer/availability joins, market-free form probabilities, matched chronological benchmarks, statistically justified combination and preregistered prospective/economic validation. A form model need not outperform market alone to add useful complementary information. No frozen-model or betting-rule changes authorised.
-
-The [single Grok-response register](operations/audit_alignment/recommendation-register.csv) reconciles the independent criticism with completed #241–246work; [programme](operations/audit_alignment/DATA_AND_RESEARCH_PROGRAMME.md) and [power assessment](operations/audit_alignment/POWER_ASSESSMENT.md) supply details without duplicating this plan. Indicative future effort45%data/20%fundamental modelling/15%academic/10%reliability/10%validation; dependencies decide sequencing. Keep exposed-sample refits, unguided variants, arbitrary weights, new infrastructure and purchases postponed.
+Verified historical fundamentals → issuer/availability joins → market-independent form probabilities → matched chronological benchmarks → scientifically justified market combination → preregistered prospective/economic validation. Standalone form need not beat market to add complementary information. Use the existing canonical audit register and Work’s source/feature registers; indicative45/20/15/10/10allocation follows dependencies. No frozen or betting-rule changes authorised.
 
 ## Permanent resource rules
 - Use ordinary ChatGPT for planning and routine reviews; reserve Work credits for substantial integration and independent audits, Codex for targeted code work. Use conventional scripts and GitHub Actions for repeatable processing.
@@ -130,13 +128,16 @@ Draft [#245](https://github.com/Spankman/Monty-Racing/pull/245), exact tested he
 
 [Draft #246 at 49d9676](https://github.com/Spankman/Monty-Racing/pull/246). No refit or market-edge claim, paid product recommendation, new live API credits, merge, deployment or trial modification.
 
-## Independent audit alignment — 26 November2026
+## Data quality and independent predictive science — owner alignment, 26 November 2026
 
-- [x] Owner-supplied Grok scores/access limits and evidence-backed recommendation register recorded permanently; criticism accepted where supported.
-- [x] Work #246verified-data acquisition programme and independent-form/academic queue aligned; no duplicate collector/model fit.
-- [x] Reproducible power/sensitivity grid and regression checks;84daywindow unchanged, actual counts/variance unknown, current readiness BLOCKED pending original gates.
-- [ ] Work: report gains in strictly admitted longitudinal/as-of records and matched earlier-pilot variance/price/outcome evidence; scale lawful free authority methods before paid alternatives.
-- [ ] Work: review/pre-register detailed secondarySAP/material-effect targets or a separate later confirmation cohort before any target outcomes; no retrospective extension/tuning.
-- [ ] Codex: resolve only demonstrated approved contract/private-delivery/custody/iPhone gaps through existing checklist; no extra scaffolding or trial changes.
+Use the [audit disposition register](operations/audit/GROK_AUDIT_RESPONSE_2026-11-26.md) for evidence, responsibilities, dependencies and acceptance. Indicative effort: **45%** data verification, **20%** independent form modelling, **15%** academic replication, **10%** operational reliability/simplification, **10%** validation/statistics. Actual sequencing follows admissible data and readiness.
 
-[Complete alignment handover](operations/audit_alignment/README.md). Scientific direction authorised now;new purchases/providercredits/credentials/protocolchanges/productionactivation not authorised.
+- [ ] Work P0: prospectively dated authority captures, scoped identities, repeated horse/role histories and independently settled results. Exhaust lawful free/current archives. Count admissible records and exclusion reasons ahead of download totals. Preserve #246 pilot limits.
+- [ ] Work P1: odds-free race probabilities, followed by strictly earlier-fitted Benter and calibrated-market comparison. Keep frozen V6/V7 as references. Use new meaningful evidence or registered research gaps before additional builds.
+- [ ] Work P1/P2: stage shrinkage, Plackett–Luce, explicit favourite–longshot stability and exact West–Kazakov research as data permits. Preserve all existing research indices and transparent no-quota roughie diagnostics.
+- [ ] Codex: improve as-of quality and existing private delivery/one-capture workflow with measured end-to-end acceptance. Reuse evidence and result routing, avoid duplicate queues and preserve guards. Keep [one owner checklist](operations/readiness/OWNER_APPROVAL_CHECKLIST.md). Major redevelopment requires an evidenced blocker.
+- [x] Assess preliminary [Queensland sample size and statistical power](operations/audit/QLD_VALIDATION_POWER_2026-11-26.md). Unmet readiness remains open. Record BLOCKED if gates fail and preregister any distinct follow-up before its outcomes. No change to dates, endpoints, safeguards or the separate six-day trial.
+
+### Codex independent verification supplement — 26 November2026
+
+Work’s [audit response/register](operations/audit/GROK_AUDIT_RESPONSE_2026-11-26.md) and [canonical power study](operations/audit/QLD_VALIDATION_POWER_2026-11-26.md) remain authoritative. Codex [alignment/reproducibility supplement](operations/audit_alignment/README.md) provides machine-readable owner attribution, data/engineering dependency detail and independent SciPy/normal verification plus SD/design/multiplicity/rare-event sensitivities. No competing register, source collection, model fit or cohort change. Exact reference6921bf47ed48401175762fff25100e860ff70865reconciled;new providercredits,private permissions,custody,liveacceptance and activation remain gated by the existing owner checklist.

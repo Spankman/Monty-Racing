@@ -48,6 +48,31 @@ def wilson_half_width(n,p=.5,z=1.959963984540054):
     return z*sqrt(p*(1-p)/n+z*z/(4*n*n))/(1+z*z/n)
 
 
+def verify_work(path):
+    """Independent SciPy/NormalDist checks of Work's rounded published grid.
+    Tolerances account for its rounded z-values and six-decimal JSON output;
+    these verify arithmetic, not empirical validity of the assumed inputs.
+    """
+    v=json.loads(Path(path).read_text());sd=v['historicalEffectiveLogLossSpread'];mde_errors=[];power_errors=[];roi_errors=[];sample_relative=[]
+    for row in v['scoreScenarios']:
+        n=row['races'];mde_errors.append(abs(minimum_effect(n,sd)-row['mdeLogLoss']))
+        for effect,reported in zip(v['logLossTargets'],row['logLossPowers']):
+            shift=effect*sqrt(n)/sd;z=N.inv_cdf(.975)
+            actual=1-N.cdf(z-shift)+N.cdf(-z-shift);power_errors.append(abs(actual-reported))
+    for effect,n in zip(v['logLossTargets'],v['logLossRequiredRaces']):sample_relative.append(abs(required_pairs(effect,sd)-n)/n)
+    for row in v['roi']:
+        actual=binomial_roi_power(row['selectionsAt720'],row['price'],.10,alpha=.025);reported=row['independentExactPowerAtPlus10pct']
+        if actual['critical_wins']!=reported['criticalWins']:raise ValueError('Work exact-binomial critical count differs')
+        roi_errors.extend([abs(actual['size']-reported['size']),abs(actual['power']-reported['power'])])
+    result=dict(work_source='operations/audit/QLD_VALIDATION_POWER_2026-11-26.json',
+        work_json_sha256=__import__('hashlib').sha256(Path(path).read_bytes()).hexdigest(),
+        max_mde_absolute_difference=max(mde_errors),max_logloss_power_absolute_difference=max(power_errors),
+        max_binomial_probability_difference=max(roi_errors),max_required_sample_relative_difference=max(sample_relative),
+        verification='ARITHMETIC_ONLY; historical SD and future admission assumptions remain unverified')
+    if max(mde_errors)>5e-6 or max(power_errors)>3e-4 or max(roi_errors)>2e-6 or max(sample_relative)>.003:raise ValueError('Work numerical verification outside disclosed rounding tolerance')
+    return result
+
+
 def assessment():
     # No observed outcomes or fitted parameters from the registered cohort.
     pairs=[250,500,1000,1500];sd_grid=[.02,.05,.1]

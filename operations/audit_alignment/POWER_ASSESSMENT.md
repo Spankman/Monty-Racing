@@ -1,4 +1,6 @@
-# Prospective statistical power assessment — planning only
+# Independent power verification and sensitivity supplement — planning only
+
+Canonical study: [Work’s Queensland power assessment](../audit/QLD_VALIDATION_POWER_2026-11-26.md) and its shared register at#234 `6921bf47ed48401175762fff25100e860ff70865`. This supplement independently checks the published mathematics and adds explicit assumption sensitivity; it is not a second prospective protocol or competing plan. Work’s720-race scenario and this grid are assumptions, not verified admissions. Different SD/design/alpha choices explain different sample sizes; do not mix them.
 
 26 November2026; exact source protocol #244 `29239357579422148091a3320401d5e0572d774c`, version1. **No formal cohort, endpoint, cutoff or protocol file changed. No target outcomes opened, model fitted or forecast generated.** Reproducible outputs: `python -m operations.audit_alignment.power OUTPUT.json`; all inputs are disclosed scenarios, not estimated prospective results.
 

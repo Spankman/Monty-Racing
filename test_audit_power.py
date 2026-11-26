@@ -21,6 +21,10 @@ class Planning(unittest.TestCase):
         r=assessment();self.assertEqual(r['locked_window']['days'],84)
         self.assertIsNone(r['actual_eligible_races']);self.assertIsNone(r['verified_paired_sd'])
         self.assertFalse(r['locked_window']['formal_protocol_modified'])
+    def test_independent_verification_of_Work_published_grid(self):
+        r=verify_work('operations/audit/QLD_VALIDATION_POWER_2026-11-26.json')
+        self.assertLess(r['max_binomial_probability_difference'],2e-6)
+
     def test_invalid_planning_inputs_rejected(self):
         for kwargs in [dict(effect=0,sd=1),dict(effect=.1,sd=1,design=.9),dict(effect=.1,sd=1,power=.4)]:
             with self.assertRaises(ValueError):required_pairs(**kwargs)
