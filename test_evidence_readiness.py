@@ -66,7 +66,7 @@ class Readiness(unittest.TestCase):
     def test_completed_receipt_preserved_by_reconciliation(self):
         r=self.recorder();r.snapshot({'data':[]});r.checkpoint('provider_captured');public=self.root/'run/public';public.mkdir();forecast=encoded({'synthetic':True});(public/'forecast.json').write_bytes(forecast)
         receipt=encoded(dict(run_id='synthetic',forecast_sha256=sha(forecast)));(public/'receipt.json').write_bytes(receipt)
-        self.assertEqual(reconcile(self.root)[0]['status'],'COMPLETED_RECEIPT_PRESENT');self.assertEqual((public/'receipt.json').read_bytes(),receipt)
+        self.assertEqual(reconcile(self.root)[0]['status'],'FINAL_RECEIPT_PRESENT');self.assertEqual((public/'receipt.json').read_bytes(),receipt)
     def test_metadata_delivery_not_scope_missing_or_manual_prediction(self):
         from operations.client import retrieve
         import monty_operations as ops

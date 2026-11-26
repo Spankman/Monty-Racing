@@ -35,9 +35,10 @@ def reconcile(root):
             if private.is_symlink():private.unlink()
             else:shutil.rmtree(private)
             cleanup='REMOVED'
-        status='COMPLETED_RECEIPT_PRESENT' if completed else 'INTERRUPTED_INCOMPLETE_EVIDENCE' if checkpoints else 'INTERRUPTED_NO_RECOVERABLE_CHECKPOINT'
+        status='FINAL_RECEIPT_PRESENT' if completed else 'INTERRUPTED_INCOMPLETE_EVIDENCE' if checkpoints else 'INTERRUPTED_NO_RECOVERABLE_CHECKPOINT'
         value=dict(schema='monty.interruption-receipt.v1',run_id=intent['run_id'],status=status,
             expires_at=intent['expires_at'],checkpoints=checkpoints,plaintext_cleanup=cleanup,
+            original_execution_status=r.get('status') if completed else None,
             selections_available=False,reason='Recovery evidence is not a completed model forecast; original request requires honest terminal failure handling')
         write(target,encoded(value));results.append(value)
     return results
