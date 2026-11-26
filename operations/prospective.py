@@ -155,5 +155,27 @@ def settle(record_path, result, output, now=None):
     out=dict(schema='monty.settlement.v1',forecast_sha256=receipt['record_sha256'],official_result=result,
              settled_at=now.isoformat(),metrics=scores,betting_authorised=False,
              limitation='One race is not evidence of predictive superiority; aggregate untouched prospective records')
-    write(output,out)
+    # Application-level tamper evidence, not independently enforced WORM storage.
+    # Exclusive creation prevents a repeated or conflicting result replacing history.
+    target=Path(output)
+    out['settlement_sha256']=digest(out)
+    def existing():
+        saved=json.loads(target.read_text())
+        claimed=saved.get('settlement_sha256')
+        unsigned={k:v for k,v in saved.items() if k!='settlement_sha256'}
+        if claimed!=digest(unsigned):raise ValueError('Settlement integrity mismatch or incomplete legacy settlement')
+        if any(saved.get(k)!=out[k] for k in ('forecast_sha256','official_result','metrics')):
+            raise ValueError('Conflicting settlement; original preserved for review')
+        return saved
+    if target.exists():return existing()
+    target.parent.mkdir(parents=True,exist_ok=True)
+    try:
+        with target.open('x') as handle:
+            json.dump(out,handle,sort_keys=True,indent=2,allow_nan=False)
+            handle.write('\n')
+            handle.flush()
+            import os
+            os.fsync(handle.fileno())
+    except FileExistsError:
+        return existing()
     return out

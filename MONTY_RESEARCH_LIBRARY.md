@@ -78,3 +78,8 @@ The [recovery handover](https://github.com/Spankman/Monty-Racing/blob/2923935757
 ## Evidence readiness integration — 26 November 2026
 
 `EVIDENCE-READINESS-20261126`: engineering validation only, no new model experiment. Successful offline checkpoint/original-response/private-delivery contracts; live/private-iPhone acceptance blocked pending rights/key/access approvals. [Master index](MONTY_MASTER_HANDOVER.md), [integration assessment](operations/governance/INTEGRATION_READINESS_2026-11-26.md). Work #242 findings remain unchanged; use verified packet arrays and authority registration/as-of/outcome joins. No new training, threshold/weight activation, live credits or trial modification.
+
+
+## Operational consolidation staging — 26 November 2026
+
+[Evidence and task register](operations/audit/consolidation_20261126/REPORT.md): decoder/wrong-page authority failures reproduced; separate scratching-source acquisition and batch deduplication staged; settlement repeat/conflict integrity repaired. No absent scratching entry is treated as nil. NSW/WA lawful authority interfaces, independent complete books and strict as-of history remain blocked data dependencies for Work. Active trial and frozen engines unchanged; no paid provider calls, merge or deployment. Reviewed canonical PR234 at3d113582d756edb4edf193b34f308c37517168da. This engineering note supplements the canonical Plan, not a new research programme.
