@@ -2,7 +2,7 @@ name: Monty PuntersEdge cutover smoke test
 on:
   push:
     branches: [staging/monty-puntersedge-pricing]
-    paths: ['.github/workflows/monty-pe-cutover-smoke.yml']
+    paths: ['.github/workflows/monty-pe-cutover-smoke.yml', 'puntersedge_adapter.py', 'monty_operations.py']
 permissions:
   contents: read
 jobs:
