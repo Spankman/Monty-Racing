@@ -30,6 +30,10 @@ jobs:
         shell: python
         run: |
           import json
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, str(Path.cwd()))
           from monty_operations import TZ, execute, utcnow
 
           day = utcnow().astimezone(TZ).date().isoformat()
