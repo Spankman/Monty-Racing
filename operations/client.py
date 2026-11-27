@@ -3,6 +3,7 @@ import argparse
 from datetime import timedelta
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -85,7 +86,7 @@ def retrieve(index, request_id=None, req=None, now=None):
         return with_form_handoff(dict(result, semantic_outcome='INTEGRITY_CHECK_FAILED'), req)
     result.update(receipt=receipt, receipt_path=index['receipt_path'],
                   captured_at=forecast.get('captured_at'), valid_until=forecast.get('valid_until'),
-                  blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),
+                  blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),provider=forecast.get('provider'),
                   models=forecast.get('models', {}))
     if forecast.get('operational_outcome'):
         result.update(semantic_outcome=forecast['operational_outcome'],
@@ -245,11 +246,11 @@ def handle(text, *, date=None, country=None, request_id=None, now=None):
         if saved['request_status'] in transport.PENDING:
             return with_workflow_status(saved,req,now)
         legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
-        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved):return saved
     elif req['command'] in ('RM6','RM7') and not country:
         saved=retrieve(transport.read(f'daily/{day}/latest.json'),req=req,now=now)
         legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
-        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved):return saved
     number=transport.enqueue(req)
     return retrieve(None,number,now=now)
 

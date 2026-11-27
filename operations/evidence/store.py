@@ -226,7 +226,7 @@ def public_metadata(prediction,index):
     Detailed rows remain only in the encrypted private packet, never public Git.
     """
     keys=('schema','date','timezone','run_id','generated_at','receipt','source_mode','status','models','blockers',
-          'captured_at','valid_until','provider_snapshot_sha256','operational_outcome','operational_reason','qualifying_forecasts')
+          'provider','coverage','provider_acquisition_diagnostics','captured_at','valid_until','provider_snapshot_sha256','operational_outcome','operational_reason','qualifying_forecasts')
     value={k:prediction[k] for k in keys if k in prediction}
     value.update(races=[],evidence=index,private_assessment_count=len(prediction.get('races',[])),
         delivery_visibility='PRIVATE_EVIDENCE_ONLY',

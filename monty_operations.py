@@ -155,7 +155,7 @@ def projection(forecast, request, now=None):
                 receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]),
                 operational_outcome=forecast.get('operational_outcome'), operational_reason=forecast.get('operational_reason'),
                 operational_evidence=forecast.get('operational_evidence'),
-                captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'),
+                provider=forecast.get('provider'),captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'),
                 delivery_visibility=forecast.get('delivery_visibility'),privacy_notice=forecast.get('privacy_notice'))
 
 
@@ -257,6 +257,9 @@ def selection(rows,version='V6'):
     roughies = [r for r in ranked if r['odds'] >= min_odds
                 and r['probability'] >= min_probability
                 and r['probability'] * r['odds'] > 1]
+    # Owner27Nov: one strongest existing-gate roughie per race; no new quota or lower floor.
+    total=sum(1/r['odds'] for r in ranked)
+    roughies=sorted(roughies,key=lambda r:(r['probability']-(1/r['odds'])/total,r['probability']*r['odds']-1),reverse=True)[:1]
     return dict(ranked_runners=ranked,ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
                 recommended_bet_type='NO BET',best_bets=[],
                 best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in roughies],
@@ -278,7 +281,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 generated_at=started.isoformat(),receipt=f'runs/{day}/{run_id}/receipt.json',source_mode='SIMULATED FIXTURE' if fixture else 'LIVE',
                 status='FAILED',models={},races=[],blockers=[],coverage={},qualifying_forecasts=0)
     from operations.evidence.store import Recorder
-    source=evidence_source or ('SIMULATED FIXTURE' if fixture else ((payload.get('meta') or {}).get('provider','Krok') if isinstance(payload,dict) else 'Krok'))
+    source=evidence_source or ('SIMULATED FIXTURE' if fixture else ((payload.get('meta') or {}).get('provider','Krok') if isinstance(payload,dict) else os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge')))
     recorder=Recorder(output,run_id,source,policy=evidence_policy,certificate=evidence_certificate)
     for body,endpoint in evidence_raw_pages or []:recorder.raw(body,endpoint)
     pins={}
@@ -309,14 +312,22 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         if payload is None and acquisition is not None:
             payload=acquisition(recorder)
         if payload is None:
-            from krok_adapter import fetch
-            key=os.environ.get('KROK_API_KEY','').strip()
+            provider=os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge')
+            if provider not in ('PuntersEdge','Krok'):raise ValueError('Unsupported configured provider')
+            result['provider']=provider
+            key=os.environ.get('PUNTERSEDGE_API_KEY' if provider=='PuntersEdge' else 'KROK_API_KEY','').strip()
             result['provider_credentials_configured']=bool(key)
-            if not key:
-                raise ValueError('KROK_API_KEY absent; live request not attempted')
-            with timed('provider_fetch', run_id, enabled=timings):
+            if not key:raise ValueError('Configured provider credential absent; no fallback attempted')
+            with timed('provider_fetch',run_id,enabled=timings):
                 result['provider_usage']=[]
-                payload=fetch(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'),**({'observer':recorder.raw} if recorder.enabled else {}))
+                if provider=='PuntersEdge':
+                    from puntersedge_adapter import fetch_board
+                    payload,captured=fetch_board(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'),observer=recorder.raw if recorder.enabled else None)
+                else:
+                    from krok_adapter import fetch
+                    payload=fetch(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'),**({'observer':recorder.raw} if recorder.enabled else {}))
+        result.setdefault('provider',(payload.get('meta') or {}).get('provider','Krok'))
+        result['provider_acquisition_diagnostics']={k:v for k,v in (payload.get('meta') or {}).items() if k in ('board_scope','board_races','board_at_limit','discovered_races','discovery_error','omissions','usage_summary','complete_national_coverage_verified')}
         durations['provider_acquisition_seconds']=monotonic()-phase_started
         durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
         recorder.snapshot(payload)
@@ -416,7 +427,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
                             view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
                         view.update(status='SCORED',model_elapsed_seconds=model_seconds,decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
-                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Named fixed-win quotes (Krok attributed)' if all(r.get('_bookmaker') for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
+                                    bookmaker='TAB ('+result['provider']+' attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Named fixed-win quotes (Krok attributed)' if all(r.get('_bookmaker') for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
                                     model_version=version,model_commit=result['models'][version]['commit'])
                         if expired_at_completion:
                             view['expired_at_completion']=True
@@ -510,7 +521,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     delivery_hash=manifest(public,result,delivery_views)
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
-                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 provider=result.get('provider'),models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
                  operational_outcome=result.get('operational_outcome'), operational_reason=result.get('operational_reason'),
                  processing_timings=durations,delivery_manifest_sha256=delivery_hash,
                  provider_usage=result.get('provider_usage'),
@@ -524,7 +535,7 @@ def ticket(view, *, archived=False, now=None):
         view = refresh_view(view, now)
     version=view['version'];mode=view['view']
     title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
-    lines=[title,view['date']+' · Australia/Brisbane','No qualified wagers — see prediction and betting decisions separately','']
+    lines=[title,view['date']+' · Australia/Brisbane','Provider: '+str(view.get('provider') or 'UNVERIFIED')+' · Capture: '+str(view.get('captured_at') or 'UNVERIFIED'),'No qualified wagers — see prediction and betting decisions separately','']
     if view.get('privacy_notice'):lines.extend([view['privacy_notice'],''])
     if mode=='provisional':lines.insert(2,'PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet')
     if archived:
@@ -571,6 +582,7 @@ def ticket(view, *, archived=False, now=None):
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)
         lines.append('')
+    lines.append('LEGEND: WIN · Q = 2-horse boxed quinella · T = 3-horse boxed trifecta · FF = 4-horse boxed first four. $4 progression uses ranked fixed-win odds; ruffies WIN ONLY. Provisional/research assessments are not approved wagers.')
     lines.append('IN MONTY WE TRUST')
     return '\n'.join(lines)+'\n'
 

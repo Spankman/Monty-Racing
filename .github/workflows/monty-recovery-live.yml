@@ -1,0 +1,42 @@
+name: Monty owner recovery live acceptance
+on:
+  push:
+    branches: [recovery/puntersedge-operations-20261127]
+    paths: ['operations/recovery_acceptance.py', '.github/workflows/monty-recovery-live.yml']
+permissions:
+  contents: read
+concurrency:
+  group: monty-recovery-live-20261127
+  cancel-in-progress: false
+jobs:
+  live:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
+          path: v7_engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - run: python operations/restore_private.py
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+      - run: python operations/recovery_acceptance.py
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-recovery-aggregate-${{ github.run_id }}
+          path: operations_output/recovery-aggregate/
+          retention-days: 7
+          if-no-files-found: error
+      - name: Remove transient plaintext
+        if: always()
+        run: rm -rf operations_output/recovery-live/private

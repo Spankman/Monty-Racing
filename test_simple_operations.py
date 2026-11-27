@@ -141,7 +141,7 @@ class QueueRecoveryTests(unittest.TestCase):
               patch.object(worker,'request_for_issue',return_value=req),
               patch.object(worker,'requests',return_value=[(200,req),(201,other)]),
               patch.object(worker,'read',return_value=None),patch.object(worker,'record_request') as record,
-              patch.object(client,'retrieve',return_value={'source_mode':'LIVE','view':{}}),
+              patch.object(client,'retrieve',return_value={'source_mode':'LIVE','provider':'PuntersEdge','view':{}}),
               patch.object(worker,'operate',return_value=result) as operate,patch('builtins.print')):
             worker.main()
         operate.assert_called_once()

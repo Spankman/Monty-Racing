@@ -135,3 +135,67 @@ def canonical_race(race,*,day,book='tab',acceptance=None):
         distance_m=race.get('distance_m'),track_condition=race.get('track_condition'),runner_count=len(runners),runners=runners)])
     return dict(success=True,data=[meeting],meta=dict(has_more=False,provider='PuntersEdge',
         source_race_id=race.get('race_id'),independent_verification=False,historical_features_joined=False))
+
+def fetch_board(day, key, *, country=None, clock=None, meter=None, command='MONTY_LIVE', observer=None, client=None):
+    """One bounded live AU board plus independent discovery inventory.
+
+    Missing/bad races are accounted for individually; no automatic provider or
+    best-book fallback. A rolling board never proves national TAB completeness.
+    """
+    from datetime import timedelta
+    from operations.market_integrity import MAX_AGE_SECONDS, timestamp
+    from zoneinfo import ZoneInfo
+    if country not in (None, 'AU'):raise ProviderError('PuntersEdge route supports Australian racing only')
+    if command.strip().upper()=='C':raise ProviderError('C cannot acquire data')
+    clock=clock or (lambda:datetime.now(timezone.utc))
+    client=client or Client(key,budget=10,observer=observer)
+    if meter is not None and client.usage is not meter:
+        meter.extend(client.usage);client.usage=meter
+    before=len(client.usage)
+    account=client.get('/v1/usage',command=command)
+    remaining=account.get('credits_remaining')
+    if type(remaining) is not int or remaining<500+client.budget:
+        raise ProviderError('PuntersEdge allowance unverified or operational reserve insufficient')
+    inventory=[];inventory_error=None
+    try:
+        events=client.get('/v1/racing/events',dict(hours_ahead=24,categories='horse',country='AU',include_unresolved='true'),command=command)
+        if not isinstance(events,list):raise ProviderError('Unexpected discovery contract')
+        for event in events:
+            try:
+                if (event.get('country')=='AU' and event.get('category')=='horse'
+                    and timestamp(event['start_time']).astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()==day):
+                    inventory.append(dict(race_id=event.get('race_id'),meeting=event.get('venue'),race=event.get('race_number')))
+            except (ValueError,TypeError,KeyError,AttributeError):inventory_error='Incomplete discovery identities'
+    except ProviderError:inventory_error='Independent provider discovery unavailable'
+    board=client.get('/v1/racing/next-to-go',dict(num_races=200,categories='horse',country='AU',include_unresolved='true'),command=command)
+    if not isinstance(board,list):raise ProviderError('Unexpected PuntersEdge board')
+    # Do not call a capped board complete; continue safe observed races explicitly.
+    capped=len(board)>=200
+    now=clock();cutoff=now-timedelta(seconds=MAX_AGE_SECONDS)
+    meetings={};race_keys=set();observations=[];omissions=[];seen_ids=set()
+    for source in board:
+        if not isinstance(source,dict):
+            omissions.append(dict(reason='Malformed board race'));continue
+        identity=dict(race_id=source.get('race_id'),meeting=source.get('venue'),race=source.get('race_number'))
+        if identity['race_id']:seen_ids.add(identity['race_id'])
+        try:
+            converted=canonical_race(source,day=day)['data'][0];card=converted['races'][0]
+            clocks=[timestamp(row['odds'][0].get('captured_at')) for row in card['runners'] if not row['is_scratched']]
+            if not all(cutoff<observed<=now for observed in clocks):raise ProviderError('Price observation expired or future-dated')
+            if timestamp(card['jump_time'])<=now:raise ProviderError('Scheduled jump reached')
+        except (ProviderError,AttributeError,KeyError,TypeError,ValueError) as exc:
+            omissions.append(dict(identity,reason=str(exc) if isinstance(exc,ProviderError) else 'Incomplete race or observation contract'))
+            continue
+        venue=converted['venue'];identity_key=(venue.casefold(),str(card['number']))
+        if identity_key in race_keys:raise ProviderError('Duplicate race identity on PuntersEdge board')
+        race_keys.add(identity_key)
+        if venue not in meetings:meetings[venue]=dict(converted,races=[])
+        meetings[venue]['races'].append(card);observations.extend(clocks)
+    absent=[dict(r,reason='Discovered race absent from priced rolling board') for r in inventory if r['race_id'] not in seen_ids]
+    payload=dict(success=True,data=list(meetings.values()),meta=dict(has_more=False,provider='PuntersEdge',
+        board_scope='AU rolling board; discovery horizon24h; independent TAB national completeness unverified',
+        board_races=len(board),eligible_races=len(race_keys),board_at_limit=capped,discovered_races=inventory,
+        discovery_error=inventory_error,omissions=omissions+absent,complete_national_coverage_verified=False,
+        usage_summary=__import__('operations.data_acquisition',fromlist=['usage_summary']).usage_summary(client.usage[before:])))
+    # Empty priced cards retain diagnostics; normalisation reports DATA BLOCKED.
+    return payload,min(observations) if observations else now

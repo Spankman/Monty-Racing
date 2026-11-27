@@ -224,7 +224,7 @@ def main():
                     if not issue_output:
                         raise
                     cached = {}
-                if cached.get('source_mode') == 'LIVE' and 'view' in cached:
+                if cached.get('source_mode') == 'LIVE' and cached.get('provider') == os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and 'view' in cached:
                     reused = dict(source, request_id=number, request=req, reused_from_request=source.get('request_id'))
                     if issue_output:
                         body = issue_delivery.archived_result(req, reused)

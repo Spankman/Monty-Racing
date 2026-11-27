@@ -49,8 +49,9 @@ class IngressContracts(unittest.TestCase):
 
     def test_recent_reuse_requires_live_scoring_and_fresh_capture(self):
         req = command('RM7 Tamworth 7')
-        index = dict(request_status='COMPLETED', source_mode='LIVE', forecast_path='path',
+        index = dict(request_status='COMPLETED', source_mode='LIVE', provider='PuntersEdge', forecast_path='path',
                      captured_at='2026-11-24T03:00:00Z', models={'V7': {'scored_races': 1}})
         self.assertTrue(transport.reusable(index, req, timestamp('2026-11-24T03:01:00Z')))
+        self.assertFalse(transport.reusable(dict(index,provider='Krok'), req, timestamp('2026-11-24T03:01:00Z')))
         self.assertFalse(transport.reusable(index, req, timestamp('2026-11-24T03:01:31Z')))
         self.assertFalse(transport.reusable(dict(index, models={}), req, timestamp('2026-11-24T03:01:00Z')))

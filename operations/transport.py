@@ -169,6 +169,7 @@ def recent_scope_index(req, issue, now):
 def reusable(index, req, now):
     captured = index.get('captured_at')
     return bool(index.get('request_status') == 'COMPLETED' and index.get('source_mode') == 'LIVE'
+                and index.get('provider') == os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge')
                 and index.get('forecast_path') and captured
                 and 0 <= (now - timestamp(captured)).total_seconds() <= 90
                 and index.get('models', {}).get(req['version'], {}).get('scored_races', 0) > 0)
@@ -233,7 +234,7 @@ def publish(directory, run_id, day, issue=None, workflow_url=None, *, request=No
         raise ValueError('Forecast/receipt integrity mismatch')
     prefix='runs/'+day+'/'+run_id+'/'
     index=dict(schema='monty.operations.index.v1',date=day,run_id=run_id,
-               status=receipt['status'],source_mode=receipt['source_mode'],
+               status=receipt['status'],source_mode=receipt['source_mode'],provider=receipt.get('provider'),
                receipt_path=prefix+'receipt.json',forecast_path=prefix+'forecast.json',
                forecast_sha256=receipt['forecast_sha256'],generated_at=receipt['generated_at'],
                workflow_url=workflow_url, captured_at=saved_forecast.get('captured_at'),
