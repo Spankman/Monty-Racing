@@ -3,6 +3,7 @@ import argparse
 from datetime import timedelta
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -85,7 +86,7 @@ def retrieve(index, request_id=None, req=None, now=None):
         return with_form_handoff(dict(result, semantic_outcome='INTEGRITY_CHECK_FAILED'), req)
     result.update(receipt=receipt, receipt_path=index['receipt_path'],
                   captured_at=forecast.get('captured_at'), valid_until=forecast.get('valid_until'),
-                  blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),
+                  blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),provider=forecast.get('provider'),
                   models=forecast.get('models', {}))
     if forecast.get('operational_outcome'):
         result.update(semantic_outcome=forecast['operational_outcome'],
@@ -102,6 +103,27 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'FRESH' if age >= 0 and now < valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
+    if forecast.get('delivery_visibility')=='PRIVATE_RESULTS_AVAILABLE':
+        try:
+            private=forecast['private_delivery']
+            validity=private.get('race_validity',[])
+            if req and req.get('meeting'):
+                validity=[v for v in validity if v['meeting'].casefold()==req['meeting'].casefold() and str(v['race'])==str(req['race']) and req.get('country') in (None,v['country'])]
+                if not validity:result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT',freshness='UNVERIFIED')
+            if req and req.get('version'):
+                scored=[v for v in validity if v.get('model_status',{}).get(req['version'])=='SCORED']
+                if validity and not scored:
+                    result['semantic_outcome']='EXECUTION FAILED' if forecast.get('models',{}).get(req['version'],{}).get('status')=='FAILED' else 'DATA BLOCKED'
+                validity=scored
+            available=sum(timestamp(v['captured_at'])<=now<timestamp(v['valid_until']) for v in validity)
+            if validity and not available:result['freshness']='EXPIRED'
+            ages=[(now-timestamp(v.get('price_observed_at') or v['captured_at'])).total_seconds() for v in validity]
+            result.update(fresh_race_assessments=available,oldest_offer_age_seconds=max(ages) if ages else None,requested_view=req,
+                delivery_status='PRIVATE_RESULTS_AVAILABLE' if result.get('freshness')=='FRESH' else 'PRIVATE_RESULTS_EXPIRED' if result.get('freshness')=='EXPIRED' else 'PRIVATE_REQUEST_SCOPE_UNAVAILABLE',
+                private_delivery=private,selections_available=result.get('freshness')=='FRESH' and available>0)
+        except (ValueError,TypeError,KeyError):
+            result.update(delivery_status='PRIVATE_RECEIPT_METADATA_INVALID',semantic_outcome='DELIVERY FAILED',selections_available=False)
+        return result
     if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
         # Execution succeeded separately from delivery rights/access. Never hide
         # valid model execution as scope-missing, NO BET or a manual form handoff.
@@ -245,11 +267,11 @@ def handle(text, *, date=None, country=None, request_id=None, now=None):
         if saved['request_status'] in transport.PENDING:
             return with_workflow_status(saved,req,now)
         legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
-        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved or saved.get('private_delivery') and saved.get('freshness')=='FRESH'):return saved
     elif req['command'] in ('RM6','RM7') and not country:
         saved=retrieve(transport.read(f'daily/{day}/latest.json'),req=req,now=now)
         legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
-        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved or saved.get('private_delivery') and saved.get('freshness')=='FRESH'):return saved
     number=transport.enqueue(req)
     return retrieve(None,number,now=now)
 

@@ -40,3 +40,11 @@ class AuthorityRecoveryTests(unittest.TestCase):
     def test_unknown_authority_mapping_never_fetches(self):
         with self.assertRaisesRegex(ValueError,'mapping'):
             capture_races('2026-11-26',[1],'.',meeting='Other',meeting_code='other')
+
+    def test_mixed_case_and_numeric_title_keep_exact_race_boundary(self):
+        pdf=(b'Rockhampton Thursday 26 November, 2026\n2 Mixed Case Handicap\n$21000\n1800 metres 1:30PM\n'
+             b'01 First(Trainer One) Rider\n02 Second(Trainer Two) Rider\n'
+             b'3 102.7 Station Handicap\n$21000\n1200 metres 2:00PM\n01 Other(Trainer Three) Rider\n')
+        with patch('subprocess.run',return_value=SimpleNamespace(stdout=pdf)):
+            result=rq_declaration(HTML,b'%PDF','2026-11-26','Rockhampton',2,scratchings_body=SCR)
+        self.assertEqual([r['horse'] for r in result['runners']],['First','Second'])

@@ -294,7 +294,7 @@ class ConnectorClientTests(unittest.TestCase):
         ])
         race = dict(meeting='Ballina', race='1', country='AU', captured_at=captured.isoformat(),
                     scheduled_start=self.jump.isoformat(), models={'V6': selections, 'V7': selections})
-        forecast = dict(run_id=run_id, status=status, date=self.day, source_mode='LIVE',
+        forecast = dict(run_id=run_id, status=status, date=self.day, source_mode='LIVE', provider='PuntersEdge',
                         captured_at=captured.isoformat(), races=[race] if status != 'FAILED' else [],
                         valid_until=(captured + timedelta(minutes=5)).isoformat())
         raw = json.dumps(forecast).encode()

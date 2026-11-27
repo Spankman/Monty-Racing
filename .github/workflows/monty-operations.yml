@@ -2,7 +2,7 @@ name: Monty ChatGPT operations (shared snapshot)
 run-name: Monty operations ${{ inputs.command || github.event.issue.title || github.event.schedule }}
 on:
   push:
-    branches: [integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback, fix/prediction-approval-diagnostics, integration/verified-operations]
+    branches: [recovery/puntersedge-operations-20261127, integration/chatgpt-operations, fix/simple-chatgpt-requests, fix/single-race-fallback, fix/prediction-approval-diagnostics, integration/verified-operations]
     paths: ['.github/workflows/monty-operations.yml', '.monty/operations-staging.json']
   workflow_dispatch:
     inputs:
@@ -44,7 +44,7 @@ jobs:
     if: >-
       always() && (github.event_name != 'issues' || needs.acknowledge.outputs.route == 'true')
     concurrency:
-      group: monty-operations-queue
+      group: ${{ github.ref_name == 'recovery/puntersedge-operations-20261127' && 'monty-private-command-acceptance' || 'monty-operations-queue' }}
       queue: max
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -96,16 +96,21 @@ jobs:
         if: steps.event.outputs.settled != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          OPERATIONS_RESULTS_BRANCH: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'monty-single-staging-results' || 'monty-simple-staging-results') || 'monty-operations-results' }}
+          OPERATIONS_RESULTS_BRANCH: ${{ github.ref_name == 'recovery/puntersedge-operations-20261127' && 'monty-private-command-acceptance-results' || github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'monty-single-staging-results' || 'monty-simple-staging-results') || 'monty-operations-results' }}
+          MONTY_PRIVATE_RESULTS_TOKEN: ${{ secrets.MONTY_PRIVATE_RESULTS_TOKEN }}
+          MONTY_PRICE_PROVIDER: PuntersEdge
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
           MONTY_EVIDENCE_POLICY: ${{ vars.MONTY_EVIDENCE_POLICY }}
           OPERATIONS_COMMAND: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'RM6 Ballina 7' || 'RMV6PS') || inputs.command }}
-          OPERATIONS_ISSUE_COMMENTS: ${{ github.ref_name == github.event.repository.default_branch && '1' || '0' }}
+          OPERATIONS_ISSUE_COMMENTS: ${{ (github.ref_name == github.event.repository.default_branch || github.ref_name == 'recovery/puntersedge-operations-20261127') && '1' || '0' }}
           OPERATIONS_DATE: ${{ inputs.date }}
           OPERATIONS_ISSUE: ${{ inputs.request_issue || github.event.issue.number }}
           OPERATIONS_MODE: ${{ (github.event_name == 'issues' || inputs.request_issue || github.event.schedule == '*/5 * * * *') && 'queue' || 'daily' }}
         run: |
-          if [ "$GITHUB_REF_NAME" = "integration/verified-operations" ]; then
+          if [ "$GITHUB_REF_NAME" = "recovery/puntersedge-operations-20261127" ]; then
+            python operations/private_command_acceptance.py
+          elif [ "$GITHUB_REF_NAME" = "integration/verified-operations" ]; then
             python operations/verification_acceptance.py
           elif [ "$GITHUB_REF_NAME" = "fix/prediction-approval-diagnostics" ]; then
             python operations/acceptance.py
@@ -120,7 +125,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: monty-operations-${{ github.run_id }}-${{ github.run_attempt }}
-          path: operations_output/*/public/
+          path: |
+            operations_output/*/public/
+            operations_output/private-command-acceptance/
+            operations_output/private-transport-probe/
           if-no-files-found: warn
           retention-days: 90
       - name: Licence-approved encrypted inference evidence only

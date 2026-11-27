@@ -10,7 +10,7 @@ from operations.public_sources import capture,rq_declaration
 
 def capture_races(day,races,directory,fetch=capture, *, meeting='Ipswich', meeting_code='ipsw'):
     # Explicit allowlist prevents arbitrary URL construction and silent venue aliases.
-    if (meeting, meeting_code) not in {('Ipswich', 'ipsw'), ('Rockhampton', 'rock')}:
+    if (meeting, meeting_code) not in {('Ipswich', 'ipsw'), ('Rockhampton', 'rock'), ('Cairns', 'crns')}:
         raise ValueError('Authority meeting mapping not validated')
     races=list(dict.fromkeys(int(number) for number in races))
     if any(number < 1 for number in races):raise ValueError('Invalid race number')

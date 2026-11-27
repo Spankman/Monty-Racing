@@ -11,9 +11,12 @@ def render(view, *, archived=False, now=None):
         view = refresh_view(view, now)
     e=html.escape
     title=f"MONTY {view['version']} — "+('SHADOW SELECTION SLIP (RESEARCH ONLY)' if view['version']=='V7' else 'OFFICIAL SELECTION SLIP' if view['view']=='official' else 'PROVISIONAL SELECTION SLIP')
+    if view['view']=='combined':title='MONTY — SMART BETTING TICKET'
     parts=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
       '<title>'+e(title)+'</title><style>body{background:white;color:#111;font:16px Arial;margin:0;padding:24px}main{max-width:760px;margin:auto;border-top:6px solid #b29446;padding-top:12px}h1{font-size:22px}h2{font-size:18px;color:#715917;margin-top:24px}table{width:100%;border-collapse:collapse}td{padding:6px 0;vertical-align:top}td:last-child{text-align:right;white-space:nowrap}p{line-height:1.5}textarea{box-sizing:border-box;width:100%;min-height:240px}section{border-bottom:1px solid #ded5bc;padding-bottom:12px}footer{color:#715917;margin-top:24px;font-weight:bold}</style><main>',
       '<h1>'+e(title)+'</h1><p>'+e(view['date'])+' · Australia/Brisbane</p><p><b>No qualified wagers — prediction and betting decisions are separate. Diagnostic rankings are not betting recommendations.</b></p>']
+    if view.get('provider'):
+        parts.append('<p>Provider '+e(str(view['provider']))+' · Capture '+e(str(view.get('captured_at') or 'UNVERIFIED'))+'</p>')
     if view.get('privacy_notice'):parts.append('<p><b>'+e(view['privacy_notice'])+'</b></p>')
     if view['view']=='provisional':parts.append('<p><b>PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet</b></p>')
     if archived:
@@ -23,6 +26,8 @@ def render(view, *, archived=False, now=None):
         for race in [r for r in view['races'] if r['meeting']==meeting]:
             result=race['result'];diag=result.get('diagnostic_assessment');parts.append('<section><p>R'+e(str(race['race']))+' · '+e(diag['progression_bet_type'] if diag else result.get('progression_bet_type','NO BET'))+' assessment · <b>'+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</b></p>')
             parts.append('<p>Prediction: '+e(result.get('prediction_classification',result.get('status','UNKNOWN')))+' · Betting: '+e(result.get('betting_decision',result.get('official_classification','UNKNOWN')))+'</p>')
+            if result.get('assessment_engine'):
+                parts.append('<p>'+e(result['assessment_engine'])+'</p>')
             diag=result.get('diagnostic_assessment')
             market=result.get('market_integrity') or race.get('market_integrity')
             if market:
@@ -43,7 +48,7 @@ def render(view, *, archived=False, now=None):
             for roughie in (diag or result).get('roughies', []):
                 if str(roughie['number']) in displayed:continue
                 book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
-                parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>'+e(quote_text(roughie)+book)+'</td></tr>')
+                parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · '+e(roughie.get('assessment_engine','diagnostic'))+' · NO BET</td><td>'+e(quote_text(roughie)+book)+'</td></tr>')
                 if roughie.get('value_attribution'):parts.append('<tr><td colspan="2">'+e(roughie['value_attribution'])+' · diagnostic only</td></tr>')
             value=result.get('value_selection')
             if race.get('single_race_assessment') and result.get('ordered_selections'):

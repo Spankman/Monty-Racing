@@ -181,9 +181,9 @@ def rq_declaration(body,pdf,day,meeting,race, *, scratchings_body=None):
     date=datetime.fromisoformat(day)
     if meeting.casefold() not in normalized.casefold() or f'{date.day} {calendar.month_name[date.month]} {date.year}' not in normalized:
         raise ValueError('Authority PDF date/meeting mismatch')
-    start=re.search(r'(?m)^\s*'+str(race)+r'\s+(?=[A-Z][A-Z ]{3})',document)
+    start=re.search(r'(?m)^\s*'+str(race)+r'\s+(?=[^\n]*[A-Za-z]{3}[^\n]*\n(?:[^\n]*\n){0,4}\s*\d{3,4}\s+metres\b)',document)
     if not start:raise ValueError('Authority PDF race heading absent')
-    tail=document[start.end():];end=re.search(r'(?m)^\s*'+str(int(race)+1)+r'\s+(?=[A-Z][A-Z ]{3})',tail)
+    tail=document[start.end():];end=re.search(r'(?m)^\s*'+str(int(race)+1)+r'\s+(?=[^\n]*[A-Za-z]{3}[^\n]*\n(?:[^\n]*\n){0,4}\s*\d{3,4}\s+metres\b)',tail)
     block=tail[:end.start()] if end else tail
     if not re.search(r'\b'+str(facts['distance_m'])+r'\s+metres\b',block):raise ValueError('Authority PDF distance mismatch')
     rows=[]

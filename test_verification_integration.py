@@ -132,6 +132,17 @@ class PairTests(unittest.TestCase):
         f['races'][1]['captured_at']=(self.now-timedelta(seconds=1)).isoformat()
         with self.assertRaises(ValueError):paired(f,self.now)
 
+    def test_combined_keeps_ranked_ladder_and_discards_an_expired_quote(self):
+        from operations.tickets import combined
+        f=self.run_it()
+        view=combined(f,self.now)
+        self.assertEqual(len(view['races']),1)
+        race=view['races'][0]
+        self.assertEqual(race['result']['assessment_engine'],'V6 provisional')
+        self.assertEqual(race['result']['ordered_selections'],f['races'][0]['models']['V6']['ordered_selections'])
+        f['races'][0]['price_observed_at']=(self.now-timedelta(minutes=5)).isoformat()
+        self.assertEqual(combined(f,self.now)['races'],[])
+
 class DeliveryTests(unittest.TestCase):
     setUp=fixtures.RunTests.setUp
     run_it=fixtures.RunTests.run_it

@@ -1,1 +1,51 @@
-{"purpose": "Second-race fresh pre-jump pilot; no production activation", "command": "RM6", "issue_id": 220, "pilot_race": 7, "operator_url": "https://www.sportsbet.com.au/horse-racing/australia-nz/ipswich/race-7-11204564", "single_pilot_only": true}
+{
+  "schema": "monty.private-command-acceptance.v1",
+  "date": "2026-11-27",
+  "requests": [
+    {
+      "issue": 264,
+      "command": "RM6"
+    },
+    {
+      "issue": 268,
+      "command": "RM7"
+    },
+    {
+      "issue": 265,
+      "command": "RM6PS"
+    },
+    {
+      "issue": 266,
+      "command": "RM7PS"
+    },
+    {
+      "issue": 269,
+      "command": "RMV6PS"
+    },
+    {
+      "issue": 267,
+      "command": "RMV7PS"
+    },
+    {
+      "issue": 272,
+      "command": "RM6 Cairns 4"
+    },
+    {
+      "issue": 274,
+      "command": "RM7 Cairns 4"
+    },
+    {
+      "issue": 271,
+      "command": "RM6PS Cairns 4"
+    },
+    {
+      "issue": 270,
+      "command": "RM7PS Cairns 4"
+    },
+    {
+      "issue": 273,
+      "command": "Cairns 4"
+    }
+  ],
+  "maximum_new_executions": 3
+}

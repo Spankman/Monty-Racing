@@ -1,0 +1,23 @@
+name: Monty existing private transport capability
+on:
+  push:
+    branches: [recovery/puntersedge-operations-20261127]
+    paths: ['operations/recovery/private-transport-probe.json']
+permissions:
+  contents: read
+jobs:
+  capability:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python operations/private_transport_probe.py
+        env:
+          PRIVATE_RESULTS_TOKEN: ${{ secrets.MONTY_PRIVATE_RESULTS_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-private-transport-${{ github.run_id }}
+          path: operations_output/private-transport-probe/
+          retention-days: 7
