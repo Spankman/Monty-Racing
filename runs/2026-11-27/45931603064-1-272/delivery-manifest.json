@@ -1,0 +1,46 @@
+{
+  "schema": "monty.delivery.v1",
+  "run_id": "45931603064-1-272",
+  "date": "2026-11-27",
+  "forecast_sha256": "97610261ccac886deba3ec9ce5ec8b461e92295b80a3551ecab27abd7e13bd55",
+  "captured_at": "2026-11-27T03:02:44.614426+00:00",
+  "valid_until": "2026-11-27T03:07:44.614426+00:00",
+  "previews": [
+    {
+      "path": "compact-v6-official.json",
+      "sha256": "ac4312e3e22431a92a52c06dc46f272d87fca5eea2df26ae6e6a8820bcb0bdee",
+      "bytes": 936,
+      "version": "V6",
+      "view": "official"
+    },
+    {
+      "path": "compact-v6-provisional.json",
+      "sha256": "d7ec48327bfafdaf5cc82ae9e523bd8d886ff13d611f0173b4ce568b218595ff",
+      "bytes": 939,
+      "version": "V6",
+      "view": "provisional"
+    },
+    {
+      "path": "compact-v7-official.json",
+      "sha256": "2cdf3014609c6ceb9a279d58d34646f49f4ac6a7ccfbab125971f692ac3384c8",
+      "bytes": 936,
+      "version": "V7",
+      "view": "official"
+    },
+    {
+      "path": "compact-v7-provisional.json",
+      "sha256": "6f481351da3d27413bb8d438c6e444212089002b8c573788a1a383f825f40fe7",
+      "bytes": 939,
+      "version": "V7",
+      "view": "provisional"
+    },
+    {
+      "path": "compact-v7-shadow.json",
+      "sha256": "afdc57c3dab0a10c7bbae232eabf6611a00b362bd22b76f29519b71e1f3e9466",
+      "bytes": 934,
+      "version": "V7",
+      "view": "shadow"
+    }
+  ],
+  "instruction": "Verify receipt and preview hashes, then enforce capture expiry and each scheduled jump before displaying selections"
+}

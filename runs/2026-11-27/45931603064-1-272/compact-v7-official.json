@@ -1,0 +1,24 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45931603064-1-272",
+  "date": "2026-11-27",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_ASSESSMENTS",
+  "races": [],
+  "receipt": "runs/2026-11-27/45931603064-1-272/receipt.json",
+  "blockers": [
+    "Betting approval DATA BLOCKED: no independent field/conditions attestation, compatible as-of history or validated prospective approval evaluator",
+    "V7 remains research only"
+  ],
+  "operational_outcome": null,
+  "operational_reason": null,
+  "operational_evidence": null,
+  "provider": "PuntersEdge",
+  "captured_at": "2026-11-27T03:02:44.614426+00:00",
+  "valid_until": "2026-11-27T03:07:44.614426+00:00",
+  "delivery_visibility": "PRIVATE_RESULTS_AVAILABLE",
+  "privacy_notice": "Owner-private detailed forecasts available in the authenticated private repository; public price display remains disabled.",
+  "snapshot_only": true,
+  "compact_delivery": true
+}
