@@ -1,0 +1,59 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45931603064-1-264",
+  "date": "2026-11-27",
+  "status": "COMPLETED_ASSESSMENTS",
+  "forecast_sha256": "8e263e09643a36ba4e399edaec58b637180ff008fa73f275e041a46042dfd40e",
+  "provider_snapshot_sha256": "b62200bf2a2424b5596723279734e210259e70f49f97ddd38bb4b84bbc30bd93",
+  "provider": "PuntersEdge",
+  "models": {
+    "V6": {
+      "commit": "ab480c4b4fb8ad5f466b26ad86e853d36e6ff1c3",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 17,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 17,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    }
+  },
+  "generated_at": "2026-11-27T03:01:58.975296+00:00",
+  "source_mode": "LIVE",
+  "operational_outcome": null,
+  "operational_reason": null,
+  "processing_timings": {
+    "frozen_verification_seconds": 0.042130098000001226,
+    "provider_acquisition_seconds": 5.564363115999996,
+    "provider_supplied_by_caller": false,
+    "before_report_seconds": 21.241490241999998,
+    "forecast_write_seconds": 11.108315992000001
+  },
+  "delivery_manifest_sha256": "19d48483e8c31e90f535774098f51994e542d700823f1caf3f15ddf81a47e467",
+  "provider_usage": null,
+  "qualifying_forecasts": 0,
+  "model_artifacts_unchanged": true,
+  "evidence": {
+    "schema": "monty.evidence-index.v1",
+    "source": "PuntersEdge",
+    "status": "NOT_CONFIGURED",
+    "complete": false,
+    "raw_http_pages": 0,
+    "errors": [],
+    "encrypted_checkpoints": 0,
+    "checkpoint_errors": []
+  },
+  "private_plaintext_cleanup": "REMOVED"
+}
