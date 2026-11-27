@@ -81,7 +81,11 @@ def freshness(record, now=None):
         age = (now-timestamp(record['captured_at'])).total_seconds()
         if age < 0 or age >= MAX_AGE_SECONDS:
             return 'STALE — REQUEST A FRESH RUN'
-        if timestamp(record['scheduled_start']) <= now:
+        observed = record.get('price_observed_at')
+        if observed and not 0 <= (now - timestamp(observed)).total_seconds() < MAX_AGE_SECONDS:
+            return 'STALE — REQUEST A FRESH RUN'
+        freeze = timedelta(minutes=1) if observed else timedelta(0)
+        if timestamp(record['scheduled_start']) <= now + freeze:
             return 'CLOSED — JUMP TIME REACHED'
     except (ValueError, KeyError, TypeError):
         return 'UNVERIFIED TIMING — NO BET'
@@ -187,7 +191,7 @@ def metadata(payload, day):
             invalid_declared=not isinstance(raw_declared,list) or len(declared)!=len(raw_declared)
             key=(str(meeting.get('venue','')).casefold(),str(race.get('number')))
             row=dict(country=meeting['country'],meeting=meeting.get('venue'),race=str(race.get('number')),
-                     scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
+                     scheduled_start=race.get('jump_time'),price_observed_at=race.get('price_observed_at'),provider_status=race.get('status'),
                      provider_track_condition=race.get('track_condition') or meeting.get('track_hint'),
                      provider_surface=race.get('surface') or meeting.get('surface'),
                      market_context=dict(declared_count=race.get('runner_count'),observed_declared_count=len(declared),
@@ -327,7 +331,9 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                     from krok_adapter import fetch
                     payload=fetch(day,key,meter=result['provider_usage'],command=request['command'],country=request.get('country'),**({'observer':recorder.raw} if recorder.enabled else {}))
         result.setdefault('provider',(payload.get('meta') or {}).get('provider','Krok'))
-        result['provider_acquisition_diagnostics']={k:v for k,v in (payload.get('meta') or {}).items() if k in ('board_scope','board_races','board_at_limit','discovered_races','discovery_error','omissions','usage_summary','complete_national_coverage_verified')}
+        result['provider_acquisition_diagnostics']={k:v for k,v in (payload.get('meta') or {}).items() if k in ('board_scope','board_races','board_at_limit','discovered_races','discovery_error','omissions','usage_summary','complete_national_coverage_verified',
+             'dated_meeting_count','dated_race_count','dated_priced_count','dated_acceptances_error',
+             'tab_clock_counts','duplicate_board_races')}
         durations['provider_acquisition_seconds']=monotonic()-phase_started
         durations['provider_supplied_by_caller']=payload is not None and not result.get('provider_credentials_configured',False)
         recorder.snapshot(payload)
@@ -378,7 +384,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             m=dict(m,date=day,single_race=bool(request.get('meeting')))
             runners=[r for r in snapshot['runners'] if (r['meeting'].casefold(),str(r['race']))==k]
             record=dict(**{n:m[n] for n in ['meeting','race','country','scheduled_start','scratchings']},
-                        captured_at=captured.isoformat(),independent_verification=False,
+                        captured_at=captured.isoformat(),price_observed_at=m.get('price_observed_at'),independent_verification=False,
                         provider_track_condition=m.get('provider_track_condition'),provider_surface=m.get('provider_surface'),
                         scratching_status='PROVIDER ASSERTION ONLY',models={})
             if single:
@@ -535,6 +541,7 @@ def ticket(view, *, archived=False, now=None):
         view = refresh_view(view, now)
     version=view['version'];mode=view['view']
     title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
+    if mode=='combined':title='MONTY — SMART BETTING TICKET'
     lines=[title,view['date']+' · Australia/Brisbane','Provider: '+str(view.get('provider') or 'UNVERIFIED')+' · Capture: '+str(view.get('captured_at') or 'UNVERIFIED'),'No qualified wagers — see prediction and betting decisions separately','']
     if view.get('privacy_notice'):lines.extend([view['privacy_notice'],''])
     if mode=='provisional':lines.insert(2,'PROVISIONAL ASSESSMENT — incomplete verification; not a qualified bet')
@@ -544,6 +551,8 @@ def ticket(view, *, archived=False, now=None):
     for race in view['races']:
         lines.append(race['meeting']+' R'+str(race['race']))
         result=race['result'];rows=result.get('ordered_selections',[])
+        if result.get('assessment_engine'):
+            lines.append(result['assessment_engine'])
         market=result.get('market_integrity') or race.get('market_integrity')
         if market:
             book='UNKNOWN (incomplete field)' if market['book_percentage'] is None else f"{market['book_percentage']:.3f}%"
@@ -574,7 +583,7 @@ def ticket(view, *, archived=False, now=None):
         for roughie in (diag or result).get('roughies', []):
             if str(roughie['number']) in displayed:continue
             book = f" ({roughie['bookmaker']})" if roughie.get('bookmaker') else ''
-            lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)}{book} · NO BET")
+            lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)}{book} · {roughie.get('assessment_engine', 'diagnostic')} · NO BET")
             if roughie.get('value_attribution'):lines.append('  '+roughie['value_attribution']+' · diagnostic only')
         from operations.ruffies import text as ruffie_text
         lines.extend(ruffie_text(result))

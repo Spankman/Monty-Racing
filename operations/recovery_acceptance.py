@@ -9,7 +9,7 @@ import hashlib,json,os,sys,time
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import monty_operations as ops
 from operations.evidence import store
-from operations.tickets import paired
+from operations.tickets import combined,paired
 from puntersedge_adapter import fetch_board
 
 
@@ -32,6 +32,12 @@ def main():
             report['commands'][text]=dict(races=len(view['races']),ranked_assessments=sum(bool((r['result'].get('diagnostic_assessment') or r['result']).get('ordered_selections')) for r in view['races']),
                 slip_sha256=hashlib.sha256(slip.encode()).hexdigest(),betting_authorised=False)
         pair=paired(prediction,now);report['paired_ticket_hashes']=[hashlib.sha256(t['text'].encode()).hexdigest() for t in pair['tickets']]
+        combined_view = combined(prediction, now)
+        report['combined_ticket'] = dict(
+            assessment_races=len(combined_view['races']),
+            ticket_sha256=hashlib.sha256(ops.ticket(combined_view, now=now).encode()).hexdigest())
+        report['read_only_status_check'] = dict(run_id=ops.projection(prediction, ops.command('C', day), now)['run_id'],
+                                               live_command_submission=False)
         report['scoring']={v:m for v,m in prediction['models'].items()}
         report['coverage']=prediction['coverage'];report['status']=prediction['status']
         report['forecast_content_sha256']=hashlib.sha256(store.encoded(prediction)).hexdigest()
