@@ -86,7 +86,7 @@ def retrieve(index, request_id=None, req=None, now=None):
     result.update(receipt=receipt, receipt_path=index['receipt_path'],
                   captured_at=forecast.get('captured_at'), valid_until=forecast.get('valid_until'),
                   blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),
-                  models=forecast.get('models', {}))
+                  models=forecast.get('models', {}), provider=forecast.get('provider', 'Krok'))
     now = now or utcnow()
     captured = result['captured_at']
     if captured:

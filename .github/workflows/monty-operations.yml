@@ -90,6 +90,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           OPERATIONS_RESULTS_BRANCH: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'monty-single-staging-results' || 'monty-simple-staging-results') || 'monty-operations-results' }}
+          MONTY_PRICE_PROVIDER: PuntersEdge
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
           KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
           OPERATIONS_COMMAND: ${{ github.event_name == 'push' && (github.ref_name == 'fix/single-race-fallback' && 'RM6 Ballina 7' || 'RMV6PS') || inputs.command }}
           OPERATIONS_ISSUE_COMMENTS: ${{ github.ref_name == github.event.repository.default_branch && '1' || '0' }}
