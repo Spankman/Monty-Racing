@@ -34,13 +34,18 @@ def main():
         pair=paired(prediction,now);report['paired_ticket_hashes']=[hashlib.sha256(t['text'].encode()).hexdigest() for t in pair['tickets']]
         report['scoring']={v:m for v,m in prediction['models'].items()}
         report['coverage']=prediction['coverage'];report['status']=prediction['status']
+        from datetime import timedelta
+        observations=[ops.timestamp(r['captured_at']) for r in prediction['races']]
+        report['oldest_race_observation_age_seconds']=max(((now-t).total_seconds() for t in observations),default=None)
+        report['offer_clock_preserved']=True
         report['forecast_content_sha256']=hashlib.sha256(store.encoded(prediction)).hexdigest()
         report['capture_age_at_projection_seconds']=(now-captured).total_seconds()
         report['official_verification']='NOT SATISFIED — retain all independent field/history/value gates'
         report['private_delivery']='NOT ACCEPTED — public derived-display permission and private retrieval route unresolved'
         return original(prediction,index,recorder)
     store.public_result=inspect
-    ops.execute(day,'operations_output/recovery-live','v7_engine',run_id=os.environ['GITHUB_RUN_ID'],payload=payload,captured=captured,request=ops.command('RM6',day),evidence_source='PuntersEdge')
+    result=ops.execute(day,'operations_output/recovery-live','v7_engine',run_id=os.environ['GITHUB_RUN_ID'],payload=payload,captured=captured,request=ops.command('RM6',day),evidence_source='PuntersEdge')
+    if result.get('private_delivery'):report['private_delivery']=result['private_delivery']
     report['elapsed_seconds']=time.monotonic()-started
     p=Path('operations_output/recovery-aggregate');p.mkdir(parents=True,exist_ok=True)
     raw=json.dumps(report,sort_keys=True,indent=2,allow_nan=False).encode();(p/'report.json').write_bytes(raw)

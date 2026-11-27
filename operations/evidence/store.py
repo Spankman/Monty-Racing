@@ -30,7 +30,7 @@ def no_secrets(value):
     elif isinstance(value,list):
         for item in value:no_secrets(item)
     elif isinstance(value,str):
-        if any(len(secret)>=12 and secret in value for name in ('KROK_API_KEY','PUNTERSEDGE_API_KEY','V6_ARCHIVE_TOKEN','GH_TOKEN','GITHUB_TOKEN') if (secret:=os.getenv(name,''))):
+        if any(len(secret)>=12 and secret in value for name in ('KROK_API_KEY','PUNTERSEDGE_API_KEY','V6_ARCHIVE_TOKEN','GH_TOKEN','GITHUB_TOKEN','MONTY_PRIVATE_RESULTS_TOKEN') if (secret:=os.getenv(name,''))):
             raise ValueError('Configured credential detected; evidence not retained')
         if 'PRIVATE KEY-----' in value or re.search(r'https?://[^/\s]+:[^/@\s]+@|[?&](?:api_key|token|access_token|key)=',value,re.I):
             raise ValueError('Credential-shaped content; evidence not retained')
@@ -238,4 +238,13 @@ def public_result(prediction,index,recorder):
     allow=(recorder.policy or {}).get('sources',{}).get(recorder.source,{})
     permitted=(allow.get('public_derived_forecasts_permitted') is True and bool(allow.get('public_display_permission_reference')))
     if prediction.get('source_mode')=='SIMULATED FIXTURE' or (recorder.enabled and permitted):return dict(prediction,evidence=index)
-    return public_metadata(prediction,index)
+    value=public_metadata(prediction,index)
+    if os.getenv('MONTY_PRIVATE_RESULTS_TOKEN') and prediction.get('provider')=='PuntersEdge':
+        try:
+            from operations.private_delivery import publish
+            private=publish(prediction)
+            value.update(private_delivery=private,delivery_visibility='PRIVATE_RESULTS_AVAILABLE',
+                privacy_notice='Owner-private detailed forecasts available in the authenticated private repository; public price display remains disabled.')
+        except Exception:
+            value['private_delivery_error']='private_result_publication_failed'
+    return value

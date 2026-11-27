@@ -1,0 +1,12 @@
+{
+  "schema": "monty.archived-poll-clock-diagnostic.v1",
+  "source_run": "45736491530",
+  "counts": {
+    "TAB_offer_observations": 84,
+    "adjacent_same_runner_pairs": 63,
+    "unchanged_price_pairs": 24,
+    "unchanged_price_with_advanced_poll_timestamp": 24
+  },
+  "provider_calls": 0,
+  "conclusion": "An unchanged price can carry a newer poll timestamp. Freshness must use observation age, not price-change age. Archived sample does not diagnose provider backend scheduling or independently verify executable prices."
+}

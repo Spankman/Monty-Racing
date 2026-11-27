@@ -103,6 +103,14 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'FRESH' if age >= 0 and now < valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
+    if forecast.get('delivery_visibility')=='PRIVATE_RESULTS_AVAILABLE':
+        validity=forecast['private_delivery'].get('race_validity',[])
+        available=sum(timestamp(v['captured_at'])<=now<timestamp(v['valid_until']) for v in validity)
+        if validity and not available:result['freshness']='EXPIRED'
+        result['fresh_race_assessments']=available
+        result.update(delivery_status='PRIVATE_RESULTS_AVAILABLE' if result.get('freshness')=='FRESH' else 'PRIVATE_RESULTS_EXPIRED',
+                      private_delivery=forecast['private_delivery'],selections_available=result.get('freshness')=='FRESH')
+        return result
     if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
         # Execution succeeded separately from delivery rights/access. Never hide
         # valid model execution as scope-missing, NO BET or a manual form handoff.
@@ -246,11 +254,11 @@ def handle(text, *, date=None, country=None, request_id=None, now=None):
         if saved['request_status'] in transport.PENDING:
             return with_workflow_status(saved,req,now)
         legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
-        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved or saved.get('private_delivery') and saved.get('freshness')=='FRESH'):return saved
     elif req['command'] in ('RM6','RM7') and not country:
         saved=retrieve(transport.read(f'daily/{day}/latest.json'),req=req,now=now)
         legacy_block=bool(req.get('meeting') and any(r['result'].get('status') in ('BLOCKED','FAILED') and not r['result'].get('assessment_level') for r in saved.get('view',{}).get('races',[])))
-        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved):return saved
+        if not legacy_block and saved['request_status']=='COMPLETED' and saved.get('source_mode')=='LIVE' and saved.get('provider')==os.getenv('MONTY_PRICE_PROVIDER','PuntersEdge') and ('view' in saved or 'form_assessment_requests' in saved or saved.get('private_delivery') and saved.get('freshness')=='FRESH'):return saved
     number=transport.enqueue(req)
     return retrieve(None,number,now=now)
 

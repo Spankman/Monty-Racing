@@ -71,7 +71,13 @@ def result_body(request, forecast, receipt, index):
     if forecast.get('captured_at'):
         lines += [f"Captured: {forecast['captured_at']} · Valid until: {forecast.get('valid_until')}",
                   'Recheck the five-minute limit and race jump at retrieval. Expired slips are historical.', '']
-    if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
+    if forecast.get('delivery_visibility')=='PRIVATE_RESULTS_AVAILABLE':
+        from monty_operations import timestamp
+        current=utcnow()
+        fresh=sum(timestamp(r['captured_at'])<=current<timestamp(r['valid_until']) for r in forecast['private_delivery'].get('race_validity',[]))
+        lines += ['**PRIVATE RESULTS AVAILABLE**' if fresh else '**PRIVATE RESULTS EXPIRED — fresh inference required**',
+                  f'Current race assessments: {fresh}. Read the private receipt and recheck each race expiry before showing selections.']
+    elif forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
         lines += ['**PRIVATE DELIVERY BLOCKED — not a predictive NO BET**', forecast.get('privacy_notice','Detailed model output requires authorised private delivery.')]
     if view['races']:
         lines.append(ticket(view))
@@ -83,8 +89,12 @@ def result_body(request, forecast, receipt, index):
         lines.append(f"Operational outcome: {outcome}" + (f" · {evidence}" if evidence else ''))
     if forecast.get('blockers'):
         lines.append('Outcome details: ' + '; '.join(forecast['blockers']))
-    if forecast.get('delivery_visibility')!='PRIVATE_EVIDENCE_ONLY' and request.get('meeting') and not any(r['result'].get('ordered_selections') for r in view['races']):
+    if forecast.get('delivery_visibility') not in ('PRIVATE_EVIDENCE_ONLY','PRIVATE_RESULTS_AVAILABLE') and request.get('meeting') and not any(r['result'].get('ordered_selections') for r in view['races']):
         lines.append('No current Monty model selections for this race. See the model status and blockers above.')
+    if forecast.get('private_delivery'):
+        private=forecast['private_delivery']
+        lines += ['Private results: https://github.com/'+private['repository']+'/blob/'+private['ref']+'/'+private['receipt_path'],
+                  'Private receipt SHA-256: `'+private['receipt_sha256']+'`']
     if index.get('forecast_path'):
         lines += ['', links(index)]
     else:

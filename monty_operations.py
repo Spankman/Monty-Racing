@@ -187,7 +187,7 @@ def metadata(payload, day):
             invalid_declared=not isinstance(raw_declared,list) or len(declared)!=len(raw_declared)
             key=(str(meeting.get('venue','')).casefold(),str(race.get('number')))
             row=dict(country=meeting['country'],meeting=meeting.get('venue'),race=str(race.get('number')),
-                     scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
+                     scheduled_start=race.get('jump_time'),quote_observed_at=race.get('quote_observed_at'),provider_status=race.get('status'),
                      provider_track_condition=race.get('track_condition') or meeting.get('track_hint'),
                      provider_surface=race.get('surface') or meeting.get('surface'),
                      market_context=dict(declared_count=race.get('runner_count'),observed_declared_count=len(declared),
@@ -378,7 +378,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             m=dict(m,date=day,single_race=bool(request.get('meeting')))
             runners=[r for r in snapshot['runners'] if (r['meeting'].casefold(),str(r['race']))==k]
             record=dict(**{n:m[n] for n in ['meeting','race','country','scheduled_start','scratchings']},
-                        captured_at=captured.isoformat(),independent_verification=False,
+                        captured_at=m.get('quote_observed_at') or captured.isoformat(),independent_verification=False,
                         provider_track_condition=m.get('provider_track_condition'),provider_surface=m.get('provider_surface'),
                         scratching_status='PROVIDER ASSERTION ONLY',models={})
             if single:

@@ -136,6 +136,30 @@ def canonical_race(race,*,day,book='tab',acceptance=None):
     return dict(success=True,data=[meeting],meta=dict(has_more=False,provider='PuntersEdge',
         source_race_id=race.get('race_id'),independent_verification=False,historical_features_joined=False))
 
+def join_acceptances(card, declaration):
+    """PR263 same-provider dated field join; never independent verification."""
+    if declaration.get('runner_set_status')=='gap_detected':raise ProviderError('PuntersEdge acceptances report a field gap')
+    rows=declaration.get('runners')
+    if not isinstance(rows,list) or not rows:raise ProviderError('Acceptance runner roster unavailable')
+    declared={str(r.get('number')):r for r in rows}
+    if len(declared)!=len(rows) or any(not n.isdigit() or int(n)<1 for n in declared):raise ProviderError('Duplicate or invalid acceptance identity')
+    offered={str(r['number']):r for r in card['runners'] if not r['is_scratched']}
+    if set(offered)-set(declared):raise ProviderError('Priced runner absent from dated acceptance roster')
+    for number,row in declared.items():
+        if type(row.get('scratched')) is not bool:raise ProviderError('Acceptance scratching state unknown')
+        if row['scratched'] and number in offered:raise ProviderError('Active quote conflicts with declared scratching')
+        if not row['scratched'] and row.get('emergency') is False and number not in offered:
+            raise ProviderError('Declared active runner missing from price board')
+        if number in offered:
+            name=row.get('runner_name')
+            if not isinstance(name,str) or name.strip().casefold()!=offered[number]['name'].strip().casefold():
+                raise ProviderError('Price and acceptance identities disagree')
+            for source,target in [('age','age'),('claim_kg','claim_kg')]:
+                if row.get(source) is not None:offered[number][target]=row[source]
+    for source,target in [('race_name','name'),('race_class','race_class'),('distance_m','distance_m')]:
+        if declaration.get(source) is not None:card[target]=declaration[source]
+
+
 def fetch_board(day, key, *, country=None, clock=None, meter=None, command='MONTY_LIVE', observer=None, client=None):
     """One bounded live AU board plus independent discovery inventory.
 
@@ -156,17 +180,22 @@ def fetch_board(day, key, *, country=None, clock=None, meter=None, command='MONT
     remaining=account.get('credits_remaining')
     if type(remaining) is not int or remaining<500+client.budget:
         raise ProviderError('PuntersEdge allowance unverified or operational reserve insufficient')
-    inventory=[];inventory_error=None
+    inventory=[];inventory_error=None;declarations={};declaration_ids={};unavailable=[]
     try:
-        events=client.get('/v1/racing/events',dict(hours_ahead=24,categories='horse',country='AU',include_unresolved='true'),command=command)
-        if not isinstance(events,list):raise ProviderError('Unexpected discovery contract')
-        for event in events:
-            try:
-                if (event.get('country')=='AU' and event.get('category')=='horse'
-                    and timestamp(event['start_time']).astimezone(ZoneInfo('Australia/Brisbane')).date().isoformat()==day):
-                    inventory.append(dict(race_id=event.get('race_id'),meeting=event.get('venue'),race=event.get('race_number')))
-            except (ValueError,TypeError,KeyError,AttributeError):inventory_error='Incomplete discovery identities'
-    except ProviderError:inventory_error='Independent provider discovery unavailable'
+        acceptance=client.get('/v1/racing/acceptances',dict(date=day),command=command)
+        if not isinstance(acceptance,dict) or acceptance.get('date')!=day or not isinstance(acceptance.get('meetings'),list):
+            raise ProviderError('Unexpected dated acceptance contract')
+        for meeting in acceptance['meetings']:
+            if not meeting.get('races'):unavailable.append(meeting.get('venue'))
+            for race in meeting.get('races',[]):
+                key=(str(meeting.get('venue_id') or meeting['venue']).strip().casefold(),str(race['race_number']))
+                if key in declarations:raise ProviderError('Duplicate dated acceptance race')
+                declarations[key]=race
+                if race.get('race_id'):
+                    if race['race_id'] in declaration_ids:raise ProviderError('Duplicate dated race ID')
+                    declaration_ids[race['race_id']]=key
+                inventory.append(dict(race_id=race.get('race_id'),meeting=meeting['venue'],race=race['race_number']))
+    except ProviderError:inventory_error='Dated acceptance discovery unavailable';inventory=[];declarations={};declaration_ids={}
     board=client.get('/v1/racing/next-to-go',dict(num_races=200,categories='horse',country='AU',include_unresolved='true'),command=command)
     if not isinstance(board,list):raise ProviderError('Unexpected PuntersEdge board')
     # Do not call a capped board complete; continue safe observed races explicitly.
@@ -180,12 +209,18 @@ def fetch_board(day, key, *, country=None, clock=None, meter=None, command='MONT
         if identity['race_id']:seen_ids.add(identity['race_id'])
         try:
             converted=canonical_race(source,day=day)['data'][0];card=converted['races'][0]
+            declared_key=declaration_ids.get(source.get('race_id'),(str(source.get('venue_id') or source['venue']).strip().casefold(),str(source['race_number'])))
+            if declared_key[1]!=str(source['race_number']):raise ProviderError('Price and acceptance race IDs disagree')
+            declared=declarations.get(declared_key)
+            if declared is not None:join_acceptances(card,declared)
             clocks=[timestamp(row['odds'][0].get('captured_at')) for row in card['runners'] if not row['is_scratched']]
-            if not all(cutoff<observed<=now for observed in clocks):raise ProviderError('Price observation expired or future-dated')
+            if max(clocks)>now:raise ProviderError('TAB poll observation future-dated')
+            if min(clocks)<=cutoff:raise ProviderError('TAB poll observation older than five minutes')
             if timestamp(card['jump_time'])<=now:raise ProviderError('Scheduled jump reached')
         except (ProviderError,AttributeError,KeyError,TypeError,ValueError) as exc:
             omissions.append(dict(identity,reason=str(exc) if isinstance(exc,ProviderError) else 'Incomplete race or observation contract'))
             continue
+        card['quote_observed_at']=min(clocks).isoformat()
         venue=converted['venue'];identity_key=(venue.casefold(),str(card['number']))
         if identity_key in race_keys:raise ProviderError('Duplicate race identity on PuntersEdge board')
         race_keys.add(identity_key)
@@ -195,7 +230,8 @@ def fetch_board(day, key, *, country=None, clock=None, meter=None, command='MONT
     payload=dict(success=True,data=list(meetings.values()),meta=dict(has_more=False,provider='PuntersEdge',
         board_scope='AU rolling board; discovery horizon24h; independent TAB national completeness unverified',
         board_races=len(board),eligible_races=len(race_keys),board_at_limit=capped,discovered_races=inventory,
-        discovery_error=inventory_error,omissions=omissions+absent,complete_national_coverage_verified=False,
+        discovery_error=inventory_error,discovery_scope='Dated provider acceptances; not independent TAB schedule',acceptance_meetings_without_races=unavailable,omissions=omissions+absent,complete_national_coverage_verified=False,
         usage_summary=__import__('operations.data_acquisition',fromlist=['usage_summary']).usage_summary(client.usage[before:])))
     # Empty priced cards retain diagnostics; normalisation reports DATA BLOCKED.
-    return payload,min(observations) if observations else now
+    # Acquisition time is distinct from each race's original per-offer poll time.
+    return payload,now
