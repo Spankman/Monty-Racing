@@ -1,0 +1,43 @@
+name: Monty PuntersEdge cutover smoke test
+on:
+  push:
+    branches: [staging/monty-puntersedge-pricing]
+    paths: ['.github/workflows/monty-pe-cutover-smoke.yml']
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
+          path: v7_engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - run: python operations/restore_private.py
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+      - name: Score both frozen models using PuntersEdge
+        env:
+          MONTY_PRICE_PROVIDER: PuntersEdge
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+        shell: python
+        run: |
+          import json
+          from monty_operations import TZ, execute, utcnow
+
+          day = utcnow().astimezone(TZ).date().isoformat()
+          result = execute(day, 'cutover-smoke', 'v7_engine', run_id='pe-cutover-smoke')
+          scored = {name: model.get('scored_races', 0) for name, model in result['models'].items()}
+          print(json.dumps({'provider': result.get('provider'), 'status': result['status'],
+                            'snapshot_sha256': result.get('provider_snapshot_sha256'),
+                            'captured_at': result.get('captured_at'), 'scored': scored,
+                            'blockers': result['blockers']}))
+          if result.get('provider') != 'PuntersEdge' or not all(scored.get(name) for name in ('V6', 'V7')):
+              raise SystemExit('Neither model may cut over without a verified shared live capture')
