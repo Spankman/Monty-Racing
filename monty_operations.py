@@ -77,8 +77,8 @@ def freshness(record, now=None):
         age = (now-timestamp(record['captured_at'])).total_seconds()
         if age < 0 or age > MAX_AGE_SECONDS:
             return 'STALE — REQUEST A FRESH RUN'
-        if timestamp(record['scheduled_start']) <= now:
-            return 'CLOSED — JUMP TIME REACHED'
+        if timestamp(record['scheduled_start']) <= now + timedelta(minutes=1):
+            return 'CLOSED — PRE-JUMP FREEZE OR JUMP TIME REACHED'
     except (ValueError, KeyError, TypeError):
         return 'UNVERIFIED TIMING — NO BET'
     return 'FRESH AT CHECK TIME'
@@ -105,6 +105,14 @@ def refresh_view(view, now=None):
     ])
 
 
+def assessment_outcome(races, mode):
+    if mode == 'official':
+        return 'DATA BLOCKED — official evidence incomplete'
+    if any(row['result'].get('ordered_selections') or row['result'].get('roughies') for row in races):
+        return 'RESEARCH ASSESSMENTS' if mode == 'shadow' else 'PROVISIONAL ASSESSMENTS'
+    return 'NO CURRENT ASSESSMENTS'
+
+
 def projection(forecast, request, now=None):
     """Explicit official/provisional view; never turn a stale price into a current tip."""
     if request.get('view') == 'status':
@@ -122,16 +130,32 @@ def projection(forecast, request, now=None):
         result = current_result(race, race['models'][request['version']], request['view'], now)
         item['result']=result
         item.pop('models')
+        if forecast.get('provider') == 'PuntersEdge' and not request.get('meeting') and request['view'] != 'official':
+            if not result.get('provisional_best'):
+                result['ordered_selections'] = []
+            if not result.get('ordered_selections') and not result.get('roughies'):
+                continue
         selected.append(item)
+    if forecast.get('provider') == 'PuntersEdge' and not request.get('meeting'):
+        selected.sort(key=lambda race: -max(
+            (row['probability'] * row['odds'] - 1 for row in
+             race['result'].get('ordered_selections', [])[:1] + race['result'].get('roughies', [])),
+            default=0))
+    outcome = (assessment_outcome(selected, request['view']) if forecast.get('provider') == 'PuntersEdge'
+               else forecast['status'])
+    if forecast.get('delivery_status'):
+        outcome = forecast['delivery_status']
+    elif forecast['status'] == 'FAILED':
+        outcome = 'FAILED'
     return dict(schema=SCHEMA,run_id=forecast['run_id'],date=forecast['date'],view=request['view'],
-                version=request['version'],status=forecast['status'],races=selected,
+                version=request['version'],status=outcome,races=selected,provider=forecast.get('provider'),
                 receipt=forecast.get('receipt'),blockers=forecast.get('blockers',[]),
                 captured_at=forecast.get('captured_at'),valid_until=forecast.get('valid_until'))
 
 
-def normalized_snapshot(payload, day, allow_restricted=False):
+def normalized_snapshot(payload, day, allow_restricted=False, *, allow_empty=False):
     from krok_adapter import normalize
-    snapshot,audit=normalize(payload, day, allow_restricted_classes=allow_restricted)
+    snapshot,audit=normalize(payload, day, allow_restricted_classes=allow_restricted, allow_empty=allow_empty)
     # V7 requires explicit false authorisation flags; these are safety labels,
     # not claims that a provider verified field completeness or eligibility.
     for row in snapshot['runners']:
@@ -149,7 +173,7 @@ def metadata(payload, day):
         for race in meeting.get('races',[]):
             key=(str(meeting.get('venue','')).casefold(),str(race.get('number')))
             row=dict(country=meeting['country'],meeting=meeting.get('venue'),race=str(race.get('number')),
-                     scheduled_start=race.get('jump_time'),provider_status=race.get('status'),
+                     scheduled_start=race.get('jump_time'),quote_observed_at=race.get('quote_observed_at'),provider_status=race.get('status'),
                      scratchings=[dict(number=str(r.get('number')),horse=r.get('name')) for r in race.get('runners',[]) if r.get('is_scratched') is True])
             if key in result:
                 raise ValueError('Ambiguous country or duplicate race identity')
@@ -205,9 +229,12 @@ def selection(rows,version='V6'):
     roughies = [r for r in ranked if r['odds'] >= min_odds
                 and r['probability'] >= min_probability
                 and r['probability'] * r['odds'] > 1]
-    return dict(ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
+    roughy = max(roughies, key=lambda row: row['probability'] * row['odds'], default=None)
+    leader = ranked[0]
+    return dict(provisional_best=(leader['probability'] * leader['odds'] > 1 and leader not in roughies),
+                ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
                 recommended_bet_type='NO BET',best_bets=[],
-                best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in roughies],
+                best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in ([roughy] if roughy else [])],
                 official_classification='NO BET',provisional_classification='PROVISIONAL RESEARCH ONLY',
                 betting_authorised=False)
 
@@ -240,13 +267,25 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 result['models'][version]=dict(commit=commit,model_sha256=pins[version],status='NOT_RUN',research_only=version=='V7')
         stage='provider_capture'
         if payload is None:
-            from krok_adapter import fetch
-            key=os.environ.get('KROK_API_KEY','').strip()
-            result['provider_credentials_configured']=bool(key)
+            provider = os.environ.get('MONTY_PRICE_PROVIDER', 'Krok')
+            result['provider'] = provider
+            if provider not in ('Krok', 'PuntersEdge'):
+                raise ValueError('Unsupported Monty provider')
+            key_name = 'PUNTERSEDGE_API_KEY' if provider == 'PuntersEdge' else 'KROK_API_KEY'
+            key = os.environ.get(key_name, '').strip()
+            result['provider_credentials_configured'] = bool(key)
             if not key:
-                raise ValueError('KROK_API_KEY absent; live request not attempted')
+                raise ValueError('Configured provider credential absent')
             with timed('provider_fetch', run_id, enabled=timings):
-                payload=fetch(day,key)
+                if provider == 'PuntersEdge':
+                    from puntersedge_adapter import fetch_board
+                    payload, captured = fetch_board(
+                        day, key, country=request.get('country'),
+                        meeting=request.get('meeting'), race_number=request.get('race'))
+                else:
+                    from krok_adapter import fetch
+                    payload = fetch(day, key)
+        result.setdefault('provider', payload.get('meta', {}).get('provider', 'Krok'))
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
@@ -254,16 +293,21 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         if not 0<=(utcnow()-captured).total_seconds()<=MAX_AGE_SECONDS:
             raise ValueError('Stale or future-dated provider snapshot')
         stage='snapshot_validation'
-        single=bool(request.get('meeting'))
-        facts=None;model_ready=True
+        source_meta = payload.get('meta') or {}
+        acquisition_skips = source_meta.get('acquisition_skips', [])
+        single = bool(request.get('meeting'))
+        facts = None
+        model_ready = True
         if single:
             from operations.single_race import prepare
-            source,facts=prepare(payload,day,request)
-        else:source=payload
+            source, facts = prepare(payload, day, request)
+        else:
+            source = payload
         meta=metadata(source,day)
+
         from krok_adapter import IncompleteFields
         try:
-            snapshot,audit=normalized_snapshot(source,day,single)
+            snapshot,audit=normalized_snapshot(source,day,single,allow_empty=not single and result['provider'] == 'PuntersEdge')
         except IncompleteFields:
             if not single:raise
             model_ready=False
@@ -271,7 +315,10 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             audit={'skipped':['Requested field lacks complete valid active identities/prices or is closed']}
         result['coverage']=dict(provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
             accepted_races=len(snapshot['races']),scored_both=0,independently_verified=0,
-            complete_au_nz_coverage_verified=False,provider_skips=audit['skipped'],
+            complete_au_nz_coverage_verified=False,provider_skips=acquisition_skips + audit['skipped'],
+            **{key: source_meta[key] for key in ('discovery_status','discovered_meetings',
+                'discovered_races','board_races','board_at_limit', 'provider_reported_meetings',
+                'provider_reported_races', 'unresolved_board_races', 'acceptance_meetings_without_races') if key in source_meta},
             jurisdictions_observed=sorted({r['country'] for r in meta.values()}),
             limitation='Provider-only AU/NZ card; independent TAB meeting completeness unavailable')
         for race in snapshot['races']:
@@ -284,7 +331,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             m=dict(m,date=day,single_race=bool(request.get('meeting')))
             runners=[r for r in snapshot['runners'] if (r['meeting'].casefold(),str(r['race']))==k]
             record=dict(**{n:m[n] for n in ['meeting','race','country','scheduled_start','scratchings']},
-                        captured_at=captured.isoformat(),independent_verification=False,
+                        captured_at=m['quote_observed_at'] or captured.isoformat(),independent_verification=False,
                         scratching_status='PROVIDER ASSERTION ONLY',models={})
             if single:
                 record['single_race_assessment']=True
@@ -294,14 +341,14 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             if any(r.get('_price_source')!='TAB' for r in runners):
                 reasons.append('named_bookmaker_fixed_win_not_available_for_entire_field')
             try:
-                if timestamp(m['scheduled_start'])<=utcnow():reasons.append('race_already_due')
+                if timestamp(m['scheduled_start'])<=utcnow()+timedelta(minutes=1):reasons.append('race_already_due')
             except (TypeError,ValueError):reasons.append('jump_time_unverified')
-            if not single and len(runners)<3:reasons.append('common_V7_minimum_three_runners_not_met')
+
             record['data_completeness']=dict(active_runners=facts['active_runners'] if single else len(runners),form_history_verified=False)
             blocked_by=['race_already_due','jump_time_unverified','complete_market_field_required_by_frozen_models']
             # A missing TAB attribution is an official evidence gap, not a
             # missing market input. Complete provider prices support research.
-            if not single:blocked_by+=['common_V7_minimum_three_runners_not_met']
+
             if not any(x in reasons for x in blocked_by):
                 private=output/'private'/str(len(result['races']))
                 common=private/'snapshot.json'
@@ -328,7 +375,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
                             view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
                         view.update(status='SCORED',decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
-                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
+                                    bookmaker=f"TAB ({result['provider']} attributed)" if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=record['captured_at'],
                                     model_version=version,model_commit=result['models'][version]['commit'])
                         if version=='V7':view['no_bet_reasons'].append('V7_RESEARCH_ONLY_NOT_APPROVED')
                         record['models'][version]=view
@@ -347,27 +394,58 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             scored=sum(r['models'][version]['status']=='SCORED' for r in result['races'])
             failed=sum(r['models'][version]['status']=='FAILED' for r in result['races'])
             result['models'][version].update(scored_races=scored,status='PARTIAL' if failed and scored else 'FAILED' if failed else 'SCORED' if scored else 'BLOCKED')
-        result['status']='COMPLETED_NO_BET' if result['races'] and all(v['status']=='SCORED' for v in result['models'].values()) else 'PARTIAL_OR_BLOCKED'
-        result['blockers']=['No independently verified TAB field/conditions attestation; official NO BET','V7 remains research only']
+        if result['provider'] == 'PuntersEdge':
+            result['status'] = 'DATA_BLOCKED'
+            if not result['races']:
+                result['blockers'] = acquisition_skips or ['No complete, current fields available for scoring']
+        else:
+            result['status']='COMPLETED_NO_BET' if result['races'] and all(v['status']=='SCORED' for v in result['models'].values()) else 'PARTIAL_OR_BLOCKED'
+        if not result['blockers']:
+            result['blockers'] = ['No independently verified TAB field/conditions attestation; official NO BET',
+                                  'Compatible pre-race form and prospective edge remain unverified',
+                                  'V7 remains research only']
     except Exception as exc:
+        if (stage == 'snapshot_validation' and result.get('provider') == 'PuntersEdge'
+                and single and isinstance(exc, ValueError)):
+            result['blockers'] = acquisition_skips or ['Requested race absent or ambiguous in provider capture']
+            result['status'] = 'DATA_BLOCKED'
+        else:
+            result['blockers'] = [stage + ': ' + type(exc).__name__]
+            result['status'] = 'FAILED'
         # Do not expose arbitrary exception strings or URLs containing credentials.
-        result['blockers']=[stage+': '+type(exc).__name__]
-        result['status']='FAILED'
     finally:
         for version,path in [('V6',ROOT/'monty_v6/results/frozen_model.json'),('V7',v7_root/'v7/artifacts/fold_3_model.json')]:
             if version in pins and sha(path)!=pins[version]:raise RuntimeError('Frozen model changed')
     result['generated_at']=utcnow().isoformat()
     result['valid_until']=(captured+timedelta(seconds=MAX_AGE_SECONDS)).isoformat() if captured else None
-    write(public/'forecast.json',result)
+    if not fixture and result.get('provider') == 'PuntersEdge':
+        from operations.combined import combined_ticket
+        from operations.render import render
+        private = output / 'private'
+        write(private / 'forecast.json', result)
+        view = combined_ticket(result)
+        (private / 'combined.txt').write_text(ticket(view))
+        (private / 'combined.html').write_text(render(view))
+        # The current GitHub results branch and workflow artifacts are
+        # public. Detailed licensed data stays on the ephemeral runner.
+        published = dict(result, races=[], coverage={key: value for key, value in result['coverage'].items()
+                         if key not in ('provider_skips',)},
+                         delivery_status='PRIVATE_DELIVERY_BLOCKED')
+        if result['status'] == 'DATA_BLOCKED':
+            published['blockers'] = ['Independent verification, compatible pre-race form or usable inputs incomplete',
+                                     'Detailed output requires an authorised private delivery route']
+    else:
+        published = result
+    write(public/'forecast.json',published)
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
-                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 provider=result.get('provider'),models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     for version in ['V6','V7']:
         modes = ['official', 'provisional', 'shadow'] if version == 'V7' else ['official', 'provisional']
         for mode in modes:
-            view = projection(result, dict(version=version, view=mode))
+            view = projection(published, dict(version=version, view=mode))
             write(public/(version.lower()+'-'+mode+'.json'), dict(view, snapshot_only=True))
     return result
 
@@ -376,14 +454,21 @@ def ticket(view, *, archived=False, now=None):
     if not archived:
         view = refresh_view(view, now)
     version=view['version'];mode=view['view']
-    title=f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
+    title='MONTY — SMART BETTING TICKET' if mode == 'combined' else f'MONTY {version} — '+('OFFICIAL SELECTION SLIP' if version=='V6' and mode=='official' else 'SHADOW SELECTION SLIP (RESEARCH ONLY)' if version=='V7' else 'PROVISIONAL SELECTION SLIP')
     lines=[title,view['date']+' · Australia/Brisbane','NO BET — no qualified wagers','']
+    if view.get('provider') == 'PuntersEdge':
+        lines[2] = view['status']
+        lines[3:3] = [f"Data via PuntersEdge · Capture {view.get('captured_at')}",
+                      'Assessments only · provider prices lack independent TAB verification']
     if archived:
         lines.insert(2, 'ARCHIVED SNAPSHOT — check request freshness before use')
     from operations.single_race import quote_text
-    for race in view['races']:
+    meetings = dict.fromkeys(race['meeting'] for race in view['races'])
+    for race in (race for meeting in meetings for race in view['races'] if race['meeting'] == meeting):
         lines.append(race['meeting']+' R'+str(race['race']))
         result=race['result'];rows=result.get('ordered_selections',[])
+        if result.get('assessment_engines'):
+            lines.append(result['assessment_engines'])
         if race.get('single_race_assessment'):
             lines.append(result.get('assessment_level','NO CURRENT ASSESSMENT'))
             lines.append('REDUCED CONFIDENCE — missing data disclosed; official NO BET')
@@ -395,12 +480,16 @@ def ticket(view, *, archived=False, now=None):
                 text=f"#{r['number']} {r['horse']} — {quote_text(r)}"
                 lines.append(('**'+text+'**') if i==0 else text)
         if race.get('single_race_assessment') and rows:
+            if view.get('provider') == 'PuntersEdge':
+                lines.append('Full model ranking')
+                lines.extend(f"{idx}. #{row['number']} {row['horse']} — {quote_text(row)}"
+                             for idx, row in enumerate(result.get('ranked_runners', []), 1))
             value=result.get('value_selection')
             lines.append('MOST LIKELY: #'+str(rows[0]['number'])+' '+rows[0]['horse']+' — not automatically a value bet')
             lines.append(('PROVISIONAL VALUE WATCH · WIN ONLY · #'+str(value['number'])+' '+value['horse']+' — '+quote_text(value)+' · NO BET') if value else 'VALUE: no supported positive-edge candidate')
-        if mode in ('provisional', 'shadow'):
+        if mode in ('provisional', 'shadow', 'combined'):
             for roughie in result.get('roughies',[]):
-                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)} · NO BET")
+                lines.append(f"RUFFY / VALUE WATCH · WIN ONLY · #{roughie['number']} {roughie['horse']} — {quote_text(roughie)} · {roughie.get('assessment_engine', 'ASSESSMENT')} · NO BET")
         lines.append('NO BET: '+', '.join(result.get('no_bet_reasons',[])))
         timing = 'Historical quote' if archived else result.get('freshness_at_retrieval', 'UNKNOWN')
         lines.append('Quote '+str(race['captured_at'])+' · '+timing)

@@ -31,7 +31,7 @@ def price(r):
         if p:return p,key
     return None,None
 
-def normalize(payload,date,*,allow_restricted_classes=False):
+def normalize(payload,date,*,allow_restricted_classes=False, allow_empty=False):
     if not isinstance(payload,dict) or payload.get('success') is not True or not isinstance(payload.get('data'),list):
         raise ValueError('Unexpected API response; expected success=true and data[]')
     meta=payload.get('meta') or {}
@@ -48,8 +48,10 @@ def normalize(payload,date,*,allow_restricted_classes=False):
         meetings+=1
         for race in meeting.get('races',[]):
             n=race.get('number');status=str(race.get('status','')).lower()
-            if n is None or status in ('abandoned','cancelled','canceled','resulted','closed','final'):
-                continue
+            if n is None:
+                skipped.append(f'{venue}: missing race number');continue
+            if status in ('abandoned','cancelled','canceled','resulted','closed','final'):
+                skipped.append(f'{venue} R{n}: provider reports {status}');continue
             # Exclude only races positively identified as prohibited; ambiguous classes remain research-only.
             label=' '.join(str(race.get(k) or '') for k in ('name','race_name','class','race_class','description','type')).lower()
             if not allow_restricted_classes and any(x in label for x in ('maiden','2yo','2 year old','two year old','hurdle','steeple','jumping')):
@@ -106,7 +108,7 @@ def normalize(payload,date,*,allow_restricted_classes=False):
                     item['effective_weight']=item['allocated_weight']-item['claim_kg']
             rows.extend(parsed)
             races.append({'meeting':venue,'race':str(n),'expected_active_runners':len(active)})
-    if not rows:raise IncompleteFields('No complete, priced, active thoroughbred fields found')
+    if not rows and not allow_empty:raise IncompleteFields('No complete, priced, active thoroughbred fields found')
     return {'date':date,'runners':rows,'races':races}, {'meetings':meetings,'races_accepted':len(races),'runners_accepted':len(rows),'skipped':skipped,'tab_verified':False,'count_basis':'same provider runner list; NOT independently TAB verified','price_sources':sorted(set(r['_price_source'] for r in rows)), 'price_source_counts':{source:sum(r['_price_source']==source for r in rows) for source in sorted(set(r['_price_source'] for r in rows))}}
 
 def _fetch_body(req,deadline):

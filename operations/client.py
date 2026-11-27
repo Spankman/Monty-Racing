@@ -86,7 +86,9 @@ def retrieve(index, request_id=None, req=None, now=None):
     result.update(receipt=receipt, receipt_path=index['receipt_path'],
                   captured_at=forecast.get('captured_at'), valid_until=forecast.get('valid_until'),
                   blockers=forecast.get('blockers', []), source_mode=forecast.get('source_mode'),
-                  models=forecast.get('models', {}))
+                  models=forecast.get('models', {}), provider=forecast.get('provider', 'Krok'))
+    if forecast.get('delivery_status'):
+        result['delivery_status'] = forecast['delivery_status']
     now = now or utcnow()
     captured = result['captured_at']
     if captured:
@@ -103,7 +105,7 @@ def retrieve(index, request_id=None, req=None, now=None):
         if pending:result['form_assessment_requests']=pending
     if req and req.get('meeting') and state=='FAILED' and not result.get('form_assessment_requests'):
         with_form_handoff(result, req)
-    if state == 'COMPLETED' and result.get('freshness') == 'FRESH' and req:
+    if state == 'COMPLETED' and result.get('freshness') == 'FRESH' and req and not result.get('delivery_status'):
         view = projection(forecast, req, now)
         if view['races'] and all(race['result']['freshness_at_retrieval'] != 'FRESH AT CHECK TIME'
                                  for race in view['races']):

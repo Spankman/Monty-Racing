@@ -10,16 +10,21 @@ def render(view, *, archived=False, now=None):
     if not archived:
         view = refresh_view(view, now)
     e=html.escape
-    title=f"MONTY {view['version']} — "+('SHADOW SELECTION SLIP (RESEARCH ONLY)' if view['version']=='V7' else 'OFFICIAL SELECTION SLIP' if view['view']=='official' else 'PROVISIONAL SELECTION SLIP')
+    title='MONTY — SMART BETTING TICKET' if view['view']=='combined' else f"MONTY {view['version']} — "+('SHADOW SELECTION SLIP (RESEARCH ONLY)' if view['version']=='V7' else 'OFFICIAL SELECTION SLIP' if view['view']=='official' else 'PROVISIONAL SELECTION SLIP')
     parts=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
       '<title>'+e(title)+'</title><style>body{background:white;color:#111;font:16px Arial;margin:0;padding:24px}main{max-width:760px;margin:auto;border-top:6px solid #b29446;padding-top:12px}h1{font-size:22px}h2{font-size:18px;color:#715917;margin-top:24px}table{width:100%;border-collapse:collapse}td{padding:6px 0;vertical-align:top}td:last-child{text-align:right;white-space:nowrap}p{line-height:1.5}textarea{box-sizing:border-box;width:100%;min-height:240px}section{border-bottom:1px solid #ded5bc;padding-bottom:12px}footer{color:#715917;margin-top:24px;font-weight:bold}</style><main>',
       '<h1>'+e(title)+'</h1><p>'+e(view['date'])+' · Australia/Brisbane</p><p><b>NO BET — no qualified wagers. Provisional rankings are not betting recommendations.</b></p>']
+    if view.get('provider') == 'PuntersEdge':
+        parts.append('<p>'+e(view['status'])+' · Data via PuntersEdge · Capture '+e(str(view.get('captured_at')))+
+                     '</p><p>Provider prices lack independent TAB verification.</p>')
     if archived:
         parts.append('<p>ARCHIVED SNAPSHOT — check request freshness before use</p>')
     for meeting in dict.fromkeys(r['meeting'] for r in view['races']):
         parts.append('<h2>'+e(meeting)+'</h2>')
         for race in [r for r in view['races'] if r['meeting']==meeting]:
             result=race['result'];parts.append('<section><p>R'+e(str(race['race']))+' · '+e(result.get('progression_bet_type','NO BET'))+' assessment · <b>NO BET</b></p>')
+            if result.get('assessment_engines'):
+                parts.append('<p>'+e(result['assessment_engines'])+'</p>')
             if race.get('single_race_assessment'):
                 parts.append('<p><b>'+e(result.get('assessment_level','NO CURRENT ASSESSMENT'))+'</b> · REDUCED CONFIDENCE</p>')
             if result.get('form_assessment_request') and not result.get('freshness_at_retrieval','').startswith(('STALE','CLOSED')):
@@ -29,9 +34,13 @@ def render(view, *, archived=False, now=None):
                 text='#'+str(row['number'])+' '+row['horse'];text=e(text)
                 if i==0:text='<b>'+text+'</b>'
                 parts.append('<tr><td>'+text+'</td><td>'+e(quote_text(row))+'</td></tr>')
-            if view['view'] in ('provisional', 'shadow'):
+            if view['view'] in ('provisional', 'shadow', 'combined'):
                 for roughie in result.get('roughies',[]):
-                    parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · NO BET</td><td>$'+format(roughie['odds'],'.2f')+'</td></tr>')
+                    parts.append('<tr><td>RUFFY / VALUE WATCH · WIN ONLY · #'+e(str(roughie['number']))+' '+e(roughie['horse'])+' · '+e(roughie.get('assessment_engine', 'ASSESSMENT'))+' · NO BET</td><td>$'+format(roughie['odds'],'.2f')+'</td></tr>')
+            if race.get('single_race_assessment') and view.get('provider') == 'PuntersEdge':
+                for idx, row in enumerate(result.get('ranked_runners', []), 1):
+                    name = f"{idx}. #{row['number']} {row['horse']}"
+                    parts.append('<tr><td>'+e(name)+'</td><td>'+e(quote_text(row))+'</td></tr>')
             value=result.get('value_selection')
             if race.get('single_race_assessment') and result.get('ordered_selections'):
                 parts.append('<tr><td>VALUE WATCH · WIN ONLY · '+e('#'+str(value['number'])+' '+value['horse'])+'</td><td>'+e(quote_text(value))+'</td></tr>' if value else '<tr><td colspan="2">VALUE: no supported positive-edge candidate</td></tr>')

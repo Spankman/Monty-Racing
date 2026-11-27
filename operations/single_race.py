@@ -37,7 +37,7 @@ def prepare(payload,day,request):
             if isinstance(runner.get(key),str) and len(runner[key])<=160:row[key]=runner[key]
         field.append(row)
     facts=dict(date=day,meeting=meeting['venue'],race=str(race['number']),country=meeting['country'],
-               source='Krok provider assertions; not independently TAB verified',provider_status=race.get('status'),
+               source=(meta.get('provider', 'Krok') + ' provider assertions; not independently TAB verified'),provider_status=race.get('status'),
                known_runners=field,active_runners=sum(r['scratched'] is False for r in field),
                priced_active_runners=sum(r['scratched'] is False and r['odds'] is not None for r in field),
                field_identity_ambiguous=len({r['number'] for r in field})!=len(field),

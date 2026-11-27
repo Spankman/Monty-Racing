@@ -65,12 +65,14 @@ def result_body(request, forecast, receipt, index):
     lines.append(f"Requested model: {request['version']} · {model.get('status', 'NOT RUN')} · "
                  f"{model.get('scored_races', 0)} races scored · Source mode: {forecast.get('source_mode', 'UNKNOWN')}")
     if forecast.get('provider_snapshot_sha256'):
-        lines.append('Field and odds data: Krok snapshot · SHA-256 `' + forecast['provider_snapshot_sha256'] + '`')
+        lines.append('Field and odds data: ' + forecast.get('provider', 'Krok') + ' snapshot · SHA-256 `' + forecast['provider_snapshot_sha256'] + '`')
     if index.get('reused_from_request'):
-        lines.append(f"Shared verified forecast from request #{index['reused_from_request']}.")
+        lines.append(f"Shared capture with verified file integrity from request #{index['reused_from_request']}.")
     if forecast.get('captured_at'):
         lines += [f"Captured: {forecast['captured_at']} · Valid until: {forecast.get('valid_until')}",
                   'Recheck the five-minute limit and race jump at retrieval. Expired slips are historical.', '']
+    if forecast.get('delivery_status'):
+        lines.append(f"Delivery: {forecast['delivery_status']}")
     if view['races']:
         lines.append(ticket(view))
     for race in view['races']:
