@@ -105,11 +105,15 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'UNVERIFIED'
     if forecast.get('delivery_visibility')=='PRIVATE_RESULTS_AVAILABLE':
         validity=forecast['private_delivery'].get('race_validity',[])
+        if req and req.get('meeting'):
+            validity=[v for v in validity if v['meeting'].casefold()==req['meeting'].casefold() and str(v['race'])==str(req['race']) and req.get('country') in (None,v['country'])]
+            if not validity:result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT',freshness='UNVERIFIED')
         available=sum(timestamp(v['captured_at'])<=now<timestamp(v['valid_until']) for v in validity)
         if validity and not available:result['freshness']='EXPIRED'
         result['fresh_race_assessments']=available
-        result.update(delivery_status='PRIVATE_RESULTS_AVAILABLE' if result.get('freshness')=='FRESH' else 'PRIVATE_RESULTS_EXPIRED',
-                      private_delivery=forecast['private_delivery'],selections_available=result.get('freshness')=='FRESH')
+        result['requested_view']=req
+        result.update(delivery_status='PRIVATE_RESULTS_AVAILABLE' if result.get('freshness')=='FRESH' else 'PRIVATE_RESULTS_EXPIRED' if result.get('freshness')=='EXPIRED' else 'PRIVATE_REQUEST_SCOPE_UNAVAILABLE',
+                      private_delivery=forecast['private_delivery'],selections_available=result.get('freshness')=='FRESH' and available>0)
         return result
     if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
         # Execution succeeded separately from delivery rights/access. Never hide

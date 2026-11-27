@@ -29,7 +29,6 @@ jobs:
           V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
       - run: python operations/recovery_acceptance.py
         env:
-          MONTY_PRIVATE_RESULTS_TOKEN: ${{ secrets.MONTY_PRIVATE_RESULTS_TOKEN }}
           PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
       - uses: actions/upload-artifact@v4
         if: always()

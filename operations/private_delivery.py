@@ -63,7 +63,7 @@ def derived_forecast(forecast):
     value['races']=[]
     for race in forecast.get('races',[]):
         row={k:v for k,v in race.items() if k in ('meeting','race','country','captured_at','scheduled_start','scratchings',
-            'market_integrity','single_race_assessment','independent_verification','scratching_status','data_completeness','shared_model_input_sha256')}
+            'market_integrity','price_observed_at','single_race_assessment','independent_verification','scratching_status','data_completeness','shared_model_input_sha256')}
         row['models']={version:{k:v for k,v in model.items() if k in allowed} for version,model in race['models'].items()}
         value['races'].append(row)
     def scrub(value):
@@ -75,7 +75,7 @@ def derived_forecast(forecast):
 def bundle(forecast,now=None):
     from monty_operations import projection,ticket,utcnow
     from operations.render import render
-    from operations.combined import combined_ticket
+    from operations.tickets import combined as combined_ticket
     now=now or utcnow()
     if forecast.get('source_mode')!='LIVE' or forecast.get('provider')!='PuntersEdge':
         raise PrivateDeliveryError('personal_puntersedge_delivery_scope_required')
@@ -102,7 +102,7 @@ def bundle(forecast,now=None):
     prefix='runs/'+day+'/'+run+'/'
     from monty_operations import timestamp,MAX_AGE_SECONDS
     from datetime import timedelta
-    validity=[dict(meeting=r['meeting'],race=str(r['race']),country=r['country'],captured_at=r['captured_at'],valid_until=min(timestamp(r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r['scheduled_start'])).isoformat()) for r in data['races'] if any(m.get('status')=='SCORED' for m in r['models'].values())]
+    validity=[dict(meeting=r['meeting'],race=str(r['race']),country=r['country'],captured_at=r['captured_at'],valid_until=min(timestamp(r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r.get('price_observed_at') or r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r['scheduled_start'])-timedelta(minutes=1 if r.get('price_observed_at') else 0)).isoformat()) for r in data['races'] if any(m.get('status')=='SCORED' for m in r['models'].values())]
     index=dict(race_validity=validity,schema='monty.private-result-index.v1',repository=REPO,ref=BRANCH,run_id=run,date=day,
         status=data['status'],provider='PuntersEdge',captured_at=data.get('captured_at'),valid_until=data.get('valid_until'),
         forecast_path=prefix+'forecast.json',forecast_sha256=receipt['forecast_sha256'],

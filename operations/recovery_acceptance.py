@@ -9,7 +9,7 @@ import hashlib,json,os,sys,time
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import monty_operations as ops
 from operations.evidence import store
-from operations.tickets import paired
+from operations.tickets import combined,paired
 from puntersedge_adapter import fetch_board
 
 
@@ -32,20 +32,21 @@ def main():
             report['commands'][text]=dict(races=len(view['races']),ranked_assessments=sum(bool((r['result'].get('diagnostic_assessment') or r['result']).get('ordered_selections')) for r in view['races']),
                 slip_sha256=hashlib.sha256(slip.encode()).hexdigest(),betting_authorised=False)
         pair=paired(prediction,now);report['paired_ticket_hashes']=[hashlib.sha256(t['text'].encode()).hexdigest() for t in pair['tickets']]
+        combined_view = combined(prediction, now)
+        report['combined_ticket'] = dict(
+            assessment_races=len(combined_view['races']),
+            ticket_sha256=hashlib.sha256(ops.ticket(combined_view, now=now).encode()).hexdigest())
+        report['read_only_status_check'] = dict(run_id=ops.projection(prediction, ops.command('C', day), now)['run_id'],
+                                               live_command_submission=False)
         report['scoring']={v:m for v,m in prediction['models'].items()}
         report['coverage']=prediction['coverage'];report['status']=prediction['status']
-        from datetime import timedelta
-        observations=[ops.timestamp(r['captured_at']) for r in prediction['races']]
-        report['oldest_race_observation_age_seconds']=max(((now-t).total_seconds() for t in observations),default=None)
-        report['offer_clock_preserved']=True
         report['forecast_content_sha256']=hashlib.sha256(store.encoded(prediction)).hexdigest()
         report['capture_age_at_projection_seconds']=(now-captured).total_seconds()
         report['official_verification']='NOT SATISFIED — retain all independent field/history/value gates'
         report['private_delivery']='NOT ACCEPTED — public derived-display permission and private retrieval route unresolved'
         return original(prediction,index,recorder)
     store.public_result=inspect
-    result=ops.execute(day,'operations_output/recovery-live','v7_engine',run_id=os.environ['GITHUB_RUN_ID'],payload=payload,captured=captured,request=ops.command('RM6',day),evidence_source='PuntersEdge')
-    if result.get('private_delivery'):report['private_delivery']=result['private_delivery']
+    ops.execute(day,'operations_output/recovery-live','v7_engine',run_id=os.environ['GITHUB_RUN_ID'],payload=payload,captured=captured,request=ops.command('RM6',day),evidence_source='PuntersEdge')
     report['elapsed_seconds']=time.monotonic()-started
     p=Path('operations_output/recovery-aggregate');p.mkdir(parents=True,exist_ok=True)
     raw=json.dumps(report,sort_keys=True,indent=2,allow_nan=False).encode();(p/'report.json').write_bytes(raw)

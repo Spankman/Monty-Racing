@@ -38,7 +38,7 @@ class PrivateDeliveryTests(unittest.TestCase):
     def test_foreign_source_rejected(self):
         with self.assertRaises(PrivateDeliveryError):bundle(dict(self.f,provider='Krok'),self.now)
     def test_combined_does_not_duplicate_same_engine_race(self):
-        from operations.combined import combined_ticket
+        from operations.tickets import combined as combined_ticket
         view=combined_ticket(self.f,self.now)
         self.assertEqual(len(view['races']),1)
         numbers=[r['number'] for r in view['races'][0]['result']['ordered_selections']+view['races'][0]['result']['roughies']]
@@ -67,4 +67,12 @@ class PrivateClientTests(unittest.TestCase):
         self.make_private()
         result=self.client.handle('C',request_id=200,now=self.capture+timedelta(seconds=61))
         self.assertEqual(result['delivery_status'],'PRIVATE_RESULTS_EXPIRED')
+        self.assertFalse(result['selections_available']);self.enqueue.assert_not_called()
+
+    def test_private_single_never_substitutes_other_fresh_races(self):
+        from monty_operations import command
+        from operations.client import retrieve
+        self.make_private()
+        result=retrieve(self.files['requests/200.json'],200,command('RM6 Cairns 4',self.day),self.capture)
+        self.assertEqual(result['semantic_outcome'],'REQUEST_SCOPE_NOT_PRESENT')
         self.assertFalse(result['selections_available']);self.enqueue.assert_not_called()

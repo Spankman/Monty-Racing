@@ -1,5 +1,6 @@
 """Offline recovery regressions. Live proof has separate workflow receipts."""
 from copy import deepcopy
+from datetime import timedelta
 from urllib.parse import urlsplit
 import unittest
 from puntersedge_adapter import Client,ProviderError,fetch_board
@@ -8,14 +9,13 @@ Response=fixtures.Response
 
 class RecoveryProviderTests(unittest.TestCase):
     setUp=fixtures.ProviderTests.setUp
-    def client(self,board,remaining=1000,events=None):
+    def client(self,board,remaining=1000,events=None,acceptances=None):
         self.calls=[]
         def open(req,timeout):
             path=urlsplit(req.full_url).path;self.calls.append(path)
             if path=='/v1/usage':return Response({'credits_remaining':remaining})
-            if path=='/v1/racing/acceptances':
-                races=events if events is not None else board
-                return Response(dict(date='2026-11-25',meetings=[dict(venue=r['venue'],venue_id=r['venue'],races=[dict(race_id=r.get('race_id'),race_number=r['race_number'],runners=[dict(number=x['number'],runner_name=x['name'],scratched=False,emergency=False) for x in r['runners']]+[dict(number=x['number'],runner_name=x['name'],scratched=True,emergency=False) for x in r.get('scratchings',[])])]) for r in races if isinstance(r,dict)]))
+            if path=='/v1/racing/events':return Response(events if events is not None else board)
+            if path=='/v1/racing/acceptances':return Response(acceptances)
             return Response(board)
         return Client('synthetic',budget=10,opener=open)
     def run_board(self,board,**kw):
@@ -40,7 +40,7 @@ class RecoveryProviderTests(unittest.TestCase):
         old=deepcopy(self.race)
         for row in old['runners']:row['bookmakers'][0]['last_update']='2026-11-25T07:55:00Z'
         p,_=self.run_board([old]);self.assertEqual(p['data'],[])
-        self.assertIn('older than five minutes',p['meta']['omissions'][0]['reason'])
+        self.assertIn('expired',p['meta']['omissions'][0]['reason'])
     def test_C_does_not_even_query_allowance(self):
         c=self.client([self.race])
         with self.assertRaises(ProviderError):fetch_board('2026-11-25','synthetic',client=c,command='C')
@@ -51,19 +51,39 @@ class RecoveryProviderTests(unittest.TestCase):
         self.assertEqual(len(p['meta']['omissions']),200)
         self.assertFalse(p['meta']['complete_national_coverage_verified'])
 
-    def test_future_observation_is_distinct_from_old_poll(self):
-        future=deepcopy(self.race)
-        for r in future['runners']:r['bookmakers'][0]['last_update']='2026-11-25T08:00:01Z'
-        p,_=self.run_board([future]);self.assertIn('future-dated',p['meta']['omissions'][0]['reason'])
-    def test_acceptance_join_rejects_extra_priced_runner(self):
-        from puntersedge_adapter import canonical_race,join_acceptances
-        card=canonical_race(self.race,day='2026-11-25')['data'][0]['races'][0]
-        with self.assertRaisesRegex(ProviderError,'absent'):
-            join_acceptances(card,dict(runners=[dict(number=1,runner_name='Fixture 1',scratched=False,emergency=False)]))
+    def test_fresh_unchanged_poll_does_not_inherit_another_races_expiry(self):
+        from monty_operations import freshness
+        older=deepcopy(self.race)
+        older.update(race_id='older',race_number=2)
+        observed=(self.now-timedelta(seconds=299)).isoformat()
+        for row in older['runners']:
+            row['bookmakers'][0].update(last_update=observed, refresh_tier='card')
+        p,t=self.run_board([self.race,older])
+        later=self.now+timedelta(seconds=2)
+        assessments=[freshness(dict(captured_at=t.isoformat(), scheduled_start=race['jump_time'],
+                                    price_observed_at=race['price_observed_at']), later)
+                     for race in p['data'][0]['races']]
+        self.assertEqual(t,self.now)
+        self.assertEqual(assessments[0],'FRESH AT CHECK TIME')
+        self.assertIn('STALE',assessments[1])
+        self.assertEqual(p['meta']['tab_clock_counts']['card/cache-unreported-or-fresh/fresh'],1)
 
-    def test_acquisition_clock_does_not_replace_original_offer_observation(self):
-        old=deepcopy(self.race)
-        for r in old['runners']:r['bookmakers'][0]['last_update']='2026-11-25T07:59:00Z'
-        p,at=self.run_board([old])
-        self.assertEqual(at,self.now)
-        self.assertEqual(p['data'][0]['races'][0]['quote_observed_at'],'2026-11-25T07:59:00+00:00')
+    def test_dated_identity_conflict_quarantines_only_the_matching_race(self):
+        other=dict(self.race,race_id='other',race_number=2)
+        declaration=dict(race_id='fixture',race_number=1,runners=[
+            dict(number=1,runner_name='Different Horse',emergency=False,scratched=False)])
+        declared_missing=dict(race_id='missing',race_number=3,runners=[])
+        acceptances=dict(date='2026-11-25',meetings=[
+            dict(venue='Fixture',races=[declaration,declared_missing])])
+        p,_=self.run_board([self.race,other],acceptances=acceptances)
+        self.assertEqual(p['meta']['eligible_races'],1)
+        self.assertEqual(p['meta']['dated_race_count'],2)
+        self.assertIn('identities disagree',p['meta']['omissions'][0]['reason'])
+        self.assertIn('absent',p['meta']['omissions'][1]['reason'])
+
+    def test_duplicate_board_race_is_quarantined_without_losing_other_races(self):
+        second=dict(self.race,race_id='second',race_number=2)
+        conflict=dict(self.race,runners=[])
+        p,_=self.run_board([self.race,second,conflict])
+        self.assertEqual(p['meta']['eligible_races'],1)
+        self.assertEqual(p['meta']['duplicate_board_races'],1)
