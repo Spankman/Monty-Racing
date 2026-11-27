@@ -66,6 +66,8 @@ def result_body(request, forecast, receipt, index):
                  f"{model.get('scored_races', 0)} races scored · Source mode: {forecast.get('source_mode', 'UNKNOWN')}")
     if forecast.get('provider_snapshot_sha256'):
         lines.append('Field and odds data: ' + forecast.get('provider', 'Krok') + ' snapshot · SHA-256 `' + forecast['provider_snapshot_sha256'] + '`')
+    if forecast.get('provider_route'):
+        lines.append('Provider route: ' + forecast['provider_route'])
     if index.get('reused_from_request'):
         lines.append(f"Shared capture with verified file integrity from request #{index['reused_from_request']}.")
     if forecast.get('captured_at'):

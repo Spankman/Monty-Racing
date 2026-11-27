@@ -224,7 +224,8 @@ def main():
                     if not issue_output:
                         raise
                     cached = {}
-                if (cached.get('source_mode') == 'LIVE' and 'view' in cached
+                if (cached.get('source_mode') == 'LIVE'
+                        and ('view' in cached or cached.get('shared_observations_fresh'))
                         and cached.get('provider', 'Krok') == os.environ.get('MONTY_PRICE_PROVIDER', 'Krok')):
                     reused = dict(source, request_id=number, request=req, reused_from_request=source.get('request_id'))
                     if issue_output:

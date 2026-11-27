@@ -100,6 +100,9 @@ def retrieve(index, request_id=None, req=None, now=None):
             result['freshness'] = 'FRESH' if age >= 0 and now <= valid_until else 'EXPIRED'
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
+    reuse_until = forecast.get('shared_observations_valid_until')
+    result['shared_observations_fresh'] = bool(
+        reuse_until and result.get('freshness') == 'FRESH' and now < timestamp(reuse_until))
     if req and req.get('meeting') and result.get('freshness')=='FRESH':
         pending=handoffs(projection(forecast,req,now))
         if pending:result['form_assessment_requests']=pending

@@ -276,6 +276,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         if payload is None:
             provider = os.environ.get('MONTY_PRICE_PROVIDER', 'Krok')
             result['provider'] = provider
+            result['provider_route'] = ('Primary' if provider == 'PuntersEdge'
+                                        else 'Explicitly configured Krok fallback')
             if provider not in ('Krok', 'PuntersEdge'):
                 raise ValueError('Unsupported Monty provider')
             key_name = 'PUNTERSEDGE_API_KEY' if provider == 'PuntersEdge' else 'KROK_API_KEY'
@@ -309,7 +311,8 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             'discovery_status', 'discovered_meetings', 'discovered_races', 'board_races',
             'board_at_limit', 'provider_reported_meetings', 'provider_reported_races',
             'unresolved_board_races', 'acceptance_meetings_without_races',
-            'acquisition_reason_counts', 'observed_credits_used') if key in source_meta}
+            'acquisition_reason_counts', 'observed_credits_used', 'discovered_priced_races',
+            'discovered_unpriced_races', 'priced_races_without_acceptance_match') if key in source_meta}
         result['coverage'].update(provider_metrics)
         if single:
             from operations.single_race import prepare
@@ -331,7 +334,9 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             complete_au_nz_coverage_verified=False,provider_skips=acquisition_skips + audit['skipped'],
             **provider_metrics,
             jurisdictions_observed=sorted({r['country'] for r in meta.values()}),
-            limitation='Provider-only AU/NZ card; independent TAB meeting completeness unavailable')
+            limitation=('PuntersEdge AU only; independent TAB meeting completeness unavailable'
+                        if result['provider'] == 'PuntersEdge'
+                        else 'Provider-only AU/NZ card; independent TAB meeting completeness unavailable'))
         for race in snapshot['races']:
             k=(race['meeting'].casefold(),str(race['race']))
             m=meta.get(k)
@@ -434,9 +439,10 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         from operations.render import render
         private = output / 'private'
         write(private / 'forecast.json', result)
-        view = combined_ticket(result)
-        (private / 'combined.txt').write_text(ticket(view))
-        (private / 'combined.html').write_text(render(view))
+        view = projection(result, request) if request.get('meeting') else combined_ticket(result)
+        name = 'assessment' if request.get('meeting') else 'combined'
+        (private / (name + '.txt')).write_text(ticket(view))
+        (private / (name + '.html')).write_text(render(view))
         # The current GitHub results branch and workflow artifacts are
         # public. Detailed licensed data stays on the ephemeral runner.
         published = dict(result, races=[], coverage={key: value for key, value in result['coverage'].items()
@@ -447,6 +453,13 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
             for text in ('RM6', 'RM7', 'RM6PS', 'RM7PS')
         }
         published['view_outcomes'] = completed_views
+        if not request.get('meeting'):
+            until = [min(timestamp(race['captured_at']) + timedelta(seconds=MAX_AGE_SECONDS),
+                         timestamp(race['scheduled_start']) - timedelta(minutes=1))
+                     for race in result['races'] if all(m['status'] == 'SCORED'
+                                                       for m in race['models'].values())]
+            if until:
+                published['shared_observations_valid_until'] = max(until).isoformat()
         if result['status'] == 'DATA_BLOCKED':
             exact = list(result['coverage'].get('acquisition_reason_counts', {})) if request.get('meeting') else []
             published['blockers'] = exact + ['Independent verification, compatible pre-race form or usable inputs incomplete',
@@ -456,7 +469,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     write(public/'forecast.json',published)
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
-                 provider=result.get('provider'),models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 provider=result.get('provider'),provider_route=result.get('provider_route'),models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     for version in ['V6','V7']:

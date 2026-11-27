@@ -50,7 +50,7 @@ class Client:
             estimated_cost=2 if requested<=20 else 3 if requested<=60 else 4
         url=BASE+path+('?' + urlencode(params) if params else '')
         for attempt in range(2):
-            if self.reserved+estimated_cost>self.budget:raise ProviderError('Staging request budget reached')
+            if self.reserved+estimated_cost>self.budget:raise ProviderError('PuntersEdge request budget reached')
             self.reserved+=estimated_cost
             started=time.monotonic();request_at=datetime.now(timezone.utc).isoformat()
             req=Request(url,headers={'X-API-Key':self._key,'Accept':'application/json','User-Agent':'Monty-personal-staging/1.0'})
@@ -263,8 +263,11 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
                 converted['venue'] = meeting
             clocks = [timestamp(row['odds'][0].get('captured_at'))
                       for row in card['runners'] if not row['is_scratched']]
-            if not all(cutoff < observed <= now for observed in clocks):
-                excluded[key] = 'TAB poll observation stale or future dated'
+            if max(clocks) > now:
+                excluded[key] = 'TAB poll observation future dated'
+                continue
+            if min(clocks) <= cutoff:
+                excluded[key] = 'TAB poll observation older than five minutes'
                 continue
         except ProviderError as exc:
             excluded[key] = str(exc)  # Messages are fixed in canonical_race.
@@ -290,7 +293,9 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
                 discovery_status=discovery, discovered_races=len(discovered),
                 discovered_meetings=len({key[0] for key in discovered}),
                 board_races=len(board), board_at_limit=len(board) >= board_params['num_races'],
-                eligible_races=len(priced),
+                eligible_races=len(priced), discovered_priced_races=len(discovered.keys() & priced.keys()),
+                discovered_unpriced_races=len(discovered.keys() - priced.keys()),
+                priced_races_without_acceptance_match=len(priced.keys() - discovered.keys()),
                 provider_reported_meetings=acceptances.get('meeting_count'),
                 provider_reported_races=acceptances.get('race_count'),
                 unresolved_board_races=sum(isinstance(race, dict) and race.get('country') is None for race in board),
