@@ -196,10 +196,9 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
             raise ProviderError('Unexpected PuntersEdge acceptances response')
     except ProviderError:
         acceptances, discovery = {}, 'UNAVAILABLE'
+    # The board's venue parameter requires an exact market spelling. A
+    # bounded AU board avoids venue filtering mistakes for single-race aliases.
     board_params = dict(params, num_races=200)
-    if meeting:
-        board_params['venue'] = meeting
-        board_params['num_races'] = 20
     board = client.get('/v1/racing/next-to-go', board_params, command='MONTY_LIVE')
     if not isinstance(board, list):
         raise ProviderError('Unexpected PuntersEdge price board')
@@ -219,6 +218,7 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
 
     declarations = {}
     unavailable_meetings = []
+    ids = {}
     for venue in acceptances.get('meetings', []):
         name = venue['venue']
         races = venue.get('races', [])
@@ -229,7 +229,9 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
             if meeting and key[1] != str(race_number):
                 continue
             discovered[key] = name
-            declarations[key] = (venue, race)
+            declarations[key] = race
+            if race.get('race_id'):
+                ids[race['race_id']] = key
 
     target_keys = set(discovered)
     if meeting:
@@ -237,6 +239,8 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
 
     for race in board:
         key = identity(race)
+        if key:
+            key = ids.get(race.get('race_id'), key)
         if not key or meeting and key not in target_keys and (
                 race.get('venue', '').casefold() != meeting.casefold() or key[1] != str(race_number)):
             continue
@@ -251,11 +255,12 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
             converted = canonical_race(race, day=day)['data'][0]
             card = converted['races'][0]
             if key in declarations:
-                _, declared = declarations[key]
-                join_acceptances(card, declared)
+                join_acceptances(card, declarations[key])
                 if meeting:
                     # Keep the exact requested spelling for the shared scope check.
                     converted['venue'] = meeting
+            elif meeting:
+                converted['venue'] = meeting
             clocks = [timestamp(row['odds'][0].get('captured_at'))
                       for row in card['runners'] if not row['is_scratched']]
             if not all(cutoff < observed <= now for observed in clocks):
@@ -278,6 +283,9 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
         excluded[key] = 'discovered but absent from rolling price board'
     if meeting and not priced and not excluded:
         excluded[(meeting.casefold(), str(race_number))] = 'requested race absent from discovery and price board'
+    from collections import Counter
+
+    cost = [row.get('x-credits-cost') for row in client.usage]
     meta = dict(has_more=False, provider='PuntersEdge', board_scope='AU rolling board',
                 discovery_status=discovery, discovered_races=len(discovered),
                 discovered_meetings=len({key[0] for key in discovered}),
@@ -287,6 +295,8 @@ def fetch_board(day, key, *, country=None, meeting=None, race_number=None, clock
                 provider_reported_races=acceptances.get('race_count'),
                 unresolved_board_races=sum(isinstance(race, dict) and race.get('country') is None for race in board),
                 acceptance_meetings_without_races=len(unavailable_meetings),
+                acquisition_reason_counts=dict(Counter(excluded.values())),
+                observed_credits_used=sum(cost) if cost and all(value is not None for value in cost) else None,
                 acquisition_skips=[f'{discovered.get(key, key[0])} R{key[1]}: {reason}'
                                    for key, reason in sorted(excluded.items())] +
                                   [f'{name}: acceptance races unavailable' for name in unavailable_meetings])

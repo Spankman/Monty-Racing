@@ -64,8 +64,20 @@ jobs:
                                     'ranked_runners': sum(len(race['result'].get('ranked_runners', []))
                                                           for race in view['races'])}
           print(json.dumps({'single': single_views, 'capture': single.get('captured_at'),
+                            'acquisition_reason_counts': single['coverage'].get('acquisition_reason_counts'),
+                            'observed_credits_used': single['coverage'].get('observed_credits_used'),
                             'scored': {name: m.get('scored_races', 0) for name, m in single['models'].items()}}))
           if result.get('provider') != 'PuntersEdge' or not all(scored.get(name) for name in ('V6', 'V7')):
               raise SystemExit('Daily live scoring evidence incomplete')
           if not all(view['ranked_runners'] for view in single_views.values()):
-              raise SystemExit('Single-race live scoring evidence incomplete')
+              # This is a separate run on a named comparison race. Do not
+              # deliver its results as an answer to the Cairns request.
+              candidate = next(row for row in result['races']
+                               if all(model['status'] == 'SCORED' for model in row['models'].values()))
+              target = f"{candidate['meeting']} {candidate['race']}"
+              comparison = execute(day, 'cutover-comparison', 'v7_engine', run_id='pe-cutover-comparison',
+                                   request=command(target, day))
+              print(json.dumps({'separate_single_comparison': {
+                  name: model.get('scored_races', 0) for name, model in comparison['models'].items()},
+                  'acquisition_reason_counts': comparison['coverage'].get('acquisition_reason_counts')}))
+              raise SystemExit('Cairns R4 live scoring evidence incomplete')

@@ -72,6 +72,7 @@ def result_body(request, forecast, receipt, index):
         lines += [f"Captured: {forecast['captured_at']} · Valid until: {forecast.get('valid_until')}",
                   'Recheck the five-minute limit and race jump at retrieval. Expired slips are historical.', '']
     if forecast.get('delivery_status'):
+        lines.append(f"Requested view outcome: {view['status']}")
         lines.append(f"Delivery: {forecast['delivery_status']}")
     if view['races']:
         lines.append(ticket(view))

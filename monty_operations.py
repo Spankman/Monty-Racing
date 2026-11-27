@@ -137,14 +137,15 @@ def projection(forecast, request, now=None):
                 continue
         selected.append(item)
     if forecast.get('provider') == 'PuntersEdge' and not request.get('meeting'):
-        selected.sort(key=lambda race: -max(
+        selected.sort(key=lambda race: (-max(
             (row['probability'] * row['odds'] - 1 for row in
              race['result'].get('ordered_selections', [])[:1] + race['result'].get('roughies', [])),
-            default=0))
+            default=0), -race['result'].get('market_uplift', 0)))
     outcome = (assessment_outcome(selected, request['view']) if forecast.get('provider') == 'PuntersEdge'
                else forecast['status'])
     if forecast.get('delivery_status'):
-        outcome = forecast['delivery_status']
+        outcome = (forecast.get('view_outcomes', {}).get(request.get('command'))
+                   or forecast['delivery_status'])
     elif forecast['status'] == 'FAILED':
         outcome = 'FAILED'
     return dict(schema=SCHEMA,run_id=forecast['run_id'],date=forecast['date'],view=request['view'],
@@ -231,7 +232,13 @@ def selection(rows,version='V6'):
                 and r['probability'] * r['odds'] > 1]
     roughy = max(roughies, key=lambda row: row['probability'] * row['odds'], default=None)
     leader = ranked[0]
-    return dict(provisional_best=(leader['probability'] * leader['odds'] > 1 and leader not in roughies),
+    market_total = sum(1 / row['odds'] for row in rows)
+    baseline = (1 / leader['odds']) / market_total
+    uplift = leader['probability'] - baseline
+    return dict(provisional_best=(leader not in roughies and
+                                  (leader['probability'] * leader['odds'] > 1 or
+                                   uplift > 0 and not math.isclose(leader['probability'], baseline))),
+                market_uplift=uplift,
                 ordered_selections=ladder['selections'],progression_bet_type=ladder['bet_type'],
                 recommended_bet_type='NO BET',best_bets=[],
                 best_chance=ranked[0],roughies=[dict(**r,bet_type='WIN',classification='PROVISIONAL VALUE WATCH — NO BET') for r in ([roughy] if roughy else [])],
@@ -298,6 +305,12 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         single = bool(request.get('meeting'))
         facts = None
         model_ready = True
+        provider_metrics = {key: source_meta[key] for key in (
+            'discovery_status', 'discovered_meetings', 'discovered_races', 'board_races',
+            'board_at_limit', 'provider_reported_meetings', 'provider_reported_races',
+            'unresolved_board_races', 'acceptance_meetings_without_races',
+            'acquisition_reason_counts', 'observed_credits_used') if key in source_meta}
+        result['coverage'].update(provider_metrics)
         if single:
             from operations.single_race import prepare
             source, facts = prepare(payload, day, request)
@@ -316,9 +329,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         result['coverage']=dict(provider_meetings=len({(r['country'],r['meeting']) for r in meta.values()}),provider_races=len(meta),
             accepted_races=len(snapshot['races']),scored_both=0,independently_verified=0,
             complete_au_nz_coverage_verified=False,provider_skips=acquisition_skips + audit['skipped'],
-            **{key: source_meta[key] for key in ('discovery_status','discovered_meetings',
-                'discovered_races','board_races','board_at_limit', 'provider_reported_meetings',
-                'provider_reported_races', 'unresolved_board_races', 'acceptance_meetings_without_races') if key in source_meta},
+            **provider_metrics,
             jurisdictions_observed=sorted({r['country'] for r in meta.values()}),
             limitation='Provider-only AU/NZ card; independent TAB meeting completeness unavailable')
         for race in snapshot['races']:
@@ -431,8 +442,14 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
         published = dict(result, races=[], coverage={key: value for key, value in result['coverage'].items()
                          if key not in ('provider_skips',)},
                          delivery_status='PRIVATE_DELIVERY_BLOCKED')
+        completed_views = {
+            text: projection(result, command(text, day))['status']
+            for text in ('RM6', 'RM7', 'RM6PS', 'RM7PS')
+        }
+        published['view_outcomes'] = completed_views
         if result['status'] == 'DATA_BLOCKED':
-            published['blockers'] = ['Independent verification, compatible pre-race form or usable inputs incomplete',
+            exact = list(result['coverage'].get('acquisition_reason_counts', {})) if request.get('meeting') else []
+            published['blockers'] = exact + ['Independent verification, compatible pre-race form or usable inputs incomplete',
                                      'Detailed output requires an authorised private delivery route']
     else:
         published = result
