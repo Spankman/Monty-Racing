@@ -1,0 +1,380 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45966975427-1-276",
+  "date": "2026-11-27",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Sunshine Coast",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T08:38:00.000Z",
+      "scratchings": [
+        {
+          "number": "4",
+          "horse": "Monocru"
+        }
+      ],
+      "captured_at": "2026-11-27T08:37:14.332709+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-27",
+        "meeting": "Sunshine Coast",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "You've Got This",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Bobby El-Issa",
+            "trainer": "Trevor Thomas"
+          },
+          {
+            "number": "2",
+            "horse": "Frosty Looks",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Adin Thompson",
+            "trainer": "P & W Hulbert"
+          },
+          {
+            "number": "3",
+            "horse": "Riesa",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Corey Sutherland",
+            "trainer": "Shaun Dwyer"
+          },
+          {
+            "number": "5",
+            "horse": "Zoubuca Shots",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Gary Geran",
+            "trainer": "C & K Geran"
+          },
+          {
+            "number": "6",
+            "horse": "Spliced",
+            "scratched": false,
+            "odds": 3.7,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Michael Rodd",
+            "trainer": "David Vandyke"
+          },
+          {
+            "number": "7",
+            "horse": "The Aviator",
+            "scratched": false,
+            "odds": 2.3,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "Cejay Graham",
+            "trainer": "Chris Anderson"
+          },
+          {
+            "number": "8",
+            "horse": "Factnot Fiction",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 55.5,
+            "age": 6,
+            "jockey": "Kayla Barker",
+            "trainer": "Terry Hong"
+          },
+          {
+            "number": "9",
+            "horse": "Seaphira",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Tiffani Brooker",
+            "trainer": "Gary Duncan"
+          },
+          {
+            "number": "10",
+            "horse": "You Drive Me Crazy",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 55,
+            "age": 4,
+            "jockey": "Emily Lang",
+            "trainer": "Trevor Thomas"
+          },
+          {
+            "number": "11",
+            "horse": "Rativa",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 54,
+            "age": 5,
+            "jockey": "Aidan Keeley",
+            "trainer": "Stephanie Sixtus"
+          },
+          {
+            "number": "12",
+            "horse": "Trail Boss",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Anthony Allen",
+            "trainer": "Gordon Hay"
+          },
+          {
+            "number": "4",
+            "horse": "Monocru",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 4,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Ben E Thompson",
+            "trainer": "Todd J Pollard"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1000,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-27T08:37:14.332709+00:00",
+        "scheduled_start": "2026-11-27T08:38:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "a33041716773913184dbbf4273c00ff7a7033848336581e2ae803d1cee9c00f2",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "7",
+            "horse": "The Aviator",
+            "odds": 2.3,
+            "probability": 0.33850557168758527,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Spliced",
+            "odds": 3.7,
+            "probability": 0.21030202509097473,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Zoubuca Shots",
+            "odds": 5.5,
+            "probability": 0.14151638582009582,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "7",
+          "horse": "The Aviator",
+          "odds": 2.3,
+          "probability": 0.33850557168758527,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "7",
+            "horse": "The Aviator",
+            "odds": 2.3,
+            "probability": 0.33850557168758527,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Spliced",
+            "odds": 3.7,
+            "probability": 0.21030202509097473,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "5",
+            "horse": "Zoubuca Shots",
+            "odds": 5.5,
+            "probability": 0.14151638582009582,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "You Drive Me Crazy",
+            "odds": 8.0,
+            "probability": 0.09925739545062799,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Seaphira",
+            "odds": 10.0,
+            "probability": 0.07933779825734594,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "2",
+            "horse": "Frosty Looks",
+            "odds": 17.0,
+            "probability": 0.0466826457626407,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "3",
+            "horse": "Riesa",
+            "odds": 19.0,
+            "probability": 0.041705781209769636,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "8",
+            "horse": "Factnot Fiction",
+            "odds": 51.0,
+            "probability": 0.015565334084363783,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "1",
+            "horse": "You've Got This",
+            "odds": 61.0,
+            "probability": 0.012986609662942485,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "Rativa",
+            "odds": 101.0,
+            "probability": 0.007847886746338385,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "12",
+            "horse": "Trail Boss",
+            "odds": 126.0,
+            "probability": 0.006292566227315137,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "7",
+          "horse": "The Aviator",
+          "odds": 2.3,
+          "probability": 0.33850557168758527,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T08:37:14.899986+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T08:37:14.332709+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T08:37:15.696988+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-27/45966975427-1-276/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-27T08:37:14.332709+00:00",
+  "valid_until": "2026-11-27T08:42:14.332709+00:00",
+  "snapshot_only": true
+}
