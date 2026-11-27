@@ -16,7 +16,7 @@ def main():
     class NoRedirect(HTTPRedirectHandler):
         def redirect_request(self,*args):return None
     def api(path,method='GET',body=None):
-        request=Request('https://api.github.com/repos/'+REPO+'/'+path,method=method,
+        request=Request('https://api.github.com/repos/'+REPO+('/'+path if path else ''),method=method,
             headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','User-Agent':'Monty-private-capability/1.0'},
             data=json.dumps(body).encode() if body is not None else None)
         with build_opener(NoRedirect()).open(request,timeout=15) as response:return json.load(response)

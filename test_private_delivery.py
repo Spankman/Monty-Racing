@@ -90,3 +90,32 @@ class PrivateClientTests(unittest.TestCase):
         self.files['requests/200.json']['forecast_sha256']=digest
         r=retrieve(self.files['requests/200.json'],200,command('RM7 Ballina 1',self.day),self.capture)
         self.assertEqual(r['semantic_outcome'],'EXECUTION FAILED');self.assertFalse(r['selections_available'])
+
+
+class RepositoryRootRouteTests(unittest.TestCase):
+    def test_writer_checks_canonical_repository_root_without_trailing_slash(self):
+        import subprocess
+        sink=Sink('synthetic-not-a-real-token')
+        def call(args,**kwargs):
+            self.assertEqual(args[2],'repos/Spankman/Monty-Private-Archive')
+            return subprocess.CompletedProcess(args,0,stdout='{"private":true}',stderr='')
+        with patch('operations.private_delivery.subprocess.run',side_effect=call):
+            self.assertTrue(sink.api('')['private'])
+    def test_probe_uses_same_supported_repository_root_route(self):
+        from io import BytesIO
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        import operations.private_transport_probe as probe
+        requests=[]
+        def open_request(request,timeout):
+            requests.append(request.full_url)
+            if len(requests)==1:
+                self.assertEqual(request.full_url,'https://api.github.com/repos/Spankman/Monty-Private-Archive')
+                value={'private':True}
+            elif len(requests)==2:value={'object':{'sha':'a'*40}}
+            else:value={'commit':{'sha':'b'*40}}
+            return BytesIO(json.dumps(value).encode())
+        with TemporaryDirectory() as tmp, patch.dict('os.environ',{'PRIVATE_RESULTS_TOKEN':'synthetic','GITHUB_SHA':'fixture','GITHUB_RUN_ID':'fixture'}), patch.object(probe,'Path',side_effect=lambda name:Path(tmp)/name), patch.object(probe,'build_opener') as opener, patch('builtins.print'):
+            opener.return_value.open.side_effect=open_request
+            self.assertEqual(probe.main()['status'],'PRIVATE_WRITE_VERIFIED')
+        self.assertEqual(len(requests),3)
