@@ -240,13 +240,23 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                 result['models'][version]=dict(commit=commit,model_sha256=pins[version],status='NOT_RUN',research_only=version=='V7')
         stage='provider_capture'
         if payload is None:
-            from krok_adapter import fetch
-            key=os.environ.get('KROK_API_KEY','').strip()
-            result['provider_credentials_configured']=bool(key)
+            provider = os.environ.get('MONTY_PRICE_PROVIDER', 'Krok')
+            result['provider'] = provider
+            if provider not in ('Krok', 'PuntersEdge'):
+                raise ValueError('Unsupported Monty provider')
+            key_name = 'PUNTERSEDGE_API_KEY' if provider == 'PuntersEdge' else 'KROK_API_KEY'
+            key = os.environ.get(key_name, '').strip()
+            result['provider_credentials_configured'] = bool(key)
             if not key:
-                raise ValueError('KROK_API_KEY absent; live request not attempted')
+                raise ValueError('Configured provider credential absent')
             with timed('provider_fetch', run_id, enabled=timings):
-                payload=fetch(day,key)
+                if provider == 'PuntersEdge':
+                    from puntersedge_adapter import fetch_board
+                    payload, captured = fetch_board(day, key, country=request.get('country'))
+                else:
+                    from krok_adapter import fetch
+                    payload = fetch(day, key)
+        result.setdefault('provider', payload.get('meta', {}).get('provider', 'Krok'))
         captured=captured or utcnow()
         encoded=json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         result['provider_snapshot_sha256']=hashlib.sha256(encoded).hexdigest()
@@ -328,7 +338,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
                             candidates=view['roughies'] if version=='V7' else [r for r in ranked if r.get('research_category') in ('BEST BET','RUFFY') and r['probability']*r['odds']>1]
                             view.update(ranked_runners=ranked,most_likely=ranked[0],value_selection=max(candidates,key=lambda r:r['probability']*r['odds']-1) if candidates else None,reduced_confidence=True)
                         view.update(status='SCORED',decision_at=utcnow().isoformat(),no_bet_reasons=reasons.copy(),
-                                    bookmaker='TAB (Krok attributed)' if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
+                                    bookmaker=f"TAB ({result['provider']} attributed)" if all(r.get('_price_source')=='TAB' for r in runners) else 'Provider win quotes — attribution incomplete',quoted_at=captured.isoformat(),
                                     model_version=version,model_commit=result['models'][version]['commit'])
                         if version=='V7':view['no_bet_reasons'].append('V7_RESEARCH_ONLY_NOT_APPROVED')
                         record['models'][version]=view
@@ -361,7 +371,7 @@ def execute(day, output, v7_root, *, run_id, payload=None, captured=None, reques
     write(public/'forecast.json',result)
     receipt=dict(schema=SCHEMA,run_id=str(run_id),date=day,status=result['status'],
                  forecast_sha256=sha(public/'forecast.json'),provider_snapshot_sha256=result.get('provider_snapshot_sha256'),
-                 models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
+                 provider=result.get('provider'),models=result['models'],generated_at=result['generated_at'],source_mode=result['source_mode'],
                  qualifying_forecasts=0,model_artifacts_unchanged=len(pins)==2)
     write(public/'receipt.json',receipt)
     for version in ['V6','V7']:
