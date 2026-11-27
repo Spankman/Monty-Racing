@@ -1,0 +1,3328 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45938557913-1-daily",
+  "date": "2026-11-27",
+  "view": "provisional",
+  "version": "V7",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Cairns",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T04:06:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Cairns",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T04:43:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Uncle Treasure"
+        },
+        {
+          "number": "4",
+          "horse": "Design Power"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "da5fb3acf210ffb0da2b0f401328a44fbccb9a7c77fa274843b11101e4fbaccf",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "5",
+            "horse": "Shorts Fury",
+            "odds": 2.25,
+            "probability": 0.3423618692692557,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Mr Strong",
+            "odds": 3.5,
+            "probability": 0.2259002145553701,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Rocky Cheval",
+            "odds": 4.2,
+            "probability": 0.19382029625464794,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "5",
+          "horse": "Shorts Fury",
+          "odds": 2.25,
+          "probability": 0.3423618692692557,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:46.607767+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Cairns",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:23:00.000Z",
+      "scratchings": [
+        {
+          "number": "4",
+          "horse": "Vincentvangee"
+        },
+        {
+          "number": "7",
+          "horse": "Ziggy Starcraft"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "073bf22da90675802aaf06e4a43f14ae8e994e54967a94f9bf3bfe7d16a6553f",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Smart Mission",
+            "odds": 1.45,
+            "probability": 0.5202243485796371,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Nosey Neo",
+            "odds": 6.5,
+            "probability": 0.1266719845204518,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Smart Mission",
+          "odds": 1.45,
+          "probability": 0.5202243485796371,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:47.692268+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Cairns",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:03:00.000Z",
+      "scratchings": [
+        {
+          "number": "4",
+          "horse": "Heart Of Vienna"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "59b8a66f26260309f19287ee774cb50ebe09e7fa4533a0f8f78a4d7421b69796",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Worthy Gem",
+            "odds": 2.2,
+            "probability": 0.3451064157231158,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Good One Cecil",
+            "odds": 2.8,
+            "probability": 0.2697987357855781,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "3",
+            "horse": "Dee Three",
+            "odds": 7.5,
+            "probability": 0.10883515016861404,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Worthy Gem",
+          "odds": 2.2,
+          "probability": 0.3451064157231158,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:48.785418+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Cairns",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:43:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Tassorting"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "82fe8b5d1977e60eda0660eda6eb365d27a3b32c28974721c56bd67fb5643594",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "7",
+            "horse": "Carlando",
+            "odds": 2.4,
+            "probability": 0.31812723330560655,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Do A Little Dance",
+            "odds": 2.6,
+            "probability": 0.29510044317870127,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Coppabella Road",
+            "odds": 5.0,
+            "probability": 0.15935962722197589,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "7",
+          "horse": "Carlando",
+          "odds": 2.4,
+          "probability": 0.31812723330560655,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:49.878623+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Cairns",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T07:19:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "Hartshorn"
+        },
+        {
+          "number": "6",
+          "horse": "Line 'em Up Loui"
+        },
+        {
+          "number": "7",
+          "horse": "Ceremonious"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 4,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "cc519b62a76a97ce6e34c6f045ac8b0fbc89a2b09207f9b2a72d36598ae2b4d0",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Brave Agenda",
+            "odds": 2.3,
+            "probability": 0.3647544751634271,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Turn Bird",
+            "odds": 2.7,
+            "probability": 0.3138413619270121,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "3",
+            "horse": "Overlord",
+            "odds": 3.5,
+            "probability": 0.24596267995336327,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Inching Closer",
+            "odds": 12.0,
+            "probability": 0.07544148295619749,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "FIRST FOUR BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Brave Agenda",
+          "odds": 2.3,
+          "probability": 0.3647544751634271,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:50.981180+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Canterbury",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T08:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Marchon"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "38d8a275cf80e79c65f78c3bce3ab9b1b70b9bebdc6060bb2fc6f7adc342aed3",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "8",
+            "horse": "War Banner",
+            "odds": 2.7,
+            "probability": 0.2865913762214899,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "9",
+            "horse": "Regal",
+            "odds": 4.5,
+            "probability": 0.1772046980834241,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "8",
+          "horse": "War Banner",
+          "odds": 2.7,
+          "probability": 0.2865913762214899,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:52.083839+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Canterbury",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T09:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "Cosmic Lad"
+        },
+        {
+          "number": "6",
+          "horse": "Darn Cute"
+        },
+        {
+          "number": "8",
+          "horse": "Danish Fortune"
+        },
+        {
+          "number": "7",
+          "horse": "Cabbucio"
+        },
+        {
+          "number": "9",
+          "horse": "Outta Line"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 5,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "30c09aa475b6eb4fc120aca534e9bf23d696205d5e183392a02ebba659d3a24f",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Hallowed Halls",
+            "odds": 2.6,
+            "probability": 0.3130231527664776,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "10",
+            "horse": "Aura",
+            "odds": 3.3,
+            "probability": 0.2485274000243022,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "3",
+            "horse": "Azarax",
+            "odds": 3.6,
+            "probability": 0.23070263728312776,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Malbork Castle",
+            "odds": 7.0,
+            "probability": 0.11980237468522947,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "FIRST FOUR BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Hallowed Halls",
+          "odds": 2.6,
+          "probability": 0.3130231527664776,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:53.175517+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Canterbury",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T09:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "Where'stheprofit"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "2086d9e1e69e3deeb9b34eb9ea0da7d495020544548814ccaee8ba20da8f0d18",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "2",
+            "horse": "Il Passero",
+            "odds": 3.8,
+            "probability": 0.2037267129228164,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Mawjood",
+            "odds": 6.0,
+            "probability": 0.13248193362624625,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "2",
+          "horse": "Il Passero",
+          "odds": 3.8,
+          "probability": 0.2037267129228164,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:54.266615+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Canterbury",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T10:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Zounaka"
+        },
+        {
+          "number": "5",
+          "horse": "Flightcrew"
+        },
+        {
+          "number": "1",
+          "horse": "Shady Road"
+        },
+        {
+          "number": "4",
+          "horse": "Emalyn"
+        },
+        {
+          "number": "2",
+          "horse": "Show Business"
+        },
+        {
+          "number": "14",
+          "horse": "Vittozzi"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "5b8dcb22c1c7a684c65f27415da75733123b321d9d53fd99fafcb37c48ccf3ce",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "11",
+            "horse": "Celestial Charm",
+            "odds": 2.45,
+            "probability": 0.31099352795527585,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "12",
+            "horse": "From Me To You",
+            "odds": 4.8,
+            "probability": 0.16808181727460048,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "11",
+          "horse": "Celestial Charm",
+          "odds": 2.45,
+          "probability": 0.31099352795527585,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:55.364846+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Canterbury",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T10:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Acheson"
+        },
+        {
+          "number": "8",
+          "horse": "Chappy"
+        },
+        {
+          "number": "11",
+          "horse": "Emerald Hills"
+        },
+        {
+          "number": "6",
+          "horse": "Big Tiger"
+        },
+        {
+          "number": "15",
+          "horse": "It's A Wonder"
+        },
+        {
+          "number": "14",
+          "horse": "Alabama Showdown"
+        },
+        {
+          "number": "10",
+          "horse": "Sheeza Diva"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "fb3da2998332e3d78cb717172b5591cf2b7c62d57c19d74fd62fdb8fd262e937",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "9",
+            "horse": "Quarterback",
+            "odds": 3.2,
+            "probability": 0.2433013875930881,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Congressman",
+            "odds": 3.4,
+            "probability": 0.22983855608704626,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Komodo Dragon",
+            "odds": 4.4,
+            "probability": 0.18028098919742463,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "9",
+          "horse": "Quarterback",
+          "odds": 3.2,
+          "probability": 0.2433013875930881,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:56.474942+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Cromwell",
+      "race": "8",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T04:16:00.000Z",
+      "scratchings": [
+        {
+          "number": "16",
+          "horse": "Lanikai"
+        },
+        {
+          "number": "19",
+          "horse": "Ardee Boy"
+        },
+        {
+          "number": "17",
+          "horse": "Eight Lucky Prawns"
+        },
+        {
+          "number": "18",
+          "horse": "Courte Xena"
+        },
+        {
+          "number": "15",
+          "horse": "Stout"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 14,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "dd22e6622988d5682dc04f49f261bff6f54184e44611dc5c31a50213ed62bdf6",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "3",
+            "horse": "On File",
+            "odds": 5.0,
+            "probability": 0.1439857987056676,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "BB",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "3",
+          "horse": "On File",
+          "odds": 5.0,
+          "probability": 0.1439857987056676,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:57.576878+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "mount-gambier",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Synthesise"
+        },
+        {
+          "number": "5",
+          "horse": "Parkrun"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "f1e1281ee938e905c54d7f87eac5b6ba897b7dab21decf144138d519357eaa5e",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Blindato",
+            "odds": 3.1,
+            "probability": 0.24880119917987556,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Van Roy",
+            "odds": 3.9,
+            "probability": 0.20054530843151647,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Pianta",
+            "odds": 4.4,
+            "probability": 0.17898668468064147,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Blindato",
+          "odds": 3.1,
+          "probability": 0.24880119917987556,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:12:58.674451+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "mount-gambier",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:10:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "04285917c037adea8a27254d059932e1cbcfe72ae4374b6b0737eee881becbf4",
+      "result": {
+        "status": "FAILED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "inference_failed_ValueError"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "mount-gambier",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "12",
+          "horse": "Squagaga"
+        },
+        {
+          "number": "6",
+          "horse": "Fox Man"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "053e83120b8566aff9c3b93fcfd2dd7d16cfbf2bb2b0dd566fed95c529677a93",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "In Love",
+            "odds": 3.8,
+            "probability": 0.19993983392567902,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Light Filled",
+            "odds": 4.6,
+            "probability": 0.16711065484938703,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "In Love",
+          "odds": 3.8,
+          "probability": 0.19993983392567902,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:00.888656+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "mount-gambier",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T07:24:00.000Z",
+      "scratchings": [
+        {
+          "number": "7",
+          "horse": "Sweet But Sassy"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "246b2ed44275ea864e158588bdcff2b00b37b7b36803556d8b034513a3ddda80",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "5",
+            "horse": "Ramelle",
+            "odds": 3.0,
+            "probability": 0.2543693995581709,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "3",
+            "horse": "Sotomayor",
+            "odds": 3.3,
+            "probability": 0.2324244365726993,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Aquaholic",
+            "odds": 4.199999809265137,
+            "probability": 0.18494962759655023,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "5",
+          "horse": "Ramelle",
+          "odds": 3.0,
+          "probability": 0.2543693995581709,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:02.000481+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "mount-gambier",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T07:54:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Let It Ride"
+        },
+        {
+          "number": "8",
+          "horse": "Bare To Witness"
+        },
+        {
+          "number": "14",
+          "horse": "Hasta La Amnesty"
+        },
+        {
+          "number": "9",
+          "horse": "Quizlet"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "6e64677f532d691a5770f81d761dce9eda0559fa027607a6a2a8cb0b7cdae494",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "6",
+            "horse": "Tudaya",
+            "odds": 3.8,
+            "probability": 0.19643444050904246,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "10",
+            "horse": "Steely Hustler",
+            "odds": 5.0,
+            "probability": 0.15196397528650965,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "6",
+          "horse": "Tudaya",
+          "odds": 3.8,
+          "probability": 0.19643444050904246,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:03.109743+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Muswellbrook",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:14:00.000Z",
+      "scratchings": [
+        {
+          "number": "9",
+          "horse": "Thirty Degrees"
+        },
+        {
+          "number": "5",
+          "horse": "Thunder Lights"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "10b0fd1d3e610988b7ea43afe601dfde51fd9527092ea3b8d45dafaf76c2e3c7",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Big Brad",
+            "odds": 3.3,
+            "probability": 0.24015353305429704,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Overzone",
+            "odds": 3.3,
+            "probability": 0.23567721748229944,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Magurtz",
+            "odds": 3.4,
+            "probability": 0.2291692307589484,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Prince De Vega",
+            "odds": 6.5,
+            "probability": 0.1269741967393209,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "FIRST FOUR BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Big Brad",
+          "odds": 3.3,
+          "probability": 0.24015353305429704,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:04.215332+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Muswellbrook",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:54:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "0f0064845d8e6fbcb66afb8371e28cf2e6895e7a2655ba972edbc13bad396bb9",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Planet Nero",
+            "odds": 1.95,
+            "probability": 0.37776355898162234,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Jason Darren",
+            "odds": 6.0,
+            "probability": 0.1311097143264733,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Planet Nero",
+          "odds": 1.95,
+          "probability": 0.37776355898162234,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:05.322776+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Muswellbrook",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:34:00.000Z",
+      "scratchings": [
+        {
+          "number": "4",
+          "horse": "Enterprise Legend"
+        },
+        {
+          "number": "12",
+          "horse": "Smart And Dapper"
+        },
+        {
+          "number": "5",
+          "horse": "Super Sioux"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "f77044263e8590568e04b9fe5e45f2c2249709ca7212b973ca6b1e7ade9264c1",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "7",
+            "horse": "Angie's Sister",
+            "odds": 2.6,
+            "probability": 0.28865579033542055,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "11",
+            "horse": "Irish Jig",
+            "odds": 3.4,
+            "probability": 0.2208674063824658,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Shihab",
+            "odds": 5.5,
+            "probability": 0.14036603402810494,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "7",
+          "horse": "Angie's Sister",
+          "odds": 2.6,
+          "probability": 0.28865579033542055,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:06.434978+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Pakenham",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T09:15:00.000Z",
+      "scratchings": [
+        {
+          "number": "7",
+          "horse": "Rogan"
+        },
+        {
+          "number": "1",
+          "horse": "Terrortorian"
+        },
+        {
+          "number": "5",
+          "horse": "Aristonous"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "45d29b934e3d2bb8327fb5c6d341f7fafff180811e43c3ba44d544171aacbcb0",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "3",
+            "horse": "Mount Sabyinyo",
+            "odds": 3.1,
+            "probability": 0.24843644683342617,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Untapped",
+            "odds": 4.0,
+            "probability": 0.19549462638026546,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "3",
+          "horse": "Mount Sabyinyo",
+          "odds": 3.1,
+          "probability": 0.24843644683342617,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:07.542159+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Pakenham",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T09:45:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Discover Lupino"
+        },
+        {
+          "number": "16",
+          "horse": "King Maywin"
+        },
+        {
+          "number": "1",
+          "horse": "Zourain"
+        },
+        {
+          "number": "14",
+          "horse": "Tiger Fox"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 12,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "fc66adf3e274c338291f547e541570c49776a4011752dbda4b3b8e7301c5dcb6",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "12",
+            "horse": "Perfect Night",
+            "odds": 4.0,
+            "probability": 0.18489907972181355,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "BB",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "12",
+          "horse": "Perfect Night",
+          "odds": 4.0,
+          "probability": 0.18489907972181355,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:08.648555+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Pakenham",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T10:15:00.000Z",
+      "scratchings": [
+        {
+          "number": "10",
+          "horse": "Glisk"
+        },
+        {
+          "number": "4",
+          "horse": "Shares"
+        },
+        {
+          "number": "2",
+          "horse": "General Blu"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "ac87eab9d17bcf916367f74f87f8aac50162a7e8748b76ddbed4c776e01429e2",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "8",
+            "horse": "Astiquer",
+            "odds": 3.1,
+            "probability": 0.24298187008138186,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Barbarino",
+            "odds": 3.6,
+            "probability": 0.21091355741329587,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Hook 'n' Spur",
+            "odds": 4.8,
+            "probability": 0.16082793736271636,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "8",
+          "horse": "Astiquer",
+          "odds": 3.1,
+          "probability": 0.24298187008138186,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:09.753340+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Pakenham",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T10:45:00.000Z",
+      "scratchings": [
+        {
+          "number": "14",
+          "horse": "Vivid Sun"
+        },
+        {
+          "number": "6",
+          "horse": "Monix"
+        },
+        {
+          "number": "7",
+          "horse": "Weapon Clear"
+        },
+        {
+          "number": "11",
+          "horse": "It's A Yes"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 12,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "b72ef624270144ad0ebc8d1d042efc6cbbf07996303f8cf6c9c77698224ea06a",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "15",
+            "horse": "Noetzie",
+            "odds": 2.9,
+            "probability": 0.2533301545563663,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Barari",
+            "odds": 4.8,
+            "probability": 0.15790474651316377,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "15",
+          "horse": "Noetzie",
+          "odds": 2.9,
+          "probability": 0.2533301545563663,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:10.866647+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "1",
+      "country": "NZ",
+      "scheduled_start": "2026-11-26T23:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "BOOMSTRUCK (AUS)"
+        },
+        {
+          "number": "6",
+          "horse": "SOUTH SEA"
+        },
+        {
+          "number": "7",
+          "horse": "HUNTSMAN"
+        },
+        {
+          "number": "10",
+          "horse": "RECTIFY"
+        },
+        {
+          "number": "15",
+          "horse": "LITTLE RED DOT"
+        },
+        {
+          "number": "16",
+          "horse": "EL PRONTO"
+        },
+        {
+          "number": "17",
+          "horse": "AMPING"
+        },
+        {
+          "number": "18",
+          "horse": "CLICQUOT GIRL"
+        },
+        {
+          "number": "19",
+          "horse": "WARRIOR PRINCESS"
+        },
+        {
+          "number": "20",
+          "horse": "ETHEREAL BEAUTY"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "2",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T00:24:00.000Z",
+      "scratchings": [
+        {
+          "number": "9",
+          "horse": "SULTAN OF SUAVE"
+        },
+        {
+          "number": "11",
+          "horse": "KAKASISISI"
+        },
+        {
+          "number": "14",
+          "horse": "LITTLE MISS PHOEBE"
+        },
+        {
+          "number": "15",
+          "horse": "CAMERLENGO"
+        },
+        {
+          "number": "16",
+          "horse": "OHOPE'S GOODENUFF"
+        },
+        {
+          "number": "17",
+          "horse": "HOMAI TAPU"
+        },
+        {
+          "number": "18",
+          "horse": "CLARA BOW"
+        },
+        {
+          "number": "19",
+          "horse": "LICORICE (AUS)"
+        },
+        {
+          "number": "20",
+          "horse": "ZAMPIERRA (AUS)"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "3",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T00:58:00.000Z",
+      "scratchings": [
+        {
+          "number": "10",
+          "horse": "NITRO POINT (AUS)"
+        },
+        {
+          "number": "15",
+          "horse": "CAMERLENGO"
+        },
+        {
+          "number": "16",
+          "horse": "OHOPE'S GOODENUFF"
+        },
+        {
+          "number": "17",
+          "horse": "HOMAI TAPU"
+        },
+        {
+          "number": "18",
+          "horse": "CLARA BOW"
+        },
+        {
+          "number": "19",
+          "horse": "LICORICE (AUS)"
+        },
+        {
+          "number": "20",
+          "horse": "ZAMPIERRA (AUS)"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "4",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T01:32:00.000Z",
+      "scratchings": [
+        {
+          "number": "6",
+          "horse": "LICORICE (AUS)"
+        },
+        {
+          "number": "15",
+          "horse": "PICCOLA BELLEZZA"
+        },
+        {
+          "number": "16",
+          "horse": "WOODBEGOOD"
+        },
+        {
+          "number": "17",
+          "horse": "KAKASISISI"
+        },
+        {
+          "number": "18",
+          "horse": "SHE'S THE DREAM"
+        },
+        {
+          "number": "19",
+          "horse": "LE FLEUR"
+        },
+        {
+          "number": "20",
+          "horse": "LITTLE MISS PHOEBE"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "5",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T02:05:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "NEW CASTLE"
+        },
+        {
+          "number": "5",
+          "horse": "HE'S DIVINE"
+        },
+        {
+          "number": "7",
+          "horse": "SHOCKATILLATAP"
+        },
+        {
+          "number": "13",
+          "horse": "LUMINANCE"
+        },
+        {
+          "number": "15",
+          "horse": "KORO'S PRINCESS"
+        },
+        {
+          "number": "16",
+          "horse": "FLUTTERBELLE"
+        },
+        {
+          "number": "17",
+          "horse": "MISTER PUCCI"
+        },
+        {
+          "number": "18",
+          "horse": "NOTABADBERGS"
+        },
+        {
+          "number": "19",
+          "horse": "IZOLA"
+        },
+        {
+          "number": "20",
+          "horse": "KING'S MOUNT"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "6",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T02:44:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "Carsolio"
+        },
+        {
+          "number": "3",
+          "horse": "Stay Frosty"
+        },
+        {
+          "number": "4",
+          "horse": "Opressor"
+        },
+        {
+          "number": "9",
+          "horse": "Admiral Vos"
+        },
+        {
+          "number": "10",
+          "horse": "Sonar"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "PUKEKOHE PARK - NZ",
+      "race": "7",
+      "country": "NZ",
+      "scheduled_start": "2026-11-27T03:16:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "WHATS THE ONE CODE"
+        },
+        {
+          "number": "15",
+          "horse": "SHAMWARI (AUS)"
+        },
+        {
+          "number": "16",
+          "horse": "NEW RECRUIT"
+        },
+        {
+          "number": "17",
+          "horse": "MISTER PUCCI"
+        },
+        {
+          "number": "18",
+          "horse": "WRITTEN IN HEAVEN"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    },
+    {
+      "meeting": "Queanbeyan",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T04:20:00.000Z",
+      "scratchings": [
+        {
+          "number": "11",
+          "horse": "Revoke"
+        },
+        {
+          "number": "3",
+          "horse": "Kosuke"
+        },
+        {
+          "number": "7",
+          "horse": "Sorry Sunshine"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "4d902ac78a93c6430cea64e373235be987795306beb41ed04853f3873a414d62",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Think I Do",
+            "odds": 3.4,
+            "probability": 0.219990577215822,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Fair Master",
+            "odds": 4.2,
+            "probability": 0.18468644595999043,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Think I Do",
+          "odds": 3.4,
+          "probability": 0.219990577215822,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:11.979336+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Queanbeyan",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:00:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Fred Astern"
+        },
+        {
+          "number": "12",
+          "horse": "Curly Bend"
+        },
+        {
+          "number": "14",
+          "horse": "Chairman's List"
+        },
+        {
+          "number": "15",
+          "horse": "Zeema"
+        },
+        {
+          "number": "11",
+          "horse": "Selhurst Park"
+        },
+        {
+          "number": "10",
+          "horse": "Straight Fire"
+        },
+        {
+          "number": "3",
+          "horse": "Missile Defence"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "740534453ecb0dc5a140fd95324a06b1b35142053b6825e74e2cb3cc354e8303",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Star Of Lily",
+            "odds": 2.9,
+            "probability": 0.29991487381162085,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "7",
+            "horse": "Royal Memory",
+            "odds": 4.8,
+            "probability": 0.18325709860356032,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Star Of Lily",
+          "odds": 2.9,
+          "probability": 0.29991487381162085,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:13.106564+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Queanbeyan",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:40:00.000Z",
+      "scratchings": [
+        {
+          "number": "10",
+          "horse": "Luna Angel"
+        },
+        {
+          "number": "7",
+          "horse": "Miss Stalwart"
+        },
+        {
+          "number": "13",
+          "horse": "Hardazhell"
+        },
+        {
+          "number": "14",
+          "horse": "Pearler"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "dc97b84b203a6ceef517f0f06c8833caaaf5793a592b65f6d36e92ff1f4edc39",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Vermicella",
+            "odds": 3.4,
+            "probability": 0.23419727385194164,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Acheson",
+            "odds": 3.4,
+            "probability": 0.22980820915416086,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "3",
+            "horse": "My Last Hooray",
+            "odds": 4.8,
+            "probability": 0.16925801735425722,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Vermicella",
+          "odds": 3.4,
+          "probability": 0.23419727385194164,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:14.223196+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Queanbeyan",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:20:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Vainstream"
+        },
+        {
+          "number": "4",
+          "horse": "Los Padres"
+        },
+        {
+          "number": "8",
+          "horse": "Alabama Hammer"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "f368062caea3f6e8a11422f0c89e4a11de453db38126cdcf3ecc9077e278f810",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "6",
+            "horse": "All Adore",
+            "odds": 1.3,
+            "probability": 0.5677925797308433,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Massira",
+            "odds": 8.5,
+            "probability": 0.0986353621035999,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "6",
+          "horse": "All Adore",
+          "odds": 1.3,
+          "probability": 0.5677925797308433,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:15.336223+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Sunshine Coast",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T09:08:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 13,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "eef313db253d15e23e97c43409af8350312ab1d89baeed6e3d206c06782b1255",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "2",
+            "horse": "Poor Ol' Johny Ray",
+            "odds": 2.7,
+            "probability": 0.2733527870842959,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Autumn Heir",
+            "odds": 4.4,
+            "probability": 0.1725951925193253,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "2",
+          "horse": "Poor Ol' Johny Ray",
+          "odds": 2.7,
+          "probability": 0.2733527870842959,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:16.448271+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Sunshine Coast",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T09:38:00.000Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "Sea Admiral"
+        },
+        {
+          "number": "9",
+          "horse": "Red Feather Boa"
+        },
+        {
+          "number": "4",
+          "horse": "Sweet Hesitation"
+        },
+        {
+          "number": "11",
+          "horse": "Sizzleist"
+        },
+        {
+          "number": "5",
+          "horse": "Telling"
+        },
+        {
+          "number": "14",
+          "horse": "Triple Yes"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 12,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "8b21c5c5b941e33b658a24bbde73e3c9a0b5307ee3b1d0fb4645d1dd378b38b5",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "8",
+            "horse": "Oscar",
+            "odds": 3.0,
+            "probability": 0.2458114235666201,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "10",
+            "horse": "Shadwell Lane",
+            "odds": 3.2,
+            "probability": 0.22860200275187365,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "7",
+            "horse": "Hi Barbie",
+            "odds": 7.5,
+            "probability": 0.10400851312385266,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "8",
+          "horse": "Oscar",
+          "odds": 3.0,
+          "probability": 0.2458114235666201,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:17.550572+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Sunshine Coast",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T10:08:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Simply Fun"
+        },
+        {
+          "number": "8",
+          "horse": "Tisani James"
+        },
+        {
+          "number": "13",
+          "horse": "Lord Danilo"
+        },
+        {
+          "number": "6",
+          "horse": "Star Of Paris"
+        },
+        {
+          "number": "11",
+          "horse": "Interro"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "925bd125c01f7098f29855dc83eebcdcc46a2d75dd60ab5df0faa49adcb8be0e",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Storming Home",
+            "odds": 1.85,
+            "probability": 0.397500478199346,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "7",
+            "horse": "Talk About Layla",
+            "odds": 2.6,
+            "probability": 0.28853942796772236,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Vandevelde",
+            "odds": 6.5,
+            "probability": 0.12416606433031675,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Storming Home",
+          "odds": 1.85,
+          "probability": 0.397500478199346,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:18.669919+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Sunshine Coast",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T10:38:00.000Z",
+      "scratchings": [
+        {
+          "number": "8",
+          "horse": "Copper Star"
+        },
+        {
+          "number": "14",
+          "horse": "Worththeadmission"
+        },
+        {
+          "number": "9",
+          "horse": "Rumble Town"
+        },
+        {
+          "number": "13",
+          "horse": "Dazzling Diamond"
+        },
+        {
+          "number": "11",
+          "horse": "Far Beyond"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 14,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "8ac25e79ac3950c4d2685e81c69a4e701907e05d68691731ffa05d8cee6b249d",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "12",
+            "horse": "Xtra La Vita",
+            "odds": 2.8,
+            "probability": 0.25921892561959875,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "1",
+            "horse": "Measure Up",
+            "odds": 6.0,
+            "probability": 0.12582585286542802,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "12",
+          "horse": "Xtra La Vita",
+          "odds": 2.8,
+          "probability": 0.25921892561959875,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:19.780196+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Wodonga",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T04:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Palladium"
+        },
+        {
+          "number": "11",
+          "horse": "Red Light Rachel"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "914cb9a2ca313378ec834290bcd1e4dceb63f02818f5212e151d168a2d8c84f4",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Shotaro",
+            "odds": 3.0,
+            "probability": 0.2529022635038675,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Bottas",
+            "odds": 3.0,
+            "probability": 0.24795240444524913,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Star Buyer",
+            "odds": 6.0,
+            "probability": 0.131565324473345,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Shotaro",
+          "odds": 3.0,
+          "probability": 0.2529022635038675,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:20.888228+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Wodonga",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:10:00.000Z",
+      "scratchings": [
+        {
+          "number": "15",
+          "horse": "Fox Appeal"
+        },
+        {
+          "number": "16",
+          "horse": "Morning Darling"
+        },
+        {
+          "number": "6",
+          "horse": "Space Rider"
+        },
+        {
+          "number": "3",
+          "horse": "Tuff Tu Mus"
+        },
+        {
+          "number": "4",
+          "horse": "El Soleado"
+        },
+        {
+          "number": "2",
+          "horse": "El Rocko"
+        },
+        {
+          "number": "17",
+          "horse": "Grey Lad"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "341cbbdb578c80b1ee4b5e2fa0ae5220fecac01d1d09f0195e8b3329bb6c64af",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Buccleuch",
+            "odds": 1.6,
+            "probability": 0.46852758681234574,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Presser",
+            "odds": 6.5,
+            "probability": 0.12518851058493413,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Buccleuch",
+          "odds": 1.6,
+          "probability": 0.46852758681234574,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:22.008817+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Wodonga",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T05:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "The Shaper"
+        },
+        {
+          "number": "8",
+          "horse": "Fourthtimelucky"
+        },
+        {
+          "number": "13",
+          "horse": "More Highs On Me"
+        },
+        {
+          "number": "14",
+          "horse": "Pacific Glamour"
+        },
+        {
+          "number": "15",
+          "horse": "Prandium Tempus"
+        },
+        {
+          "number": "12",
+          "horse": "Alice Alice"
+        },
+        {
+          "number": "16",
+          "horse": "Three Musketeers"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "5409428f0a49154b8907af08dad60e6ddc12444b256ea44099f4fcefa3fa2238",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "9",
+            "horse": "Hazardous",
+            "odds": 2.6,
+            "probability": 0.34175281549100606,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "11",
+            "horse": "Roussillon",
+            "odds": 7.0,
+            "probability": 0.13688369479395565,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "9",
+          "horse": "Hazardous",
+          "odds": 2.6,
+          "probability": 0.34175281549100606,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:23.133814+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    },
+    {
+      "meeting": "Wodonga",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T06:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "9",
+          "horse": "Deeling Aces"
+        }
+      ],
+      "captured_at": "2026-11-27T04:12:45.206957+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "ab78bf9e85d5f53f961c584b4fd2db479b46dc5e0a15219b98f5ffdbe99c0adb",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "Lord Of Valor",
+            "odds": 3.6,
+            "probability": 0.21113920477645146,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Doubtfree",
+            "odds": 4.8,
+            "probability": 0.16105499878939394,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "Lord Of Valor",
+          "odds": 3.6,
+          "probability": 0.21113920477645146,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T04:13:24.243905+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T04:12:45.206957+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T04:13:24.258716+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-27/45938557913-1-daily/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-27T04:12:45.206957+00:00",
+  "valid_until": "2026-11-27T04:17:45.206957+00:00",
+  "snapshot_only": true
+}
