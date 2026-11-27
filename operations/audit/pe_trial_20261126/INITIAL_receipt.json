@@ -1,0 +1,283 @@
+{
+  "schema": "monty.pe-trial.v1",
+  "trial_id": "PE-AU-20261126-6D",
+  "date": "2026-11-26",
+  "phase": "plan",
+  "commit": "e4062513d1ae3c41a21d562feed76d80e06bfd44",
+  "started_at": "2026-11-25T18:38:37.642155+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45677174261",
+  "betting_authorised": false,
+  "production_changed": false,
+  "usage_before": {
+    "plan": "free",
+    "credits_used": 67,
+    "credits_limit": 1500,
+    "credits_remaining": 1433,
+    "period_start": "2026-11-25T07:37:08.098912",
+    "next_reset_at": "2026-12-01T00:00:00",
+    "reset_at": "2026-11-25T07:37:08.098912"
+  },
+  "status": "PREREGISTERED",
+  "plan_sha256": "0a130677908ca5d97fc939cd0ecaf2c999e84b95ad773fed61f24e588f0f691c",
+  "registered_races": 3,
+  "card_races": 29,
+  "country_unresolved": 0,
+  "historical_form": [
+    {
+      "race_id": "5047da2a-a572-4c37-b0cc-6373327b8df2",
+      "source_sha256": "a041d4aefb30b07ab813f4dc81b79b0b9d3140df941f7f3a5a1000209b1b88ac",
+      "runners": 8,
+      "runners_with_runs": 8,
+      "past_runs": 78,
+      "form_as_at": "2026-11-26T04:00:00Z",
+      "activated_features": false,
+      "limitation": "Candidate history only; no national identity crosswalk or original residual reconstruction attested"
+    },
+    {
+      "race_id": "88486ae8-7602-4651-8025-8d4fd7521b2a",
+      "source_sha256": "f8db013222a78dd2dda4515f50c93b94904721bdd477a1cb0cfba1d5877c6b22",
+      "runners": 6,
+      "runners_with_runs": 6,
+      "past_runs": 57,
+      "form_as_at": "2026-11-26T04:20:00Z",
+      "activated_features": false,
+      "limitation": "Candidate history only; no national identity crosswalk or original residual reconstruction attested"
+    },
+    {
+      "race_id": "bfd65896-c8d5-4db5-9e90-ade1eb45070a",
+      "source_sha256": "d09ed7161f87113a237e759cfdd483d582dfedbed0685537584d1263a9f1e00d",
+      "runners": 8,
+      "runners_with_runs": 8,
+      "past_runs": 73,
+      "form_as_at": "2026-11-26T06:34:00Z",
+      "activated_features": false,
+      "limitation": "Candidate history only; no national identity crosswalk or original residual reconstruction attested"
+    }
+  ],
+  "request_usage": [
+    {
+      "endpoint": "/v1/usage",
+      "status": 200,
+      "command": "PE_TRIAL_PLAN",
+      "attempted_at": "2026-11-25T18:38:38.235590+00:00",
+      "elapsed_seconds": 0.58693,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 29,
+      "credit_cost_known": false
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:39.798233+00:00",
+      "elapsed_seconds": 1.56231,
+      "x-credits-cost": 4,
+      "x-credits-remaining": 1429,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 28,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:40.843057+00:00",
+      "elapsed_seconds": 0.995829,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1427,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 27,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:41.758422+00:00",
+      "elapsed_seconds": 0.911273,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1425,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 26,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:42.726593+00:00",
+      "elapsed_seconds": 0.965227,
+      "x-credits-cost": 2,
+      "x-credits-remaining": 1423,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 25,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:43.739739+00:00",
+      "elapsed_seconds": 1.007904,
+      "x-credits-cost": 3,
+      "x-credits-remaining": 1420,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 24,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:44.611078+00:00",
+      "elapsed_seconds": 0.8671,
+      "x-credits-cost": 3,
+      "x-credits-remaining": 1417,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 23,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "status": 200,
+      "command": "STAGING",
+      "attempted_at": "2026-11-25T18:38:45.506869+00:00",
+      "elapsed_seconds": 0.891998,
+      "x-credits-cost": 3,
+      "x-credits-remaining": 1414,
+      "x-credits-limit": 1500,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 22,
+      "credit_cost_known": true
+    },
+    {
+      "endpoint": "/v1/usage",
+      "status": 200,
+      "command": "PE_TRIAL_USAGE",
+      "attempted_at": "2026-11-25T18:38:46.067758+00:00",
+      "elapsed_seconds": 0.556792,
+      "x-ratelimit-limit": 30,
+      "x-ratelimit-remaining": 21,
+      "credit_cost_known": false
+    }
+  ],
+  "response_evidence": [
+    {
+      "endpoint": "/v1/usage",
+      "request_at": "2026-11-25T18:38:37.648677+00:00",
+      "received_at": "2026-11-25T18:38:38.235705+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:38 GMT",
+      "cache_control": null,
+      "sha256": "ca4d0eb6fa2fc5678c10a850abf70a70c61670932958e42cc0979b89adc1b65d",
+      "bytes": 5084,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/next-to-go",
+      "request_at": "2026-11-25T18:38:38.235942+00:00",
+      "received_at": "2026-11-25T18:38:39.806526+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:38 GMT",
+      "cache_control": "private, max-age=0, must-revalidate",
+      "sha256": "62561fcbf9a276544d0118f88208f043d486fb7c13d75903f5631f1e19e487ec",
+      "bytes": 917911,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "request_at": "2026-11-25T18:38:39.847245+00:00",
+      "received_at": "2026-11-25T18:38:40.844026+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:40 GMT",
+      "cache_control": null,
+      "sha256": "6dcdc59d47846e6d1539303bcef02de5258b8a0d72655551eba91b4cda6961e0",
+      "bytes": 80522,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "request_at": "2026-11-25T18:38:40.847168+00:00",
+      "received_at": "2026-11-25T18:38:41.759005+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:41 GMT",
+      "cache_control": null,
+      "sha256": "7fac101d90029b3fedcf0a2a8538e42dc9c9fe409924dcde1361a537d7ed8135",
+      "bytes": 53681,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/acceptances",
+      "request_at": "2026-11-25T18:38:41.761383+00:00",
+      "received_at": "2026-11-25T18:38:42.727818+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:42 GMT",
+      "cache_control": null,
+      "sha256": "96e0d3a2183a5bb2386ff9a66578aed2864b5b2ea8997c03d70b0d3c70691acf",
+      "bytes": 101521,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "request_at": "2026-11-25T18:38:42.731852+00:00",
+      "received_at": "2026-11-25T18:38:43.740384+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:43 GMT",
+      "cache_control": null,
+      "sha256": "c10f3a49b4a8799fbcad03c022b0f5f3744b273b699c046e2e0c8d75a3f0d280",
+      "bytes": 59850,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "request_at": "2026-11-25T18:38:43.744034+00:00",
+      "received_at": "2026-11-25T18:38:44.611870+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:44 GMT",
+      "cache_control": null,
+      "sha256": "882f95a9afd3fc358cf8bbfc3f63d9baa70360b2dec8288b4b34eed2b4aedbad",
+      "bytes": 45859,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/racing/form",
+      "request_at": "2026-11-25T18:38:44.614889+00:00",
+      "received_at": "2026-11-25T18:38:45.507502+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:45 GMT",
+      "cache_control": null,
+      "sha256": "37047e5137999a3ca4ff361c93f9255b8f95d4616c8d4edb24efab3c6c9a3e78",
+      "bytes": 54620,
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/usage",
+      "request_at": "2026-11-25T18:38:45.510984+00:00",
+      "received_at": "2026-11-25T18:38:46.067863+00:00",
+      "response_date": "Wed, 25 Nov 2026 18:38:45 GMT",
+      "cache_control": null,
+      "sha256": "6ba4a9f1158c5f0fb1988c464eecebf37212fddc25ba12a0f78873248e2a9f01",
+      "bytes": 5088,
+      "status": 200
+    }
+  ],
+  "usage": {
+    "attempts": 8,
+    "measured_credits": 19,
+    "unknown_cost_attempts": 1,
+    "total_credits": null,
+    "remaining_balance_is_not_monty_usage": true
+  },
+  "reserved_credits": 19,
+  "usage_after": {
+    "plan": "free",
+    "credits_used": 86,
+    "credits_limit": 1500,
+    "credits_remaining": 1414,
+    "period_start": "2026-11-25T07:37:08.098912",
+    "next_reset_at": "2026-12-01T00:00:00",
+    "reset_at": "2026-11-25T07:37:08.098912"
+  },
+  "account_counter_delta": 19,
+  "account_delta_attribution": "Account-wide; concurrent production calls may contribute; endpoint headers separately recorded",
+  "finished_at": "2026-11-25T18:38:46.067902+00:00",
+  "encrypted_evidence_sha256": "7d76a0db7ad19bb030b65a29dc07e28300aefa51a3fe652df3bd678d6c073c92"
+}

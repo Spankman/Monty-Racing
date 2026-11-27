@@ -245,3 +245,10 @@ labels, a run ID and elapsed seconds. It is workflow diagnostic metadata and
 does not enter forecasts, receipts or tickets. An `ok` timed span only means
 the operation returned without raising. Check the existing semantic forecast
 status to determine whether either model scored.
+
+## Finite PuntersEdge acceptance trial (staging)
+
+26 November–1 December2026: see [trial protocol and operation](trial/README.md),
+[dated handover](audit/PUNTERSEDGE_TRIAL_HANDOVER_2026-11-26.md) and
+[evidence-backed register](trial/REGISTER.md). Draft235 builds on draft231;
+no automatic production migration or completed six-day acceptance is implied.

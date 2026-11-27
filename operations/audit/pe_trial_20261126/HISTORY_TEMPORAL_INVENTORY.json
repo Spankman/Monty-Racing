@@ -1,0 +1,38 @@
+[
+  {
+    "recovered_file_sha256": "b76f7cb7d74d0e4befb4604e32334fda58d873bbc5d07058a451c798b7cc7f3d",
+    "race_id": "5047da2a-a572-4c37-b0cc-6373327b8df2",
+    "inventory": {
+      "candidate_strictly_prior_day_rows": 78,
+      "excluded_same_day_future_or_invalid_rows": 0,
+      "declared_form_as_at_after_capture": true,
+      "verified_lifetime_identity": false,
+      "feature_activation": false,
+      "limitation": "Provider form_as_at may denote scheduled race cutoff; not treated as observation time or historical availability proof"
+    }
+  },
+  {
+    "recovered_file_sha256": "bb89ea2e80ed9c4056197c5acd5b6e7cceb410b2ff8d1bb169bd6e1340dd11cf",
+    "race_id": "88486ae8-7602-4651-8025-8d4fd7521b2a",
+    "inventory": {
+      "candidate_strictly_prior_day_rows": 57,
+      "excluded_same_day_future_or_invalid_rows": 0,
+      "declared_form_as_at_after_capture": true,
+      "verified_lifetime_identity": false,
+      "feature_activation": false,
+      "limitation": "Provider form_as_at may denote scheduled race cutoff; not treated as observation time or historical availability proof"
+    }
+  },
+  {
+    "recovered_file_sha256": "e0da2eb9376da319e7230e5b9416ea9e992536617822c0c8b9f99cd4a7b9f8ac",
+    "race_id": "bfd65896-c8d5-4db5-9e90-ade1eb45070a",
+    "inventory": {
+      "candidate_strictly_prior_day_rows": 73,
+      "excluded_same_day_future_or_invalid_rows": 0,
+      "declared_form_as_at_after_capture": true,
+      "verified_lifetime_identity": false,
+      "feature_activation": false,
+      "limitation": "Provider form_as_at may denote scheduled race cutoff; not treated as observation time or historical availability proof"
+    }
+  }
+]

@@ -1,0 +1,212 @@
+name: Monty finite private PuntersEdge trial
+run-name: PE trial ${{ github.event.head_commit.message }}
+on:
+  push:
+    branches: [trial/puntersedge-acceptance-20261126]
+    paths: [operations/trial/control.json]
+permissions:
+  contents: read
+concurrency:
+  group: monty-pe-finite-trial
+  cancel-in-progress: false
+jobs:
+  trial:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - id: control
+        run: |
+          python - <<'PYTHON'
+          import json,os
+          c=json.load(open('operations/trial/control.json'))
+          if c['mode'] not in ('plan','capture','results'):raise ValueError('Invalid mode')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('mode='+c['mode']+'\n')
+          PYTHON
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-runner.txt
+      - uses: actions/checkout@v4
+        if: steps.control.outputs.mode == 'capture'
+        with:
+          ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
+          path: v7_engine
+      - name: Restore unchanged original private V6 records
+        if: steps.control.outputs.mode == 'capture'
+        run: python operations/restore_private.py
+        env:
+          V6_ARCHIVE_URL: ${{ secrets.V6_ARCHIVE_URL }}
+          V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
+      - name: Preregister or collect results
+        if: steps.control.outputs.mode != 'capture'
+        run: python operations/trial/run.py "${{ steps.control.outputs.mode }}"
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode != 'capture'
+        with:
+          name: pe-trial-${{ steps.control.outputs.mode }}-${{ github.run_id }}
+          path: operations_output/pe-trial/public/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 00
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 0
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-00-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-00/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 01
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 1
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-01-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-01/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 02
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 2
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-02-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-02/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 03
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 3
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-03-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-03/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 04
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 4
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-04-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-04/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 05
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 5
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-05-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-05/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 06
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 6
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-06-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-06/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 07
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 7
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-07-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-07/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 08
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 8
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-08-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-08/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 09
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 9
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-09-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-09/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 10
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 10
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-10-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-10/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Scheduled paired window 11
+        if: always() && steps.control.outputs.mode == 'capture'
+        run: python operations/trial/run.py capture --index 11
+        env:
+          PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
+          KROK_API_KEY: ${{ secrets.KROK_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.control.outputs.mode == 'capture'
+        with:
+          name: pe-trial-window-11-${{ github.run_id }}
+          path: operations_output/pe-trial/public/window-11/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Remove plaintext private evidence
+        if: always()
+        run: rm -rf operations_output/pe-trial/private
