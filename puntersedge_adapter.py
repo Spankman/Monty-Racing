@@ -6,9 +6,19 @@ account mutation, wager/betslip routes, signup or billing requests are supported
 from datetime import datetime,timezone
 from urllib.request import Request,build_opener,HTTPRedirectHandler
 from urllib.error import HTTPError,URLError
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 import hashlib,json,os,time
-from operations.data_acquisition import record_usage
+def record_usage(rows, url, status, headers, command, started):
+    safe = {}
+    for key in ('X-Credits-Cost', 'X-Credits-Remaining', 'X-Credits-Limit',
+                'X-RateLimit-Limit', 'X-RateLimit-Remaining'):
+        value = headers.get(key)
+        if isinstance(value, str) and value.isascii() and value.isdigit():
+            safe[key.lower()] = int(value)
+    rows.append(dict(endpoint=urlsplit(url).path, status=status, command=command,
+                     attempted_at=datetime.now(timezone.utc).isoformat(),
+                     elapsed_seconds=round(time.monotonic() - started, 6),
+                     **safe, credit_cost_known='x-credits-cost' in safe))
 
 BASE='https://api.puntersedge.online'
 COSTS={'/v1/usage':0,'/v1/racing/events':1,'/v1/racing/next-to-go':4,
