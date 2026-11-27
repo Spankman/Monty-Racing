@@ -1,0 +1,183 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "45958488471-1-275",
+  "date": "2026-11-27",
+  "view": "official",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Canterbury",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-27T07:30:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-27T07:27:24.164487+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-27",
+        "meeting": "Canterbury",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Aurora Boom",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Siena Grima",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "5",
+            "horse": "Divine Gal",
+            "scratched": false,
+            "odds": 16.0,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Zac Lloyd",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "7",
+            "horse": "Rocket Girl",
+            "scratched": false,
+            "odds": 3.3,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "James McDonald",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "6",
+            "horse": "Posh Pommery",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Kerrin McEvoy",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "2",
+            "horse": "Mens Rea",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Andrew Adkins",
+            "trainer": "Con Karakatsanis"
+          },
+          {
+            "number": "3",
+            "horse": "Sacred Vow",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Jean Van Overmeire",
+            "trainer": "Michael Freedman"
+          },
+          {
+            "number": "4",
+            "horse": "Bybrook",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Jason Collett",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "8",
+            "horse": "Thyme To Go",
+            "scratched": false,
+            "odds": 1.95,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Tom Sherry",
+            "trainer": "Annabel & Rob Archibald"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1250,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-27T07:27:24.164487+00:00",
+        "scheduled_start": "2026-11-27T07:30:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "4201479f82ebcc9bb2ccdbd51546e8d49959bdc2e550e058e2a1fe255e061a4f",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-27T07:27:24.638784+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-27T07:27:24.164487+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-27T07:27:25.383811+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-27/45958488471-1-275/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-27T07:27:24.164487+00:00",
+  "valid_until": "2026-11-27T07:32:24.164487+00:00",
+  "snapshot_only": true
+}
