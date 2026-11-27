@@ -1,0 +1,231 @@
+{
+  "history": {
+    "races": 4129,
+    "ci": [
+      -0.0011961148107358668,
+      0.0017920466431703738
+    ],
+    "roughieSelections": [
+      348,
+      617,
+      448,
+      2442
+    ]
+  },
+  "assumedCensus": 1440,
+  "maximumDays": 84,
+  "designEffectForOtherEndpoints": 1.4,
+  "historicalEffectiveLogLossSpread": 0.048983,
+  "logLossTargets": [
+    0.001,
+    0.002,
+    0.005
+  ],
+  "logLossRequiredRaces": [
+    18833,
+    4709,
+    754
+  ],
+  "logLossRequiredRacesStressed": [
+    44150,
+    11038,
+    1766
+  ],
+  "scoreScenarios": [
+    {
+      "races": 360,
+      "mdeLogLoss": 0.007233,
+      "stressedMdeLogLoss": 0.011074,
+      "logLossPowers": [
+        0.067359,
+        0.121079,
+        0.490787
+      ],
+      "mdeBrier": [
+        0.007383,
+        0.014766
+      ],
+      "mdePairedWinRoi": [
+        0.087355,
+        0.17471,
+        0.349419
+      ],
+      "mdeWinStrike": [
+        0.039066,
+        0.055248,
+        0.078132
+      ],
+      "calibrationMdeAtOneObservationPerRace": 0.052413
+    },
+    {
+      "races": 720,
+      "mdeLogLoss": 0.005114,
+      "stressedMdeLogLoss": 0.007831,
+      "logLossPowers": [
+        0.085025,
+        0.194814,
+        0.782014
+      ],
+      "mdeBrier": [
+        0.00522,
+        0.010441
+      ],
+      "mdePairedWinRoi": [
+        0.061769,
+        0.123538,
+        0.247077
+      ],
+      "mdeWinStrike": [
+        0.027624,
+        0.039066,
+        0.055248
+      ],
+      "calibrationMdeAtOneObservationPerRace": 0.037061
+    },
+    {
+      "races": 1080,
+      "mdeLogLoss": 0.004176,
+      "stressedMdeLogLoss": 0.006394,
+      "logLossPowers": [
+        0.102948,
+        0.26872,
+        0.918429
+      ],
+      "mdeBrier": [
+        0.004262,
+        0.008525
+      ],
+      "mdePairedWinRoi": [
+        0.050434,
+        0.100869,
+        0.201737
+      ],
+      "mdeWinStrike": [
+        0.022555,
+        0.031897,
+        0.04511
+      ],
+      "calibrationMdeAtOneObservationPerRace": 0.030261
+    },
+    {
+      "races": 1440,
+      "mdeLogLoss": 0.003616,
+      "stressedMdeLogLoss": 0.005537,
+      "logLossPowers": [
+        0.121079,
+        0.34092,
+        0.97216
+      ],
+      "mdeBrier": [
+        0.003691,
+        0.007383
+      ],
+      "mdePairedWinRoi": [
+        0.043677,
+        0.087355,
+        0.17471
+      ],
+      "mdeWinStrike": [
+        0.019533,
+        0.027624,
+        0.039066
+      ],
+      "calibrationMdeAtOneObservationPerRace": 0.026206
+    }
+  ],
+  "roi": [
+    {
+      "price": 3,
+      "selectionRateProxy": 1,
+      "selectionsAt720": 720,
+      "expectedWinsAtBreakEven": 240,
+      "independentExactPowerAtPlus10pct": {
+        "criticalWins": 266,
+        "size": 0.022561,
+        "power": 0.452486
+      },
+      "approximateSelectionsForNetROI5pct": 8854,
+      "approximateSelectionsForNetROI10pct": 2228
+    },
+    {
+      "price": 15,
+      "selectionRateProxy": 0.084282,
+      "selectionsAt720": 61,
+      "expectedWinsAtBreakEven": 4.07,
+      "independentExactPowerAtPlus10pct": {
+        "criticalWins": 9,
+        "size": 0.019268,
+        "power": 0.033088
+      },
+      "approximateSelectionsForNetROI5pct": 62384,
+      "approximateSelectionsForNetROI10pct": 15804
+    },
+    {
+      "price": 30,
+      "selectionRateProxy": 0.149431,
+      "selectionsAt720": 108,
+      "expectedWinsAtBreakEven": 3.6,
+      "independentExactPowerAtPlus10pct": {
+        "criticalWins": 9,
+        "size": 0.01029,
+        "power": 0.018089
+      },
+      "approximateSelectionsForNetROI5pct": 129296,
+      "approximateSelectionsForNetROI10pct": 32773
+    },
+    {
+      "price": 50,
+      "selectionRateProxy": 0.108501,
+      "selectionsAt720": 78,
+      "expectedWinsAtBreakEven": 1.56,
+      "independentExactPowerAtPlus10pct": {
+        "criticalWins": 5,
+        "size": 0.020275,
+        "power": 0.029002
+      },
+      "approximateSelectionsForNetROI5pct": 218513,
+      "approximateSelectionsForNetROI10pct": 55399
+    },
+    {
+      "price": 80,
+      "selectionRateProxy": 0.591426,
+      "selectionsAt720": 426,
+      "expectedWinsAtBreakEven": 5.33,
+      "independentExactPowerAtPlus10pct": {
+        "criticalWins": 11,
+        "size": 0.01989,
+        "power": 0.035943
+      },
+      "approximateSelectionsForNetROI5pct": 352338,
+      "approximateSelectionsForNetROI10pct": 89338
+    }
+  ],
+  "calibrationExamplesAt80pct": [
+    {
+      "gap": 0.01,
+      "binObservations": 9890
+    },
+    {
+      "gap": 0.02,
+      "binObservations": 2473
+    },
+    {
+      "gap": 0.03,
+      "binObservations": 1099
+    }
+  ],
+  "strikeRacesAt10pctDiscordance": [
+    {
+      "gap": 0.01,
+      "races": 10989
+    },
+    {
+      "gap": 0.02,
+      "races": 2748
+    },
+    {
+      "gap": 0.03,
+      "races": 1221
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "headRefName": "integration/evidence-readiness-20261126",
+    "headRefOid": "fd901172448f0197b5adb69d8c196660a416f1f6",
+    "isDraft": true,
+    "number": 245,
+    "title": "Stage evidence readiness, permanent master handover and private delivery safeguards",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "research/historical-coverage-20261126",
+    "headRefOid": "29239357579422148091a3320401d5e0572d774c",
+    "isDraft": true,
+    "number": 244,
+    "title": "Audit historical coverage and preregister independent AU validation",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "engineering/inference-evidence",
+    "headRefOid": "112703369ad8386df50801627b02b2c656092cf2",
+    "isDraft": true,
+    "number": 243,
+    "title": "Retain complete private inference evidence and expose reproducible research diagnostics",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "research/independent-fundamentals-20261126",
+    "headRefOid": "ad47142f9b824d74d05d30cdc467a416ad987229",
+    "isDraft": true,
+    "number": 242,
+    "title": "Research independent fundamentals against market and calibration controls",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "audit/roughies-240",
+    "headRefOid": "cd775dc07a0a716ecb47a6e4db934c5fb451a72a",
+    "isDraft": true,
+    "number": 241,
+    "title": "Audit roughie exclusions and stage research watch reporting for issue 240",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "trial/puntersedge-acceptance-20261126",
+    "headRefOid": "84689048a374f2af824da77057623d20809f6baa",
+    "isDraft": true,
+    "number": 235,
+    "title": "Staging: finite six-day PuntersEdge live acceptance trial",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "docs/living-development-plan-2026-11-25",
+    "headRefOid": "51ba4febd3443eaec4f755777a65bee493e01821",
+    "isDraft": true,
+    "number": 234,
+    "title": "Owner rules and Monty living development plan",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "integration/puntersedge-staging",
+    "headRefOid": "0df55dccd230b69bba8e0be5f8d8ef9462f5c388",
+    "isDraft": true,
+    "number": 231,
+    "title": "Stage PuntersEdge authentication, market integrity and provider comparison",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "audit/live-data-reliability",
+    "headRefOid": "5c96fe36e9714cd1fcd27fb8d345a95b00c94472",
+    "isDraft": true,
+    "number": 230,
+    "title": "Audit Australian live quote reliability",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "integration/data-cost-controls",
+    "headRefOid": "8a1e36a2f206acac35a2759a221f975991f5a401",
+    "isDraft": true,
+    "number": 229,
+    "title": "Bind Krok offer timestamps and measure safe acquisition costs (staging)",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "audit/free-low-cost-data",
+    "headRefOid": "bb76198a0eeed5d4c6e1d221fe1bbf1787d3ce93",
+    "isDraft": true,
+    "number": 228,
+    "title": "Audit free and low-cost Australian racing data",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "audit/au-data-validation",
+    "headRefOid": "e26f9368fe17a1ae39753b022d730f0740275795",
+    "isDraft": true,
+    "number": 227,
+    "title": "Audit Australian history inputs and prospective evaluation",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "fix/market-integrity",
+    "headRefOid": "23d363d4c4dc19c72a439c7cd86b9420af3d8523",
+    "isDraft": true,
+    "number": 226,
+    "title": "Quarantine anomalous markets and separate model value from normalization",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "audit/roughie-concentration",
+    "headRefOid": "5b2ee240c9a3a4e1cb3cfe0a4cc4d1f25d39e007",
+    "isDraft": true,
+    "number": 225,
+    "title": "Audit roughie concentration and market underrounds",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "integration/verified-operations",
+    "headRefOid": "4a3068c07b3608174a8e647381c38abc6af045b5",
+    "isDraft": true,
+    "number": 213,
+    "title": "Integrate prediction delivery and verified-race staging repairs (not production-ready)",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "audit/independent-feature-recovery",
+    "headRefOid": "55d0c0e1144cf4aff55c6d4742db7669d033fc87",
+    "isDraft": true,
+    "number": 211,
+    "title": "Audit Monty scoring and recover original historical feature evidence",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "fix/prediction-approval-diagnostics",
+    "headRefOid": "50b8b370decbb3f9593d1b7039614d07c286fde6",
+    "isDraft": true,
+    "number": 210,
+    "title": "Separate genuine Monty predictions from blocked betting approval",
+    "ancestor_of_tested_245": true
+  },
+  {
+    "headRefName": "fix/pagination-regression-tests-20261122",
+    "headRefOid": "c6f63a22008f0c5bd5266dd3ff502e18fcd6d75c",
+    "isDraft": true,
+    "number": 99,
+    "title": "Add regression tests for truncated Krok meeting pagination",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "test/trigger-launceston-r9",
+    "headRefOid": "15d3d6cb9def161b9925adf6541e0bdbcb74dcc0",
+    "isDraft": false,
+    "number": 53,
+    "title": "Run Monty Launceston R9 using $4 win-price ladder",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "test/rerun-pakenham-r7",
+    "headRefOid": "7f39ba9dfd35cfce76bd01cd9d6c4e49c7cb1fca",
+    "isDraft": false,
+    "number": 50,
+    "title": "Rerun Pakenham R7 after single-race ladder update",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "test/trigger-pakenham-r7",
+    "headRefOid": "dccc788f045d5eae9b6e8571e798ae541708382b",
+    "isDraft": false,
+    "number": 47,
+    "title": "Trigger Monty Pakenham R7 single-race scoring",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "test/trigger-pakenham-r6",
+    "headRefOid": "f5485211d82cbcd74ef8b8677f51f54d18d6f3d9",
+    "isDraft": false,
+    "number": 44,
+    "title": "Trigger Monty Pakenham R6 poll",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "test/trigger-launceston-r7",
+    "headRefOid": "f189b371366b1293850164367d2b3452e1f2a5d1",
+    "isDraft": false,
+    "number": 42,
+    "title": "Trigger Monty Launceston R7 poll",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "fix/exotic-quote-runner-matching",
+    "headRefOid": "da5d9699b91d79755c7f67ac92d5176bc08e4697",
+    "isDraft": false,
+    "number": 40,
+    "title": "Prevent exotic bets using prices for the wrong horse combination",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "fix/single-race-compact-bet-output",
+    "headRefOid": "f52717f48b7dbaf633d5b585b4c7602d46a77586",
+    "isDraft": false,
+    "number": 34,
+    "title": "Single-race output: one BB/Q/T/FF decision, no ranking dump",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "fix/poll-race-requests",
+    "headRefOid": "26eb1fcea488f714c3589cf26e44d71abeab76b3",
+    "isDraft": false,
+    "number": 22,
+    "title": "Fix missing Monty race responses with scheduled issue polling",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "grok-independent-repairs",
+    "headRefOid": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+    "isDraft": true,
+    "number": 15,
+    "title": "Draft: provisional public V6 scorer (Grok repair adaptation)",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "experiment/expert-consensus-v7",
+    "headRefOid": "9c07748f31e5f9c3b5e87b30ff7b650f57bf4ba1",
+    "isDraft": true,
+    "number": 9,
+    "title": "WORK START HERE \u2014 Monty V7 Sunday handover (DO NOT MERGE)",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "development/monty-v7-candidate2",
+    "headRefOid": "c27d66da4c94488b9c093aadd16f0dceea9d465c",
+    "isDraft": true,
+    "number": 8,
+    "title": "Candidate 2: diagnose conditional miscalibration and start shadow validation",
+    "ancestor_of_tested_245": false
+  },
+  {
+    "headRefName": "development/monty-v7",
+    "headRefOid": "a1e275bb0b7809f661d18d677f58d49267e71577",
+    "isDraft": true,
+    "number": 7,
+    "title": "Develop V7 research candidate without replacing V6",
+    "ancestor_of_tested_245": false
+  }
+]
