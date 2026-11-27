@@ -24,7 +24,8 @@ class Sink:
         if not self.token:raise PrivateDeliveryError('private_writer_credential_absent')
     def api(self,path,method='GET',body=None,optional=False):
         env=dict(os.environ,GH_TOKEN=self.token)
-        args=['gh','api','repos/'+REPO+'/'+path,'--method',method]
+        endpoint='repos/'+REPO+('/'+path if path else '')
+        args=['gh','api',endpoint,'--method',method]
         if body is not None:args+=['--input','-']
         r=subprocess.run(args,input=json.dumps(body) if body is not None else None,text=True,capture_output=True,timeout=20,env=env)
         if r.returncode:
