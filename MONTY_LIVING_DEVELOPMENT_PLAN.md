@@ -182,3 +182,14 @@ Genuine live [45922818202](https://github.com/Spankman/Monty-Racing/actions/runs
 Work: lawful authority/operator/as-of historical inputs via existing source register; no duplicatedruntime implementation or paidacquisition. Codex: minimal integration/private-delivery and source contracts. Already-authorisedPEchoice needs no repeated approval; production activation remains blocked by actual coverage, independent evidence and lawful private ticket delivery, not a proposal to buy more infrastructure. Do not disable licence guards or manufacture permission references. Master/Plan/Library remain canonical;issue260isits execution checklist.
 
 Separate due11:30trial phase executed once: exactplan21e180c58f1e17886d576a16f5da8b3764a39a3763e61cb1f679676f0e7644e8,launch65b5531797f0d54ddccff684a5420c591c5f0c20,[run45922957288](https://github.com/Spankman/Monty-Racing/actions/runs/45922957288),earliestT6012:24Brisbane. Hostedjobwaitingforwindows;no completedcapture claim. No trialcode/protocol/races/budgetchanges. Production remains623d46b449e46cfc5fa63b633c3f19b404bba41a;no merge/deploy,purchase,permission/secretchange,wager orprofitabilityclaim.
+
+
+### Private operational delivery checkpoint — 27 November2026
+
+- [x] Codex: integrate existing #263 improvements into canonical #262 without duplicate provider/combined architecture; stage owner-private derived publisher, receipt/expiry/model/scope checks and read-only C. Tested head3166d9bf8ef8bf186367d29f9db7ab534c4b5c4b;265operational/158runner/6V7CIpassed,13frozenlocal;55originalhashes unchanged.
+- [x] Verify existing private repository/native connector text read and personally permitted derived-ticket licence scope. Preserve separate raw-retention/public-display restrictions.
+- [ ] Owner: configure only MONTY_PRIVATE_RESULTS_TOKEN through GitHub UI, fine-grained ContentsRW/MetadataR restricted to existing Monty-Private-Archive. Owner will seek ChatGPT setup guidance; credential not yet configured. Hosted final preflight45927694180 failed closed before provider calls. No secret/permission mutation by agents.
+- [ ] Codex after authentication: actual request-to-private-receipt/slip acceptance for all commands, C and combined ticket; final production activation/iPhone check. No projection-only success claim. Work retains authoritative operator/history/value evidence obligations through the existing source register.
+- [ ] Official qualification remains blocked until those evidence/value requirements pass; do not invent daily confidence thresholds, substitute market favourites or force roughies.
+
+See [one recovery register260](https://github.com/Spankman/Monty-Racing/issues/260) and [private setup/evidence](https://github.com/Spankman/Monty-Racing/blob/3166d9bf8ef8bf186367d29f9db7ab534c4b5c4b/operations/recovery/PRIVATE_DELIVERY.md). PE primary already authorised;no repeat provider-choice approval,paid plan or new infrastructure proposed. Trial unchanged.
