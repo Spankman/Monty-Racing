@@ -106,16 +106,22 @@ class RepositoryRootRouteTests(unittest.TestCase):
         from tempfile import TemporaryDirectory
         from pathlib import Path
         import operations.private_transport_probe as probe
-        requests=[]
+        requests=[];written=[]
         def open_request(request,timeout):
             requests.append(request.full_url)
             if len(requests)==1:
                 self.assertEqual(request.full_url,'https://api.github.com/repos/Spankman/Monty-Private-Archive')
                 value={'private':True}
             elif len(requests)==2:value={'object':{'sha':'a'*40}}
-            else:value={'commit':{'sha':'b'*40}}
+            elif len(requests)==3:
+                import base64
+                written.append(base64.b64decode(json.loads(request.data)['content']))
+                value={'commit':{'sha':'b'*40}}
+            else:
+                import base64
+                value={'content':base64.b64encode(written[0]).decode()}
             return BytesIO(json.dumps(value).encode())
         with TemporaryDirectory() as tmp, patch.dict('os.environ',{'PRIVATE_RESULTS_TOKEN':'synthetic','GITHUB_SHA':'fixture','GITHUB_RUN_ID':'fixture'}), patch.object(probe,'Path',side_effect=lambda name:Path(tmp)/name), patch.object(probe,'build_opener') as opener, patch('builtins.print'):
             opener.return_value.open.side_effect=open_request
             self.assertEqual(probe.main()['status'],'PRIVATE_WRITE_VERIFIED')
-        self.assertEqual(len(requests),3)
+        self.assertEqual(len(requests),4)
