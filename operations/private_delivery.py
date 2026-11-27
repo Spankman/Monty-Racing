@@ -10,7 +10,7 @@ import subprocess
 
 REPO='Spankman/Monty-Private-Archive'
 BRANCH='monty-operational-private-results'
-PERMISSION='https://puntersedge.online/terms#section-8'
+PERMISSION='https://puntersedge.online/terms'
 TERMS_SHA='0933f504bd267d2e4309dc0a6eb36ef1c84614143b66927aebd499ac5618a2c9'
 
 class PrivateDeliveryError(RuntimeError):pass
@@ -57,7 +57,7 @@ def derived_forecast(forecast):
         'model_version','model_commit','ordered_selections','ranked_runners','progression_bet_type','recommended_bet_type',
         'best_bets','best_chance','roughies','no_bet_reasons','betting_authorised','decision_at','bookmaker',
         'quote_capture_at','quoted_at','market_integrity','ruffies_to_watch','value_selection','most_likely',
-        'provisional_classification','feature_evidence','model_inference'}
+        'provisional_classification','feature_evidence','input_evidence','model_inference'}
     value={k:forecast[k] for k in ('schema','date','timezone','run_id','generated_at','receipt','source_mode','status',
         'provider','captured_at','valid_until','provider_snapshot_sha256','models','blockers','coverage') if k in forecast}
     value['races']=[]
@@ -102,7 +102,7 @@ def bundle(forecast,now=None):
     prefix='runs/'+day+'/'+run+'/'
     from monty_operations import timestamp,MAX_AGE_SECONDS
     from datetime import timedelta
-    validity=[dict(meeting=r['meeting'],race=str(r['race']),country=r['country'],captured_at=r['captured_at'],valid_until=min(timestamp(r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r.get('price_observed_at') or r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r['scheduled_start'])-timedelta(minutes=1 if r.get('price_observed_at') else 0)).isoformat()) for r in data['races'] if any(m.get('status')=='SCORED' for m in r['models'].values())]
+    validity=[dict(meeting=r['meeting'],race=str(r['race']),country=r['country'],captured_at=r['captured_at'],price_observed_at=r.get('price_observed_at'),model_status={v:m['status'] for v,m in r['models'].items()},valid_until=min(timestamp(r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r.get('price_observed_at') or r['captured_at'])+timedelta(seconds=MAX_AGE_SECONDS),timestamp(r['scheduled_start'])-timedelta(minutes=1 if r.get('price_observed_at') else 0)).isoformat()) for r in data['races'] if any(m.get('status')=='SCORED' for m in r['models'].values())]
     index=dict(race_validity=validity,schema='monty.private-result-index.v1',repository=REPO,ref=BRANCH,run_id=run,date=day,
         status=data['status'],provider='PuntersEdge',captured_at=data.get('captured_at'),valid_until=data.get('valid_until'),
         forecast_path=prefix+'forecast.json',forecast_sha256=receipt['forecast_sha256'],
@@ -123,5 +123,5 @@ def publish(forecast,*,sink=None,now=None):
         return index
     # Private derived records remain immutable; only the latest pointer advances.
     files['daily/'+forecast['date']+'/latest.json']=encoded(index)
-    sink.commit(files)
-    return index
+    commit=sink.commit(files)
+    return dict(index,commit=commit)

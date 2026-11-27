@@ -1,0 +1,21 @@
+{
+  "request_id": 256,
+  "run_id": "45921772012-1-256",
+  "request_status": "COMPLETED",
+  "semantic_outcome": "COMPLETED_NO_BET",
+  "freshness": "EXPIRED",
+  "capture_age_seconds": 2925.412374,
+  "captured_at": "2026-11-27T01:18:46.162949+00:00",
+  "valid_until": "2026-11-27T01:23:46.162949+00:00",
+  "receipt_path": "runs/2026-11-27/45921772012-1-256/receipt.json",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45921772012",
+  "http_methods": [
+    "GET",
+    "GET",
+    "GET",
+    "GET"
+  ],
+  "writes": 0,
+  "ticket_returned": false,
+  "provider_calls": 0
+}

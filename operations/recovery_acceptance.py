@@ -46,7 +46,8 @@ def main():
         report['private_delivery']='NOT ACCEPTED — public derived-display permission and private retrieval route unresolved'
         return original(prediction,index,recorder)
     store.public_result=inspect
-    ops.execute(day,'operations_output/recovery-live','v7_engine',run_id=os.environ['GITHUB_RUN_ID'],payload=payload,captured=captured,request=ops.command('RM6',day),evidence_source='PuntersEdge')
+    result=ops.execute(day,'operations_output/recovery-live','v7_engine',run_id=os.environ['GITHUB_RUN_ID'],payload=payload,captured=captured,request=ops.command('RM6',day),evidence_source='PuntersEdge')
+    report['private_delivery']=result.get('private_delivery') or dict(status='PRIVATE_DELIVERY_BLOCKED')
     report['elapsed_seconds']=time.monotonic()-started
     p=Path('operations_output/recovery-aggregate');p.mkdir(parents=True,exist_ok=True)
     raw=json.dumps(report,sort_keys=True,indent=2,allow_nan=False).encode();(p/'report.json').write_bytes(raw)

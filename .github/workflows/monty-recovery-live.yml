@@ -2,7 +2,7 @@ name: Monty owner recovery live acceptance
 on:
   push:
     branches: [recovery/puntersedge-operations-20261127]
-    paths: ['operations/recovery_acceptance.py', '.github/workflows/monty-recovery-live.yml']
+    paths: ['operations/recovery_acceptance.py', '.github/workflows/monty-recovery-live.yml', 'operations/recovery/private-live-control.json']
 permissions:
   contents: read
 concurrency:
@@ -15,6 +15,17 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Private writer preflight before provider consumption
+        id: private_writer
+        run: python operations/private_transport_probe.py
+        env:
+          PRIVATE_RESULTS_TOKEN: ${{ secrets.MONTY_PRIVATE_RESULTS_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monty-private-preflight-${{ github.run_id }}
+          path: operations_output/private-transport-probe/
+          retention-days: 7
       - uses: actions/checkout@v4
         with:
           ref: efc51abb1595ef1eb8417e2d4e0d591f6d3c9378
@@ -29,9 +40,10 @@ jobs:
           V6_ARCHIVE_TOKEN: ${{ secrets.V6_ARCHIVE_TOKEN }}
       - run: python operations/recovery_acceptance.py
         env:
+          MONTY_PRIVATE_RESULTS_TOKEN: ${{ secrets.MONTY_PRIVATE_RESULTS_TOKEN }}
           PUNTERSEDGE_API_KEY: ${{ secrets.PUNTERSEDGE_API_KEY }}
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && steps.private_writer.outcome == 'success'
         with:
           name: monty-recovery-aggregate-${{ github.run_id }}
           path: operations_output/recovery-aggregate/

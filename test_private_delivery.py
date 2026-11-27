@@ -53,7 +53,7 @@ class PrivateClientTests(unittest.TestCase):
         self.save('requests/200.json','private',self.capture)
         f=json.loads(self.files['private/forecast.json']);f['races']=[]
         f.update(delivery_visibility='PRIVATE_RESULTS_AVAILABLE',private_delivery=dict(repository='Spankman/Monty-Private-Archive',ref='monty-operational-private-results',receipt_path='private/receipt.json',receipt_sha256='a'*64,
-            race_validity=[dict(meeting='Ballina',race='1',country='AU',captured_at=(self.capture-timedelta(seconds=240)).isoformat(),valid_until=(self.capture+timedelta(seconds=60)).isoformat())]))
+            race_validity=[dict(meeting='Ballina',race='1',country='AU',captured_at=self.capture.isoformat(),price_observed_at=(self.capture-timedelta(seconds=240)).isoformat(),model_status={'V6':'SCORED','V7':'SCORED'},valid_until=(self.capture+timedelta(seconds=60)).isoformat())]))
         raw=json.dumps(f).encode();digest=hashlib.sha256(raw).hexdigest()
         self.files['private/forecast.json']=raw;self.files['private/receipt.json']['forecast_sha256']=digest
         self.files['requests/200.json']['forecast_sha256']=digest
@@ -61,7 +61,7 @@ class PrivateClientTests(unittest.TestCase):
         self.make_private()
         result=self.client.handle('C',request_id=200,now=self.capture+timedelta(seconds=30))
         self.assertEqual(result['delivery_status'],'PRIVATE_RESULTS_AVAILABLE')
-        self.assertEqual(result['fresh_race_assessments'],1);self.enqueue.assert_not_called()
+        self.assertEqual(result['fresh_race_assessments'],1);self.assertEqual(result['oldest_offer_age_seconds'],270);self.enqueue.assert_not_called()
         self.assertNotIn('ticket',result)
     def test_offer_expiry_wins_over_recent_acquisition(self):
         self.make_private()
@@ -76,3 +76,17 @@ class PrivateClientTests(unittest.TestCase):
         result=retrieve(self.files['requests/200.json'],200,command('RM6 Cairns 4',self.day),self.capture)
         self.assertEqual(result['semantic_outcome'],'REQUEST_SCOPE_NOT_PRESENT')
         self.assertFalse(result['selections_available']);self.enqueue.assert_not_called()
+
+    def test_private_other_model_is_never_substituted_for_failed_engine(self):
+        from monty_operations import command
+        from operations.client import retrieve
+        import hashlib
+        self.make_private()
+        f=json.loads(self.files['private/forecast.json'])
+        f['models']={'V7':{'status':'FAILED'}}
+        f['private_delivery']['race_validity'][0]['model_status']['V7']='FAILED'
+        raw=json.dumps(f).encode();digest=hashlib.sha256(raw).hexdigest()
+        self.files['private/forecast.json']=raw;self.files['private/receipt.json']['forecast_sha256']=digest
+        self.files['requests/200.json']['forecast_sha256']=digest
+        r=retrieve(self.files['requests/200.json'],200,command('RM7 Ballina 1',self.day),self.capture)
+        self.assertEqual(r['semantic_outcome'],'EXECUTION FAILED');self.assertFalse(r['selections_available'])

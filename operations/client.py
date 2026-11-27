@@ -104,16 +104,25 @@ def retrieve(index, request_id=None, req=None, now=None):
         except (ValueError, TypeError):
             result['freshness'] = 'UNVERIFIED'
     if forecast.get('delivery_visibility')=='PRIVATE_RESULTS_AVAILABLE':
-        validity=forecast['private_delivery'].get('race_validity',[])
-        if req and req.get('meeting'):
-            validity=[v for v in validity if v['meeting'].casefold()==req['meeting'].casefold() and str(v['race'])==str(req['race']) and req.get('country') in (None,v['country'])]
-            if not validity:result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT',freshness='UNVERIFIED')
-        available=sum(timestamp(v['captured_at'])<=now<timestamp(v['valid_until']) for v in validity)
-        if validity and not available:result['freshness']='EXPIRED'
-        result['fresh_race_assessments']=available
-        result['requested_view']=req
-        result.update(delivery_status='PRIVATE_RESULTS_AVAILABLE' if result.get('freshness')=='FRESH' else 'PRIVATE_RESULTS_EXPIRED' if result.get('freshness')=='EXPIRED' else 'PRIVATE_REQUEST_SCOPE_UNAVAILABLE',
-                      private_delivery=forecast['private_delivery'],selections_available=result.get('freshness')=='FRESH' and available>0)
+        try:
+            private=forecast['private_delivery']
+            validity=private.get('race_validity',[])
+            if req and req.get('meeting'):
+                validity=[v for v in validity if v['meeting'].casefold()==req['meeting'].casefold() and str(v['race'])==str(req['race']) and req.get('country') in (None,v['country'])]
+                if not validity:result.update(semantic_outcome='REQUEST_SCOPE_NOT_PRESENT',freshness='UNVERIFIED')
+            if req and req.get('version'):
+                scored=[v for v in validity if v.get('model_status',{}).get(req['version'])=='SCORED']
+                if validity and not scored:
+                    result['semantic_outcome']='EXECUTION FAILED' if forecast.get('models',{}).get(req['version'],{}).get('status')=='FAILED' else 'DATA BLOCKED'
+                validity=scored
+            available=sum(timestamp(v['captured_at'])<=now<timestamp(v['valid_until']) for v in validity)
+            if validity and not available:result['freshness']='EXPIRED'
+            ages=[(now-timestamp(v.get('price_observed_at') or v['captured_at'])).total_seconds() for v in validity]
+            result.update(fresh_race_assessments=available,oldest_offer_age_seconds=max(ages) if ages else None,requested_view=req,
+                delivery_status='PRIVATE_RESULTS_AVAILABLE' if result.get('freshness')=='FRESH' else 'PRIVATE_RESULTS_EXPIRED' if result.get('freshness')=='EXPIRED' else 'PRIVATE_REQUEST_SCOPE_UNAVAILABLE',
+                private_delivery=private,selections_available=result.get('freshness')=='FRESH' and available>0)
+        except (ValueError,TypeError,KeyError):
+            result.update(delivery_status='PRIVATE_RECEIPT_METADATA_INVALID',semantic_outcome='DELIVERY FAILED',selections_available=False)
         return result
     if forecast.get('delivery_visibility')=='PRIVATE_EVIDENCE_ONLY':
         # Execution succeeded separately from delivery rights/access. Never hide
