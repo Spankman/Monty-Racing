@@ -1,12 +1,45 @@
 {
   "schema": "monty.operations.index.v1",
   "date": "2026-11-27",
-  "request_id": 271,
-  "run_id": "45931603064-1-271",
+  "run_id": "45931603064-1-272",
+  "status": "COMPLETED_ASSESSMENTS",
+  "source_mode": "LIVE",
+  "provider": "PuntersEdge",
+  "receipt_path": "runs/2026-11-27/45931603064-1-272/receipt.json",
+  "forecast_path": "runs/2026-11-27/45931603064-1-272/forecast.json",
+  "forecast_sha256": "97610261ccac886deba3ec9ce5ec8b461e92295b80a3551ecab27abd7e13bd55",
+  "generated_at": "2026-11-27T03:02:45.480543+00:00",
   "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/45931603064",
-  "request_status": "QUEUED",
-  "status": "QUEUED",
-  "updated_at": "2026-11-27T03:01:27.173067+00:00",
+  "captured_at": "2026-11-27T03:02:44.614426+00:00",
+  "valid_until": "2026-11-27T03:07:44.614426+00:00",
+  "models": {
+    "V6": {
+      "commit": "ab480c4b4fb8ad5f466b26ad86e853d36e6ff1c3",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1,
+      "failed_races": 0,
+      "blocked_races": 0,
+      "expired_races": 0,
+      "delivery_status": "SCORED"
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "b8087ef0815f378d0695faed08fd15771cda95280cfc68e77b1260a9251e1aff",
+  "delivery_manifest_path": "runs/2026-11-27/45931603064-1-272/delivery-manifest.json",
+  "delivery_manifest_sha256": "8bfd9359183248235078048d2654f51a7b9f6bdc0fbb66ab0f9b0337c532b8be",
   "request": {
     "command": "RM6PS CAIRNS 4",
     "version": "V6",
@@ -16,5 +49,8 @@
     "race": "4",
     "country": "AU",
     "provisional_requested": true
-  }
+  },
+  "request_id": 271,
+  "request_status": "COMPLETED",
+  "reused_from_request": 272
 }
