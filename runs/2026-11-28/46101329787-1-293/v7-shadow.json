@@ -1,0 +1,293 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46101329787-1-293",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Gold Coast",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T03:09:00Z",
+      "scratchings": [
+        {
+          "number": "7",
+          "horse": "Vieni Qua"
+        },
+        {
+          "number": "8",
+          "horse": "Le Starcell"
+        }
+      ],
+      "captured_at": "2026-11-28T03:08:08.488321+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Gold Coast",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Amourette",
+            "scratched": false,
+            "odds": 2.6,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 60,
+            "age": 3,
+            "jockey": "Jag Guthmann-Chester",
+            "trainer": "Michael Lakey"
+          },
+          {
+            "number": "2",
+            "horse": "Spirit Of Torque",
+            "scratched": false,
+            "odds": 4.2,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 60,
+            "age": 3,
+            "jockey": "Brandon Lerena",
+            "trainer": "Stuart & Bayley Kendrick"
+          },
+          {
+            "number": "3",
+            "horse": "Tisani James",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 60,
+            "age": 3,
+            "jockey": "Jaden Lloyd",
+            "trainer": "Kevin Kemp"
+          },
+          {
+            "number": "4",
+            "horse": "Beat The Drum",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 59.5,
+            "age": 3,
+            "jockey": "Grady Spokes",
+            "trainer": "Gary Doughty"
+          },
+          {
+            "number": "5",
+            "horse": "Fearless Win",
+            "scratched": false,
+            "odds": 2.6,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 59.5,
+            "age": 3,
+            "jockey": "Archie Mccolm",
+            "trainer": "Allan Chau"
+          },
+          {
+            "number": "6",
+            "horse": "Alto Luna",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 59,
+            "age": 3,
+            "jockey": "Ashley Butler",
+            "trainer": "Ryan Tyrell"
+          },
+          {
+            "number": "7",
+            "horse": "Vieni Qua",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 7,
+            "weight": 58.5,
+            "age": 3,
+            "jockey": "Noriyuki Masuda",
+            "trainer": "Daiki Chujo"
+          },
+          {
+            "number": "8",
+            "horse": "Le Starcell",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 58,
+            "age": 3,
+            "jockey": "Unknown",
+            "trainer": "Daiki Chujo"
+          }
+        ],
+        "active_runners": 6,
+        "priced_active_runners": 6,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1722,
+        "track_condition": "Soft6",
+        "captured_at": "2026-11-28T03:08:08.488321+00:00",
+        "scheduled_start": "2026-11-28T03:09:00Z"
+      },
+      "data_completeness": {
+        "active_runners": 6,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "d57c7f1cdeddd91fcf970b79692313b9381484660e94db08eb9e77b3f14af1f2",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Amourette",
+            "odds": 2.6,
+            "probability": 0.30780828876684246,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "5",
+            "horse": "Fearless Win",
+            "odds": 2.6,
+            "probability": 0.307177087260548,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Spirit Of Torque",
+            "odds": 4.2,
+            "probability": 0.19132375413559508,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Amourette",
+          "odds": 2.6,
+          "probability": 0.30780828876684246,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "1",
+            "horse": "Amourette",
+            "odds": 2.6,
+            "probability": 0.30780828876684246,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Fearless Win",
+            "odds": 2.6,
+            "probability": 0.307177087260548,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "2",
+            "horse": "Spirit Of Torque",
+            "odds": 4.2,
+            "probability": 0.19132375413559508,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Tisani James",
+            "odds": 9.0,
+            "probability": 0.0934164112290304,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Alto Luna",
+            "odds": 11.0,
+            "probability": 0.0773864798856611,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Beat The Drum",
+            "odds": 41.0,
+            "probability": 0.02288797872232306,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "1",
+          "horse": "Amourette",
+          "odds": 2.6,
+          "probability": 0.30780828876684246,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T03:08:09.571956+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T03:08:08.488321+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T03:08:09.573971+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46101329787-1-293/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T03:08:08.488321+00:00",
+  "valid_until": "2026-11-28T03:13:08.488321+00:00",
+  "snapshot_only": true
+}
