@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46112142566-1-303",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46112142566-1-303/receipt.json",
+  "forecast_path": "runs/2026-11-28/46112142566-1-303/forecast.json",
+  "forecast_sha256": "cf2c36374419ebcef1c761679864ddf036bc52633581e1c45fc32398dfb81606",
+  "generated_at": "2026-11-28T05:27:31.924105+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46112142566",
+  "captured_at": "2026-11-28T05:27:31.042255+00:00",
+  "valid_until": "2026-11-28T05:32:31.042255+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "fc0464d7f7debda805f62df003b865d655dba54207e8b3e7aaabcfba03bb82f9",
+  "request": {
+    "command": "RM6 KEMBLA GRANGE 5",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Kembla Grange",
+    "race": "5",
+    "country": "AU"
+  },
+  "request_id": 303,
+  "request_status": "COMPLETED"
+}
