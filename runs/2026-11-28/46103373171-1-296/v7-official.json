@@ -1,0 +1,226 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46103373171-1-296",
+  "date": "2026-11-28",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Kembla Grange",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T03:39:00.000Z",
+      "scratchings": [
+        {
+          "number": "4",
+          "horse": "Mardyke"
+        }
+      ],
+      "captured_at": "2026-11-28T03:33:28.011113+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Kembla Grange",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Silver Summit",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 58,
+            "age": 4,
+            "jockey": "Jean Van Overmeire",
+            "trainer": "Joseph Ible"
+          },
+          {
+            "number": "2",
+            "horse": "King Cosmic",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "L P Beuzelin",
+            "trainer": "John Thompson"
+          },
+          {
+            "number": "5",
+            "horse": "Kaihalulu Beach",
+            "scratched": false,
+            "odds": 35.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Amy McLucas",
+            "trainer": "Theresa Bateup"
+          },
+          {
+            "number": "6",
+            "horse": "Be More Pacific",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Brock Ryan",
+            "trainer": "Donna Grisedale"
+          },
+          {
+            "number": "4",
+            "horse": "Mardyke",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 9,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "Grant Buckley",
+            "trainer": "Edward Cummings"
+          },
+          {
+            "number": "8",
+            "horse": "My Star",
+            "scratched": false,
+            "odds": 3.1,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Jess Taylor",
+            "trainer": "Craig Carmody"
+          },
+          {
+            "number": "9",
+            "horse": "Neferusobek",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Lee Magorrian",
+            "trainer": "Diane Poidevin-Laine"
+          },
+          {
+            "number": "10",
+            "horse": "Pronounced",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Chad Lever",
+            "trainer": "Joseph Ible"
+          },
+          {
+            "number": "11",
+            "horse": "Weekday Flyer",
+            "scratched": false,
+            "odds": 3.7,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Rory Hutchings",
+            "trainer": "Kerry Parker"
+          },
+          {
+            "number": "7",
+            "horse": "Lady Winston",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "William A Stanley",
+            "trainer": "Marc & Mitchell Conners"
+          },
+          {
+            "number": "3",
+            "horse": "Glamour Magic",
+            "scratched": false,
+            "odds": 2.8,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Jeff Penza",
+            "trainer": "Joseph Pride"
+          }
+        ],
+        "active_runners": 10,
+        "priced_active_runners": 10,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1400,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T03:33:28.011113+00:00",
+        "scheduled_start": "2026-11-28T03:39:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "cf9fa505249350c7c144717ba8e121bdb78e86f9440a58090cc0c0aa7c3e954b",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T03:33:29.089201+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T03:33:28.011113+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T03:33:29.090790+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46103373171-1-296/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T03:33:28.011113+00:00",
+  "valid_until": "2026-11-28T03:38:28.011113+00:00",
+  "snapshot_only": true
+}
