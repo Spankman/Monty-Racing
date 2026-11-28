@@ -1,0 +1,482 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46103197859-1-295",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V6",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Wagga",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T03:31:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Jingu Express"
+        },
+        {
+          "number": "6",
+          "horse": "Perfectly Good"
+        },
+        {
+          "number": "13",
+          "horse": "Cinephile"
+        },
+        {
+          "number": "14",
+          "horse": "The Pres"
+        },
+        {
+          "number": "15",
+          "horse": "Enough War"
+        },
+        {
+          "number": "16",
+          "horse": "Rasloc"
+        }
+      ],
+      "captured_at": "2026-11-28T03:31:23.165896+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Wagga",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Tyndrum Gold",
+            "scratched": false,
+            "odds": 15.0,
+            "price_source": "fixed_win",
+            "weight": 62.5,
+            "jockey": "C Taylor",
+            "trainer": "N Hobson"
+          },
+          {
+            "number": "2",
+            "horse": "Ozzy The Equaliser",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "weight": 62,
+            "jockey": "D Cole",
+            "trainer": "S Spackman"
+          },
+          {
+            "number": "3",
+            "horse": "Sunroe",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win",
+            "weight": 61,
+            "jockey": "C Parish",
+            "trainer": "D Gorrel"
+          },
+          {
+            "number": "4",
+            "horse": "Anladio",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "fixed_win",
+            "weight": 60.5,
+            "jockey": "N Heywood",
+            "trainer": "A Mcrae"
+          },
+          {
+            "number": "5",
+            "horse": "Jingu Express",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 60.5,
+            "jockey": "NOT NOTIFIED",
+            "trainer": "A Dale"
+          },
+          {
+            "number": "6",
+            "horse": "Perfectly Good",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 60.5,
+            "jockey": "J Richards",
+            "trainer": "D Gorrel"
+          },
+          {
+            "number": "7",
+            "horse": "Darken",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "fixed_win",
+            "weight": 60,
+            "jockey": "B Loy",
+            "trainer": "S Mcintosh"
+          },
+          {
+            "number": "8",
+            "horse": "Sundrop",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "fixed_win",
+            "weight": 60,
+            "jockey": "C Ramsbotham",
+            "trainer": "S Bloomfield"
+          },
+          {
+            "number": "9",
+            "horse": "Captain Barbossa",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "weight": 59,
+            "jockey": "D Budler",
+            "trainer": "John & C Ledger"
+          },
+          {
+            "number": "10",
+            "horse": "So Regal",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "weight": 58.5,
+            "jockey": "J Duffy",
+            "trainer": "C Weeding"
+          },
+          {
+            "number": "11",
+            "horse": "Cloud Of Dust",
+            "scratched": false,
+            "odds": 16.0,
+            "price_source": "fixed_win",
+            "weight": 58,
+            "jockey": "M Heagney",
+            "trainer": "T Burleigh"
+          },
+          {
+            "number": "12",
+            "horse": "Lost Ya Sock",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "fixed_win",
+            "weight": 56.5,
+            "jockey": "J Richards",
+            "trainer": "D Gorrel"
+          },
+          {
+            "number": "13",
+            "horse": "Cinephile",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 57,
+            "jockey": "Q Krogh",
+            "trainer": "M Travers"
+          },
+          {
+            "number": "14",
+            "horse": "The Pres",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55.5,
+            "jockey": "S Fawke",
+            "trainer": "J Rolfe"
+          },
+          {
+            "number": "15",
+            "horse": "Enough War",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "M Lawrence",
+            "trainer": "G Brunsdon"
+          },
+          {
+            "number": "16",
+            "horse": "Rasloc",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 57,
+            "jockey": "NOT NOTIFIED",
+            "trainer": "D Burnet"
+          }
+        ],
+        "active_runners": 10,
+        "priced_active_runners": 10,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1675,
+        "track_condition": "SOFT7",
+        "captured_at": "2026-11-28T03:31:23.165896+00:00",
+        "scheduled_start": "2026-11-28T03:31:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "assessment_level": "MODEL RANKINGS UNAVAILABLE",
+        "model_inference": false,
+        "form_assessment_request": {
+          "classification": "FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION",
+          "model_version_requested": "V6",
+          "model_inference": false,
+          "model_status": "BLOCKED",
+          "target": {
+            "date": "2026-11-28",
+            "meeting": "Wagga",
+            "race": "2",
+            "country": "AU"
+          },
+          "reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "race_already_due"
+          ],
+          "facts": {
+            "date": "2026-11-28",
+            "meeting": "Wagga",
+            "race": "2",
+            "country": "AU",
+            "source": "Krok provider assertions; not independently TAB verified",
+            "provider_status": "open",
+            "known_runners": [
+              {
+                "number": "1",
+                "horse": "Tyndrum Gold",
+                "scratched": false,
+                "odds": 15.0,
+                "price_source": "fixed_win",
+                "weight": 62.5,
+                "jockey": "C Taylor",
+                "trainer": "N Hobson"
+              },
+              {
+                "number": "2",
+                "horse": "Ozzy The Equaliser",
+                "scratched": false,
+                "odds": 5.0,
+                "price_source": "fixed_win",
+                "weight": 62,
+                "jockey": "D Cole",
+                "trainer": "S Spackman"
+              },
+              {
+                "number": "3",
+                "horse": "Sunroe",
+                "scratched": false,
+                "odds": 6.0,
+                "price_source": "fixed_win",
+                "weight": 61,
+                "jockey": "C Parish",
+                "trainer": "D Gorrel"
+              },
+              {
+                "number": "4",
+                "horse": "Anladio",
+                "scratched": false,
+                "odds": 17.0,
+                "price_source": "fixed_win",
+                "weight": 60.5,
+                "jockey": "N Heywood",
+                "trainer": "A Mcrae"
+              },
+              {
+                "number": "5",
+                "horse": "Jingu Express",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "weight": 60.5,
+                "jockey": "NOT NOTIFIED",
+                "trainer": "A Dale"
+              },
+              {
+                "number": "6",
+                "horse": "Perfectly Good",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "weight": 60.5,
+                "jockey": "J Richards",
+                "trainer": "D Gorrel"
+              },
+              {
+                "number": "7",
+                "horse": "Darken",
+                "scratched": false,
+                "odds": 6.5,
+                "price_source": "fixed_win",
+                "weight": 60,
+                "jockey": "B Loy",
+                "trainer": "S Mcintosh"
+              },
+              {
+                "number": "8",
+                "horse": "Sundrop",
+                "scratched": false,
+                "odds": 14.0,
+                "price_source": "fixed_win",
+                "weight": 60,
+                "jockey": "C Ramsbotham",
+                "trainer": "S Bloomfield"
+              },
+              {
+                "number": "9",
+                "horse": "Captain Barbossa",
+                "scratched": false,
+                "odds": 8.0,
+                "price_source": "fixed_win",
+                "weight": 59,
+                "jockey": "D Budler",
+                "trainer": "John & C Ledger"
+              },
+              {
+                "number": "10",
+                "horse": "So Regal",
+                "scratched": false,
+                "odds": 5.0,
+                "price_source": "fixed_win",
+                "weight": 58.5,
+                "jockey": "J Duffy",
+                "trainer": "C Weeding"
+              },
+              {
+                "number": "11",
+                "horse": "Cloud Of Dust",
+                "scratched": false,
+                "odds": 16.0,
+                "price_source": "fixed_win",
+                "weight": 58,
+                "jockey": "M Heagney",
+                "trainer": "T Burleigh"
+              },
+              {
+                "number": "12",
+                "horse": "Lost Ya Sock",
+                "scratched": false,
+                "odds": 23.0,
+                "price_source": "fixed_win",
+                "weight": 56.5,
+                "jockey": "J Richards",
+                "trainer": "D Gorrel"
+              },
+              {
+                "number": "13",
+                "horse": "Cinephile",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "weight": 57,
+                "jockey": "Q Krogh",
+                "trainer": "M Travers"
+              },
+              {
+                "number": "14",
+                "horse": "The Pres",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "weight": 55.5,
+                "jockey": "S Fawke",
+                "trainer": "J Rolfe"
+              },
+              {
+                "number": "15",
+                "horse": "Enough War",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "weight": 55,
+                "jockey": "M Lawrence",
+                "trainer": "G Brunsdon"
+              },
+              {
+                "number": "16",
+                "horse": "Rasloc",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "weight": 57,
+                "jockey": "NOT NOTIFIED",
+                "trainer": "D Burnet"
+              }
+            ],
+            "active_runners": 10,
+            "priced_active_runners": 10,
+            "field_identity_ambiguous": false,
+            "unknown_scratching_count": 0,
+            "historical_form_available": false,
+            "required_research": [
+              "current fields and scratchings",
+              "recent and relevant form",
+              "jockeys and trainers",
+              "barriers and weights",
+              "track conditions and distance suitability",
+              "available market prices and capture times"
+            ],
+            "distance_m": 1675,
+            "track_condition": "SOFT7",
+            "captured_at": "2026-11-28T03:31:23.165896+00:00",
+            "scheduled_start": "2026-11-28T03:31:00.000Z"
+          },
+          "required_research": [
+            "current fields and scratchings",
+            "recent and relevant form",
+            "jockeys and trainers",
+            "barriers and weights",
+            "track conditions and distance suitability",
+            "available market prices and capture times"
+          ],
+          "requires_fresh_public_sources": true,
+          "instruction": "Report the model status and blocker. No Monty selection can be given without genuine inference."
+        },
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-28T03:31:23.222347+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46103197859-1-295/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T03:31:23.165896+00:00",
+  "valid_until": "2026-11-28T03:36:23.165896+00:00",
+  "snapshot_only": true
+}
