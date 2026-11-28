@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46100137173-1-291",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46100137173-1-291/receipt.json",
+  "forecast_path": "runs/2026-11-28/46100137173-1-291/forecast.json",
+  "forecast_sha256": "74a8181e7f039c9fee18cefc32358791a98ce3141babe7f968a5d8c2599c764f",
+  "generated_at": "2026-11-28T02:52:55.348791+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46100137173",
+  "captured_at": "2026-11-28T02:52:54.048083+00:00",
+  "valid_until": "2026-11-28T02:57:54.048083+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "1df7a402de18fd1567e84e63e5420f40a501c655f02ee88cb3560895fa60358c",
+  "request": {
+    "command": "RM6 DOOMBEN 3",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Doomben",
+    "race": "3",
+    "country": "AU"
+  },
+  "request_id": 291,
+  "request_status": "COMPLETED"
+}
