@@ -1,0 +1,190 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46110862764-1-302",
+  "date": "2026-11-28",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Kempsey",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T05:13:00.000Z",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Zou Big Boy"
+        }
+      ],
+      "captured_at": "2026-11-28T05:10:59.058006+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Kempsey",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "2",
+            "horse": "Crashmyplaya",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 60.5,
+            "age": 5,
+            "jockey": "Olivia Dalton",
+            "trainer": "Colt Prosser"
+          },
+          {
+            "number": "4",
+            "horse": "O'britzelle",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Liam Riordan",
+            "trainer": "Terry Evans"
+          },
+          {
+            "number": "8",
+            "horse": "Pongola",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 55,
+            "age": 7,
+            "jockey": "Teighan Worsnop",
+            "trainer": "Hilary Dew"
+          },
+          {
+            "number": "7",
+            "horse": "Rivoli Star",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 55,
+            "age": 7,
+            "jockey": "Laura Wakely",
+            "trainer": "Peter Graham"
+          },
+          {
+            "number": "1",
+            "horse": "Zou Big Boy",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 8,
+            "weight": 66.5,
+            "age": 5,
+            "jockey": "N.r",
+            "trainer": "Lea Selby"
+          },
+          {
+            "number": "3",
+            "horse": "Tickle My Tosen",
+            "scratched": false,
+            "odds": 3.1,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 60,
+            "age": 5,
+            "jockey": "Ben Looker",
+            "trainer": "Colt Prosser"
+          },
+          {
+            "number": "5",
+            "horse": "La Bella Rosa",
+            "scratched": false,
+            "odds": 2.35,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 58,
+            "age": 4,
+            "jockey": "Zac Wadick",
+            "trainer": "Rocky Simonetta"
+          },
+          {
+            "number": "6",
+            "horse": "Corpsman",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 57.5,
+            "age": 6,
+            "jockey": "Shae Wilkes",
+            "trainer": "Jeremy Sylvester"
+          }
+        ],
+        "active_runners": 7,
+        "priced_active_runners": 7,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1450,
+        "track_condition": "Soft6",
+        "captured_at": "2026-11-28T05:10:59.058006+00:00",
+        "scheduled_start": "2026-11-28T05:13:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "51a3e62d0161626037b4836e9e349796bcc156b5012ab62c2af3f5dfd899eeb3",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T05:11:00.160694+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T05:10:59.058006+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T05:11:00.162117+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46110862764-1-302/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T05:10:59.058006+00:00",
+  "valid_until": "2026-11-28T05:15:59.058006+00:00",
+  "snapshot_only": true
+}
