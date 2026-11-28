@@ -1,0 +1,382 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46101975850-1-294",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V6",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "Yarra Valley",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T03:16:00.000Z",
+      "scratchings": [
+        {
+          "number": "9",
+          "horse": "Stomping Ground"
+        }
+      ],
+      "captured_at": "2026-11-28T03:16:15.659841+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Yarra Valley",
+        "race": "3",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Bowdacious Gold",
+            "scratched": false,
+            "odds": 35.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "V Boeuf",
+            "trainer": "S Wells"
+          },
+          {
+            "number": "2",
+            "horse": "Mo Mo's Choise",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 59.5,
+            "age": 5,
+            "jockey": "J Maskiell",
+            "trainer": "J Edwards"
+          },
+          {
+            "number": "3",
+            "horse": "Now Hear This",
+            "scratched": false,
+            "odds": 27.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 59.5,
+            "age": 5,
+            "jockey": "J Bowditch",
+            "trainer": "C Scott"
+          },
+          {
+            "number": "4",
+            "horse": "Smart Eddie",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 59.5,
+            "age": 5,
+            "jockey": "D Horner (Jnr)",
+            "trainer": "A Maragos"
+          },
+          {
+            "number": "5",
+            "horse": "Welcometodetroit",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 59.5,
+            "age": 5,
+            "jockey": "R Lamont",
+            "trainer": "M Webb"
+          },
+          {
+            "number": "6",
+            "horse": "Western Edge",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "B Kinninmont",
+            "trainer": "C Davis"
+          },
+          {
+            "number": "7",
+            "horse": "Bruceismyname",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 58,
+            "age": 3,
+            "jockey": "D Thornton",
+            "trainer": "L Oliver"
+          },
+          {
+            "number": "8",
+            "horse": "Gozaimasu",
+            "scratched": false,
+            "odds": 2.25,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 58,
+            "age": 3,
+            "jockey": "Z Spain",
+            "trainer": "S Nichols & H Black"
+          },
+          {
+            "number": "9",
+            "horse": "Stomping Ground",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 5,
+            "weight": 58,
+            "age": 3,
+            "jockey": "R Mcleod",
+            "trainer": "Emma-Lee & D Browne"
+          },
+          {
+            "number": "10",
+            "horse": "Xtra Black",
+            "scratched": false,
+            "odds": 2.9,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 58,
+            "age": 3,
+            "jockey": "L Meech",
+            "trainer": "D Dwyer"
+          }
+        ],
+        "active_runners": 9,
+        "priced_active_runners": 9,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1209,
+        "track_condition": "Heavy8",
+        "captured_at": "2026-11-28T03:16:15.659841+00:00",
+        "scheduled_start": "2026-11-28T03:16:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "assessment_level": "MODEL RANKINGS UNAVAILABLE",
+        "model_inference": false,
+        "form_assessment_request": {
+          "classification": "FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION",
+          "model_version_requested": "V6",
+          "model_inference": false,
+          "model_status": "BLOCKED",
+          "target": {
+            "date": "2026-11-28",
+            "meeting": "Yarra Valley",
+            "race": "3",
+            "country": "AU"
+          },
+          "reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "race_already_due"
+          ],
+          "facts": {
+            "date": "2026-11-28",
+            "meeting": "Yarra Valley",
+            "race": "3",
+            "country": "AU",
+            "source": "Krok provider assertions; not independently TAB verified",
+            "provider_status": "open",
+            "known_runners": [
+              {
+                "number": "1",
+                "horse": "Bowdacious Gold",
+                "scratched": false,
+                "odds": 35.0,
+                "price_source": "fixed_win",
+                "barrier": 7,
+                "weight": 59.5,
+                "age": 4,
+                "jockey": "V Boeuf",
+                "trainer": "S Wells"
+              },
+              {
+                "number": "2",
+                "horse": "Mo Mo's Choise",
+                "scratched": false,
+                "odds": 10.0,
+                "price_source": "fixed_win",
+                "barrier": 1,
+                "weight": 59.5,
+                "age": 5,
+                "jockey": "J Maskiell",
+                "trainer": "J Edwards"
+              },
+              {
+                "number": "3",
+                "horse": "Now Hear This",
+                "scratched": false,
+                "odds": 27.0,
+                "price_source": "fixed_win",
+                "barrier": 10,
+                "weight": 59.5,
+                "age": 5,
+                "jockey": "J Bowditch",
+                "trainer": "C Scott"
+              },
+              {
+                "number": "4",
+                "horse": "Smart Eddie",
+                "scratched": false,
+                "odds": 26.0,
+                "price_source": "fixed_win",
+                "barrier": 8,
+                "weight": 59.5,
+                "age": 5,
+                "jockey": "D Horner (Jnr)",
+                "trainer": "A Maragos"
+              },
+              {
+                "number": "5",
+                "horse": "Welcometodetroit",
+                "scratched": false,
+                "odds": 6.5,
+                "price_source": "fixed_win",
+                "barrier": 6,
+                "weight": 59.5,
+                "age": 5,
+                "jockey": "R Lamont",
+                "trainer": "M Webb"
+              },
+              {
+                "number": "6",
+                "horse": "Western Edge",
+                "scratched": false,
+                "odds": 101.0,
+                "price_source": "fixed_win",
+                "barrier": 3,
+                "weight": 59.5,
+                "age": 4,
+                "jockey": "B Kinninmont",
+                "trainer": "C Davis"
+              },
+              {
+                "number": "7",
+                "horse": "Bruceismyname",
+                "scratched": false,
+                "odds": 9.0,
+                "price_source": "fixed_win",
+                "barrier": 2,
+                "weight": 58,
+                "age": 3,
+                "jockey": "D Thornton",
+                "trainer": "L Oliver"
+              },
+              {
+                "number": "8",
+                "horse": "Gozaimasu",
+                "scratched": false,
+                "odds": 2.25,
+                "price_source": "fixed_win",
+                "barrier": 9,
+                "weight": 58,
+                "age": 3,
+                "jockey": "Z Spain",
+                "trainer": "S Nichols & H Black"
+              },
+              {
+                "number": "9",
+                "horse": "Stomping Ground",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 5,
+                "weight": 58,
+                "age": 3,
+                "jockey": "R Mcleod",
+                "trainer": "Emma-Lee & D Browne"
+              },
+              {
+                "number": "10",
+                "horse": "Xtra Black",
+                "scratched": false,
+                "odds": 2.9,
+                "price_source": "fixed_win",
+                "barrier": 4,
+                "weight": 58,
+                "age": 3,
+                "jockey": "L Meech",
+                "trainer": "D Dwyer"
+              }
+            ],
+            "active_runners": 9,
+            "priced_active_runners": 9,
+            "field_identity_ambiguous": false,
+            "unknown_scratching_count": 0,
+            "historical_form_available": false,
+            "required_research": [
+              "current fields and scratchings",
+              "recent and relevant form",
+              "jockeys and trainers",
+              "barriers and weights",
+              "track conditions and distance suitability",
+              "available market prices and capture times"
+            ],
+            "distance_m": 1209,
+            "track_condition": "Heavy8",
+            "captured_at": "2026-11-28T03:16:15.659841+00:00",
+            "scheduled_start": "2026-11-28T03:16:00.000Z"
+          },
+          "required_research": [
+            "current fields and scratchings",
+            "recent and relevant form",
+            "jockeys and trainers",
+            "barriers and weights",
+            "track conditions and distance suitability",
+            "available market prices and capture times"
+          ],
+          "requires_fresh_public_sources": true,
+          "instruction": "Report the model status and blocker. No Monty selection can be given without genuine inference."
+        },
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-28T03:16:15.712125+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46101975850-1-294/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T03:16:15.659841+00:00",
+  "valid_until": "2026-11-28T03:21:15.659841+00:00",
+  "snapshot_only": true
+}
