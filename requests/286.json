@@ -1,0 +1,41 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46088390585-1-286",
+  "status": "FAILED",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46088390585-1-286/receipt.json",
+  "forecast_path": "runs/2026-11-28/46088390585-1-286/forecast.json",
+  "forecast_sha256": "63415b6c2f03d6958bf30bcdc9737dce78aa192f77219c746bca2839370809d9",
+  "generated_at": "2026-11-28T00:32:53.377302+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46088390585",
+  "captured_at": "2026-11-28T00:32:53.225012+00:00",
+  "valid_until": "2026-11-28T00:37:53.225012+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "NOT_RUN",
+      "research_only": false
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "NOT_RUN",
+      "research_only": true
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "1bbd4634bdafef9c61fd31875439788e0e819f10b1b7016c77137c94af2d32b9",
+  "request": {
+    "command": "RM6 ELLERSLIE 2",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Ellerslie",
+    "race": "2",
+    "country": "AU"
+  },
+  "request_id": 286,
+  "request_status": "FAILED"
+}
