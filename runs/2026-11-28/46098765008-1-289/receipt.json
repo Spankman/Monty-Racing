@@ -1,0 +1,28 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46098765008-1-289",
+  "date": "2026-11-28",
+  "status": "COMPLETED_NO_BET",
+  "forecast_sha256": "bc6139881415c98fa715a7b7e6b77054faccae509c3a86036730fa27d1dbf473",
+  "provider_snapshot_sha256": "5080bdf0047454e01c02d1eabd21ffde95501f0e51a82acb90aa5114a897215a",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "generated_at": "2026-11-28T02:35:33.157657+00:00",
+  "source_mode": "LIVE",
+  "qualifying_forecasts": 0,
+  "model_artifacts_unchanged": true
+}

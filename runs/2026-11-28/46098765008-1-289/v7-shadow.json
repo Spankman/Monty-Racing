@@ -1,0 +1,286 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46098765008-1-289",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "morphettville",
+      "race": "2",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T02:37:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-28T02:35:32.069421+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "morphettville",
+        "race": "2",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Durham",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Shayleigh Ingelse",
+            "trainer": "Paul Preusker"
+          },
+          {
+            "number": "2",
+            "horse": "Octane Reign",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Jake Toeroek",
+            "trainer": "Jason Warren"
+          },
+          {
+            "number": "3",
+            "horse": "Silvaloa",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Connor Murtagh",
+            "trainer": "Stephen Theodore"
+          },
+          {
+            "number": "4",
+            "horse": "Tyusix",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 58.5,
+            "age": 7,
+            "jockey": "Rose Hammond",
+            "trainer": "R & T Daniel & Stanbury"
+          },
+          {
+            "number": "5",
+            "horse": "Synthesise",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Todd Pannell",
+            "trainer": "Matthew Seyers"
+          },
+          {
+            "number": "7",
+            "horse": "Somewhere Soon",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 57,
+            "age": 5,
+            "jockey": "Jason Holder",
+            "trainer": "Andrew Gluyas"
+          },
+          {
+            "number": "8",
+            "horse": "Swan Dance",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Alysha Warren",
+            "trainer": "Gary Boyce"
+          },
+          {
+            "number": "6",
+            "horse": "Kazaru",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Noel Callow",
+            "trainer": "Phillip & Tommy Stokes"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1990,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T02:35:32.069421+00:00",
+        "scheduled_start": "2026-11-28T02:37:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "1694db695bdc27c539866d5db460c6b392567ac9d11e95c12dfa5dbbdd485281",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "8",
+            "horse": "Swan Dance",
+            "odds": 4.4,
+            "probability": 0.1807003769117278,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "BB",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "8",
+          "horse": "Swan Dance",
+          "odds": 4.4,
+          "probability": 0.1807003769117278,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "8",
+            "horse": "Swan Dance",
+            "odds": 4.4,
+            "probability": 0.1807003769117278,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "2",
+            "horse": "Octane Reign",
+            "odds": 5.0,
+            "probability": 0.156806937178445,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "1",
+            "horse": "Durham",
+            "odds": 5.5,
+            "probability": 0.1466137136806635,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Kazaru",
+            "odds": 6.5,
+            "probability": 0.1252089341505039,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Tyusix",
+            "odds": 7.0,
+            "probability": 0.11429049580730714,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "7",
+            "horse": "Somewhere Soon",
+            "odds": 7.5,
+            "probability": 0.1095242211051251,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Silvaloa",
+            "odds": 8.0,
+            "probability": 0.10301252300762652,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Synthesise",
+            "odds": 13.0,
+            "probability": 0.06384279815860097,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "8",
+          "horse": "Swan Dance",
+          "odds": 4.4,
+          "probability": 0.1807003769117278,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T02:35:33.157527+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T02:35:32.069421+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T02:35:33.159125+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46098765008-1-289/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T02:35:32.069421+00:00",
+  "valid_until": "2026-11-28T02:40:32.069421+00:00",
+  "snapshot_only": true
+}
