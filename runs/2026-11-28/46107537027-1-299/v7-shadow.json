@@ -1,0 +1,588 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46107537027-1-299",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Rosehill",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T04:30:00.000Z",
+      "scratchings": [
+        {
+          "number": "22",
+          "horse": "Imelda"
+        },
+        {
+          "number": "23",
+          "horse": "Fair Master"
+        },
+        {
+          "number": "19",
+          "horse": "Alabama Blitz"
+        },
+        {
+          "number": "20",
+          "horse": "Ring Ahoy"
+        },
+        {
+          "number": "21",
+          "horse": "Olympian"
+        },
+        {
+          "number": "24",
+          "horse": "Samurai"
+        },
+        {
+          "number": "9",
+          "horse": "Think Like Paddy"
+        }
+      ],
+      "captured_at": "2026-11-28T04:26:57.713096+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Rosehill",
+        "race": "6",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "22",
+            "horse": "Imelda",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 15,
+            "weight": 52,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "P & L Messara & Gavranich"
+          },
+          {
+            "number": "23",
+            "horse": "Fair Master",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 16,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Doug Gorrel"
+          },
+          {
+            "number": "1",
+            "horse": "Knights Armour",
+            "scratched": false,
+            "odds": 22.0,
+            "price_source": "fixed_win",
+            "barrier": 18,
+            "weight": 62,
+            "age": 8,
+            "jockey": "Rebecca Bronett Prag",
+            "trainer": "Ross Lavis"
+          },
+          {
+            "number": "2",
+            "horse": "Danish Fortune",
+            "scratched": false,
+            "odds": 86.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 60,
+            "age": 9,
+            "jockey": "Gabrielle Johnston",
+            "trainer": "Joel Wilkes"
+          },
+          {
+            "number": "3",
+            "horse": "Indifference",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "fixed_win",
+            "barrier": 12,
+            "weight": 60,
+            "age": 8,
+            "jockey": "Madeline Owen",
+            "trainer": "Brett & Georgie Cavanough"
+          },
+          {
+            "number": "4",
+            "horse": "Social Outcast",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "fixed_win",
+            "barrier": 20,
+            "weight": 60,
+            "age": 7,
+            "jockey": "Aaron Bullock",
+            "trainer": "Matthew Dunn"
+          },
+          {
+            "number": "5",
+            "horse": "Knife's Edge",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 60,
+            "age": 10,
+            "jockey": "Coriah Keatings",
+            "trainer": "Garry Lunn"
+          },
+          {
+            "number": "6",
+            "horse": "Gallant Star",
+            "scratched": false,
+            "odds": 7.75,
+            "price_source": "fixed_win",
+            "barrier": 24,
+            "weight": 59,
+            "age": 7,
+            "jockey": "Tommy Berry",
+            "trainer": "Brett Robb"
+          },
+          {
+            "number": "7",
+            "horse": "Villasaurus",
+            "scratched": false,
+            "odds": 6.75,
+            "price_source": "fixed_win",
+            "barrier": 19,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Blaike McDougall",
+            "trainer": "Donna Scott"
+          },
+          {
+            "number": "13",
+            "horse": "Godwits",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 57,
+            "age": 5,
+            "jockey": "Jake Pracey-Holmes",
+            "trainer": "Todd Smith"
+          },
+          {
+            "number": "14",
+            "horse": "Michelangelo",
+            "scratched": false,
+            "odds": 6.5,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Jacob Stiff",
+            "trainer": "Dean Mirfin"
+          },
+          {
+            "number": "8",
+            "horse": "Hammoon Sensation",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "barrier": 14,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Reece Jones",
+            "trainer": "Rodney Northam"
+          },
+          {
+            "number": "10",
+            "horse": "Giapponese",
+            "scratched": false,
+            "odds": 4.2,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Jason Collett",
+            "trainer": "Stephen & Jordan Lee"
+          },
+          {
+            "number": "11",
+            "horse": "Poisen Point",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "fixed_win",
+            "barrier": 13,
+            "weight": 57,
+            "age": 5,
+            "jockey": "Siena Grima",
+            "trainer": "Brett Robb"
+          },
+          {
+            "number": "12",
+            "horse": "Ocean Tsunami",
+            "scratched": false,
+            "odds": 4.8,
+            "price_source": "fixed_win",
+            "barrier": 23,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Zac Lloyd",
+            "trainer": "Scott Singleton"
+          },
+          {
+            "number": "16",
+            "horse": "Haze",
+            "scratched": false,
+            "odds": 101.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Ashley Morgan",
+            "trainer": "Brett & Georgie Cavanough"
+          },
+          {
+            "number": "17",
+            "horse": "Off The Scale",
+            "scratched": false,
+            "odds": 76.0,
+            "price_source": "fixed_win",
+            "barrier": 22,
+            "weight": 55,
+            "age": 5,
+            "jockey": "Braith Nock",
+            "trainer": "Lou Mary"
+          },
+          {
+            "number": "19",
+            "horse": "Alabama Blitz",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 8,
+            "weight": 53.5,
+            "age": 5,
+            "jockey": "Alysha Collett",
+            "trainer": "Cameron Crockett"
+          },
+          {
+            "number": "20",
+            "horse": "Ring Ahoy",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 4,
+            "weight": 57,
+            "age": 7,
+            "jockey": "N.r",
+            "trainer": "David Hatch"
+          },
+          {
+            "number": "21",
+            "horse": "Olympian",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 17,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Shannen Llewellyn",
+            "trainer": "P & L Messara & Gavranich"
+          },
+          {
+            "number": "18",
+            "horse": "Grandini",
+            "scratched": false,
+            "odds": 81.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 53.5,
+            "age": 6,
+            "jockey": "Mollie Fitzgerald",
+            "trainer": "Rodney Northam"
+          },
+          {
+            "number": "24",
+            "horse": "Samurai",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 7,
+            "weight": 55.5,
+            "age": 6,
+            "jockey": "N.r",
+            "trainer": "Brett & Georgie Cavanough"
+          },
+          {
+            "number": "15",
+            "horse": "Southern Dancer",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Tyler Schiller",
+            "trainer": "Gary Colvin"
+          },
+          {
+            "number": "9",
+            "horse": "Think Like Paddy",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 21,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "James McDonald",
+            "trainer": "Matthew Dunn"
+          }
+        ],
+        "active_runners": 17,
+        "priced_active_runners": 17,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 2000,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T04:26:57.713096+00:00",
+        "scheduled_start": "2026-11-28T04:30:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 17,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "f05b849f55c725450d6311603ee16287a479d38228a72814582057c5fb3590b6",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "10",
+            "horse": "Giapponese",
+            "odds": 4.2,
+            "probability": 0.18889606636836437,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "BB",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "10",
+          "horse": "Giapponese",
+          "odds": 4.2,
+          "probability": 0.18889606636836437,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "10",
+            "horse": "Giapponese",
+            "odds": 4.2,
+            "probability": 0.18889606636836437,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "12",
+            "horse": "Ocean Tsunami",
+            "odds": 4.8,
+            "probability": 0.1690064390844036,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "14",
+            "horse": "Michelangelo",
+            "odds": 6.5,
+            "probability": 0.1251585632348001,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "7",
+            "horse": "Villasaurus",
+            "odds": 6.75,
+            "probability": 0.12270698664831739,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Gallant Star",
+            "odds": 7.75,
+            "probability": 0.10762499490423118,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "8",
+            "horse": "Hammoon Sensation",
+            "odds": 10.0,
+            "probability": 0.08484338630652793,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "11",
+            "horse": "Poisen Point",
+            "odds": 17.0,
+            "probability": 0.05149138870119296,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "1",
+            "horse": "Knights Armour",
+            "odds": 22.0,
+            "probability": 0.04034978356497657,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Social Outcast",
+            "odds": 51.0,
+            "probability": 0.018274876434337343,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "13",
+            "horse": "Godwits",
+            "odds": 61.0,
+            "probability": 0.015486954557226588,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Indifference",
+            "odds": 61.0,
+            "probability": 0.015476991864012949,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "17",
+            "horse": "Off The Scale",
+            "odds": 76.0,
+            "probability": 0.01254737215185769,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "18",
+            "horse": "Grandini",
+            "odds": 81.0,
+            "probability": 0.0116420848276131,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "2",
+            "horse": "Danish Fortune",
+            "odds": 86.0,
+            "probability": 0.011214953816601363,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "16",
+            "horse": "Haze",
+            "odds": 101.0,
+            "probability": 0.009629211650118864,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Knife's Edge",
+            "odds": 126.0,
+            "probability": 0.007829169102493675,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "15",
+            "horse": "Southern Dancer",
+            "odds": 126.0,
+            "probability": 0.007820776782924107,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "10",
+          "horse": "Giapponese",
+          "odds": 4.2,
+          "probability": 0.18889606636836437,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T04:26:58.830824+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T04:26:57.713096+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T04:26:58.833762+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46107537027-1-299/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T04:26:57.713096+00:00",
+  "valid_until": "2026-11-28T04:31:57.713096+00:00",
+  "snapshot_only": true
+}
