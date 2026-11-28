@@ -1,0 +1,355 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46116256615-1-307",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Ascot",
+      "race": "5",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T06:24:00.000Z",
+      "scratchings": [],
+      "captured_at": "2026-11-28T06:22:39.910658+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Ascot",
+        "race": "5",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "3",
+            "horse": "Bassett Hound",
+            "scratched": false,
+            "odds": 2.1,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Patrick Carbery",
+            "trainer": "Mitchell Pateman"
+          },
+          {
+            "number": "2",
+            "horse": "Twisted Steel",
+            "scratched": false,
+            "odds": 3.3,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 58,
+            "age": 4,
+            "jockey": "Blake Shinn",
+            "trainer": "Simon Miller"
+          },
+          {
+            "number": "10",
+            "horse": "Xentaro",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Chris Parnham",
+            "trainer": "Neville Parnham"
+          },
+          {
+            "number": "8",
+            "horse": "Keep Reading",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 55,
+            "age": 8,
+            "jockey": "Holly Watson",
+            "trainer": "Mitchell Pateman"
+          },
+          {
+            "number": "9",
+            "horse": "Wubin Gold",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Troy Turner",
+            "trainer": "Colin Ross Webster"
+          },
+          {
+            "number": "4",
+            "horse": "Norich",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 56,
+            "age": 8,
+            "jockey": "Shaun McGruddy",
+            "trainer": "Karen Kersley"
+          },
+          {
+            "number": "1",
+            "horse": "Jaz Session",
+            "scratched": false,
+            "odds": 67.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 60,
+            "age": 6,
+            "jockey": "Shaun O'Donnell",
+            "trainer": "Justine Erkelens"
+          },
+          {
+            "number": "5",
+            "horse": "Hurricane Harley",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Austin Galati",
+            "trainer": "Summer Dickson"
+          },
+          {
+            "number": "6",
+            "horse": "Snitzalatte",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Lucy F Fiore",
+            "trainer": "Adam Durrant"
+          },
+          {
+            "number": "7",
+            "horse": "Avoidance",
+            "scratched": false,
+            "odds": 201.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 55,
+            "age": 8,
+            "jockey": "Natasha Faithfull",
+            "trainer": "Steve Wolfe"
+          }
+        ],
+        "active_runners": 10,
+        "priced_active_runners": 10,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T06:22:39.910658+00:00",
+        "scheduled_start": "2026-11-28T06:24:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 10,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "73192a8553ad064046e4c11f4b406534a13ed20053c2b0c4f6829da6c8dd526c",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "3",
+            "horse": "Bassett Hound",
+            "odds": 2.1,
+            "probability": 0.3621673777817456,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "2",
+            "horse": "Twisted Steel",
+            "odds": 3.3,
+            "probability": 0.23671526536134024,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "10",
+            "horse": "Xentaro",
+            "odds": 8.0,
+            "probability": 0.10483185347016781,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "3",
+          "horse": "Bassett Hound",
+          "odds": 2.1,
+          "probability": 0.3621673777817456,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "3",
+            "horse": "Bassett Hound",
+            "odds": 2.1,
+            "probability": 0.3621673777817456,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "2",
+            "horse": "Twisted Steel",
+            "odds": 3.3,
+            "probability": 0.23671526536134024,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "10",
+            "horse": "Xentaro",
+            "odds": 8.0,
+            "probability": 0.10483185347016781,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Hurricane Harley",
+            "odds": 8.5,
+            "probability": 0.09882329367456649,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Snitzalatte",
+            "odds": 9.0,
+            "probability": 0.09206762289141057,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "8",
+            "horse": "Keep Reading",
+            "odds": 26.0,
+            "probability": 0.034468253859414336,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "9",
+            "horse": "Wubin Gold",
+            "odds": 31.0,
+            "probability": 0.02926448855924613,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Norich",
+            "odds": 41.0,
+            "probability": 0.02248440375175496,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "1",
+            "horse": "Jaz Session",
+            "odds": 67.0,
+            "probability": 0.014141234547557151,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "7",
+            "horse": "Avoidance",
+            "odds": 201.0,
+            "probability": 0.005036206102796792,
+            "research_category": null,
+            "value_watch": {
+              "number": "7",
+              "horse": "Avoidance",
+              "fixed_win_odds": 201.0,
+              "v7_win_probability": 0.0050362061027967,
+              "model_expected_win_roi": 0.012277426662136603,
+              "model_fair_win_odds": 198.5621675500296,
+              "same_as_best_bet": false,
+              "positive_model_edge": true,
+              "betting_authorised": false,
+              "warning": "Uncalibrated model-only value diagnostic; NO BET"
+            },
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "3",
+          "horse": "Bassett Hound",
+          "odds": 2.1,
+          "probability": 0.3621673777817456,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T06:22:40.964385+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T06:22:39.910658+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T06:22:40.966202+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46116256615-1-307/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T06:22:39.910658+00:00",
+  "valid_until": "2026-11-28T06:27:39.910658+00:00",
+  "snapshot_only": true
+}
