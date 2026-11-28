@@ -1,0 +1,486 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46112945446-1-305",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "morphettville",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T05:37:00.000Z",
+      "scratchings": [
+        {
+          "number": "14",
+          "horse": "Blanc Visage"
+        },
+        {
+          "number": "2",
+          "horse": "Nicish"
+        },
+        {
+          "number": "13",
+          "horse": "Tobikko"
+        }
+      ],
+      "captured_at": "2026-11-28T05:38:01.098919+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "morphettville",
+        "race": "7",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "10",
+            "horse": "Bristler",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "fixed_win",
+            "barrier": 12,
+            "weight": 58.5,
+            "age": 7,
+            "jockey": "S H Sit",
+            "trainer": "G & D Richards & Moyle"
+          },
+          {
+            "number": "1",
+            "horse": "Spanish Fox",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 60.5,
+            "age": 6,
+            "jockey": "Jacob Opperman",
+            "trainer": "Sarah Rutten"
+          },
+          {
+            "number": "9",
+            "horse": "Bardigrub",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Teagan Voorham",
+            "trainer": "R & C Jolly"
+          },
+          {
+            "number": "3",
+            "horse": "Vexatious Dancer",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 60,
+            "age": 6,
+            "jockey": "Connor Murtagh",
+            "trainer": "Nicole Irwin"
+          },
+          {
+            "number": "6",
+            "horse": "Deepfloat Diva",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "fixed_win",
+            "barrier": 14,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Jake Toeroek",
+            "trainer": "R & C Jolly"
+          },
+          {
+            "number": "7",
+            "horse": "High On Sugar",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "fixed_win",
+            "barrier": 13,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Caitlin Tootell",
+            "trainer": "W F & Glen Francis & Kent"
+          },
+          {
+            "number": "11",
+            "horse": "Super Alana",
+            "scratched": false,
+            "odds": 15.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 58,
+            "age": 7,
+            "jockey": "Rochelle Milnes",
+            "trainer": "W F & Glen Francis & Kent"
+          },
+          {
+            "number": "5",
+            "horse": "Thoros Of Myr",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 59.5,
+            "age": 6,
+            "jockey": "Rose Hammond",
+            "trainer": "Andrew Clarken"
+          },
+          {
+            "number": "14",
+            "horse": "Blanc Visage",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 9,
+            "weight": 54,
+            "age": 6,
+            "jockey": "Todd Pannell",
+            "trainer": "P & B Blanch"
+          },
+          {
+            "number": "4",
+            "horse": "O'tycoon",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 59.5,
+            "age": 7,
+            "jockey": "Shayleigh Ingelse",
+            "trainer": "Scott Whittle"
+          },
+          {
+            "number": "2",
+            "horse": "Nicish",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 60,
+            "age": 6,
+            "jockey": "Brooke King",
+            "trainer": "Phillip & Tommy Stokes"
+          },
+          {
+            "number": "13",
+            "horse": "Tobikko",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Noel Callow",
+            "trainer": "Phillip & Tommy Stokes"
+          },
+          {
+            "number": "12",
+            "horse": "Boyd",
+            "scratched": false,
+            "odds": 9.5,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Andrew Stead",
+            "trainer": "Stephen Theodore"
+          },
+          {
+            "number": "8",
+            "horse": "Lake Forest",
+            "scratched": false,
+            "odds": 3.2,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 59,
+            "age": 5,
+            "jockey": "Jason Holder",
+            "trainer": "Peter Gelagotis"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1000,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T05:38:01.098919+00:00",
+        "scheduled_start": "2026-11-28T05:37:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "race_already_due"
+        ],
+        "betting_authorised": false,
+        "assessment_level": "MODEL RANKINGS UNAVAILABLE",
+        "model_inference": false,
+        "form_assessment_request": {
+          "classification": "FORM ASSESSMENT — INDEPENDENT, NOT A MONTY PREDICTION",
+          "model_version_requested": "V7",
+          "model_inference": false,
+          "model_status": "BLOCKED",
+          "target": {
+            "date": "2026-11-28",
+            "meeting": "morphettville",
+            "race": "7",
+            "country": "AU"
+          },
+          "reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "race_already_due"
+          ],
+          "facts": {
+            "date": "2026-11-28",
+            "meeting": "morphettville",
+            "race": "7",
+            "country": "AU",
+            "source": "Krok provider assertions; not independently TAB verified",
+            "provider_status": "open",
+            "known_runners": [
+              {
+                "number": "10",
+                "horse": "Bristler",
+                "scratched": false,
+                "odds": 51.0,
+                "price_source": "fixed_win",
+                "barrier": 12,
+                "weight": 58.5,
+                "age": 7,
+                "jockey": "S H Sit",
+                "trainer": "G & D Richards & Moyle"
+              },
+              {
+                "number": "1",
+                "horse": "Spanish Fox",
+                "scratched": false,
+                "odds": 51.0,
+                "price_source": "fixed_win",
+                "barrier": 7,
+                "weight": 60.5,
+                "age": 6,
+                "jockey": "Jacob Opperman",
+                "trainer": "Sarah Rutten"
+              },
+              {
+                "number": "9",
+                "horse": "Bardigrub",
+                "scratched": false,
+                "odds": 8.0,
+                "price_source": "fixed_win",
+                "barrier": 11,
+                "weight": 58.5,
+                "age": 4,
+                "jockey": "Teagan Voorham",
+                "trainer": "R & C Jolly"
+              },
+              {
+                "number": "3",
+                "horse": "Vexatious Dancer",
+                "scratched": false,
+                "odds": 26.0,
+                "price_source": "fixed_win",
+                "barrier": 5,
+                "weight": 60,
+                "age": 6,
+                "jockey": "Connor Murtagh",
+                "trainer": "Nicole Irwin"
+              },
+              {
+                "number": "6",
+                "horse": "Deepfloat Diva",
+                "scratched": false,
+                "odds": 17.0,
+                "price_source": "fixed_win",
+                "barrier": 14,
+                "weight": 59,
+                "age": 6,
+                "jockey": "Jake Toeroek",
+                "trainer": "R & C Jolly"
+              },
+              {
+                "number": "7",
+                "horse": "High On Sugar",
+                "scratched": false,
+                "odds": 61.0,
+                "price_source": "fixed_win",
+                "barrier": 13,
+                "weight": 59,
+                "age": 6,
+                "jockey": "Caitlin Tootell",
+                "trainer": "W F & Glen Francis & Kent"
+              },
+              {
+                "number": "11",
+                "horse": "Super Alana",
+                "scratched": false,
+                "odds": 15.0,
+                "price_source": "fixed_win",
+                "barrier": 4,
+                "weight": 58,
+                "age": 7,
+                "jockey": "Rochelle Milnes",
+                "trainer": "W F & Glen Francis & Kent"
+              },
+              {
+                "number": "5",
+                "horse": "Thoros Of Myr",
+                "scratched": false,
+                "odds": 126.0,
+                "price_source": "fixed_win",
+                "barrier": 3,
+                "weight": 59.5,
+                "age": 6,
+                "jockey": "Rose Hammond",
+                "trainer": "Andrew Clarken"
+              },
+              {
+                "number": "14",
+                "horse": "Blanc Visage",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 9,
+                "weight": 54,
+                "age": 6,
+                "jockey": "Todd Pannell",
+                "trainer": "P & B Blanch"
+              },
+              {
+                "number": "4",
+                "horse": "O'tycoon",
+                "scratched": false,
+                "odds": 126.0,
+                "price_source": "fixed_win",
+                "barrier": 2,
+                "weight": 59.5,
+                "age": 7,
+                "jockey": "Shayleigh Ingelse",
+                "trainer": "Scott Whittle"
+              },
+              {
+                "number": "2",
+                "horse": "Nicish",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 6,
+                "weight": 60,
+                "age": 6,
+                "jockey": "Brooke King",
+                "trainer": "Phillip & Tommy Stokes"
+              },
+              {
+                "number": "13",
+                "horse": "Tobikko",
+                "scratched": true,
+                "odds": null,
+                "price_source": null,
+                "barrier": 10,
+                "weight": 56,
+                "age": 4,
+                "jockey": "Noel Callow",
+                "trainer": "Phillip & Tommy Stokes"
+              },
+              {
+                "number": "12",
+                "horse": "Boyd",
+                "scratched": false,
+                "odds": 9.5,
+                "price_source": "fixed_win",
+                "barrier": 8,
+                "weight": 57,
+                "age": 4,
+                "jockey": "Andrew Stead",
+                "trainer": "Stephen Theodore"
+              },
+              {
+                "number": "8",
+                "horse": "Lake Forest",
+                "scratched": false,
+                "odds": 3.2,
+                "price_source": "fixed_win",
+                "barrier": 1,
+                "weight": 59,
+                "age": 5,
+                "jockey": "Jason Holder",
+                "trainer": "Peter Gelagotis"
+              }
+            ],
+            "active_runners": 11,
+            "priced_active_runners": 11,
+            "field_identity_ambiguous": false,
+            "unknown_scratching_count": 0,
+            "historical_form_available": false,
+            "required_research": [
+              "current fields and scratchings",
+              "recent and relevant form",
+              "jockeys and trainers",
+              "barriers and weights",
+              "track conditions and distance suitability",
+              "available market prices and capture times"
+            ],
+            "distance_m": 1000,
+            "track_condition": "Good4",
+            "captured_at": "2026-11-28T05:38:01.098919+00:00",
+            "scheduled_start": "2026-11-28T05:37:00.000Z"
+          },
+          "required_research": [
+            "current fields and scratchings",
+            "recent and relevant form",
+            "jockeys and trainers",
+            "barriers and weights",
+            "track conditions and distance suitability",
+            "available market prices and capture times"
+          ],
+          "requires_fresh_public_sources": true,
+          "instruction": "Report the model status and blocker. No Monty selection can be given without genuine inference."
+        },
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-28T05:38:01.156882+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46112945446-1-305/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T05:38:01.098919+00:00",
+  "valid_until": "2026-11-28T05:43:01.098919+00:00",
+  "snapshot_only": true
+}

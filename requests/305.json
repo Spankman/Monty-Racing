@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46112945446-1-305",
+  "status": "PARTIAL_OR_BLOCKED",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46112945446-1-305/receipt.json",
+  "forecast_path": "runs/2026-11-28/46112945446-1-305/forecast.json",
+  "forecast_sha256": "42f520f3341bb532b8a090f05dc4ea6647aec92776dfdc4d7032d83cfc28c0a2",
+  "generated_at": "2026-11-28T05:38:01.154034+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46112945446",
+  "captured_at": "2026-11-28T05:38:01.098919+00:00",
+  "valid_until": "2026-11-28T05:43:01.098919+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "BLOCKED",
+      "research_only": false,
+      "scored_races": 0
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "BLOCKED",
+      "research_only": true,
+      "scored_races": 0
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "139bc35d154c2c9c67267aa0b6000853b6da30a7fa3c63101623b04745dd8dd8",
+  "request": {
+    "command": "RM6 MORPHETTVILLE 7",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Morphettville",
+    "race": "7",
+    "country": "AU"
+  },
+  "request_id": 305,
+  "request_status": "COMPLETED"
+}
