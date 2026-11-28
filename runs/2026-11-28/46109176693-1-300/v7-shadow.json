@@ -1,0 +1,466 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46109176693-1-300",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Kembla Grange",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T04:50:00.000Z",
+      "scratchings": [
+        {
+          "number": "10",
+          "horse": "Years Gone By"
+        },
+        {
+          "number": "15",
+          "horse": "King Commander"
+        },
+        {
+          "number": "16",
+          "horse": "Pyra"
+        },
+        {
+          "number": "17",
+          "horse": "Lady Resolute"
+        },
+        {
+          "number": "18",
+          "horse": "Solid Heart"
+        },
+        {
+          "number": "13",
+          "horse": "Run In Your Memory"
+        },
+        {
+          "number": "6",
+          "horse": "Sir Verdi"
+        },
+        {
+          "number": "1",
+          "horse": "King's Charm"
+        },
+        {
+          "number": "5",
+          "horse": "Sacred Vow"
+        },
+        {
+          "number": "7",
+          "horse": "Sweet Intent"
+        }
+      ],
+      "captured_at": "2026-11-28T04:48:29.258419+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Kembla Grange",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "10",
+            "horse": "Years Gone By",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 16,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Bryce Heys"
+          },
+          {
+            "number": "4",
+            "horse": "Remember The Time",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Glenn Cahill",
+            "trainer": "P & M Cave"
+          },
+          {
+            "number": "8",
+            "horse": "Ultimate Warrior",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "fixed_win",
+            "barrier": 12,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Keagan Latham",
+            "trainer": "A & S Freedman"
+          },
+          {
+            "number": "2",
+            "horse": "Malua Bay",
+            "scratched": false,
+            "odds": 1.85,
+            "price_source": "fixed_win",
+            "barrier": 14,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Chad Lever",
+            "trainer": "Bjorn Baker"
+          },
+          {
+            "number": "3",
+            "horse": "Milele",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Lee Magorrian",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "11",
+            "horse": "Miss Serengeti",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 57,
+            "age": 4,
+            "jockey": "Jess Taylor",
+            "trainer": "Matthew Smith"
+          },
+          {
+            "number": "12",
+            "horse": "Gekido",
+            "scratched": false,
+            "odds": 126.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Louise Day",
+            "trainer": "Ciaron Maher"
+          },
+          {
+            "number": "14",
+            "horse": "Zoudawnie",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Christian Reith",
+            "trainer": "Brad Widdup"
+          },
+          {
+            "number": "15",
+            "horse": "King Commander",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Richard Litt"
+          },
+          {
+            "number": "16",
+            "horse": "Pyra",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Jean Van Overmeire",
+            "trainer": "Bjorn Baker"
+          },
+          {
+            "number": "17",
+            "horse": "Lady Resolute",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 18,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "18",
+            "horse": "Solid Heart",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Rory Hutchings",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "13",
+            "horse": "Run In Your Memory",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 55.5,
+            "age": 3,
+            "jockey": "Jeff Penza",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "6",
+            "horse": "Sir Verdi",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 15,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Mitchell Bell",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "1",
+            "horse": "King's Charm",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "N.r",
+            "trainer": "Joseph Ible"
+          },
+          {
+            "number": "5",
+            "horse": "Sacred Vow",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 2,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Jean Van Overmeire",
+            "trainer": "Michael Freedman"
+          },
+          {
+            "number": "9",
+            "horse": "Virtuoso",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "fixed_win",
+            "barrier": 17,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Brock Ryan",
+            "trainer": "Bjorn Baker"
+          },
+          {
+            "number": "7",
+            "horse": "Sweet Intent",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "weight": 57.5,
+            "age": 3,
+            "jockey": "Rory Hutchings",
+            "trainer": "Chris Waller"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T04:48:29.258419+00:00",
+        "scheduled_start": "2026-11-28T04:50:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "646a577aaf395c626e4e2b2a76e79ad6ddd54fa1d10876a1934ec36f2a4cc087",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "2",
+            "horse": "Malua Bay",
+            "odds": 1.85,
+            "probability": 0.4467005541581923,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Ultimate Warrior",
+            "odds": 5.5,
+            "probability": 0.1601905221558823,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "2",
+          "horse": "Malua Bay",
+          "odds": 1.85,
+          "probability": 0.4467005541581923,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "2",
+            "horse": "Malua Bay",
+            "odds": 1.85,
+            "probability": 0.4467005541581923,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "8",
+            "horse": "Ultimate Warrior",
+            "odds": 5.5,
+            "probability": 0.1601905221558823,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "14",
+            "horse": "Zoudawnie",
+            "odds": 8.0,
+            "probability": 0.11280148332158456,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Remember The Time",
+            "odds": 8.0,
+            "probability": 0.11262753651445644,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "9",
+            "horse": "Virtuoso",
+            "odds": 8.5,
+            "probability": 0.10623397321984944,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "11",
+            "horse": "Miss Serengeti",
+            "odds": 34.0,
+            "probability": 0.02884961609862407,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Milele",
+            "odds": 41.0,
+            "probability": 0.024183233618683173,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "12",
+            "horse": "Gekido",
+            "odds": 126.0,
+            "probability": 0.0084130809127275,
+            "research_category": null,
+            "value_watch": {
+              "number": "12",
+              "horse": "Gekido",
+              "fixed_win_odds": 126.0,
+              "v7_win_probability": 0.0084130809127275,
+              "model_expected_win_roi": 0.06004819500366487,
+              "model_fair_win_odds": 118.86252020792732,
+              "same_as_best_bet": false,
+              "positive_model_edge": true,
+              "betting_authorised": false,
+              "warning": "Uncalibrated model-only value diagnostic; NO BET"
+            },
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "2",
+          "horse": "Malua Bay",
+          "odds": 1.85,
+          "probability": 0.4467005541581923,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T04:48:30.706421+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T04:48:29.258419+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T04:48:30.709922+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46109176693-1-300/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T04:48:29.258419+00:00",
+  "valid_until": "2026-11-28T04:53:29.258419+00:00",
+  "snapshot_only": true
+}
