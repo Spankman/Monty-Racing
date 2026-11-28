@@ -1,0 +1,394 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46121224827-1-311",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Ascot",
+      "race": "7",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T07:37:00.000Z",
+      "scratchings": [
+        {
+          "number": "12",
+          "horse": "She's A Splinter"
+        }
+      ],
+      "captured_at": "2026-11-28T07:27:23.419296+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Ascot",
+        "race": "7",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Levati Dimezzo",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "TAB",
+            "barrier": 10,
+            "weight": 57,
+            "age": 3,
+            "jockey": "Brad Parnham",
+            "trainer": "C & M Gangemi"
+          },
+          {
+            "number": "2",
+            "horse": "Harbour Rise",
+            "scratched": false,
+            "odds": 26.0,
+            "price_source": "TAB",
+            "barrier": 6,
+            "weight": 56,
+            "age": 3,
+            "jockey": "Patrick Carbery",
+            "trainer": "Dion Luciani"
+          },
+          {
+            "number": "3",
+            "horse": "Godspeed",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 56,
+            "age": 3,
+            "jockey": "Clint Johnston-Porter",
+            "trainer": "C & M Gangemi"
+          },
+          {
+            "number": "4",
+            "horse": "One Last Resort",
+            "scratched": false,
+            "odds": 3.3,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Chris Parnham",
+            "trainer": "S & J Casey"
+          },
+          {
+            "number": "5",
+            "horse": "Consignment",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Steven Parnham",
+            "trainer": "Neville Parnham"
+          },
+          {
+            "number": "6",
+            "horse": "Countersunk",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Jason Whiting",
+            "trainer": "Lou Luciani"
+          },
+          {
+            "number": "7",
+            "horse": "Fast Break",
+            "scratched": false,
+            "odds": 151.0,
+            "price_source": "TAB",
+            "barrier": 12,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Brayden Gaerth",
+            "trainer": "Kieran Regan"
+          },
+          {
+            "number": "8",
+            "horse": "Gaintree",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "TAB",
+            "barrier": 11,
+            "weight": 54,
+            "age": 3,
+            "jockey": "Shaun O'Donnell",
+            "trainer": "Simon Miller"
+          },
+          {
+            "number": "9",
+            "horse": "Rok 'n' Rom",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 54,
+            "age": 3,
+            "jockey": "Holly Watson",
+            "trainer": "Josh Brown"
+          },
+          {
+            "number": "10",
+            "horse": "Cos I Am",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 54,
+            "age": 3,
+            "jockey": "Natasha Faithfull",
+            "trainer": "D & B Pearce"
+          },
+          {
+            "number": "11",
+            "horse": "Lady Torque",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 53,
+            "age": 3,
+            "jockey": "Lucy F Fiore",
+            "trainer": "Daniel Morton"
+          },
+          {
+            "number": "13",
+            "horse": "Chixfromthestix",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 53,
+            "age": 3,
+            "jockey": "Chloe Azzopardi",
+            "trainer": "Josh Brown"
+          },
+          {
+            "number": "12",
+            "horse": "She's A Splinter",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 53,
+            "age": 3,
+            "jockey": "Holly Nottle",
+            "trainer": "Josh Brown"
+          }
+        ],
+        "active_runners": 12,
+        "priced_active_runners": 12,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1400,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T07:27:23.419296+00:00",
+        "scheduled_start": "2026-11-28T07:37:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 12,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "e76daead5c6814a84564bb6d05b1bc3aa41c1b2863a1bd88ece62d6898e4c442",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "4",
+            "horse": "One Last Resort",
+            "odds": 3.3,
+            "probability": 0.22758512927324379,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Gaintree",
+            "odds": 7.0,
+            "probability": 0.11190462637636947,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "4",
+          "horse": "One Last Resort",
+          "odds": 3.3,
+          "probability": 0.22758512927324379,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "4",
+            "horse": "One Last Resort",
+            "odds": 3.3,
+            "probability": 0.22758512927324379,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "8",
+            "horse": "Gaintree",
+            "odds": 7.0,
+            "probability": 0.11190462637636947,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "5",
+            "horse": "Consignment",
+            "odds": 7.5,
+            "probability": 0.10512177864040487,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "3",
+            "horse": "Godspeed",
+            "odds": 7.5,
+            "probability": 0.1031427019187747,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "Lady Torque",
+            "odds": 8.0,
+            "probability": 0.09883818615025165,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "1",
+            "horse": "Levati Dimezzo",
+            "odds": 8.5,
+            "probability": 0.0932357809216383,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "Cos I Am",
+            "odds": 10.0,
+            "probability": 0.07864623364399245,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Rok 'n' Rom",
+            "odds": 11.0,
+            "probability": 0.07321187117005147,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "6",
+            "horse": "Countersunk",
+            "odds": 17.0,
+            "probability": 0.048663960723595745,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "2",
+            "horse": "Harbour Rise",
+            "odds": 26.0,
+            "probability": 0.0326000838265167,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "13",
+            "horse": "Chixfromthestix",
+            "odds": 41.0,
+            "probability": 0.020843477203478893,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "Fast Break",
+            "odds": 151.0,
+            "probability": 0.006206170151682049,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "4",
+          "horse": "One Last Resort",
+          "odds": 3.3,
+          "probability": 0.22758512927324379,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T07:27:24.895275+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-28T07:27:23.419296+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T07:27:24.898274+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46121224827-1-311/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T07:27:23.419296+00:00",
+  "valid_until": "2026-11-28T07:32:23.419296+00:00",
+  "snapshot_only": true
+}

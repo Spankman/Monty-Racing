@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46121224827-1-311",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46121224827-1-311/receipt.json",
+  "forecast_path": "runs/2026-11-28/46121224827-1-311/forecast.json",
+  "forecast_sha256": "34ee69b7cb895017f4518e0bb17c7313aeaa92c5e2018ce8c9671b4382666f85",
+  "generated_at": "2026-11-28T07:27:24.895430+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46121224827",
+  "captured_at": "2026-11-28T07:27:23.419296+00:00",
+  "valid_until": "2026-11-28T07:32:23.419296+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "847dca72640b16a1d65b3a969dbb90eda6cb3330957faadcfeeda01dc911eb65",
+  "request": {
+    "command": "RM6 ASCOT 7",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Ascot",
+    "race": "7",
+    "country": "AU"
+  },
+  "request_id": 311,
+  "request_status": "COMPLETED"
+}
