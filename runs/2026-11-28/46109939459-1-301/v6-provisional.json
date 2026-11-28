@@ -1,0 +1,371 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46109939459-1-301",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Yarra Valley",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T05:01:00.000Z",
+      "scratchings": [
+        {
+          "number": "5",
+          "horse": "Ricky Runs"
+        },
+        {
+          "number": "7",
+          "horse": "Jazzanski"
+        },
+        {
+          "number": "8",
+          "horse": "Sweet But Sassy"
+        },
+        {
+          "number": "11",
+          "horse": "Sinhalese"
+        },
+        {
+          "number": "12",
+          "horse": "Alpinova"
+        },
+        {
+          "number": "13",
+          "horse": "Stand By Me Ned"
+        },
+        {
+          "number": "14",
+          "horse": "Slippery Thinker"
+        }
+      ],
+      "captured_at": "2026-11-28T04:59:02.766776+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Yarra Valley",
+        "race": "6",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Chambers Bay",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "fixed_win",
+            "weight": 60,
+            "age": 7,
+            "jockey": "S Kennedy",
+            "trainer": "M Watts"
+          },
+          {
+            "number": "2",
+            "horse": "Sheer Lunacy",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "weight": 60,
+            "age": 8,
+            "jockey": "Z Spain",
+            "trainer": "B Brisbourne"
+          },
+          {
+            "number": "3",
+            "horse": "Silver Snow",
+            "scratched": false,
+            "odds": 3.8,
+            "price_source": "fixed_win",
+            "weight": 60,
+            "age": 5,
+            "jockey": "Dylan Dunn",
+            "trainer": "D Williams"
+          },
+          {
+            "number": "4",
+            "horse": "Pensatore",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "fixed_win",
+            "weight": 59,
+            "age": 6,
+            "jockey": "J Beriman",
+            "trainer": "T Cullen"
+          },
+          {
+            "number": "5",
+            "horse": "Ricky Runs",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 59,
+            "age": 6,
+            "jockey": "N Punch",
+            "trainer": "Paul & T Templeton"
+          },
+          {
+            "number": "6",
+            "horse": "Hellish Lee",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "fixed_win",
+            "weight": 58,
+            "age": 4,
+            "jockey": "L Meech",
+            "trainer": "A Bobbin"
+          },
+          {
+            "number": "7",
+            "horse": "Jazzanski",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 58,
+            "age": 6,
+            "jockey": "S Hateley",
+            "trainer": "David & C Feek"
+          },
+          {
+            "number": "8",
+            "horse": "Sweet But Sassy",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 58,
+            "age": 4,
+            "jockey": "L Boyd",
+            "trainer": "L Boyd"
+          },
+          {
+            "number": "9",
+            "horse": "Scholl Deep",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "weight": 57,
+            "age": 6,
+            "jockey": "C Hollowood",
+            "trainer": "R Cluning"
+          },
+          {
+            "number": "10",
+            "horse": "Jingu Express",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win",
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "J Bowditch",
+            "trainer": "A Dale"
+          },
+          {
+            "number": "11",
+            "horse": "Sinhalese",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 58.5,
+            "age": 6,
+            "jockey": "N.r",
+            "trainer": "M Croston & G Gilmour"
+          },
+          {
+            "number": "12",
+            "horse": "Alpinova",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55.5,
+            "age": 7,
+            "jockey": "M Castle",
+            "trainer": "B Verwey-Mitchell"
+          },
+          {
+            "number": "13",
+            "horse": "Stand By Me Ned",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 57.5,
+            "age": 7,
+            "jockey": "B Kinninmont",
+            "trainer": "M Lawson"
+          },
+          {
+            "number": "14",
+            "horse": "Slippery Thinker",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 56,
+            "age": 4,
+            "jockey": "J Gibbons",
+            "trainer": "J Gibbons"
+          }
+        ],
+        "active_runners": 7,
+        "priced_active_runners": 7,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1514,
+        "track_condition": "Heavy10",
+        "captured_at": "2026-11-28T04:59:02.766776+00:00",
+        "scheduled_start": "2026-11-28T05:01:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "fd97e2f0b7f9f2812a428667a54be930798a853fda1290ac8d9a3211079fdac5",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "3",
+            "horse": "Silver Snow",
+            "odds": 3.8,
+            "probability": 0.2598299295006905,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Hellish Lee",
+            "odds": 5.5,
+            "probability": 0.17951886038229525,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "3",
+          "horse": "Silver Snow",
+          "odds": 3.8,
+          "probability": 0.2598299295006905,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "3",
+            "horse": "Silver Snow",
+            "odds": 3.8,
+            "probability": 0.2598299295006905,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Hellish Lee",
+            "odds": 5.5,
+            "probability": 0.17951886038229525,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "10",
+            "horse": "Jingu Express",
+            "odds": 6.0,
+            "probability": 0.1645589553504373,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Pensatore",
+            "odds": 7.5,
+            "probability": 0.13164716428034984,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "2",
+            "horse": "Sheer Lunacy",
+            "odds": 10.0,
+            "probability": 0.09873537321026236,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "1",
+            "horse": "Chambers Bay",
+            "odds": 11.0,
+            "probability": 0.08975943019114763,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "9",
+            "horse": "Scholl Deep",
+            "odds": 13.0,
+            "probability": 0.07595028708481723,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "3",
+          "horse": "Silver Snow",
+          "odds": 3.8,
+          "probability": 0.2598299295006905,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T04:59:03.304533+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T04:59:02.766776+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T04:59:04.185360+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46109939459-1-301/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T04:59:02.766776+00:00",
+  "valid_until": "2026-11-28T05:04:02.766776+00:00",
+  "snapshot_only": true
+}
