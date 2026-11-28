@@ -1,0 +1,16 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46107364039-1-298",
+  "date": "2026-11-28",
+  "view": "official",
+  "version": "V7",
+  "status": "FAILED",
+  "races": [],
+  "receipt": "runs/2026-11-28/46107364039-1-298/receipt.json",
+  "blockers": [
+    "provider_capture: ValueError"
+  ],
+  "captured_at": null,
+  "valid_until": null,
+  "snapshot_only": true
+}
