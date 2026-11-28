@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46117348143-1-308",
+  "status": "PARTIAL_OR_BLOCKED",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46117348143-1-308/receipt.json",
+  "forecast_path": "runs/2026-11-28/46117348143-1-308/forecast.json",
+  "forecast_sha256": "0e449e952c40aca896b5f44e21e99e0e32cd86eb3b0e7462c0b529828bdd3691",
+  "generated_at": "2026-11-28T06:36:33.614201+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46117348143",
+  "captured_at": "2026-11-28T06:36:33.575817+00:00",
+  "valid_until": "2026-11-28T06:41:33.575817+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "BLOCKED",
+      "research_only": false,
+      "scored_races": 0
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "BLOCKED",
+      "research_only": true,
+      "scored_races": 0
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "c4d274d4b2f97757b6bc11fffa763456ed009f545779e1a27cb24f2857e3de88",
+  "request": {
+    "command": "RM6 SANDOWN 9",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Sandown",
+    "race": "9",
+    "country": "AU"
+  },
+  "request_id": 308,
+  "request_status": "COMPLETED"
+}
