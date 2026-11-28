@@ -1,0 +1,444 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46118329097-1-310",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Gold Coast",
+      "race": "8",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T06:50:00Z",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Camelight"
+        },
+        {
+          "number": "2",
+          "horse": "Tivacious"
+        },
+        {
+          "number": "7",
+          "horse": "Hell Of A High"
+        },
+        {
+          "number": "8",
+          "horse": "Copper Star"
+        },
+        {
+          "number": "10",
+          "horse": "The Epic Journey"
+        },
+        {
+          "number": "12",
+          "horse": "Hide The Pierata"
+        },
+        {
+          "number": "14",
+          "horse": "Mishani Cabello"
+        },
+        {
+          "number": "16",
+          "horse": "Far Beyond"
+        },
+        {
+          "number": "17",
+          "horse": "Military Legend"
+        },
+        {
+          "number": "18",
+          "horse": "Sir Don"
+        }
+      ],
+      "captured_at": "2026-11-28T06:49:22.901502+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Gold Coast",
+        "race": "8",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Camelight",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Unknown",
+            "trainer": "Barry Lockwood & Emma-Jane Vincent"
+          },
+          {
+            "number": "2",
+            "horse": "Tivacious",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 58.5,
+            "age": 4,
+            "jockey": "Tiffani Brooker",
+            "trainer": "James Healy"
+          },
+          {
+            "number": "3",
+            "horse": "Overoptomystic",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "weight": 58,
+            "age": 4,
+            "jockey": "Brandon Lerena",
+            "trainer": "Jack Bruce"
+          },
+          {
+            "number": "4",
+            "horse": "Duchess Difficult",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "fixed_win",
+            "weight": 57,
+            "age": 4,
+            "jockey": "Jag Guthmann-Chester",
+            "trainer": "Matthew Hoysted"
+          },
+          {
+            "number": "5",
+            "horse": "Skeldergate",
+            "scratched": false,
+            "odds": 51.0,
+            "price_source": "fixed_win",
+            "weight": 57,
+            "age": 5,
+            "jockey": "Adin Thompson",
+            "trainer": "Brett Baker"
+          },
+          {
+            "number": "6",
+            "horse": "Egmont",
+            "scratched": false,
+            "odds": 2.45,
+            "price_source": "fixed_win",
+            "weight": 56.5,
+            "age": 3,
+            "jockey": "Bobby El-Issa",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "7",
+            "horse": "Hell Of A High",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 56.5,
+            "age": 4,
+            "jockey": "Tiffani Brooker",
+            "trainer": "James Healy"
+          },
+          {
+            "number": "8",
+            "horse": "Copper Star",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 56,
+            "age": 4,
+            "jockey": "Unknown",
+            "trainer": "James Moore"
+          },
+          {
+            "number": "9",
+            "horse": "Saxon Spirit",
+            "scratched": false,
+            "odds": 2.15,
+            "price_source": "fixed_win",
+            "weight": 56,
+            "age": 3,
+            "jockey": "Tahlia Fenlon",
+            "trainer": "Chris & Corey Munce"
+          },
+          {
+            "number": "10",
+            "horse": "The Epic Journey",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 56,
+            "age": 3,
+            "jockey": "Jasper Franklin",
+            "trainer": "Paul Shailer"
+          },
+          {
+            "number": "11",
+            "horse": "She Can Soar",
+            "scratched": false,
+            "odds": 27.0,
+            "price_source": "fixed_win",
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Ashley Butler",
+            "trainer": "Kelly Schweida"
+          },
+          {
+            "number": "12",
+            "horse": "Hide The Pierata",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 54.5,
+            "age": 3,
+            "jockey": "Georgina Cartwright",
+            "trainer": "Rex Lipp"
+          },
+          {
+            "number": "13",
+            "horse": "Lights Will Guide",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "fixed_win",
+            "weight": 54.5,
+            "age": 4,
+            "jockey": "Montana Philpot",
+            "trainer": "Michael Lakey"
+          },
+          {
+            "number": "14",
+            "horse": "Mishani Cabello",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 54.5,
+            "age": 3,
+            "jockey": "Chelsea Baker",
+            "trainer": "Donna Stanbridge"
+          },
+          {
+            "number": "15",
+            "horse": "Worththeadmission",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "weight": 54,
+            "age": 3,
+            "jockey": "Archie Mccolm",
+            "trainer": "Chris & Corey Munce"
+          },
+          {
+            "number": "16",
+            "horse": "Far Beyond",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Micheal Hellyer",
+            "trainer": "Chris Anderson"
+          },
+          {
+            "number": "17",
+            "horse": "Military Legend",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Unknown",
+            "trainer": "Allan Chau"
+          },
+          {
+            "number": "18",
+            "horse": "Sir Don",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Girish Goomany",
+            "trainer": "John Gilmore"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1400,
+        "track_condition": "Heavy10",
+        "captured_at": "2026-11-28T06:49:22.901502+00:00",
+        "scheduled_start": "2026-11-28T06:50:00Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "96b9fc54ddcb2cb40e8a37af57b21a4cdc2ad37dcbb5f283a9b79cb9ba90a80e",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "9",
+            "horse": "Saxon Spirit",
+            "odds": 2.15,
+            "probability": 0.37179024764188656,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Egmont",
+            "odds": 2.45,
+            "probability": 0.3262649111959412,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Duchess Difficult",
+            "odds": 7.0,
+            "probability": 0.11419271891857939,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "9",
+          "horse": "Saxon Spirit",
+          "odds": 2.15,
+          "probability": 0.37179024764188656,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "9",
+            "horse": "Saxon Spirit",
+            "odds": 2.15,
+            "probability": 0.37179024764188656,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Egmont",
+            "odds": 2.45,
+            "probability": 0.3262649111959412,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Duchess Difficult",
+            "odds": 7.0,
+            "probability": 0.11419271891857939,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Overoptomystic",
+            "odds": 13.0,
+            "probability": 0.061488387110004296,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "15",
+            "horse": "Worththeadmission",
+            "odds": 13.0,
+            "probability": 0.061488387110004296,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "11",
+            "horse": "She Can Soar",
+            "odds": 27.0,
+            "probability": 0.029605519719631695,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "13",
+            "horse": "Lights Will Guide",
+            "odds": 41.0,
+            "probability": 0.01949631786414771,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Skeldergate",
+            "odds": 51.0,
+            "probability": 0.015673510439805017,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "9",
+          "horse": "Saxon Spirit",
+          "odds": 2.15,
+          "probability": 0.37179024764188656,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T06:49:23.437557+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T06:49:22.901502+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T06:49:24.327707+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46118329097-1-310/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T06:49:22.901502+00:00",
+  "valid_until": "2026-11-28T06:54:22.901502+00:00",
+  "snapshot_only": true
+}
