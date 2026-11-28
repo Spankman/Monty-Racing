@@ -1,0 +1,377 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46098243891-1-287",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V6",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Gold Coast",
+      "race": "1",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T02:30:00Z",
+      "scratchings": [
+        {
+          "number": "2",
+          "horse": "Meteoric"
+        },
+        {
+          "number": "9",
+          "horse": "Tough Love"
+        },
+        {
+          "number": "10",
+          "horse": "Swim Up Bar"
+        },
+        {
+          "number": "11",
+          "horse": "My Kingslee"
+        },
+        {
+          "number": "12",
+          "horse": "Mishani Jazz"
+        },
+        {
+          "number": "13",
+          "horse": "Pasita"
+        }
+      ],
+      "captured_at": "2026-11-28T02:29:11.256852+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Gold Coast",
+        "race": "1",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Chayse 'N' Mishani",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Frederick Larson",
+            "trainer": "Jay Bellamy"
+          },
+          {
+            "number": "2",
+            "horse": "Meteoric",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 3,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Jai Williams",
+            "trainer": "Michael Freedman"
+          },
+          {
+            "number": "3",
+            "horse": "Mishani Flyer",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "fixed_win",
+            "barrier": 12,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Bobby El-Issa",
+            "trainer": "Richard Laming"
+          },
+          {
+            "number": "4",
+            "horse": "Rowdy Return",
+            "scratched": false,
+            "odds": 3.9,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Brandon Lerena",
+            "trainer": "Liam Birchley"
+          },
+          {
+            "number": "5",
+            "horse": "Totatsu",
+            "scratched": false,
+            "odds": 1.75,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Tahlia Fenlon",
+            "trainer": "Chris & Corey Munce"
+          },
+          {
+            "number": "6",
+            "horse": "Hot Momma",
+            "scratched": false,
+            "odds": 17.0,
+            "price_source": "fixed_win",
+            "barrier": 13,
+            "weight": 56,
+            "age": 2,
+            "jockey": "Jasper Franklin",
+            "trainer": "Peter Robl"
+          },
+          {
+            "number": "7",
+            "horse": "My Mini Me",
+            "scratched": false,
+            "odds": 15.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 56,
+            "age": 2,
+            "jockey": "Benjamin Osmond",
+            "trainer": "Jason Patton"
+          },
+          {
+            "number": "8",
+            "horse": "Steph's Ready",
+            "scratched": false,
+            "odds": 8.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 56,
+            "age": 2,
+            "jockey": "Micheal Hellyer",
+            "trainer": "Tony & Maddysen Sears"
+          },
+          {
+            "number": "9",
+            "horse": "Tough Love",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 7,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Ashley Butler",
+            "trainer": "Kelly Schweida"
+          },
+          {
+            "number": "10",
+            "horse": "Swim Up Bar",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Unknown",
+            "trainer": "James Moore"
+          },
+          {
+            "number": "11",
+            "horse": "My Kingslee",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 5,
+            "weight": 58,
+            "age": 2,
+            "jockey": "Jaden Lloyd",
+            "trainer": "James Moore"
+          },
+          {
+            "number": "12",
+            "horse": "Mishani Jazz",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 56,
+            "age": 2,
+            "jockey": "Georgina Cartwright",
+            "trainer": "Donna Stanbridge"
+          },
+          {
+            "number": "13",
+            "horse": "Pasita",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 1,
+            "weight": 56,
+            "age": 2,
+            "jockey": "Unknown",
+            "trainer": "Belinda Mair"
+          }
+        ],
+        "active_runners": 7,
+        "priced_active_runners": 7,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1000,
+        "track_condition": "Soft6",
+        "captured_at": "2026-11-28T02:29:11.256852+00:00",
+        "scheduled_start": "2026-11-28T02:30:00Z"
+      },
+      "data_completeness": {
+        "active_runners": 7,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "4ff7d510a43137a160060faba217fd39007906274848e6352240e72843a2bf1d",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "5",
+            "horse": "Totatsu",
+            "odds": 1.75,
+            "probability": 0.452446961369452,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Rowdy Return",
+            "odds": 3.9,
+            "probability": 0.1990977017718098,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          {
+            "number": "8",
+            "horse": "Steph's Ready",
+            "odds": 8.0,
+            "probability": 0.09895505484954316,
+            "research_category": "NO BET",
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "TRIFECTA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "5",
+          "horse": "Totatsu",
+          "odds": 1.75,
+          "probability": 0.452446961369452,
+          "research_category": "NO BET",
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "5",
+            "horse": "Totatsu",
+            "odds": 1.75,
+            "probability": 0.452446961369452,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "4",
+            "horse": "Rowdy Return",
+            "odds": 3.9,
+            "probability": 0.1990977017718098,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "8",
+            "horse": "Steph's Ready",
+            "odds": 8.0,
+            "probability": 0.09895505484954316,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Mishani Flyer",
+            "odds": 8.5,
+            "probability": 0.09336471386214111,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "1",
+            "horse": "Chayse 'N' Mishani",
+            "odds": 14.0,
+            "probability": 0.0566156891216202,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "7",
+            "horse": "My Mini Me",
+            "odds": 15.0,
+            "probability": 0.05280865946271213,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Hot Momma",
+            "odds": 17.0,
+            "probability": 0.04671121956272149,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "5",
+          "horse": "Totatsu",
+          "odds": 1.75,
+          "probability": 0.452446961369452,
+          "research_category": "NO BET",
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T02:29:11.606666+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T02:29:11.256852+00:00",
+        "model_version": "V6",
+        "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T02:29:12.242003+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46098243891-1-287/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T02:29:11.256852+00:00",
+  "valid_until": "2026-11-28T02:34:11.256852+00:00",
+  "snapshot_only": true
+}
