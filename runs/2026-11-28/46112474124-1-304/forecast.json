@@ -1,0 +1,599 @@
+{
+  "schema": "monty.operations.v1",
+  "date": "2026-11-28",
+  "timezone": "Australia/Brisbane",
+  "run_id": "46112474124-1-304",
+  "generated_at": "2026-11-28T05:32:02.437465+00:00",
+  "receipt": "runs/2026-11-28/46112474124-1-304/receipt.json",
+  "source_mode": "LIVE",
+  "status": "COMPLETED_NO_BET",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "races": [
+    {
+      "meeting": "Gold Coast",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T05:34:00Z",
+      "scratchings": [
+        {
+          "number": "7",
+          "horse": "Ever So Ready"
+        },
+        {
+          "number": "9",
+          "horse": "Varejao"
+        },
+        {
+          "number": "14",
+          "horse": "Astern Villa"
+        }
+      ],
+      "captured_at": "2026-11-28T05:32:01.418927+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "models": {
+        "V6": {
+          "ordered_selections": [
+            {
+              "number": "2",
+              "horse": "Baltray",
+              "odds": 3.9,
+              "probability": 0.20143850667909433,
+              "research_category": "NO BET",
+              "value_watch": null
+            },
+            {
+              "number": "3",
+              "horse": "Backstage",
+              "odds": 4.2,
+              "probability": 0.1871572510193229,
+              "research_category": "NO BET",
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "2",
+            "horse": "Baltray",
+            "odds": 3.9,
+            "probability": 0.20143850667909433,
+            "research_category": "NO BET",
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "2",
+              "horse": "Baltray",
+              "odds": 3.9,
+              "probability": 0.20143850667909433,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "3",
+              "horse": "Backstage",
+              "odds": 4.2,
+              "probability": 0.1871572510193229,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "1",
+              "horse": "Zouthur",
+              "odds": 4.4,
+              "probability": 0.1751957976998358,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "5",
+              "horse": "Rhetoric",
+              "odds": 5.0,
+              "probability": 0.15725271358234236,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "6",
+              "horse": "Brechen",
+              "odds": 10.0,
+              "probability": 0.07870413076937913,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "11",
+              "horse": "Quantum Overdrive",
+              "odds": 13.0,
+              "probability": 0.05934635655993267,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "8",
+              "horse": "National Interest",
+              "odds": 19.0,
+              "probability": 0.04140601161267042,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "4",
+              "horse": "Chilliwack",
+              "odds": 19.0,
+              "probability": 0.04058852662915355,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "10",
+              "horse": "Love Rat",
+              "odds": 31.0,
+              "probability": 0.025352800131615606,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "12",
+              "horse": "Zouslayer",
+              "odds": 35.0,
+              "probability": 0.022468207700629253,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "13",
+              "horse": "Oval Office",
+              "odds": 71.0,
+              "probability": 0.011089697616023941,
+              "research_category": "NO BET",
+              "value_watch": null,
+              "price_source": "fixed_win"
+            }
+          ],
+          "most_likely": {
+            "number": "2",
+            "horse": "Baltray",
+            "odds": 3.9,
+            "probability": 0.20143850667909433,
+            "research_category": "NO BET",
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-28T05:32:01.822362+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field"
+          ],
+          "bookmaker": "Provider win quotes — attribution incomplete",
+          "quoted_at": "2026-11-28T05:32:01.418927+00:00",
+          "model_version": "V6",
+          "model_commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        },
+        "V7": {
+          "ordered_selections": [
+            {
+              "number": "2",
+              "horse": "Baltray",
+              "odds": 3.9,
+              "probability": 0.19553260999607572,
+              "research_category": null,
+              "value_watch": null
+            },
+            {
+              "number": "3",
+              "horse": "Backstage",
+              "odds": 4.2,
+              "probability": 0.1828137755739272,
+              "research_category": null,
+              "value_watch": null
+            }
+          ],
+          "progression_bet_type": "QUINELLA BOXED",
+          "recommended_bet_type": "NO BET",
+          "best_bets": [],
+          "best_chance": {
+            "number": "2",
+            "horse": "Baltray",
+            "odds": 3.9,
+            "probability": 0.19553260999607572,
+            "research_category": null,
+            "value_watch": null
+          },
+          "roughies": [],
+          "official_classification": "NO BET",
+          "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+          "betting_authorised": false,
+          "ranked_runners": [
+            {
+              "number": "2",
+              "horse": "Baltray",
+              "odds": 3.9,
+              "probability": 0.19553260999607572,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "3",
+              "horse": "Backstage",
+              "odds": 4.2,
+              "probability": 0.1828137755739272,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "1",
+              "horse": "Zouthur",
+              "odds": 4.4,
+              "probability": 0.17172360918389296,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "5",
+              "horse": "Rhetoric",
+              "odds": 5.0,
+              "probability": 0.15463407340659052,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "6",
+              "horse": "Brechen",
+              "odds": 10.0,
+              "probability": 0.08068786688400052,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "11",
+              "horse": "Quantum Overdrive",
+              "odds": 13.0,
+              "probability": 0.06187681987888245,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "8",
+              "horse": "National Interest",
+              "odds": 19.0,
+              "probability": 0.04410719343967219,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "4",
+              "horse": "Chilliwack",
+              "odds": 19.0,
+              "probability": 0.043302326993833705,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "10",
+              "horse": "Love Rat",
+              "odds": 31.0,
+              "probability": 0.02775852079593276,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "12",
+              "horse": "Zouslayer",
+              "odds": 35.0,
+              "probability": 0.024823561978415475,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            },
+            {
+              "number": "13",
+              "horse": "Oval Office",
+              "odds": 71.0,
+              "probability": 0.012739641868776446,
+              "research_category": null,
+              "value_watch": null,
+              "price_source": "fixed_win"
+            }
+          ],
+          "most_likely": {
+            "number": "2",
+            "horse": "Baltray",
+            "odds": 3.9,
+            "probability": 0.19553260999607572,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          "value_selection": null,
+          "reduced_confidence": true,
+          "status": "SCORED",
+          "decision_at": "2026-11-28T05:32:02.437368+00:00",
+          "no_bet_reasons": [
+            "independent_fields_scratchings_and_going_unverified",
+            "historical_form_incomplete",
+            "prospective_value_unverified",
+            "named_bookmaker_fixed_win_not_available_for_entire_field",
+            "V7_RESEARCH_ONLY_NOT_APPROVED"
+          ],
+          "bookmaker": "Provider win quotes — attribution incomplete",
+          "quoted_at": "2026-11-28T05:32:01.418927+00:00",
+          "model_version": "V7",
+          "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+          "assessment_level": "PROVISIONAL",
+          "model_inference": true
+        }
+      },
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Gold Coast",
+        "race": "6",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Zouthur",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 63,
+            "age": 7,
+            "jockey": "Grady Spokes",
+            "trainer": "John Wallace"
+          },
+          {
+            "number": "2",
+            "horse": "Baltray",
+            "scratched": false,
+            "odds": 3.9,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 62.5,
+            "age": 8,
+            "jockey": "Sophie Potter",
+            "trainer": "Lennie Wheeler"
+          },
+          {
+            "number": "3",
+            "horse": "Backstage",
+            "scratched": false,
+            "odds": 4.2,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 62,
+            "age": 5,
+            "jockey": "Archie Mccolm",
+            "trainer": "John Gilmore"
+          },
+          {
+            "number": "4",
+            "horse": "Chilliwack",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 61.5,
+            "age": 9,
+            "jockey": "Rob Thorburn",
+            "trainer": "G Heinrich & B Rodgers"
+          },
+          {
+            "number": "5",
+            "horse": "Rhetoric",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 61,
+            "age": 4,
+            "jockey": "Adin Thompson",
+            "trainer": "Ray Dart"
+          },
+          {
+            "number": "6",
+            "horse": "Brechen",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 60.5,
+            "age": 8,
+            "jockey": "Ashley Butler",
+            "trainer": "Jesse Townsend"
+          },
+          {
+            "number": "7",
+            "horse": "Ever So Ready",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 12,
+            "weight": 60.5,
+            "age": 3,
+            "jockey": "Jaden Lloyd",
+            "trainer": "Richard Laming"
+          },
+          {
+            "number": "8",
+            "horse": "National Interest",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 60.5,
+            "age": 7,
+            "jockey": "Tom Orr",
+            "trainer": "G Heinrich & B Rodgers"
+          },
+          {
+            "number": "9",
+            "horse": "Varejao",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Brandon Lerena",
+            "trainer": "Stuart & Bayley Kendrick"
+          },
+          {
+            "number": "10",
+            "horse": "Love Rat",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 59.5,
+            "age": 8,
+            "jockey": "Matthew Palmer",
+            "trainer": "Cathleen Rode"
+          },
+          {
+            "number": "11",
+            "horse": "Quantum Overdrive",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Jag Guthmann-Chester",
+            "trainer": "Annabel & Rob Archibald"
+          },
+          {
+            "number": "12",
+            "horse": "Zouslayer",
+            "scratched": false,
+            "odds": 35.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "Georgina Cartwright",
+            "trainer": "Vishan Venkaya"
+          },
+          {
+            "number": "13",
+            "horse": "Oval Office",
+            "scratched": false,
+            "odds": 71.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Girish Goomany",
+            "trainer": "John Gilmore"
+          },
+          {
+            "number": "14",
+            "horse": "Astern Villa",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 54.5,
+            "age": 8,
+            "jockey": "Kayla Johnston",
+            "trainer": "John Johnston"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Soft6",
+        "captured_at": "2026-11-28T05:32:01.418927+00:00",
+        "scheduled_start": "2026-11-28T05:34:00Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "8026075ec607cf3668105421632ae74505b8ffc8fcc523757f37de36b0de9fcc"
+    }
+  ],
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "coverage": {
+    "provider_meetings": 1,
+    "provider_races": 1,
+    "accepted_races": 1,
+    "scored_both": 1,
+    "independently_verified": 0,
+    "complete_au_nz_coverage_verified": false,
+    "provider_skips": [],
+    "jurisdictions_observed": [
+      "AU"
+    ],
+    "limitation": "Provider-only AU/NZ card; independent TAB meeting completeness unavailable"
+  },
+  "qualifying_forecasts": 0,
+  "provider_credentials_configured": true,
+  "provider_snapshot_sha256": "52765998d8eff0c0eb9e1e706a70d79868c4ea85cb3223ab2b62d742e69e449c",
+  "captured_at": "2026-11-28T05:32:01.418927+00:00",
+  "valid_until": "2026-11-28T05:37:01.418927+00:00"
+}

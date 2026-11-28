@@ -1,0 +1,270 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46112474124-1-304",
+  "date": "2026-11-28",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Gold Coast",
+      "race": "6",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T05:34:00Z",
+      "scratchings": [
+        {
+          "number": "7",
+          "horse": "Ever So Ready"
+        },
+        {
+          "number": "9",
+          "horse": "Varejao"
+        },
+        {
+          "number": "14",
+          "horse": "Astern Villa"
+        }
+      ],
+      "captured_at": "2026-11-28T05:32:01.418927+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Gold Coast",
+        "race": "6",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Zouthur",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 63,
+            "age": 7,
+            "jockey": "Grady Spokes",
+            "trainer": "John Wallace"
+          },
+          {
+            "number": "2",
+            "horse": "Baltray",
+            "scratched": false,
+            "odds": 3.9,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 62.5,
+            "age": 8,
+            "jockey": "Sophie Potter",
+            "trainer": "Lennie Wheeler"
+          },
+          {
+            "number": "3",
+            "horse": "Backstage",
+            "scratched": false,
+            "odds": 4.2,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 62,
+            "age": 5,
+            "jockey": "Archie Mccolm",
+            "trainer": "John Gilmore"
+          },
+          {
+            "number": "4",
+            "horse": "Chilliwack",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 61.5,
+            "age": 9,
+            "jockey": "Rob Thorburn",
+            "trainer": "G Heinrich & B Rodgers"
+          },
+          {
+            "number": "5",
+            "horse": "Rhetoric",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 61,
+            "age": 4,
+            "jockey": "Adin Thompson",
+            "trainer": "Ray Dart"
+          },
+          {
+            "number": "6",
+            "horse": "Brechen",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 60.5,
+            "age": 8,
+            "jockey": "Ashley Butler",
+            "trainer": "Jesse Townsend"
+          },
+          {
+            "number": "7",
+            "horse": "Ever So Ready",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 12,
+            "weight": 60.5,
+            "age": 3,
+            "jockey": "Jaden Lloyd",
+            "trainer": "Richard Laming"
+          },
+          {
+            "number": "8",
+            "horse": "National Interest",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 60.5,
+            "age": 7,
+            "jockey": "Tom Orr",
+            "trainer": "G Heinrich & B Rodgers"
+          },
+          {
+            "number": "9",
+            "horse": "Varejao",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 60,
+            "age": 4,
+            "jockey": "Brandon Lerena",
+            "trainer": "Stuart & Bayley Kendrick"
+          },
+          {
+            "number": "10",
+            "horse": "Love Rat",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "fixed_win",
+            "barrier": 10,
+            "weight": 59.5,
+            "age": 8,
+            "jockey": "Matthew Palmer",
+            "trainer": "Cathleen Rode"
+          },
+          {
+            "number": "11",
+            "horse": "Quantum Overdrive",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 59.5,
+            "age": 4,
+            "jockey": "Jag Guthmann-Chester",
+            "trainer": "Annabel & Rob Archibald"
+          },
+          {
+            "number": "12",
+            "horse": "Zouslayer",
+            "scratched": false,
+            "odds": 35.0,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 57.5,
+            "age": 5,
+            "jockey": "Georgina Cartwright",
+            "trainer": "Vishan Venkaya"
+          },
+          {
+            "number": "13",
+            "horse": "Oval Office",
+            "scratched": false,
+            "odds": 71.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Girish Goomany",
+            "trainer": "John Gilmore"
+          },
+          {
+            "number": "14",
+            "horse": "Astern Villa",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 54.5,
+            "age": 8,
+            "jockey": "Kayla Johnston",
+            "trainer": "John Johnston"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "Soft6",
+        "captured_at": "2026-11-28T05:32:01.418927+00:00",
+        "scheduled_start": "2026-11-28T05:34:00Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "8026075ec607cf3668105421632ae74505b8ffc8fcc523757f37de36b0de9fcc",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T05:32:02.437368+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T05:32:01.418927+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T05:32:02.438748+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46112474124-1-304/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T05:32:01.418927+00:00",
+  "valid_until": "2026-11-28T05:37:01.418927+00:00",
+  "snapshot_only": true
+}
