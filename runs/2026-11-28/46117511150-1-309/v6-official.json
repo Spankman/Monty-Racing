@@ -1,0 +1,271 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46117511150-1-309",
+  "date": "2026-11-28",
+  "view": "official",
+  "version": "V6",
+  "status": "PARTIAL_OR_BLOCKED",
+  "races": [
+    {
+      "meeting": "sandown",
+      "race": "9",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T06:05:00.000Z",
+      "scratchings": [
+        {
+          "number": "1",
+          "horse": "Bianco Vilano"
+        },
+        {
+          "number": "2",
+          "horse": "Revelare"
+        },
+        {
+          "number": "12",
+          "horse": "Fiorenot"
+        },
+        {
+          "number": "7",
+          "horse": "Paltrow Miss"
+        },
+        {
+          "number": "13",
+          "horse": "Sulek"
+        }
+      ],
+      "captured_at": "2026-11-28T06:38:51.485061+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "sandown",
+        "race": "9",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "resulted",
+        "known_runners": [
+          {
+            "number": "14",
+            "horse": "Moonlight Circus",
+            "scratched": false,
+            "odds": 23.0,
+            "price_source": "fixed_win",
+            "barrier": 14,
+            "weight": 54,
+            "age": 5,
+            "jockey": "Luke Cartwright",
+            "trainer": "Michael Kent"
+          },
+          {
+            "number": "1",
+            "horse": "Bianco Vilano",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 8,
+            "weight": 59,
+            "age": 8,
+            "jockey": "Thomas Stockdale",
+            "trainer": "Ron Stubbs"
+          },
+          {
+            "number": "2",
+            "horse": "Revelare",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 1,
+            "weight": 59,
+            "age": 6,
+            "jockey": "Ryan Hurdle",
+            "trainer": "Robert Hickmott"
+          },
+          {
+            "number": "10",
+            "horse": "Williamsburg",
+            "scratched": false,
+            "odds": 18.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 54,
+            "age": 7,
+            "jockey": "Teodore Nugent",
+            "trainer": "Garret Lynch"
+          },
+          {
+            "number": "6",
+            "horse": "Sav On Ice",
+            "scratched": false,
+            "odds": 11.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 54.5,
+            "age": 5,
+            "jockey": "Luke Nolen",
+            "trainer": "Garret Lynch"
+          },
+          {
+            "number": "12",
+            "horse": "Fiorenot",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 5,
+            "weight": 54,
+            "age": 6,
+            "jockey": "Michael Dee",
+            "trainer": "Tom Dabernig"
+          },
+          {
+            "number": "3",
+            "horse": "Wymark",
+            "scratched": false,
+            "odds": 19.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 57,
+            "age": 6,
+            "jockey": "Jett Stanley",
+            "trainer": "Gavin Bedggood"
+          },
+          {
+            "number": "4",
+            "horse": "Cilacap",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "fixed_win",
+            "barrier": 13,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Jordan Childs",
+            "trainer": "Grahame Begg"
+          },
+          {
+            "number": "5",
+            "horse": "Makdane",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 54.5,
+            "age": 6,
+            "jockey": "Craig Williams",
+            "trainer": "Michael Kent"
+          },
+          {
+            "number": "9",
+            "horse": "Charterhouse",
+            "scratched": false,
+            "odds": 34.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 54,
+            "age": 8,
+            "jockey": "Beau Mertens",
+            "trainer": "Gavin Bedggood"
+          },
+          {
+            "number": "7",
+            "horse": "Paltrow Miss",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 12,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Craig Williams",
+            "trainer": "Ciaron Maher"
+          },
+          {
+            "number": "8",
+            "horse": "Nobler",
+            "scratched": false,
+            "odds": 2.2,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Damian Lane",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "11",
+            "horse": "Roulette King",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Jamie Mott",
+            "trainer": "Trevor Rogers"
+          },
+          {
+            "number": "13",
+            "horse": "Sulek",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 54,
+            "age": 4,
+            "jockey": "Billy Egan",
+            "trainer": "Dominic Sutton"
+          }
+        ],
+        "active_runners": 9,
+        "priced_active_runners": 9,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1800,
+        "track_condition": "Soft7",
+        "captured_at": "2026-11-28T06:38:51.485061+00:00",
+        "scheduled_start": "2026-11-28T06:05:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "result": {
+        "status": "BLOCKED",
+        "official_classification": "NO BET",
+        "ordered_selections": [],
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "complete_market_field_required_by_frozen_models",
+          "race_already_due",
+          "provider_reports_race_closed"
+        ],
+        "betting_authorised": false,
+        "assessment_level": "NO CURRENT ASSESSMENT — RACE CLOSED",
+        "model_inference": false,
+        "freshness_at_retrieval": "CLOSED — JUMP TIME REACHED",
+        "freshness_checked_at": "2026-11-28T06:38:51.542145+00:00",
+        "best_bets": [],
+        "roughies": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46117511150-1-309/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T06:38:51.485061+00:00",
+  "valid_until": "2026-11-28T06:43:51.485061+00:00",
+  "snapshot_only": true
+}
