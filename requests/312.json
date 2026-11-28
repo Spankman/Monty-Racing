@@ -1,0 +1,43 @@
+{
+  "schema": "monty.operations.index.v1",
+  "date": "2026-11-28",
+  "run_id": "46126975267-1-312",
+  "status": "COMPLETED_NO_BET",
+  "source_mode": "LIVE",
+  "receipt_path": "runs/2026-11-28/46126975267-1-312/receipt.json",
+  "forecast_path": "runs/2026-11-28/46126975267-1-312/forecast.json",
+  "forecast_sha256": "d003a01c2ff2e0f657c0adbca08425b5ef80051cdd96682a7b2b3b16f7ff9c30",
+  "generated_at": "2026-11-28T08:41:54.117355+00:00",
+  "workflow_url": "https://github.com/Spankman/Monty-Racing/actions/runs/46126975267",
+  "captured_at": "2026-11-28T08:41:53.246325+00:00",
+  "valid_until": "2026-11-28T08:46:53.246325+00:00",
+  "models": {
+    "V6": {
+      "commit": "623d46b449e46cfc5fa63b633c3f19b404bba41a",
+      "model_sha256": "f44e31f74ed017f915963950b17f144fbf6c994854403a39ba197fe5923d3fb7",
+      "status": "SCORED",
+      "research_only": false,
+      "scored_races": 1
+    },
+    "V7": {
+      "commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+      "model_sha256": "c7e42a414fc672539ed6a6403e9902f5cb3349d699b7d5d78547ba5c8db3f324",
+      "status": "SCORED",
+      "research_only": true,
+      "scored_races": 1
+    }
+  },
+  "forecast_integrity_verified": true,
+  "receipt_sha256": "4aeb233d2015d1465e1eb34ce5145edbcb5dc27754fee90f67e0d3fdba0dc22b",
+  "request": {
+    "command": "RM6 TOOWOOMBA 3",
+    "version": "V6",
+    "view": "provisional",
+    "date": "2026-11-28",
+    "meeting": "Toowoomba",
+    "race": "3",
+    "country": "AU"
+  },
+  "request_id": 312,
+  "request_status": "COMPLETED"
+}

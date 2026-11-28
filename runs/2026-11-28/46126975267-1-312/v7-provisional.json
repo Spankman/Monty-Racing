@@ -1,0 +1,342 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46126975267-1-312",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Toowoomba",
+      "race": "3",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T08:45:00.000Z",
+      "scratchings": [
+        {
+          "number": "3",
+          "horse": "Crypto Miss"
+        },
+        {
+          "number": "6",
+          "horse": "Decorative"
+        },
+        {
+          "number": "8",
+          "horse": "Happy Wins"
+        }
+      ],
+      "captured_at": "2026-11-28T08:41:53.246325+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Toowoomba",
+        "race": "3",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Worthy",
+            "scratched": false,
+            "odds": 4.8,
+            "price_source": "TAB",
+            "barrier": 9,
+            "weight": 62,
+            "age": 4,
+            "jockey": "Isabel Jessop",
+            "trainer": "Michael G Nolan"
+          },
+          {
+            "number": "3",
+            "horse": "Crypto Miss",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 11,
+            "weight": 60,
+            "age": 4,
+            "jockey": "N.r",
+            "trainer": "Rex Lipp"
+          },
+          {
+            "number": "4",
+            "horse": "Ladies Ocean Run",
+            "scratched": false,
+            "odds": 4.4,
+            "price_source": "TAB",
+            "barrier": 5,
+            "weight": 59,
+            "age": 4,
+            "jockey": "Leslie Tilley",
+            "trainer": "Pat W Webster"
+          },
+          {
+            "number": "5",
+            "horse": "Ocean Joy",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "TAB",
+            "barrier": 8,
+            "weight": 59,
+            "age": 5,
+            "jockey": "Nozi Tomizawa",
+            "trainer": "Lynda Powell"
+          },
+          {
+            "number": "2",
+            "horse": "Terracotta Rose",
+            "scratched": false,
+            "odds": 1.65,
+            "price_source": "TAB",
+            "barrier": 2,
+            "weight": 61.5,
+            "age": 4,
+            "jockey": "Kayla Barker",
+            "trainer": "Stephen Matthews"
+          },
+          {
+            "number": "6",
+            "horse": "Decorative",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 6,
+            "weight": 58.5,
+            "age": 5,
+            "jockey": "McKenzie Apel",
+            "trainer": "Kristie Clark-Peoples"
+          },
+          {
+            "number": "9",
+            "horse": "Torvecchio",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "TAB",
+            "barrier": 7,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Montanna Savva",
+            "trainer": "Bob Davis"
+          },
+          {
+            "number": "10",
+            "horse": "Ancient Mission",
+            "scratched": false,
+            "odds": 81.0,
+            "price_source": "TAB",
+            "barrier": 3,
+            "weight": 55.5,
+            "age": 7,
+            "jockey": "Stacey Callow",
+            "trainer": "Lynette Paton"
+          },
+          {
+            "number": "7",
+            "horse": "Vesper Lynd",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "TAB",
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 6,
+            "jockey": "Fiona Sandkuhl",
+            "trainer": "Dale Groves"
+          },
+          {
+            "number": "8",
+            "horse": "Happy Wins",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 56.5,
+            "age": 5,
+            "jockey": "Karl Zechner",
+            "trainer": "James Moore"
+          },
+          {
+            "number": "11",
+            "horse": "She's A Revelation",
+            "scratched": false,
+            "odds": 41.0,
+            "price_source": "TAB",
+            "barrier": 4,
+            "weight": 55,
+            "age": 6,
+            "jockey": "Aidan Keeley",
+            "trainer": "Jason Judge"
+          }
+        ],
+        "active_runners": 8,
+        "priced_active_runners": 8,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1000,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T08:41:53.246325+00:00",
+        "scheduled_start": "2026-11-28T08:45:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 8,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "e5cf6794ae53f49a1682b589ed13c6096b39d0d3fc81683a154423222b4aff2c",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "2",
+            "horse": "Terracotta Rose",
+            "odds": 1.65,
+            "probability": 0.4584890419744684,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "4",
+            "horse": "Ladies Ocean Run",
+            "odds": 4.4,
+            "probability": 0.18554204244956055,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "2",
+          "horse": "Terracotta Rose",
+          "odds": 1.65,
+          "probability": 0.4584890419744684,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "2",
+            "horse": "Terracotta Rose",
+            "odds": 1.65,
+            "probability": 0.4584890419744684,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "4",
+            "horse": "Ladies Ocean Run",
+            "odds": 4.4,
+            "probability": 0.18554204244956055,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "1",
+            "horse": "Worthy",
+            "odds": 4.8,
+            "probability": 0.1705920733179848,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "7",
+            "horse": "Vesper Lynd",
+            "odds": 9.0,
+            "probability": 0.09285242343225417,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "5",
+            "horse": "Ocean Joy",
+            "odds": 21.0,
+            "probability": 0.04252106876017538,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "11",
+            "horse": "She's A Revelation",
+            "odds": 41.0,
+            "probability": 0.022695017953740827,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "9",
+            "horse": "Torvecchio",
+            "odds": 61.0,
+            "probability": 0.015585424024012076,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          },
+          {
+            "number": "10",
+            "horse": "Ancient Mission",
+            "odds": 81.0,
+            "probability": 0.011722908087803907,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "TAB"
+          }
+        ],
+        "most_likely": {
+          "number": "2",
+          "horse": "Terracotta Rose",
+          "odds": 1.65,
+          "probability": 0.4584890419744684,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "TAB"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T08:41:54.117257+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "TAB (Krok attributed)",
+        "quoted_at": "2026-11-28T08:41:53.246325+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T08:41:54.118528+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46126975267-1-312/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T08:41:53.246325+00:00",
+  "valid_until": "2026-11-28T08:46:53.246325+00:00",
+  "snapshot_only": true
+}
