@@ -1,0 +1,270 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46116037487-1-306",
+  "date": "2026-11-28",
+  "view": "official",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Rosehill",
+      "race": "9",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T06:20:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Flying Bandit"
+        },
+        {
+          "number": "10",
+          "horse": "Paltrow Miss"
+        },
+        {
+          "number": "3",
+          "horse": "Bianco Vilano"
+        }
+      ],
+      "captured_at": "2026-11-28T06:19:56.570015+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Rosehill",
+        "race": "9",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "2",
+            "horse": "Kovalica",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "fixed_win",
+            "barrier": 9,
+            "weight": 58.5,
+            "age": 7,
+            "jockey": "Sam Clipperton",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "13",
+            "horse": "Flying Bandit",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 13,
+            "weight": 53,
+            "age": 6,
+            "jockey": "Andrew Adkins",
+            "trainer": "Kerry Parker"
+          },
+          {
+            "number": "14",
+            "horse": "Medatsu",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 53,
+            "age": 6,
+            "jockey": "Kerrin McEvoy",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "4",
+            "horse": "Major Beel",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 57,
+            "age": 7,
+            "jockey": "Tim Clark",
+            "trainer": "G & A Waterhouse & Bott"
+          },
+          {
+            "number": "12",
+            "horse": "Anythink Goes",
+            "scratched": false,
+            "odds": 14.0,
+            "price_source": "fixed_win",
+            "barrier": 2,
+            "weight": 53,
+            "age": 8,
+            "jockey": "Alysha Collett",
+            "trainer": "Matthew Smith"
+          },
+          {
+            "number": "9",
+            "horse": "Tavros",
+            "scratched": false,
+            "odds": 8.5,
+            "price_source": "fixed_win",
+            "barrier": 5,
+            "weight": 53,
+            "age": 6,
+            "jockey": "Anna Roper",
+            "trainer": "Craig Martin"
+          },
+          {
+            "number": "8",
+            "horse": "You Wahng",
+            "scratched": false,
+            "odds": 20.0,
+            "price_source": "fixed_win",
+            "barrier": 12,
+            "weight": 53,
+            "age": 5,
+            "jockey": "Dylan Gibbons",
+            "trainer": "Kris Lees"
+          },
+          {
+            "number": "1",
+            "horse": "Wootton Verni",
+            "scratched": false,
+            "odds": 6.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 59.5,
+            "age": 5,
+            "jockey": "James McDonald",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "10",
+            "horse": "Paltrow Miss",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 14,
+            "weight": 53,
+            "age": 4,
+            "jockey": "Ashley Morgan",
+            "trainer": "Ciaron Maher"
+          },
+          {
+            "number": "11",
+            "horse": "Imperialist",
+            "scratched": false,
+            "odds": 61.0,
+            "price_source": "fixed_win",
+            "barrier": 11,
+            "weight": 53,
+            "age": 5,
+            "jockey": "Siena Grima",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "5",
+            "horse": "Filthy Habits",
+            "scratched": false,
+            "odds": 21.0,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 55.5,
+            "age": 7,
+            "jockey": "Rachel King",
+            "trainer": "Bjorn Baker"
+          },
+          {
+            "number": "3",
+            "horse": "Bianco Vilano",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 10,
+            "weight": 58,
+            "age": 8,
+            "jockey": "Tyler Schiller",
+            "trainer": "Ron Stubbs"
+          },
+          {
+            "number": "6",
+            "horse": "Zaphod",
+            "scratched": false,
+            "odds": 15.0,
+            "price_source": "fixed_win",
+            "barrier": 8,
+            "weight": 54,
+            "age": 5,
+            "jockey": "Jason Collett",
+            "trainer": "Kris Lees"
+          },
+          {
+            "number": "7",
+            "horse": "Lord Penman",
+            "scratched": false,
+            "odds": 12.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 53.5,
+            "age": 5,
+            "jockey": "Zac Lloyd",
+            "trainer": "Chris Waller"
+          }
+        ],
+        "active_runners": 11,
+        "priced_active_runners": 11,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 2000,
+        "track_condition": "Good4",
+        "captured_at": "2026-11-28T06:19:56.570015+00:00",
+        "scheduled_start": "2026-11-28T06:20:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 11,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "6093252a68483e7efec185369bf93d81d771efddcd51169a7d3022c8f01cb72b",
+      "result": {
+        "ordered_selections": [],
+        "progression_bet_type": "NO BET",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T06:19:57.828208+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T06:19:56.570015+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T06:19:57.829700+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46116037487-1-306/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T06:19:56.570015+00:00",
+  "valid_until": "2026-11-28T06:24:56.570015+00:00",
+  "snapshot_only": true
+}
