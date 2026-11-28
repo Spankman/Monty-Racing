@@ -1,0 +1,315 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46106761797-1-297",
+  "date": "2026-11-28",
+  "view": "shadow",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Gold Coast",
+      "race": "4",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T04:19:00.000Z",
+      "scratchings": [
+        {
+          "number": "13",
+          "horse": "Launcher"
+        },
+        {
+          "number": "15",
+          "horse": "Going To The Sun"
+        }
+      ],
+      "captured_at": "2026-11-28T04:17:12.757769+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Gold Coast",
+        "race": "4",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Morning Sun",
+            "scratched": false,
+            "odds": 3.7,
+            "price_source": "fixed_win",
+            "barrier": 4,
+            "weight": 60.5,
+            "age": 7,
+            "jockey": "Ryan Wiggins",
+            "trainer": "Ricky Vale"
+          },
+          {
+            "number": "11",
+            "horse": "Pink Dogwood",
+            "scratched": false,
+            "odds": 5.5,
+            "price_source": "fixed_win",
+            "barrier": 3,
+            "weight": 55,
+            "age": 3,
+            "jockey": "Bobby El-Issa",
+            "trainer": "Chris Waller"
+          },
+          {
+            "number": "6",
+            "horse": "Outta Reef",
+            "scratched": false,
+            "odds": 4.8,
+            "price_source": "fixed_win",
+            "barrier": 1,
+            "weight": 57.5,
+            "age": 4,
+            "jockey": "Georgina Cartwright",
+            "trainer": "Tony Gollan"
+          },
+          {
+            "number": "13",
+            "horse": "Launcher",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 8,
+            "weight": 55.5,
+            "age": 5,
+            "jockey": "Nozi Tomizawa",
+            "trainer": "Allan Chau"
+          },
+          {
+            "number": "12",
+            "horse": "Backhander",
+            "scratched": false,
+            "odds": 13.0,
+            "price_source": "fixed_win",
+            "barrier": 7,
+            "weight": 54.5,
+            "age": 4,
+            "jockey": "Aidan Keeley",
+            "trainer": "Annabel & Rob Archibald"
+          },
+          {
+            "number": "9",
+            "horse": "Inquicktime",
+            "scratched": false,
+            "odds": 27.0,
+            "price_source": "fixed_win",
+            "barrier": 6,
+            "weight": 55.5,
+            "age": 4,
+            "jockey": "Rob Thorburn",
+            "trainer": "Robert Heathcote"
+          },
+          {
+            "number": "15",
+            "horse": "Going To The Sun",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "barrier": 2,
+            "weight": 54,
+            "age": 8,
+            "jockey": "Chelsea Baker",
+            "trainer": "Wayne King"
+          }
+        ],
+        "active_runners": 5,
+        "priced_active_runners": 5,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1800,
+        "track_condition": "Heavy10",
+        "captured_at": "2026-11-28T04:17:12.757769+00:00",
+        "scheduled_start": "2026-11-28T04:19:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 5,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "da98b24450b93016713a1f4cf82a24ea71feaf5699c178fdf12b3712597e93f5",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Morning Sun",
+            "odds": 3.7,
+            "probability": 0.34464971077418827,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "6",
+            "horse": "Outta Reef",
+            "odds": 4.8,
+            "probability": 0.263737125678209,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Morning Sun",
+          "odds": 3.7,
+          "probability": 0.34464971077418827,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [
+          {
+            "number": "6",
+            "horse": "Outta Reef",
+            "odds": 4.8,
+            "probability": 0.263737125678209,
+            "research_category": null,
+            "value_watch": null,
+            "bet_type": "WIN",
+            "classification": "PROVISIONAL VALUE WATCH — NO BET"
+          },
+          {
+            "number": "11",
+            "horse": "Pink Dogwood",
+            "odds": 5.5,
+            "probability": 0.23252460231474148,
+            "research_category": null,
+            "value_watch": null,
+            "bet_type": "WIN",
+            "classification": "PROVISIONAL VALUE WATCH — NO BET"
+          },
+          {
+            "number": "12",
+            "horse": "Backhander",
+            "odds": 13.0,
+            "probability": 0.10592178326924401,
+            "research_category": null,
+            "value_watch": null,
+            "bet_type": "WIN",
+            "classification": "PROVISIONAL VALUE WATCH — NO BET"
+          }
+        ],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "1",
+            "horse": "Morning Sun",
+            "odds": 3.7,
+            "probability": 0.34464971077418827,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "6",
+            "horse": "Outta Reef",
+            "odds": 4.8,
+            "probability": 0.263737125678209,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "11",
+            "horse": "Pink Dogwood",
+            "odds": 5.5,
+            "probability": 0.23252460231474148,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "12",
+            "horse": "Backhander",
+            "odds": 13.0,
+            "probability": 0.10592178326924401,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "9",
+            "horse": "Inquicktime",
+            "odds": 27.0,
+            "probability": 0.05316677796361724,
+            "research_category": null,
+            "value_watch": {
+              "number": "9",
+              "horse": "Inquicktime",
+              "fixed_win_odds": 27.0,
+              "v7_win_probability": 0.0531667779636172,
+              "model_expected_win_roi": 0.43550300501766426,
+              "model_fair_win_odds": 18.808738056015255,
+              "same_as_best_bet": false,
+              "positive_model_edge": true,
+              "betting_authorised": false,
+              "warning": "Uncalibrated model-only value diagnostic; NO BET"
+            },
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "1",
+          "horse": "Morning Sun",
+          "odds": 3.7,
+          "probability": 0.34464971077418827,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": {
+          "number": "12",
+          "horse": "Backhander",
+          "odds": 13.0,
+          "probability": 0.10592178326924401,
+          "research_category": null,
+          "value_watch": null,
+          "bet_type": "WIN",
+          "classification": "PROVISIONAL VALUE WATCH — NO BET"
+        },
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T04:17:13.823741+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T04:17:12.757769+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T04:17:13.825765+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46106761797-1-297/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T04:17:12.757769+00:00",
+  "valid_until": "2026-11-28T04:22:12.757769+00:00",
+  "snapshot_only": true
+}
