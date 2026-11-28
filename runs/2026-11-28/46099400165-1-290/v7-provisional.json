@@ -1,0 +1,424 @@
+{
+  "schema": "monty.operations.v1",
+  "run_id": "46099400165-1-290",
+  "date": "2026-11-28",
+  "view": "provisional",
+  "version": "V7",
+  "status": "COMPLETED_NO_BET",
+  "races": [
+    {
+      "meeting": "Wagga",
+      "race": "1",
+      "country": "AU",
+      "scheduled_start": "2026-11-28T02:56:00.000Z",
+      "scratchings": [
+        {
+          "number": "4",
+          "horse": "Duke Of Zhou"
+        },
+        {
+          "number": "6",
+          "horse": "Forrest Dancer"
+        },
+        {
+          "number": "11",
+          "horse": "Mo Cent"
+        },
+        {
+          "number": "13",
+          "horse": "Jackets"
+        },
+        {
+          "number": "14",
+          "horse": "Four Esses"
+        },
+        {
+          "number": "15",
+          "horse": "The Favorite Son"
+        },
+        {
+          "number": "16",
+          "horse": "Blessing Season"
+        },
+        {
+          "number": "17",
+          "horse": "Gettin' Tipsy"
+        },
+        {
+          "number": "18",
+          "horse": "Dita Von"
+        }
+      ],
+      "captured_at": "2026-11-28T02:43:20.169117+00:00",
+      "independent_verification": false,
+      "scratching_status": "PROVIDER ASSERTION ONLY",
+      "single_race_assessment": true,
+      "assessment_facts": {
+        "date": "2026-11-28",
+        "meeting": "Wagga",
+        "race": "1",
+        "country": "AU",
+        "source": "Krok provider assertions; not independently TAB verified",
+        "provider_status": "open",
+        "known_runners": [
+          {
+            "number": "1",
+            "horse": "Kenny's Swans",
+            "scratched": false,
+            "odds": 2.6,
+            "price_source": "fixed_win",
+            "weight": 60.5,
+            "jockey": "B Loy",
+            "trainer": "W Carroll"
+          },
+          {
+            "number": "2",
+            "horse": "Spanish Night",
+            "scratched": false,
+            "odds": 18.0,
+            "price_source": "fixed_win",
+            "weight": 59,
+            "jockey": "D Cole",
+            "trainer": "T Smart"
+          },
+          {
+            "number": "3",
+            "horse": "Blue Moon Summit",
+            "scratched": false,
+            "odds": 5.0,
+            "price_source": "fixed_win",
+            "weight": 58.5,
+            "jockey": "N Heywood",
+            "trainer": "M Ivill"
+          },
+          {
+            "number": "4",
+            "horse": "Duke Of Zhou",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 58,
+            "jockey": "C Parish",
+            "trainer": "P Mcvicar"
+          },
+          {
+            "number": "5",
+            "horse": "Russian Gangster",
+            "scratched": false,
+            "odds": 7.5,
+            "price_source": "fixed_win",
+            "weight": 58,
+            "jockey": "J Richards",
+            "trainer": "D Burnet"
+          },
+          {
+            "number": "6",
+            "horse": "Forrest Dancer",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 56.5,
+            "jockey": "D Cole",
+            "trainer": "S Spackman"
+          },
+          {
+            "number": "7",
+            "horse": "Kathleen's Prayer",
+            "scratched": false,
+            "odds": 9.0,
+            "price_source": "fixed_win",
+            "weight": 56.5,
+            "jockey": "C Ramsbotham",
+            "trainer": "N Gardner"
+          },
+          {
+            "number": "8",
+            "horse": "Forjori",
+            "scratched": false,
+            "odds": 9.5,
+            "price_source": "fixed_win",
+            "weight": 56,
+            "jockey": "R Wedrat-Kr",
+            "trainer": "N Osborne"
+          },
+          {
+            "number": "9",
+            "horse": "Head Capitalist",
+            "scratched": false,
+            "odds": 7.0,
+            "price_source": "fixed_win",
+            "weight": 55,
+            "jockey": "S Fawke",
+            "trainer": "T Smart"
+          },
+          {
+            "number": "10",
+            "horse": "I've Forgotten",
+            "scratched": false,
+            "odds": 10.0,
+            "price_source": "fixed_win",
+            "weight": 55,
+            "jockey": "J Duffy",
+            "trainer": "A Dale"
+          },
+          {
+            "number": "11",
+            "horse": "Mo Cent",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "Q Krogh",
+            "trainer": "R Waters"
+          },
+          {
+            "number": "12",
+            "horse": "Tully's Bell",
+            "scratched": false,
+            "odds": 31.0,
+            "price_source": "fixed_win",
+            "weight": 55,
+            "jockey": "C Taylor",
+            "trainer": "G Colvin"
+          },
+          {
+            "number": "13",
+            "horse": "Jackets",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "M Heagney",
+            "trainer": "J Rolfe"
+          },
+          {
+            "number": "14",
+            "horse": "Four Esses",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "C Hill",
+            "trainer": "P Mcvicar"
+          },
+          {
+            "number": "15",
+            "horse": "The Favorite Son",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "NOT NOTIFIED",
+            "trainer": "J Scobie"
+          },
+          {
+            "number": "16",
+            "horse": "Blessing Season",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "NOT NOTIFIED",
+            "trainer": "P Mcvicar"
+          },
+          {
+            "number": "17",
+            "horse": "Gettin' Tipsy",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "NOT NOTIFIED",
+            "trainer": "M Travers"
+          },
+          {
+            "number": "18",
+            "horse": "Dita Von",
+            "scratched": true,
+            "odds": null,
+            "price_source": null,
+            "weight": 55,
+            "jockey": "NOT NOTIFIED",
+            "trainer": "M Travers"
+          }
+        ],
+        "active_runners": 9,
+        "priced_active_runners": 9,
+        "field_identity_ambiguous": false,
+        "unknown_scratching_count": 0,
+        "historical_form_available": false,
+        "required_research": [
+          "current fields and scratchings",
+          "recent and relevant form",
+          "jockeys and trainers",
+          "barriers and weights",
+          "track conditions and distance suitability",
+          "available market prices and capture times"
+        ],
+        "distance_m": 1200,
+        "track_condition": "SOFT7",
+        "captured_at": "2026-11-28T02:43:20.169117+00:00",
+        "scheduled_start": "2026-11-28T02:56:00.000Z"
+      },
+      "data_completeness": {
+        "active_runners": 9,
+        "form_history_verified": false
+      },
+      "shared_model_input_sha256": "75afce72c99bb990db252dffe785f47331197e9d1162bf64279cbda47b8c48d4",
+      "result": {
+        "ordered_selections": [
+          {
+            "number": "1",
+            "horse": "Kenny's Swans",
+            "odds": 2.6,
+            "probability": 0.2899806746577431,
+            "research_category": null,
+            "value_watch": null
+          },
+          {
+            "number": "3",
+            "horse": "Blue Moon Summit",
+            "odds": 5.0,
+            "probability": 0.15666617952230164,
+            "research_category": null,
+            "value_watch": null
+          }
+        ],
+        "progression_bet_type": "QUINELLA BOXED",
+        "recommended_bet_type": "NO BET",
+        "best_bets": [],
+        "best_chance": {
+          "number": "1",
+          "horse": "Kenny's Swans",
+          "odds": 2.6,
+          "probability": 0.2899806746577431,
+          "research_category": null,
+          "value_watch": null
+        },
+        "roughies": [],
+        "official_classification": "NO BET",
+        "provisional_classification": "PROVISIONAL RESEARCH ONLY",
+        "betting_authorised": false,
+        "ranked_runners": [
+          {
+            "number": "1",
+            "horse": "Kenny's Swans",
+            "odds": 2.6,
+            "probability": 0.2899806746577431,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "3",
+            "horse": "Blue Moon Summit",
+            "odds": 5.0,
+            "probability": 0.15666617952230164,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "9",
+            "horse": "Head Capitalist",
+            "odds": 7.0,
+            "probability": 0.11412743913252468,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "5",
+            "horse": "Russian Gangster",
+            "odds": 7.5,
+            "probability": 0.10694944671608456,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "7",
+            "horse": "Kathleen's Prayer",
+            "odds": 9.0,
+            "probability": 0.09007957857301618,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "8",
+            "horse": "Forjori",
+            "odds": 9.5,
+            "probability": 0.08560871702017915,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "10",
+            "horse": "I've Forgotten",
+            "odds": 10.0,
+            "probability": 0.08157252466461544,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "2",
+            "horse": "Spanish Night",
+            "odds": 18.0,
+            "probability": 0.04690239250954308,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          },
+          {
+            "number": "12",
+            "horse": "Tully's Bell",
+            "odds": 31.0,
+            "probability": 0.02811304720399224,
+            "research_category": null,
+            "value_watch": null,
+            "price_source": "fixed_win"
+          }
+        ],
+        "most_likely": {
+          "number": "1",
+          "horse": "Kenny's Swans",
+          "odds": 2.6,
+          "probability": 0.2899806746577431,
+          "research_category": null,
+          "value_watch": null,
+          "price_source": "fixed_win"
+        },
+        "value_selection": null,
+        "reduced_confidence": true,
+        "status": "SCORED",
+        "decision_at": "2026-11-28T02:43:21.264573+00:00",
+        "no_bet_reasons": [
+          "independent_fields_scratchings_and_going_unverified",
+          "historical_form_incomplete",
+          "prospective_value_unverified",
+          "named_bookmaker_fixed_win_not_available_for_entire_field",
+          "V7_RESEARCH_ONLY_NOT_APPROVED"
+        ],
+        "bookmaker": "Provider win quotes — attribution incomplete",
+        "quoted_at": "2026-11-28T02:43:20.169117+00:00",
+        "model_version": "V7",
+        "model_commit": "efc51abb1595ef1eb8417e2d4e0d591f6d3c9378",
+        "assessment_level": "PROVISIONAL",
+        "model_inference": true,
+        "freshness_at_retrieval": "FRESH AT CHECK TIME",
+        "freshness_checked_at": "2026-11-28T02:43:21.266637+00:00"
+      }
+    }
+  ],
+  "receipt": "runs/2026-11-28/46099400165-1-290/receipt.json",
+  "blockers": [
+    "No independently verified TAB field/conditions attestation; official NO BET",
+    "V7 remains research only"
+  ],
+  "captured_at": "2026-11-28T02:43:20.169117+00:00",
+  "valid_until": "2026-11-28T02:48:20.169117+00:00",
+  "snapshot_only": true
+}
